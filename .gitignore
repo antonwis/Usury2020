@@ -1,6 +1,12 @@
 # Created by https://www.gitignore.io/api/java,maven
 # Edit at https://www.gitignore.io/?templates=java,maven
 
+### IDE SPECIFIC ###
+# Eclipse
+.classpath
+.project
+.settings/
+
 ### Java ###
 # Compiled class file
 *.class
