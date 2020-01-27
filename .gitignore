@@ -6,6 +6,9 @@
 .classpath
 .project
 .settings/
+bin/
+#IntelliJ
+.idea/
 
 ### Java ###
 # Compiled class file
