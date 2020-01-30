@@ -10,6 +10,7 @@ bin/
 
 #IntelliJ
 .idea/
+*.iml
 
 ### Java ###
 # Compiled class file
