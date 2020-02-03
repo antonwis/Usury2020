@@ -1,4 +1,4 @@
-package fi.metropolia.group8;
+package fi.metropolia.group8.view;
 
 import java.io.IOException;
 import javafx.fxml.FXML;

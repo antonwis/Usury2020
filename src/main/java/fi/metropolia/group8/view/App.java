@@ -1,4 +1,4 @@
-package fi.metropolia.group8;
+package fi.metropolia.group8.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
