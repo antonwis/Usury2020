@@ -16,10 +16,11 @@ public class App extends Application {
     private static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage primaryStage) throws IOException {
         scene = new Scene(loadFXML("primary"));
-        stage.setScene(scene);
-        stage.show();
+        primaryStage.setTitle("Khazar Simulator (Early Access)"); // main ikkuna title
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     static void setRoot(String fxml) throws IOException {
@@ -32,7 +33,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 
 }
