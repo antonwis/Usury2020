@@ -22,7 +22,6 @@
         <property name="hibernate.show_sql">true</property>
 
         <!-- Mallitason DTO-oliot, pakkausnimet mukaan -->
-        <mapping class="model.TestTable"/>
         <mapping class="fi.metropolia.group8.model.User"/>
     </session-factory>
 </hibernate-configuration>
