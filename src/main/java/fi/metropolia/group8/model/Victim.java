@@ -1,9 +1,19 @@
 package fi.metropolia.group8.model;
 
-public class Victim {
+import javax.persistence.*;
 
+@Entity
+@Table
+public class Victim {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "address")
     private String address;
+    @Column(name = "desc")
     private String description;
 
     public Victim(String name, String address, String description) {
@@ -37,5 +47,10 @@ public class Victim {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString(){
+        return this.name+", "+this.address+", "+this.description;
     }
 }

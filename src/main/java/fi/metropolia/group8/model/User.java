@@ -1,4 +1,4 @@
-package fi.metropolia.group8.model.user;
+package fi.metropolia.group8.model;
 
 import javax.persistence.*;
 
@@ -16,9 +16,9 @@ public class User {
     public User(){
 
     }
-    public User(String name,long id){
-        name = this.name;
-        id = this.id;
+    public User(String name){
+        this.name = name;
+
     }
 
     public long getId() {
@@ -35,5 +35,10 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString(){
+        return this.name;
     }
 }

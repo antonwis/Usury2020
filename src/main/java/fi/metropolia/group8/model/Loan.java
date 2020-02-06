@@ -1,9 +1,7 @@
-package fi.metropolia.group8.model.loan;
+package fi.metropolia.group8.model;
 
-import fi.metropolia.group8.model.Victim;
-import fi.metropolia.group8.model.user.User;
 import javax.persistence.*;
-import java.util.*;
+import java.time.LocalDate;
 
 @Entity
 @Table
@@ -18,21 +16,23 @@ public class Loan {
     private float value;
     @Column(name="victim")
     private Victim victim;
-    @Column(name="loanTaken")
-    private Date loanTakenDate;
-    @Column(name="dueDate")
-    private Date dueDate;
+    @Column(name="loan_taken")
+    private LocalDate loanTakenDate;
+    @Column(name="due_date")
+    private LocalDate dueDate;
+    @Column(name = "intrest")
+    private float intrest;
 
     public Loan(){
 
     }
-    public Loan(long id, User owner, float value, Victim victim, Date loanTakenDate, Date dueDate){
-        id = this.id;
-        owner = this.owner;
-        value = this.value;
-        victim = this.victim;
-        loanTakenDate = this.loanTakenDate;
-        dueDate = this.dueDate;
+    public Loan(User owner, float value, Victim victim, LocalDate loanTakenDate, LocalDate dueDate, float intrest){
+
+        this.owner = owner;
+        this.value = value;
+        this.victim = victim;
+        this.loanTakenDate = loanTakenDate;
+        this.dueDate = dueDate;
     }
 
     public long getId() {
@@ -67,20 +67,33 @@ public class Loan {
         this.victim = victim;
     }
 
-    public Date getLoanTakenDate() {
+    public LocalDate getLoanTakenDate() {
         return loanTakenDate;
     }
 
-    public void setLoanTakenDate(Date loanTakenDate) {
+    public void setLoanTakenDate(LocalDate loanTakenDate) {
         this.loanTakenDate = loanTakenDate;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public float getIntrest() {
+        return intrest;
+    }
+
+    public void setIntrest(float intrest) {
+        this.intrest = intrest;
+    }
+
+    @Override
+    public String toString(){
+        return this.owner.getName() +", "+this.value+", "+this.victim.getName()+", "+this.loanTakenDate+", "+this.dueDate;
     }
 
 
