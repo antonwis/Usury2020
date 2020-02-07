@@ -11,7 +11,7 @@ public class LoanCalculator {
     private long daysBetween;
     private float finalSum;
 
-    public void CalculateIntrest(Loan loan){
+    public void CalculateInterest(Loan loan){
         this.amount = loan.getValue();
         this.intrest = loan.getIntrest();
         this.daysBetween = DAYS.between(loan.getLoanTakenDate(),loan.getDueDate());

@@ -1,43 +1,39 @@
 package fi.metropolia.group8.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Alias {
 
-    private String name;
-    private String description;
-    private int equity = 0;
-
-
-    public Alias(String name, int equity) {
-        this.name = name;
-        this.equity = equity;
-
-    }
-
-    public String getName() {
+    private StringProperty name;
+    public void setName(String value) { nameProperty().set(value); }
+    public String getName() { return nameProperty().get(); }
+    public StringProperty nameProperty() {
+        if (name == null) name = new SimpleStringProperty(this,"name") ;
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
+    private StringProperty description;
+    public void setDescription(String value) { descriptionProperty().set(value); }
+    public String getDescription() { return descriptionProperty().get(); }
+    public StringProperty descriptionProperty() {
+        if (description == null) description = new SimpleStringProperty(this,"description") ;
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getEquity() {
+    private IntegerProperty equity;
+    public void setEquity(int value) { equityProperty().set(value); }
+    public int getEquity() { return equityProperty().get(); }
+    public IntegerProperty equityProperty() {
+        if(equity == null) equity = new SimpleIntegerProperty(this, "equity");
         return equity;
     }
 
-    public void setEquity(int equity) {
-        this.equity = equity;
-    }
-
-    public void addMoney(int money) {
-        this.equity += money;
+    public Alias(String name, String description, int equity) {
+        setName(name);
+        setDescription(description);
+        setEquity(equity);
     }
 }
