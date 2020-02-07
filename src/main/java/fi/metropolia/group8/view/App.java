@@ -13,21 +13,16 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    private static Scene scene;
-
     @Override
     public void start(Stage primaryStage) throws IOException {
-        scene = new Scene(loadFXML("primary"));
-        primaryStage.setTitle("Khazar Simulator (Early Access)"); // main ikkuna title
+        Scene scene = new Scene(loadFXML("primary"));
+        primaryStage.setTitle("Khazar Simulator (Early Access)");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
+    // public ettei tarvii copypaste. Väliaikanen solution
+    public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }

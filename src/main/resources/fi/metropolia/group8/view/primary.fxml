@@ -1,45 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <TabPane layoutY="25.0" prefHeight="376.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
-        <tabs>
-          <Tab fx:id="Lainat" text="Lainat">
-            <fx:include source="loans.fxml"/>
-          </Tab>
-          <Tab text="Summary">
-            <fx:include source="summary.fxml"/>
-          </Tab>
-          <Tab text="Kalenteri">
-            <fx:include source="calendar.fxml"/>
-          </Tab>
-        </tabs>
-      </TabPane>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="413.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </children>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0"
+            prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="fi.metropolia.group8.view.PrimaryController">
+    <children>
+        <TabPane layoutY="80.0" prefHeight="820.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE"
+                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                 AnchorPane.topAnchor="80.0">
+            <tabs>
+                <Tab fx:id="Loans" text="Loans">
+                    <fx:include source="loans.fxml"/>
+                </Tab>
+                <Tab fx:id="Summary" text="Summary">
+                    <fx:include source="summary.fxml"/>
+                </Tab>
+                <Tab fx:id="Calendar" text="Calendar">
+                    <fx:include source="calendar.fxml"/>
+                </Tab>
+            </tabs>
+        </TabPane>
+        <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="413.0" AnchorPane.leftAnchor="0.0"
+                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Close"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <AnchorPane layoutY="24.0" prefHeight="56.0" prefWidth="1200.0" AnchorPane.bottomAnchor="820.0"
+                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
+            <children>
+                <ComboBox layoutX="1036.0" layoutY="16.0" prefWidth="150.0" promptText="Choose an Alias"
+                          AnchorPane.rightAnchor="14.0"/>
+                <Button fx:id="newAlias" layoutX="977.0" layoutY="16.0" mnemonicParsing="false"
+                        onAction="#createNewAlias" text="+" AnchorPane.rightAnchor="171.0"/>
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>
