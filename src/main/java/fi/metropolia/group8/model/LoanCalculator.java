@@ -1,22 +1,20 @@
 package fi.metropolia.group8.model;
 
-import java.time.*;
-
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class LoanCalculator {
     private float amount;
-    private float intrest;
+    private float interest;
     private Loan loan;
     private long daysBetween;
     private float finalSum;
 
     public void CalculateInterest(Loan loan){
         this.amount = loan.getValue();
-        this.intrest = loan.getIntrest();
-        this.daysBetween = DAYS.between(loan.getLoanTakenDate(),loan.getDueDate());
+        this.interest = loan.getInterest();
+        this.daysBetween = DAYS.between(loan.getStartDate(),loan.getDueDate());
         for(int i = 0; i<daysBetween;i++) {
-            finalSum = this.amount * this.intrest;
+            finalSum = this.amount * this.interest;
         }
     }
     public void setLoan(Loan loan){

@@ -1,48 +1,48 @@
 package fi.metropolia.group8.model;
 
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleFloatProperty;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table
+@Table(name="Loan")
+@Access(value= AccessType.PROPERTY)
 public class Loan {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
+
+
     private long id;
-    @Column(name="owner")
     private User owner;
-    @Column(name="value")
-    private float value;
-    @Column(name="victim")
+    private FloatProperty value;
     private Victim victim;
-    @Column(name="loan_taken")
-    private LocalDate loanTakenDate;
-    @Column(name="due_date")
+    private LocalDate startDate;
     private LocalDate dueDate;
-    @Column(name = "intrest")
-    private float intrest;
+    private FloatProperty interest;
 
     public Loan(){
 
     }
-    public Loan(User owner, float value, Victim victim, LocalDate loanTakenDate, LocalDate dueDate, float intrest){
+    public Loan(User owner, float value, Victim victim, LocalDate startDate, LocalDate dueDate, float interest){
 
         this.owner = owner;
-        this.value = value;
+        this.value = new SimpleFloatProperty(value);
         this.victim = victim;
-        this.loanTakenDate = loanTakenDate;
+        this.startDate = startDate;
         this.dueDate = dueDate;
+        this.interest = new SimpleFloatProperty(interest);
     }
 
-    public long getId() {
-        return id;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id")
+    public long getId() { return id; }
 
     public void setId(long id) {
         this.id = id;
     }
 
+    @Column(name="owner")
     public User getOwner() {
         return owner;
     }
@@ -51,14 +51,36 @@ public class Loan {
         this.owner = owner;
     }
 
-    public float getValue() {
+    //Value property stuff
+    public FloatProperty valueProperty() {
         return value;
     }
 
-    public void setValue(float value) {
-        this.value = value;
+    @Column(name="value")
+    public final float getValue() {
+        return valueProperty().get();
     }
 
+    public final void setValue(float value) {
+        valueProperty().set(value);
+    }
+
+    //Interest property stuff
+    public FloatProperty interestProperty() {
+        return interest;
+    }
+
+    @Column(name = "interest_percentage")
+    public final float getInterest() {
+        return interestProperty().get();
+    }
+
+    public final void setInterest(float value) {
+        interestProperty().set(value);
+    }
+
+
+    @Column(name="victim")
     public Victim getVictim() {
         return victim;
     }
@@ -67,14 +89,16 @@ public class Loan {
         this.victim = victim;
     }
 
-    public LocalDate getLoanTakenDate() {
-        return loanTakenDate;
+    @Column(name="startDate")
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setLoanTakenDate(LocalDate loanTakenDate) {
-        this.loanTakenDate = loanTakenDate;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
+    @Column(name="dueDate")
     public LocalDate getDueDate() {
         return dueDate;
     }
@@ -83,17 +107,11 @@ public class Loan {
         this.dueDate = dueDate;
     }
 
-    public float getIntrest() {
-        return intrest;
-    }
 
-    public void setIntrest(float intrest) {
-        this.intrest = intrest;
-    }
 
     @Override
     public String toString(){
-        return this.owner.getName() +", "+this.value+", "+this.victim.getName()+", "+this.loanTakenDate+", "+this.dueDate;
+        return this.owner.getName() +", "+this.value+", "+this.victim.getName()+", "+this.startDate +", "+this.dueDate;
     }
 
 
