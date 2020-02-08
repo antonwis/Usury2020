@@ -13,7 +13,7 @@ public class Loan {
 
 
     private long id;
-    private User owner;
+    private Alias owner;
     private FloatProperty value;
     private Victim victim;
     private LocalDate startDate;
@@ -23,7 +23,7 @@ public class Loan {
     public Loan(){
 
     }
-    public Loan(User owner, float value, Victim victim, LocalDate startDate, LocalDate dueDate, float interest){
+    public Loan(Alias owner, float value, Victim victim, LocalDate startDate, LocalDate dueDate, float interest){
 
         this.owner = owner;
         this.value = new SimpleFloatProperty(value);
@@ -43,11 +43,11 @@ public class Loan {
     }
 
     @Column(name="owner")
-    public User getOwner() {
+    public Alias getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(Alias owner) {
         this.owner = owner;
     }
 

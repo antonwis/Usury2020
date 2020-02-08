@@ -1,5 +1,9 @@
 package fi.metropolia.group8.model;
 
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,45 +13,52 @@ public class Victim {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "address")
-    private String address;
-    @Column(name = "desc")
-    private String description;
+    private StringProperty name;
+    private StringProperty address;
+    private StringProperty description;
 
     public Victim(String name, String address, String description) {
-        this.name = name;
-        this.address = address;
-        this.description = description;
+        this.name = new SimpleStringProperty(name);
+        this.address = new SimpleStringProperty(address);
+        this.description = new SimpleStringProperty(description);
     }
-    public Victim(String name) {
-        this.name = name;
-    }
+    public void setName(String value) { nameProperty().set(value); }
 
-    public String getName() {
+    @Column(name = "name")
+    public String getName() { return nameProperty().get(); }
+    public StringProperty nameProperty() {
+        if (name == null) name = new SimpleStringProperty(this,"name") ;
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Column(name="address")
+    public final String getAddress() {
+        return addressProperty().get();
     }
 
-    public String getAddress() {
+    public final void setAddress(String value) {
+        addressProperty().set(value);
+    }
+
+    //Interest property stuff
+    public StringProperty addressProperty() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    @Column(name="description")
+    public final String getDescription() {
+        return descriptionProperty().get();
     }
 
-    public String getDescription() {
+    public final void setDescription(String value) {
+        descriptionProperty().set(value);
+    }
+
+    //Interest property stuff
+    public StringProperty descriptionProperty() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     @Override
     public String toString(){
