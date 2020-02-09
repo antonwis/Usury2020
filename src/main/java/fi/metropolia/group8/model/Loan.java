@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="Loan")
-@Access(value= AccessType.PROPERTY)
+@Table(name = "Loan")
+@Access(value = AccessType.PROPERTY)
 public class Loan {
 
 
@@ -21,11 +21,11 @@ public class Loan {
     private FloatProperty interest;
 
 
-    public Loan(){
+    public Loan() {
         // Empty Constructor for hibernate
     }
 
-    public Loan(Alias owner, float value, Victim victim, LocalDate startDate, LocalDate dueDate, float interest){
+    public Loan(Alias owner, float value, Victim victim, LocalDate startDate, LocalDate dueDate, float interest) {
 
         this.owner = owner;
         this.value = new SimpleFloatProperty(value);
@@ -37,10 +37,12 @@ public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
-    public long getId() { return id; }
+    @Column(name = "id")
+    public long getId() {
+        return id;
+    }
 
-    @Column(name="owner")
+    @Column(name = "owner")
     public Alias getOwner() {
         return owner;
     }
@@ -54,7 +56,7 @@ public class Loan {
         return value;
     }
 
-    @Column(name="value")
+    @Column(name = "value")
     public final float getValue() {
         return valueProperty().get();
     }
@@ -78,7 +80,7 @@ public class Loan {
     }
 
 
-    @Column(name="victim")
+    @Column(name = "victim")
     public Victim getVictim() {
         return victim;
     }
@@ -88,7 +90,7 @@ public class Loan {
         this.victim = victim;
     }
 
-    @Column(name="startDate")
+    @Column(name = "startDate")
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -98,7 +100,7 @@ public class Loan {
         this.startDate = startDate;
     }
 
-    @Column(name="dueDate")
+    @Column(name = "dueDate")
     public LocalDate getDueDate() {
         return dueDate;
     }
@@ -108,10 +110,9 @@ public class Loan {
     }
 
 
-
     @Override
-    public String toString(){
-        return this.owner.getName() +", "+this.value+", "+this.victim.getName()+", "+this.startDate +", "+this.dueDate;
+    public String toString() {
+        return this.owner.getName() + ", " + getValue() + ", " + this.victim.getName() + ", " + getStartDate() + ", " + getDueDate();
     }
 
 

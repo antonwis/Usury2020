@@ -40,6 +40,11 @@ public class LoanDataModel {
                 new Loan(new Alias("Ben Shapiro", "Law Jew", 9000), 2000, new Victim("Jani Toivola", "Homokuja 2", "Ajeli taksilla"), LocalDate.now(), LocalDate.now(), 2)
         );
     }
+    public void kyslol(){
+        loanList.setAll(
+                new Loan(new Alias("Ben Shapiro", "Law Jew", 9000), 2000, new Victim("Jani Toivola", "Homokuja 2", "Ajeli taksilla"), LocalDate.now(), LocalDate.now(), 2)
+        );
+    }
     public void saveData(File file) {
         // kys2
     }

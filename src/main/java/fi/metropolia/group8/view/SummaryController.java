@@ -1,4 +1,4 @@
 package fi.metropolia.group8.view;
 
-public class Summary {
+public class SummaryController {
 }
