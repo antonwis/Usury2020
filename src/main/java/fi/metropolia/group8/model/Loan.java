@@ -20,9 +20,11 @@ public class Loan {
     private LocalDate dueDate;
     private FloatProperty interest;
 
-    public Loan(){
 
+    public Loan(){
+        // Empty Constructor for hibernate
     }
+
     public Loan(Alias owner, float value, Victim victim, LocalDate startDate, LocalDate dueDate, float interest){
 
         this.owner = owner;
@@ -37,10 +39,6 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     public long getId() { return id; }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     @Column(name="owner")
     public Alias getOwner() {
@@ -85,6 +83,7 @@ public class Loan {
         return victim;
     }
 
+    // Probably not needed
     public void setVictim(Victim victim) {
         this.victim = victim;
     }
@@ -94,6 +93,7 @@ public class Loan {
         return startDate;
     }
 
+    // Probably not needed
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }

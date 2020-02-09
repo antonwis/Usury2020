@@ -9,20 +9,26 @@ import javax.persistence.*;
 @Entity
 @Table
 public class Victim {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
+
     private StringProperty name;
     private StringProperty address;
     private StringProperty description;
+
+    // Empty Constructor for hibernate
+    public Victim() {
+
+    }
 
     public Victim(String name, String address, String description) {
         this.name = new SimpleStringProperty(name);
         this.address = new SimpleStringProperty(address);
         this.description = new SimpleStringProperty(description);
     }
-    public void setName(String value) { nameProperty().set(value); }
 
     @Column(name = "name")
     public String getName() { return nameProperty().get(); }
@@ -30,6 +36,8 @@ public class Victim {
         if (name == null) name = new SimpleStringProperty(this,"name") ;
         return name;
     }
+
+    public void setName(String value) { nameProperty().set(value); }
 
     @Column(name="address")
     public final String getAddress() {
@@ -40,7 +48,7 @@ public class Victim {
         addressProperty().set(value);
     }
 
-    //Interest property stuff
+
     public StringProperty addressProperty() {
         return address;
     }
@@ -54,7 +62,7 @@ public class Victim {
         descriptionProperty().set(value);
     }
 
-    //Interest property stuff
+
     public StringProperty descriptionProperty() {
         return description;
     }
