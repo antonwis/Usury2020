@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class LoanDataModel {
 
     private final ObservableList<Loan> loanList = FXCollections.observableArrayList(loan ->
-            new Observable[] {loan.getOwner().nameProperty(), loan.valueProperty(), loan.getVictim().nameProperty(), loan.interestProperty(), });
+            new Observable[] {loan.getOwner().nameProperty(), loan.valueProperty(), loan.getVictim().nameProperty(), loan.interestProperty()});
 
     private final ObjectProperty<Loan> currentLoan = new SimpleObjectProperty<>(null);
 
