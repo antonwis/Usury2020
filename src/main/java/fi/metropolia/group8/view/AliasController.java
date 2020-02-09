@@ -1,12 +1,15 @@
 package fi.metropolia.group8.view;
 
+import antlr.PreservingFileWriter;
 import fi.metropolia.group8.model.AliasDataModel;
 import javafx.beans.property.IntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
@@ -14,7 +17,7 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 
-public class NewAlias {
+public class AliasController {
 
     private static Stage aliasWindow;
 
@@ -70,10 +73,12 @@ public class NewAlias {
     }
 
     public static void display() throws IOException {
-        Scene scene = new Scene(App.loadFXML("newAlias"));
         aliasWindow = new Stage();
-        aliasWindow.initModality(Modality.APPLICATION_MODAL);
-        aliasWindow.setTitle("Add new alias");
+        FXMLLoader alias = new FXMLLoader();
+        AnchorPane aliaSS = FXMLLoader.load(AliasController.class.getResource("newAlias.fxml"));
+        AliasController aliasController = alias.getController();
+
+        Scene scene = new Scene(aliaSS, 300, 500);
         aliasWindow.setScene(scene);
         aliasWindow.show();
     }
