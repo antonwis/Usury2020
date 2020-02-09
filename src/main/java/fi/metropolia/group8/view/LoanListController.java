@@ -31,7 +31,7 @@ public class LoanListController implements Initializable {
         listView.setItems(model.getLoanList());
 
         listView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->
-                model.setCurrentPerson(newSelection));
+                model.setCurrentLoan(newSelection));
 
         model.currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
             if (newLoan == null) {
@@ -48,7 +48,7 @@ public class LoanListController implements Initializable {
                 if (empty) {
                     setText(null);
                 } else {
-                    setText(loan.toString());
+                    setText("ID: " + loan.getId() + ", " + loan.getVictim().getName() + ", Remaining value: " + loan.getValue() + ", Due: " + loan.getDueDate());
                 }
             }
         });

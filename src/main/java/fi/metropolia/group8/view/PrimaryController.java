@@ -42,7 +42,7 @@ public class PrimaryController implements Initializable {
             LoanListController loanListController = loanList.getController();
             LoanDataModel loanDataModel = new LoanDataModel();
             //////
-            loanDataModel.kyslol();
+            loanDataModel.loadTestData();
             ////
             loanListController.initModel(loanDataModel);
 
