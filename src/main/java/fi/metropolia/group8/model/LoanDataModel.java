@@ -25,7 +25,7 @@ public class LoanDataModel {
         return currentLoanProperty().get();
     }
 
-    public final void setCurrentPerson(Loan loan) {
+    public final void setCurrentLoan(Loan loan) {
         currentLoanProperty().set(loan);
     }
 
@@ -38,10 +38,19 @@ public class LoanDataModel {
         // newit pois ja tilalle viitteet oikeisiin juttuihin
         loanList.setAll(
                 new Loan(new Alias("Ben Shapiro", "Law Jew", 9000), 2000, new Victim("Jani Toivola", "Homokuja 2", "Ajeli taksilla"), LocalDate.now(), LocalDate.now(), 2)
-
         );
     }
     public void saveData(File file) {
         // kys2
     }
+
+    // Loanlist for testing
+    public void loadTestData() {
+        Alias testAlias = new Alias("Seppo", "Testimies", 1000);
+        Victim testVictim = new Victim("Kake", "Piritori", "Nisti");
+        Loan testLoan = new Loan(testAlias, 500, testVictim, LocalDate.now(), LocalDate.now(), 2);
+
+        loanList.setAll(testLoan);
+    }
+
 }
