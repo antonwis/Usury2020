@@ -34,6 +34,10 @@ public class Alias {
     @Column(name="id")
     public long getId() { return id; }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public void setName(String value) { nameProperty().set(value); }
 
     @Column(name="name")

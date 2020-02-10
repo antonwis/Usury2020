@@ -31,6 +31,10 @@ public class User {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public void setName(String value) { nameProperty().set(value); }
 
     @Column(name="name")

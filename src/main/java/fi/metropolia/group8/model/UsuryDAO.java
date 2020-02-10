@@ -59,5 +59,37 @@ public class UsuryDAO {
         }
     }
 
+    public Alias[] readAliases() {
+        Transaction transaction = null;
+        Alias[] aliases = null;
+        try (Session session = istuntotehdas.openSession()) {
+            transaction = session.beginTransaction();
+            List result = session.createQuery("FROM fi.metropolia.group8.model.Alias").getResultList();
+            aliases = new Alias[result.size()];
+            result.toArray(aliases);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+                throw e;
+            }
+        }
+        return aliases;
+    }
+
+    public void createAlias(Alias alias) {
+        Transaction transaction = null;
+        try (Session session = istuntotehdas.openSession()){
+            transaction = session.beginTransaction();
+            session.save(alias);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+                throw e;
+            }
+        }
+    }
+
 
 }
