@@ -24,5 +24,6 @@
         <!-- Mallitason DTO-oliot, pakkausnimet mukaan -->
         <mapping class="fi.metropolia.group8.model.User"/>
         <mapping class="fi.metropolia.group8.model.Alias"/>
+        <mapping class="fi.metropolia.group8.model.Victim"/>
     </session-factory>
 </hibernate-configuration>

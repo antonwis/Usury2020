@@ -91,5 +91,38 @@ public class UsuryDAO {
         }
     }
 
+    public Victim[] readVictims() {
+        Transaction transaction = null;
+        Victim[] victims = null;
+        try (Session session = istuntotehdas.openSession()) {
+            transaction = session.beginTransaction();
+            List result = session.createQuery("FROM fi.metropolia.group8.model.Victim").getResultList();
+            victims = new Victim[result.size()];
+            result.toArray(victims);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                e.printStackTrace();
+                transaction.rollback();
+                throw e;
+            }
+        }
+        return victims;
+    }
+
+    public void createVictim(Victim victim) {
+        Transaction transaction = null;
+        try (Session session = istuntotehdas.openSession()){
+            transaction = session.beginTransaction();
+            session.save(victim);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+                throw e;
+            }
+        }
+    }
+
 
 }

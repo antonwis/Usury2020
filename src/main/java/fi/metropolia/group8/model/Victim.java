@@ -10,9 +10,6 @@ import javax.persistence.*;
 @Table
 public class Victim {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private long id;
 
     private StringProperty name;
@@ -28,6 +25,17 @@ public class Victim {
         this.name = new SimpleStringProperty(name);
         this.address = new SimpleStringProperty(address);
         this.description = new SimpleStringProperty(description);
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Column(name = "name")
@@ -50,6 +58,7 @@ public class Victim {
 
 
     public StringProperty addressProperty() {
+        if (address == null) address = new SimpleStringProperty(this,"address") ;
         return address;
     }
 
@@ -64,6 +73,7 @@ public class Victim {
 
 
     public StringProperty descriptionProperty() {
+        if (description == null) description = new SimpleStringProperty(this,"description") ;
         return description;
     }
 
