@@ -124,5 +124,38 @@ public class UsuryDAO {
         }
     }
 
+    public Loan[] readLoans() {
+        Transaction transaction = null;
+        Loan[] loans = null;
+        try (Session session = istuntotehdas.openSession()) {
+            transaction = session.beginTransaction();
+            List result = session.createQuery("FROM fi.metropolia.group8.model.Loan").getResultList();
+            loans = new Loan[result.size()];
+            result.toArray(loans);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                e.printStackTrace();
+                transaction.rollback();
+                throw e;
+            }
+        }
+        return loans;
+    }
+
+    public void createLoan(Loan loan) {
+        Transaction transaction = null;
+        try (Session session = istuntotehdas.openSession()){
+            transaction = session.beginTransaction();
+            session.save(loan);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+                throw e;
+            }
+        }
+    }
+
 
 }
