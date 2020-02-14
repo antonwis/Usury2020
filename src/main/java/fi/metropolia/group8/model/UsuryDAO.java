@@ -7,6 +7,8 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UsuryDAO {
@@ -22,99 +24,48 @@ public class UsuryDAO {
                 System.out.println("Istuntotehtaan luonti ei onnistu");
                 e.printStackTrace();
                 StandardServiceRegistryBuilder.destroy(registry);
-                System.exit(-1);
+                //System.exit(-1);
             }
         }
     }
 
-    public User[] readUsers() {
-        Transaction transaction = null;
-        User[] users = null;
-        try (Session session = istuntotehdas.openSession()) {
-            transaction = session.beginTransaction();
-            List result = session.createQuery("FROM fi.metropolia.group8.model.User").getResultList();
-            users = new User[result.size()];
-            result.toArray(users);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-                throw e;
-            }
-        }
-        return users;
+    public List<User> readUsers() {
+        return readObjects(User.class);
     }
 
     public void createUser(User user) {
-        Transaction transaction = null;
-        try (Session session = istuntotehdas.openSession()){
-            transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-                throw e;
-            }
-        }
+        createObject(user);
     }
 
-    public Alias[] readAliases() {
-        Transaction transaction = null;
-        Alias[] aliases = null;
-        try (Session session = istuntotehdas.openSession()) {
-            transaction = session.beginTransaction();
-            List result = session.createQuery("FROM fi.metropolia.group8.model.Alias").getResultList();
-            aliases = new Alias[result.size()];
-            result.toArray(aliases);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-                throw e;
-            }
-        }
-        return aliases;
+    public List<Alias> readAliases() {
+        return readObjects(Alias.class);
     }
 
     public void createAlias(Alias alias) {
-        Transaction transaction = null;
-        try (Session session = istuntotehdas.openSession()){
-            transaction = session.beginTransaction();
-            session.save(alias);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-                throw e;
-            }
-        }
+        createObject(alias);
     }
 
-    public Victim[] readVictims() {
-        Transaction transaction = null;
-        Victim[] victims = null;
-        try (Session session = istuntotehdas.openSession()) {
-            transaction = session.beginTransaction();
-            List result = session.createQuery("FROM fi.metropolia.group8.model.Victim").getResultList();
-            victims = new Victim[result.size()];
-            result.toArray(victims);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                e.printStackTrace();
-                transaction.rollback();
-                throw e;
-            }
-        }
-        return victims;
+    public List<Victim> readVictims() {
+        return readObjects(Victim.class);
     }
 
     public void createVictim(Victim victim) {
+        createObject(victim);
+    }
+
+    public List<Loan> readLoans() {
+        return readObjects(Loan.class);
+    }
+
+    public void createLoan(Loan loan) {
+        createObject(loan);
+    }
+
+    private <T> void createObject(T object) {
         Transaction transaction = null;
         try (Session session = istuntotehdas.openSession()){
             transaction = session.beginTransaction();
-            session.save(victim);
+            session.save(object);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -124,14 +75,13 @@ public class UsuryDAO {
         }
     }
 
-    public Loan[] readLoans() {
+    @SuppressWarnings("unchecked")
+    private <T> List<T> readObjects(Class aClass) {
         Transaction transaction = null;
-        Loan[] loans = null;
+        List result = Collections.emptyList();
         try (Session session = istuntotehdas.openSession()) {
             transaction = session.beginTransaction();
-            List result = session.createQuery("FROM fi.metropolia.group8.model.Loan").getResultList();
-            loans = new Loan[result.size()];
-            result.toArray(loans);
+            result = session.createQuery("FROM " + aClass.getName()).getResultList(); //hql
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -140,22 +90,7 @@ public class UsuryDAO {
                 throw e;
             }
         }
-        return loans;
+        return (List<T>) result;
     }
-
-    public void createLoan(Loan loan) {
-        Transaction transaction = null;
-        try (Session session = istuntotehdas.openSession()){
-            transaction = session.beginTransaction();
-            session.save(loan);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-                throw e;
-            }
-        }
-    }
-
 
 }
