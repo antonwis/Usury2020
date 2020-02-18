@@ -19,7 +19,6 @@ import java.util.ResourceBundle;
 public class PrimaryController implements Initializable {
 
 
-
     @FXML
     private Tab Loans;
     @FXML
