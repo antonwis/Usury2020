@@ -1,16 +1,21 @@
 package fi.metropolia.group8.view;
 
+import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.model.LoanDataModel;
+import fi.metropolia.group8.model.Victim;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.Node;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 
@@ -18,7 +23,22 @@ public class LoanListController implements Initializable {
 
 
     @FXML
-    private ListView<Loan> listView;
+    private AnchorPane LoanDetailsAnchorPane;
+    @FXML
+    private TableView<Loan> LoanTableView;
+    @FXML
+    private TableColumn<Loan, Alias> Lender;
+    @FXML
+    private TableColumn<Loan, Float> Amount;
+    @FXML
+    private TableColumn<Loan, Victim> Debtor;
+    @FXML
+    private TableColumn<Loan, Float> Interest;
+    @FXML
+    private TableColumn<Loan, LocalDate> Date;
+    @FXML
+    private TableColumn<Loan, LocalDate> DueDate;
+
 
     private LoanDataModel model;
 
@@ -26,37 +46,43 @@ public class LoanListController implements Initializable {
         if (this.model != null) {
             throw new IllegalStateException("Model can only be initialized once");
         }
-
         this.model = model;
-        listView.setItems(model.getLoanList());
+        LoanTableView.setItems(model.getLoanList());
 
-        listView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->
-                model.setCurrentLoan(newSelection));
-
+        LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> model.setCurrentLoan(newSelection));
         model.currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
             if (newLoan == null) {
-                listView.getSelectionModel().clearSelection();
+                LoanTableView.getSelectionModel().clearSelection();
             } else {
-                listView.getSelectionModel().select(newLoan);
+                LoanTableView.getSelectionModel().select(newLoan);
+                ////////////////
+                try {
+                    AnchorPane a = FXMLLoader.load(getClass().getResource("loanDetails.fxml"));
+                    LoanDetailsAnchorPane.getChildren().setAll(a);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ///////////////
+                //System.out.println(model.getCurrentLoan());
             }
         });
 
-        listView.setCellFactory(lv -> new ListCell<Loan>() {
-            @Override
-            public void updateItem(Loan loan, boolean empty) {
-                super.updateItem(loan, empty);
-                if (empty) {
-                    setText(null);
-                } else {
-                    setText("ID: " + loan.getId() + ", " + loan.getVictim().getName() + ", Remaining value: " + loan.getValue() + ", Due: " + loan.getDueDate());
-                }
-            }
-        });
+        //Lender.setCellValueFactory(lender -> new SimpleObjectProperty(lender.getValue().getOwner().getName()));
+        Debtor.setCellValueFactory(victim -> new SimpleObjectProperty(victim.getValue().getVictim().getName()));
+        Amount.setCellValueFactory(amount -> amount.getValue().valueProperty().asObject());
+        //Interest.setCellValueFactory(interest -> interest.getValue().interestProperty().asObject());
+        //Date.setCellValueFactory(startDate -> startDate.getValue().startDateProperty());
+        DueDate.setCellValueFactory(dueDate -> dueDate.getValue().dueDateProperty());
     }
+
+    //System.out.println(model.getCurrentLoan());
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
 }
+
 

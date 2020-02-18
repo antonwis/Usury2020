@@ -1,6 +1,5 @@
 package fi.metropolia.group8.model;
 
-import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -39,47 +38,51 @@ public class Victim {
     }
 
     @Column(name = "name")
-    public String getName() { return nameProperty().get(); }
+    public String getName() {
+        return name.get();
+    }
+
     public StringProperty nameProperty() {
-        if (name == null) name = new SimpleStringProperty(this,"name") ;
+        if (name == null) name = new SimpleStringProperty(this, "name");
         return name;
     }
 
-    public void setName(String value) { nameProperty().set(value); }
-
-    @Column(name="address")
-    public final String getAddress() {
-        return addressProperty().get();
+    public void setName(String name) {
+        this.name.set(name);
     }
 
-    public final void setAddress(String value) {
-        addressProperty().set(value);
+    @Column(name = "address")
+    public String getAddress() {
+        return address.get();
     }
-
 
     public StringProperty addressProperty() {
-        if (address == null) address = new SimpleStringProperty(this,"address") ;
+        if (address == null) address = new SimpleStringProperty(this, "address");
         return address;
     }
 
-    @Column(name="description")
-    public final String getDescription() {
-        return descriptionProperty().get();
+    public void setAddress(String address) {
+        this.address.set(address);
     }
 
-    public final void setDescription(String value) {
-        descriptionProperty().set(value);
-    }
 
+    @Column(name = "description")
+    public String getDescription() {
+        return description.get();
+    }
 
     public StringProperty descriptionProperty() {
-        if (description == null) description = new SimpleStringProperty(this,"description") ;
+        if (description == null) description = new SimpleStringProperty(this, "description");
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description.set(description);
     }
 
 
     @Override
-    public String toString(){
-        return this.name+", "+this.address+", "+this.description;
+    public String toString() {
+        return this.name + ", " + this.address + ", " + this.description;
     }
 }

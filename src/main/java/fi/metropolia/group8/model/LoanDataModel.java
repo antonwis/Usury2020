@@ -1,6 +1,5 @@
 package fi.metropolia.group8.model;
 
-import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -11,8 +10,8 @@ import java.time.LocalDate;
 
 public class LoanDataModel {
 
-    private final ObservableList<Loan> loanList = FXCollections.observableArrayList(loan ->
-            new Observable[] {loan.getOwner().nameProperty(), loan.valueProperty(), loan.getVictim().nameProperty(), loan.interestProperty()});
+    // loan -> new Observable[] {loan.getOwner().nameProperty(), loan.valueProperty(), loan.getVictim().nameProperty(), loan.interestProperty()}
+    private final ObservableList<Loan> loanList = FXCollections.observableArrayList();
 
     private final ObjectProperty<Loan> currentLoan = new SimpleObjectProperty<>(null);
 
