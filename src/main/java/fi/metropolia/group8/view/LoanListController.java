@@ -27,6 +27,8 @@ public class LoanListController implements Initializable {
     @FXML
     private TableView<Loan> LoanTableView;
     @FXML
+    private TableColumn<Loan, Long> Id;
+    @FXML
     private TableColumn<Loan, Alias> Lender;
     @FXML
     private TableColumn<Loan, Float> Amount;
@@ -42,28 +44,27 @@ public class LoanListController implements Initializable {
 
     private LoanDataModel model;
 
-    public void initModel(LoanDataModel model) {
+    public void initModel(LoanDataModel model) throws IOException {
         if (this.model != null) {
             throw new IllegalStateException("Model can only be initialized once");
         }
         this.model = model;
         LoanTableView.setItems(model.getLoanList());
-
+        ////////////////////////////////////////////
         LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> model.setCurrentLoan(newSelection));
         model.currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
             if (newLoan == null) {
                 LoanTableView.getSelectionModel().clearSelection();
             } else {
                 LoanTableView.getSelectionModel().select(newLoan);
-                ////////////////
                 try {
-                    AnchorPane a = FXMLLoader.load(getClass().getResource("loanDetails.fxml"));
-                    LoanDetailsAnchorPane.getChildren().setAll(a);
+                    FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
+                    LoanDetailsAnchorPane.getChildren().setAll((Node) loanDetails.load());
+                    LoanDetailController loanDetailController = loanDetails.getController();
+                    loanDetailController.display(model);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                ///////////////
-                //System.out.println(model.getCurrentLoan());
             }
         });
 

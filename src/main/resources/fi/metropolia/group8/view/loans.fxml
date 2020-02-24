@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.65" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.LoanListController">
+<SplitPane dividerPositions="0.6" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.LoanListController">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
             <children>
@@ -25,12 +25,12 @@
             </children>
         </AnchorPane>
         <AnchorPane fx:id="LoanDetailsAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="338.0">
-         <children>
-            <Label alignment="CENTER" layoutY="243.0" prefHeight="120.0" prefWidth="300.0" text="Click on entry to view details" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
-               <font>
-                  <Font size="26.0" />
-               </font>
-            </Label>
-         </children></AnchorPane>
+            <children>
+                <Label alignment="CENTER" layoutY="243.0" prefHeight="120.0" prefWidth="300.0" text="Click on entry to view details" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
+                    <font>
+                        <Font size="26.0" />
+                    </font>
+                </Label>
+            </children></AnchorPane>
     </items>
 </SplitPane>

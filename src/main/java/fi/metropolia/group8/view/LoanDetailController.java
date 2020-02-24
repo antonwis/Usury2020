@@ -28,4 +28,17 @@ public class LoanDetailController {
     @FXML
     private Label VictimDescription;
 
+
+    public void display(LoanDataModel m) {
+        //System.out.println(m.getCurrentLoan());
+        IssueDate.setText(m.getCurrentLoan().getStartDate().toString());
+        DebtRemaining.setText(String.valueOf(m.getCurrentLoan().getValue()));
+        ProjectedEarnings.setText(String.valueOf(m.getCurrentLoan().getValue() + ((m.getCurrentLoan().getInterest()/100)*m.getCurrentLoan().getValue())));
+        TotalDebt.setText(String.valueOf(m.getCurrentLoan().getValue()));
+        Interest.setText(String.valueOf(m.getCurrentLoan().getInterest()));
+        DueDate.setText(m.getCurrentLoan().getDueDate().toString());
+        VictimName.setText(m.getCurrentLoan().getVictim().getName());
+        VictimAddress.setText(m.getCurrentLoan().getVictim().getAddress());
+        VictimDescription.setText(m.getCurrentLoan().getVictim().getDescription());
+    }
 }
