@@ -8,9 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,6 +29,10 @@ public class PrimaryController implements Initializable {
     private Tab Calendar;
     @FXML
     private Button newAlias;
+    @FXML
+    private AnchorPane primaryAnchor;
+    @FXML
+    private MenuBar menuBar;
 
     @FXML
     void createNewAlias(ActionEvent e) throws IOException {
@@ -42,6 +48,14 @@ public class PrimaryController implements Initializable {
             LoanDataModel loanDataModel = new LoanDataModel();
             loanDataModel.loadTestData(); // test
             loanListController.initModel(loanDataModel);
+
+            VBox menuBar = FXMLLoader.load(getClass().getResource("menubar.fxml"));
+            MenubarController menubarController = new MenubarController();
+
+            primaryAnchor.getChildren().add(menuBar);
+            AnchorPane.setLeftAnchor(menuBar,0d);
+            AnchorPane.setTopAnchor(menuBar,0d);
+
 
         } catch (IOException e) {
             e.printStackTrace();

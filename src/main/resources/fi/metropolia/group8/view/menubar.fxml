@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox id="vbox" xmlns:fx="http://javafx.com/fxml"
+       fx:controller="fi.metropolia.group8.view.MenubarController"  prefHeight="10.0" prefWidth="3000.0">
+
+<MenuBar id="menuBar" focusTraversable="true" >
+    <menus>
+        <Menu text="System">
+            <items>
+                <MenuItem text="Settings"/>
+                <MenuItem text="Save"/>
+                <MenuItem text="Load"/>
+                <MenuItem text="Logout"/>
+                <MenuItem text="Exit"/>
+
+            </items>
+        </Menu>
+        <Menu text="Alias">
+            <items>
+                <MenuItem text="Add new alias"/>
+                <SeparatorMenuItem  />
+                <MenuItem text="Objects Example"/>
+                <MenuItem text="Animation Example"/>
+            </items>
+        </Menu>
+        <Menu text="Help">
+            <items>
+                <MenuItem text="About" />
+            </items>
+        </Menu>
+    </menus>
+</MenuBar>
+</VBox>

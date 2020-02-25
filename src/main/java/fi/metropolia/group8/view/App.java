@@ -22,6 +22,7 @@ public class App extends Application {
 
         FXMLLoader primary = new FXMLLoader();
         AnchorPane root = FXMLLoader.load(getClass().getResource("primary.fxml"));
+
         PrimaryController primaryController = primary.getController();
 
         Scene scene = new Scene(root, 1200, 800);
