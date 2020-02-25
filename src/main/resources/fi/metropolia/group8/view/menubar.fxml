@@ -17,7 +17,7 @@
                 <MenuItem text="Save"/>
                 <MenuItem text="Load"/>
                 <MenuItem text="Logout"/>
-                <MenuItem text="Exit"/>
+                <MenuItem fx:id="exitMenuItem" onAction="#exitApp" text="Exit"/>
 
             </items>
         </Menu>
