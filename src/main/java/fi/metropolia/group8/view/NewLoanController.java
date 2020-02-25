@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -32,6 +33,8 @@ public class NewLoanController {
 
     public static void display() throws IOException {
         newLoan = new Stage();
+        newLoan.initModality(Modality.APPLICATION_MODAL);
+        newLoan.setResizable(false);
         FXMLLoader loan = new FXMLLoader();
         AnchorPane newLoanFxml = FXMLLoader.load(NewLoanController.class.getResource("newLoan.fxml"));
         NewLoanController newLoanController = loan.getController();
