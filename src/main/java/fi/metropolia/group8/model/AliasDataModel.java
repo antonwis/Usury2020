@@ -43,5 +43,4 @@ public class AliasDataModel {
     public void saveData(File file) {
         // kys
     }
-
 }
