@@ -5,10 +5,12 @@ import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.model.LoanDataModel;
 import fi.metropolia.group8.model.Victim;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
@@ -40,7 +42,13 @@ public class LoanListController implements Initializable {
     private TableColumn<Loan, LocalDate> Date;
     @FXML
     private TableColumn<Loan, LocalDate> DueDate;
+    @FXML
+    private Button newLoanButton;
 
+    @FXML
+    void newLoan(ActionEvent event) throws IOException {
+      NewLoanController.display();
+    }
 
     private LoanDataModel model;
 
