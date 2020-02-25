@@ -21,12 +21,11 @@
 
             </items>
         </Menu>
-        <Menu text="Alias">
+        <Menu fx:id="aliasMenu" text="Alias">
             <items>
                 <MenuItem text="Add new alias"/>
                 <SeparatorMenuItem  />
-                <MenuItem text="Objects Example"/>
-                <MenuItem text="Animation Example"/>
+
             </items>
         </Menu>
         <Menu text="Help">
