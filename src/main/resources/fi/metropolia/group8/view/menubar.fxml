@@ -6,10 +6,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox id="vbox" xmlns:fx="http://javafx.com/fxml"
+<VBox fx:id="vbox" xmlns:fx="http://javafx.com/fxml"
        fx:controller="fi.metropolia.group8.view.MenubarController"  prefHeight="10.0" prefWidth="3000.0">
 
-<MenuBar id="menuBar" focusTraversable="true" >
+
+<MenuBar  fx:id="menuBar" focusTraversable="true" >
     <menus>
         <Menu text="System">
             <items>

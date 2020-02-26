@@ -8,7 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.VBox;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
@@ -22,6 +24,7 @@ public class MenubarController {
     private MenuItem exitMenuItem;
     @FXML
     private Menu aliasMenu;
+
     private ObservableList<Alias> aliasList;
 
 
@@ -29,14 +32,15 @@ public class MenubarController {
         System.out.println(aliasList);
         int i = 0;
 
-            System.out.println("moi");
+        for(Alias alias : aliasList) {
             System.out.println(aliasList.get(0).getName());
             MenuItem menuItem = new MenuItem("Item");
-            menuItem.setText(aliasList.get(0).getName());
+            menuItem.setText(aliasList.get(i).getName());
             System.out.println(menuItem);
-        System.out.println(aliasMenu);
+            System.out.println(aliasMenu);
             aliasMenu.getItems().add(menuItem);
-
+            i++;
+        }
 
 
     }
@@ -44,5 +48,6 @@ public class MenubarController {
     public void exitApp(javafx.event.ActionEvent actionEvent) {
         System.exit(0);
     }
+
 
 }

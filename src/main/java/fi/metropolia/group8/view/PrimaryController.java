@@ -53,21 +53,26 @@ public class PrimaryController implements Initializable {
             loanDataModel.loadTestData(); // test
             loanListController.initModel(loanDataModel);
 
-            VBox menuBar = FXMLLoader.load(getClass().getResource("menubar.fxml"));
-            MenubarController menubarController = new MenubarController();
 
+
+
+            FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));
+            VBox menuBar = menuBarF.load();
 
             primaryAnchor.getChildren().add(menuBar);
             AnchorPane.setLeftAnchor(menuBar,0d);
             AnchorPane.setTopAnchor(menuBar,0d);
 
-            AliasController aliasController = new AliasController();
+            MenubarController menubarController = menuBarF.getController();
+
+
             AliasDataModel aliasDataModel = new AliasDataModel();
-
-
             aliasDataModel.loadData();
-            aliasController.initModel(aliasDataModel);
             ObservableList<Alias> aliasList = aliasDataModel.getAliasList();
+
+            AliasController aliasController = new AliasController();
+            aliasController.initModel(aliasDataModel);
+
             menubarController.init(aliasList);
 
         } catch (IOException e) {
