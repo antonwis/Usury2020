@@ -52,6 +52,7 @@ public class LoanListController implements Initializable {
 
     private LoanDataModel model;
 
+
     public void initModel(LoanDataModel model) throws IOException {
         if (this.model != null) {
             throw new IllegalStateException("Model can only be initialized once");
