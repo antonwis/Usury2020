@@ -1,9 +1,8 @@
 package fi.metropolia.group8.model;
 
 import javafx.beans.property.FloatProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,8 +17,8 @@ public class Loan {
     private Alias owner;
     private FloatProperty value;
     private Victim victim;
-    private ObjectProperty<LocalDate> startDate;
-    private ObjectProperty<LocalDate> dueDate;
+    private LocalDate startDate;
+    private LocalDate dueDate;
     private FloatProperty interest;
 
 
@@ -32,8 +31,8 @@ public class Loan {
         this.owner = owner;
         this.value = new SimpleFloatProperty(value);
         this.victim = victim;
-        this.startDate = new SimpleObjectProperty<>(startDate);
-        this.dueDate = new SimpleObjectProperty<>(dueDate);
+        this.startDate = startDate;
+        this.dueDate = dueDate;
         this.interest = new SimpleFloatProperty(interest);
     }
 
@@ -58,18 +57,34 @@ public class Loan {
         this.owner = owner;
     }
 
-    @Column(name = "value")
-    public float getValue() {
-        return value.get();
-    }
-
+    //Value property stuff
     public FloatProperty valueProperty() {
-        if (value == null) value = new SimpleFloatProperty(this, "value");
+        if (value == null) value = new SimpleFloatProperty(this,"value");
         return value;
     }
 
-    public void setValue(float value) {
-        this.value.set(value);
+    @Column(name = "value")
+    public final float getValue() {
+        return valueProperty().get();
+    }
+
+    public final void setValue(float value) {
+        valueProperty().set(value);
+    }
+
+    //Interest property stuff
+    public FloatProperty interestProperty() {
+        if (interest == null) interest = new SimpleFloatProperty(this,"interest");
+        return interest;
+    }
+
+    @Column(name = "interest_percentage")
+    public final float getInterest() {
+        return interestProperty().get();
+    }
+
+    public final void setInterest(float value) {
+        interestProperty().set(value);
     }
 
     @ManyToOne
@@ -78,49 +93,30 @@ public class Loan {
         return victim;
     }
 
+    // Probably not needed
     public void setVictim(Victim victim) {
         this.victim = victim;
     }
 
     @Column(name = "startDate")
     public LocalDate getStartDate() {
-        return startDate.get();
-    }
-
-    public ObjectProperty<LocalDate> startDateProperty() {
         return startDate;
     }
 
+    // Probably not needed
     public void setStartDate(LocalDate startDate) {
-        this.startDate.set(startDate);
+        this.startDate = startDate;
     }
 
     @Column(name = "dueDate")
     public LocalDate getDueDate() {
-        return dueDate.get();
-    }
-
-    public ObjectProperty<LocalDate> dueDateProperty() {
         return dueDate;
     }
 
     public void setDueDate(LocalDate dueDate) {
-        this.dueDate.set(dueDate);
+        this.dueDate = dueDate;
     }
 
-    @Column(name = "interest_percentage")
-    public float getInterest() {
-        return interest.get();
-    }
-
-    public FloatProperty interestProperty() {
-        if (interest == null) interest = new SimpleFloatProperty(this, "interest");
-        return interest;
-    }
-
-    public void setInterest(float interest) {
-        this.interest.set(interest);
-    }
 
     @Override
     public String toString() {

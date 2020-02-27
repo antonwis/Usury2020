@@ -9,8 +9,8 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "Alias")
-@Access(value = AccessType.PROPERTY)
+@Table(name="Alias")
+@Access(value= AccessType.PROPERTY)
 public class Alias {
 
     private long id;
@@ -24,63 +24,50 @@ public class Alias {
     }
 
     public Alias(String name, String description, int equity) {
-        this.name = new SimpleStringProperty(name);
-        this.description = new SimpleStringProperty(description);
-        this.equity = new SimpleIntegerProperty(equity);
+        setName(name);
+        setDescription(description);
+        setEquity(equity);
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    public long getId() {
-        return id;
-    }
+    @Column(name="id")
+    public long getId() { return id; }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    @Column(name = "name")
-    public String getName() {
-        return name.get();
-    }
+    public void setName(String value) { nameProperty().set(value); }
+
+    @Column(name="name")
+    public String getName() { return nameProperty().get(); }
 
     public StringProperty nameProperty() {
-        if (name == null) name = new SimpleStringProperty(this, "name");
+        if (name == null) name = new SimpleStringProperty(this,"name") ;
         return name;
     }
 
-    public void setName(String name) {
-        this.name.set(name);
-    }
 
+    public void setDescription(String value) { descriptionProperty().set(value); }
 
-    @Column(name = "description")
-    public String getDescription() {
-        return description.get();
-    }
+    @Column(name="description")
+    public String getDescription() { return descriptionProperty().get(); }
 
     public StringProperty descriptionProperty() {
-        if (description == null) description = new SimpleStringProperty(this, "description");
+        if (description == null) description = new SimpleStringProperty(this,"description") ;
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description.set(description);
-    }
+    public void setEquity(int value) { equityProperty().set(value); }
 
-    @Column(name = "equity")
-    public int getEquity() {
-        return equity.get();
-    }
+    @Column(name="equity")
+    public int getEquity() { return equityProperty().get(); }
 
     public IntegerProperty equityProperty() {
-        if (equity == null) equity = new SimpleIntegerProperty(this, "equity");
+        if(equity == null) equity = new SimpleIntegerProperty(this, "equity");
         return equity;
     }
 
-    public void setEquity(int equity) {
-        this.equity.set(equity);
-    }
 
 }
