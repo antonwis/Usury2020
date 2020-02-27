@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.NewLoanController">
+   <children>
+      <Label alignment="CENTER" layoutX="100.0" layoutY="14.0" text="Issue a new loan" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="90.0" text="Debtor details" AnchorPane.leftAnchor="53.0" AnchorPane.topAnchor="80.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="54.0" layoutY="136.0" text="Name:" AnchorPane.leftAnchor="53.0" AnchorPane.topAnchor="136.0" />
+      <Label layoutX="53.0" layoutY="170.0" text="Address:" AnchorPane.leftAnchor="53.0" />
+      <Label layoutX="53.0" layoutY="200.0" prefHeight="17.0" prefWidth="65.0" text="Description:" AnchorPane.leftAnchor="53.0" />
+      <TextField layoutX="126.0" layoutY="132.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="126.0" />
+      <TextField layoutX="126.0" layoutY="166.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="126.0" />
+      <TextArea layoutX="128.0" layoutY="200.0" prefHeight="71.0" prefWidth="200.0" wrapText="true" AnchorPane.leftAnchor="126.0" />
+      <Label layoutX="54.0" layoutY="284.0" text="Loan Details" AnchorPane.leftAnchor="53.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="53.0" layoutY="330.0" text="Amount:" AnchorPane.leftAnchor="53.0" />
+      <TextField layoutX="128.0" layoutY="326.0" prefHeight="25.0" prefWidth="200.0" />
+      <Label layoutX="53.0" layoutY="362.0" prefHeight="17.0" prefWidth="46.0" text="Interest:" AnchorPane.leftAnchor="53.0" />
+      <TextField layoutX="128.0" layoutY="358.0" prefHeight="25.0" prefWidth="200.0" />
+      <Label layoutX="53.0" layoutY="397.0" prefHeight="17.0" prefWidth="65.0" text="Due Date:" AnchorPane.leftAnchor="53.0" />
+      <DatePicker layoutX="129.0" layoutY="393.0" prefHeight="25.0" prefWidth="200.0" />
+      <HBox alignment="CENTER" layoutX="126.0" layoutY="464.0" prefHeight="30.0" prefWidth="200.0" spacing="15.0">
+         <children>
+          <Button fx:id="loanConfirmButton" mnemonicParsing="false" onAction="#loanConfirm" prefHeight="25.0" prefWidth="75.0" text="Confirm" />
+            <Button fx:id="loanCancelButton" mnemonicParsing="false" onAction="#loanCancel" prefHeight="25.0" prefWidth="75.0" text="Cancel" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

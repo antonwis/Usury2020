@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 public class PrimaryController implements Initializable {
 
 
-
     @FXML
     private Tab Loans;
     @FXML
@@ -50,9 +49,7 @@ public class PrimaryController implements Initializable {
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
             LoanDataModel loanDataModel = new LoanDataModel();
-            //////
-            loanDataModel.loadTestData();
-            ////
+            loanDataModel.loadTestData(); // test
             loanListController.initModel(loanDataModel);
 
         } catch (IOException e) {

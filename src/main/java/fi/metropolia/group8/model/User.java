@@ -31,6 +31,10 @@ public class User {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public void setName(String value) { nameProperty().set(value); }
 
     @Column(name="name")
@@ -39,5 +43,9 @@ public class User {
     public StringProperty nameProperty() {
         if (name == null) name = new SimpleStringProperty(this,"name") ;
         return name;
+    }
+    @Override
+    public String toString(){
+        return getName();
     }
 }

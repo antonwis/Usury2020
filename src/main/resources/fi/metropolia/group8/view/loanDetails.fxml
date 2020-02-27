@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.LoanDetailController">
+    <children>
+        <Label fx:id="LoanDetailHeader" alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="14.0" text="Details for loan (loan id)" textAlignment="CENTER" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="5.0">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Separator layoutX="125.0" layoutY="66.0" prefWidth="300.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="60.0" />
+        <Separator layoutX="126.0" layoutY="241.0" prefWidth="300.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="200.0" />
+        <Label alignment="CENTER" layoutX="85.0" layoutY="257.0" text="Debtor details" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="210.0">
+            <font>
+                <Font size="24.0" />
+            </font></Label>
+        <ImageView fx:id="ProfileImage" fitHeight="137.0" fitWidth="123.0" layoutX="90.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="250.0">
+            <image>
+                <Image url="@../img/template.png" />
+            </image>
+        </ImageView>
+        <Button layoutX="143.0" layoutY="417.0" mnemonicParsing="false" text="Enforce payment" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="417.0" />
+        <Button layoutX="250.0" layoutY="417.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Modify loan" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="417.0" />
+          <Label alignment="BASELINE_LEFT" layoutX="294.0" layoutY="100.0" text="Issue date:" AnchorPane.leftAnchor="270.0" AnchorPane.topAnchor="80.0" />
+          <Label alignment="BASELINE_LEFT" layoutX="117.0" layoutY="80.0" prefHeight="17.0" prefWidth="59.0" text="Total Debt:" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="80.0" />
+          <Label alignment="CENTER" layoutX="125.0" layoutY="126.0" text="Interest(%):" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="140.0" />
+          <Label alignment="CENTER" layoutX="323.0" layoutY="175.0" text="Due date:" AnchorPane.leftAnchor="270.0" AnchorPane.topAnchor="110.0" />
+          <Label alignment="CENTER" layoutX="125.0" layoutY="161.0" text="Remaining:" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="110.0" />
+          <Label alignment="CENTER" layoutX="264.0" layoutY="206.0" prefHeight="17.0" prefWidth="112.0" text="Projected earnings:" AnchorPane.leftAnchor="264.0" AnchorPane.topAnchor="140.0" />
+          <Label fx:id="IssueDate" layoutX="384.0" layoutY="143.0" prefHeight="17.0" prefWidth="141.0" text="issueDateField" AnchorPane.leftAnchor="330.0" AnchorPane.topAnchor="80.0" />
+          <Label fx:id="TotalDebt" layoutX="201.0" layoutY="95.0" prefHeight="17.0" prefWidth="79.0" text="totalDebtField" AnchorPane.leftAnchor="185.0" AnchorPane.topAnchor="80.0" />
+          <Label fx:id="Interest" layoutX="201.0" layoutY="126.0" prefHeight="17.0" prefWidth="79.0" text="interestField" AnchorPane.leftAnchor="185.0" AnchorPane.topAnchor="140.0" />
+          <Label fx:id="DueDate" layoutX="384.0" layoutY="175.0" prefHeight="17.0" prefWidth="141.0" text="dueDateField" AnchorPane.leftAnchor="330.0" AnchorPane.topAnchor="110.0" />
+          <Label fx:id="DebtRemaining" layoutX="201.0" layoutY="161.0" prefHeight="17.0" prefWidth="79.0" text="remainingField" AnchorPane.leftAnchor="185.0" AnchorPane.topAnchor="110.0" />
+          <Label fx:id="ProjectedEarnings" layoutX="459.0" layoutY="206.0" prefHeight="17.0" prefWidth="112.0" text="projectedEarningsField" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="140.0" />
+          <Label alignment="CENTER" layoutX="235.0" layoutY="307.0" text="Name:" AnchorPane.leftAnchor="235.0" AnchorPane.topAnchor="250.0" />
+          <Label alignment="CENTER" layoutX="235.0" layoutY="337.0" text="Address:" AnchorPane.leftAnchor="235.0" AnchorPane.topAnchor="280.0" />
+          <Label alignment="CENTER" layoutX="235.0" layoutY="367.0" text="Description:" AnchorPane.leftAnchor="235.0" AnchorPane.topAnchor="310.0" />
+          <Label fx:id="VictimName" layoutX="304.0" layoutY="307.0" prefHeight="17.0" prefWidth="215.0" text="nameField" AnchorPane.leftAnchor="275.0" AnchorPane.topAnchor="250.0" />
+          <Label fx:id="VictimAddress" layoutX="303.0" layoutY="337.0" prefHeight="17.0" prefWidth="207.0" text="addressField" textOverrun="CLIP" AnchorPane.leftAnchor="285.0" AnchorPane.topAnchor="280.0" />
+          <Label fx:id="VictimDescription" alignment="TOP_LEFT" layoutX="303.0" layoutY="367.0" prefHeight="82.0" prefWidth="182.0" text="descriptionField" wrapText="true" AnchorPane.leftAnchor="305.0" AnchorPane.topAnchor="310.0" />
+    </children>
+</AnchorPane>
