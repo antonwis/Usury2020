@@ -10,7 +10,8 @@ import java.io.File;
 
 public class AliasDataModel {
 
-    private final ObservableList<Alias> aliasList = FXCollections.observableArrayList(alias -> new Observable[] {alias.nameProperty(), alias.equityProperty()});
+    //alias -> new Observable[] {alias.nameProperty(), alias.equityProperty()}
+    private final ObservableList<Alias> aliasList = FXCollections.observableArrayList();
 
     private final ObjectProperty<Alias> currentAlias = new SimpleObjectProperty<>(null);
 
@@ -30,7 +31,7 @@ public class AliasDataModel {
         return aliasList;
     }
 
-    public void loadData(File file) {
+    public void loadData() {
         // tänne DAOsetit tai luku tiedostosta tms.
 
         // Dummy aliases for testing purposes

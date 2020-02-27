@@ -66,7 +66,7 @@ public class AliasController {
 
     @FXML
     void addNewAlias(ActionEvent e) throws IOException {
-        // tee jotai memes
+
         aliasWindow.close();
     }
 
