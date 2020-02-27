@@ -44,4 +44,8 @@ public class User {
         if (name == null) name = new SimpleStringProperty(this,"name") ;
         return name;
     }
+    @Override
+    public String toString(){
+        return getName();
+    }
 }
