@@ -2,6 +2,7 @@ package fi.metropolia.group8.model;
 
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -42,7 +43,12 @@ public class Loan {
         return id;
     }
 
-    @Column(name = "owner")
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "owner")
     public Alias getOwner() {
         return owner;
     }
@@ -53,6 +59,7 @@ public class Loan {
 
     //Value property stuff
     public FloatProperty valueProperty() {
+        if (value == null) value = new SimpleFloatProperty(this,"value");
         return value;
     }
 
@@ -67,6 +74,7 @@ public class Loan {
 
     //Interest property stuff
     public FloatProperty interestProperty() {
+        if (interest == null) interest = new SimpleFloatProperty(this,"interest");
         return interest;
     }
 
@@ -79,8 +87,8 @@ public class Loan {
         interestProperty().set(value);
     }
 
-
-    @Column(name = "victim")
+    @ManyToOne
+    @JoinColumn(name = "victim")
     public Victim getVictim() {
         return victim;
     }
