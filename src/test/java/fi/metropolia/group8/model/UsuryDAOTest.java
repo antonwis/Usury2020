@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UsuryDAOTest {
 
+    //private UsuryDAO dao = new UsuryDAO();
     private UsuryDAO dao = new UsuryDAO();
     private int loanCount = 0;
     private final LocalDate localDate = LocalDate.of(2003, 6,12);
