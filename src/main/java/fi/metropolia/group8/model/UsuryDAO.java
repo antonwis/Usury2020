@@ -133,8 +133,8 @@ public class UsuryDAO {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
-                throw e;
             }
+            throw e;
         }
     }
 
@@ -149,8 +149,8 @@ public class UsuryDAO {
             if (transaction != null) {
                 e.printStackTrace();
                 transaction.rollback();
-                throw e;
             }
+            throw e;
         }
         return result;
     }
@@ -165,8 +165,8 @@ public class UsuryDAO {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
-                throw e;
             }
+            throw e;
         }
         return object;
     }
@@ -183,8 +183,8 @@ public class UsuryDAO {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
-                throw e;
             }
+            throw e;
         }
     }
 
@@ -197,8 +197,8 @@ public class UsuryDAO {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
-                throw e;
             }
+            throw e;
         }
     }
 

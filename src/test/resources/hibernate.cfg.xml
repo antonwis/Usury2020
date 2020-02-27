@@ -9,9 +9,9 @@
 
         <!-- Yhteyden perustiedot: ajuri, palvelin käyttäjätunnus/salasana -->
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/usury2020db</property>
-        <property name="hibernate.connection.username">test_user</property>
-        <property name="hibernate.connection.password">pass</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/Usury2020</property>
+        <property name="hibernate.connection.username">mir</property>
+        <property name="hibernate.connection.password">kyslol</property>
 
         <!-- create , create-drop, update tai validate -->
         <!-- Älä käytä tuotantoversioissa, ts, älä anna Hibernaten enää muuttaa taulurakennetta  -->
@@ -24,5 +24,8 @@
         <!-- Mallitason DTO-oliot, pakkausnimet mukaan -->
         <mapping class="model.TestTable"/>
         <mapping class="fi.metropolia.group8.model.User"/>
+        <mapping class="fi.metropolia.group8.model.Alias"/>
+        <mapping class="fi.metropolia.group8.model.Loan"/>
+        <mapping class="fi.metropolia.group8.model.Victim"/>
     </session-factory>
 </hibernate-configuration>

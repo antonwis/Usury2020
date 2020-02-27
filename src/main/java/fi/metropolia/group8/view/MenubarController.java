@@ -29,15 +29,15 @@ public class MenubarController {
 
 
     public void init(ObservableList<Alias> aliasList){
-        System.out.println(aliasList);
+        //System.out.println(aliasList);
         int i = 0;
 
         for(Alias alias : aliasList) {
-            System.out.println(aliasList.get(0).getName());
+            //System.out.println(aliasList.get(0).getName());
             MenuItem menuItem = new MenuItem("Item");
             menuItem.setText(aliasList.get(i).getName());
-            System.out.println(menuItem);
-            System.out.println(aliasMenu);
+            //System.out.println(menuItem);
+            //System.out.println(aliasMenu);
             aliasMenu.getItems().add(menuItem);
             i++;
         }

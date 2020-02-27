@@ -80,8 +80,9 @@ public class LoanListController implements Initializable {
         Debtor.setCellValueFactory(victim -> new SimpleObjectProperty(victim.getValue().getVictim().getName()));
         Amount.setCellValueFactory(amount -> amount.getValue().valueProperty().asObject());
         //Interest.setCellValueFactory(interest -> interest.getValue().interestProperty().asObject());
-        //Date.setCellValueFactory(startDate -> startDate.getValue().startDateProperty());
+        //Date.setCellValueFactory(startDate -> startDate.getValue().getStartDate());
         //DueDate.setCellValueFactory(dueDate -> dueDate.getValue().dueDateProperty());
+        System.out.println(model.getLoanList());
     }
 
     //System.out.println(model.getCurrentLoan());
