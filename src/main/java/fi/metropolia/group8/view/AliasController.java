@@ -43,6 +43,8 @@ public class AliasController {
         }
         this.aliasDataModel = aliasDataModel;
         aliasDataModel.currentAliasProperty().addListener((obs, oldAlias, newAlias) -> {
+
+            /*
             if(oldAlias != null) {
                 nameField.textProperty().unbindBidirectional(oldAlias.nameProperty());
                 equityField.textProperty().unbindBidirectional(oldAlias.equityProperty());
@@ -57,6 +59,7 @@ public class AliasController {
                 equityField.textProperty().bindBidirectional(newAlias.equityProperty(), new NumberStringConverter());
                 descriptionField.textProperty().bindBidirectional(newAlias.descriptionProperty());
             }
+            */
         });
     }
 

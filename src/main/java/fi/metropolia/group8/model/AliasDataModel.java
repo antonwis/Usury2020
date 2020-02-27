@@ -44,4 +44,12 @@ public class AliasDataModel {
         // kys
     }
 
+    public void loadTestData() {
+        aliasList.setAll(
+                new Alias("Ben Shapiro", "Professional jew", 2000),
+                new Alias("Dr. Sheckelstein", "Usury M.D", 5000)
+        );
+    }
+
 }
+

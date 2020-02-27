@@ -1,5 +1,7 @@
 package fi.metropolia.group8.view;
 
+import fi.metropolia.group8.model.Alias;
+import fi.metropolia.group8.model.AliasDataModel;
 import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.model.LoanDataModel;
 import javafx.event.ActionEvent;
@@ -8,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -28,6 +31,9 @@ public class PrimaryController implements Initializable {
     private Tab Calendar;
     @FXML
     private Button newAlias;
+    @FXML
+    private ComboBox<Alias> aliasComboBox;
+
 
     @FXML
     void createNewAlias(ActionEvent e) throws IOException {
