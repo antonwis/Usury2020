@@ -24,9 +24,9 @@ public class Alias {
     }
 
     public Alias(String name, String description, int equity) {
-        this.name = new SimpleStringProperty(name);
-        this.description = new SimpleStringProperty(description);
-        this.equity = new SimpleIntegerProperty(equity);
+        setName(name);
+        setDescription(description);
+        setEquity(equity);
     }
 
     @Id
