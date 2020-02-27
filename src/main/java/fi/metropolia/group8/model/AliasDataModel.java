@@ -31,7 +31,7 @@ public class AliasDataModel {
         return aliasList;
     }
 
-    public void loadData(File file) {
+    public void loadData() {
         // tänne DAOsetit tai luku tiedostosta tms.
 
         // Dummy aliases for testing purposes

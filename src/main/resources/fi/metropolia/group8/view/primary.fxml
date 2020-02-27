@@ -24,33 +24,6 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <MenuBar fx:id="menuBar" layoutY="2.0" prefHeight="25.0" prefWidth="413.0" AnchorPane.leftAnchor="0.0"
-                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" onKeyPressed="#handleKeyInput">
-            <menus>
-                <Menu mnemonicParsing="false" text="System">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Load"/>
-                        <MenuItem mnemonicParsing="false" text="Save"/>
-                        <SeparatorMenuItem/>
-                        <MenuItem mnemonicParsing="false" text="Logout"/>
-                        <MenuItem text="Exit" onAction="#handleExitAction"/>
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Alias">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Delete"/>
-                        <SeparatorMenuItem/>
-                        <MenuItem mnemonicParsing="false" text="Create new alias"/>
-
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
         <AnchorPane layoutY="24.0" prefHeight="56.0" prefWidth="1200.0" AnchorPane.bottomAnchor="820.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
             <children>
                 <ComboBox fx:id="comboboxList" layoutX="1036.0" layoutY="16.0" prefWidth="150.0" promptText="Choose an Alias" AnchorPane.rightAnchor="14.0" />
