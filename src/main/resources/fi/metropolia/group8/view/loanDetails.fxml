@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.LoanDetailController">
     <children>
-        <Label fx:id="LoanDetailHeader" alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="14.0" text="Details for loan (loan id)" textAlignment="CENTER" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="5.0">
+        <Label fx:id="LoanDetailHeader" alignment="CENTER" contentDisplay="CENTER" layoutX="152.0" layoutY="14.0" text="Details for loan" textAlignment="CENTER" AnchorPane.leftAnchor="152.0" AnchorPane.topAnchor="14.0">
             <font>
                 <Font size="30.0" />
             </font>

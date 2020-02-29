@@ -1,9 +1,6 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.Alias;
-import fi.metropolia.group8.model.AliasDataModel;
-import fi.metropolia.group8.model.Loan;
-import fi.metropolia.group8.model.LoanDataModel;
+import fi.metropolia.group8.model.*;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,6 +40,7 @@ public class PrimaryController implements Initializable {
     @FXML
     private MenuBar menuBar;
 
+    private UsuryDAO dao = new UsuryDAO();
 
     @FXML
     void createNewAlias(ActionEvent e) throws IOException {
@@ -52,16 +50,13 @@ public class PrimaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-
-
             FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
             LoanDataModel loanDataModel = new LoanDataModel();
-            loanDataModel.loadTestData(); // test
+            //loanDataModel.loadTestData(); // test
+            //loanDataModel.testDao(); jos haluat luoda ekalla kerralla dataa local database
             loanListController.initModel(loanDataModel);
-
-
 
 
             FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));
