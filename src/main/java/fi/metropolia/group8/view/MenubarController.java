@@ -26,10 +26,13 @@ public class MenubarController {
     private Menu aliasMenu;
 
     private ObservableList<Alias> aliasList;
+    private LoginManager loginManager;
 
 
-    public void init(ObservableList<Alias> aliasList){
+    public void init(ObservableList<Alias> aliasList, LoginManager loginManager){
         System.out.println(aliasList);
+        this.loginManager = loginManager;
+
         int i = 0;
 
         for(Alias alias : aliasList) {
@@ -41,12 +44,14 @@ public class MenubarController {
             aliasMenu.getItems().add(menuItem);
             i++;
         }
-
-
     }
 
     public void exitApp(javafx.event.ActionEvent actionEvent) {
         System.exit(0);
+    }
+
+    public void logout(javafx.event.ActionEvent actionEvent) {
+        loginManager.logout();
     }
 
 

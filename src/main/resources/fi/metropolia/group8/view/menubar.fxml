@@ -17,7 +17,7 @@
                 <MenuItem text="Settings"/>
                 <MenuItem text="Save"/>
                 <MenuItem text="Load"/>
-                <MenuItem text="Logout"/>
+                <MenuItem fx:id="logoutButton" onAction="#logout" text="Logout"/>
                 <MenuItem fx:id="exitMenuItem" onAction="#exitApp" text="Exit"/>
 
             </items>
