@@ -4,15 +4,25 @@ import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.io.IOException;
+
 /** Controls the login screen */
 public class LoginController {
+
+    /*
+    * TODO replace with a drop down selection which pulls every user from database
+    */
+
     @FXML private TextField user;
     @FXML private TextField password;
     @FXML private Button loginButton;
 
+    private LoginManager loginManager;
+
     public void initialize() {}
 
     public void initManager(final LoginManager loginManager) {
+        this.loginManager = loginManager;
         loginButton.setOnAction(event -> {
             String sessionID = authorize();
             if (sessionID != null) {
@@ -40,4 +50,14 @@ public class LoginController {
         sessionID++;
         return "session id: " + sessionID;
     }
+
+    public void createNewUser() throws IOException {
+        NewUserController.display();
+    }
+
+    public void updateTextField(String newUserName) {
+        user.setText(newUserName);
+        password.setText("");
+    }
+
 }

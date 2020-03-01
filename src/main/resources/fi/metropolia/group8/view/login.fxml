@@ -32,6 +32,7 @@
                         <StackPane prefHeight="-1.0" prefWidth="-1.0">
                             <children>
                                 <Button fx:id="loginButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" text="Login" StackPane.alignment="CENTER_RIGHT" />
+                                <Button fx:id="newUserButton" onAction="#createNewUser" alignment="CENTER" defaultButton="true" mnemonicParsing="false" text="New User" StackPane.alignment="CENTER" />
                             </children>
                         </StackPane>
                     </children>

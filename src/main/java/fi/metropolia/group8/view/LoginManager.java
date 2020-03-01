@@ -56,4 +56,9 @@ public class LoginManager {
             Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void showNewUserScreen() {
+
+    }
+
 }

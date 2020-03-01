@@ -54,5 +54,9 @@ public class MenubarController {
         loginManager.logout();
     }
 
+    public void addNewAlias(javafx.event.ActionEvent actionEvent) throws IOException {
+        AliasController.display();
+    }
+
 
 }
