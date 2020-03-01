@@ -83,6 +83,7 @@ public class Loan {
         return interestProperty().get();
     }
 
+
     public final void setInterest(float value) {
         interestProperty().set(value);
     }

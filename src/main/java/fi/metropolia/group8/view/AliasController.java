@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -21,6 +22,8 @@ public class AliasController {
 
     private static Stage aliasWindow;
 
+
+
     @FXML
     private Button AddAlias;
     @FXML
@@ -33,7 +36,7 @@ public class AliasController {
     private TextField equityField;
 
     @FXML
-    private TextField descriptionField;
+    private TextArea descriptionArea;
 
     private AliasDataModel aliasDataModel;
 
@@ -66,7 +69,11 @@ public class AliasController {
 
     @FXML
     void addNewAlias(ActionEvent e) throws IOException {
-
+        String name = nameField.getText();
+        Float equity = Float.parseFloat(equityField.getText());
+        String description = descriptionArea.getText();
+        AliasDataModel aliasDataModel = new AliasDataModel();
+        aliasDataModel.addNewAlias(name, description, equity);
         aliasWindow.close();
     }
 

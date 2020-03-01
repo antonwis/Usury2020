@@ -1,5 +1,6 @@
 package fi.metropolia.group8.model;
 
+import fi.metropolia.group8.view.AliasController;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -36,19 +37,27 @@ public class AliasDataModel {
 
         // Dummy aliases for testing purposes
         aliasList.setAll(
-                new Alias("Ben Shapiro", "Professional jew", 2000),
-                new Alias("Dr. Sheckelstein", "Usury M.D", 5000)
+                new Alias("Ben Shapiro", "Professional jew", 2000f),
+                new Alias("Dr. Sheckelstein", "Usury M.D", 5000f)
         );
     }
 
     public void saveData(File file) {
         // kys
     }
+    public void addNewAlias(String name, String description, Float equity){
+        Alias alias = new Alias(name,description,equity);
+        loadTestData();
+        UsuryDAO usuryDAO = new UsuryDAO();
+        usuryDAO.createAlias(alias);
+        aliasList.add(alias);
+        System.out.println(aliasList.get(2));
+    }
 
     public void loadTestData() {
         aliasList.setAll(
-                new Alias("Ben Shapiro", "Professional jew", 2000),
-                new Alias("Dr. Sheckelstein", "Usury M.D", 5000)
+                new Alias("Ben Shapiro", "Professional jew", 2000f),
+                new Alias("Dr. Sheckelstein", "Usury M.D", 5000f)
         );
     }
 

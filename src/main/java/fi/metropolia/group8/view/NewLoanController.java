@@ -52,7 +52,7 @@ public class NewLoanController {
     @FXML
     void loanConfirm(ActionEvent event) {
         UsuryDAO u = new UsuryDAO();
-        Alias a = new Alias("Teppo Testi","Nenäklubin jäsen",9001);
+        Alias a = new Alias("Teppo Testi","Nenäklubin jäsen",9001f);
         Victim v = new Victim(nameField.getText(),addressField.getText(),descriptionField.getText());
         Loan loan = new Loan(a,Float.parseFloat(amountField.getText()),v,LocalDate.now(),LocalDate.from(dueDatepicker.getValue()),Float.parseFloat(interestField.getText()));
         u.createAlias(a);
