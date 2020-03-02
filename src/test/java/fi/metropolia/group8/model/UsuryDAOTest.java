@@ -305,9 +305,14 @@ class UsuryDAOTest {
         dao.createAlias(loan1.getOwner());
         dao.createLoan(loan1);
         int startSize = dao.readLoans().size();
-
+        Alias alias1 = new Alias("updateLoanAliasName1", "updateLoanAliasDescription1", 122);
+        dao.createAlias(alias1);
+        loan1.setOwner(alias1);
+        dao.updateLoan(loan1);
         int endSize = dao.readLoans().size();
         assertEquals(startSize, endSize);
+        Loan updatedLoan = dao.getLoanById(loan1.getId());
+        assertEquals("updateLoanAliasName1", updatedLoan.getOwner().getName());
     }
 
     @Test
