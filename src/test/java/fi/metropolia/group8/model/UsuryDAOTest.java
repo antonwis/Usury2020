@@ -317,14 +317,38 @@ class UsuryDAOTest {
 
     @Test
     void getLoanById() {
+        Loan loan1 = this.getNextLoan();
+        dao.createVictim(loan1.getVictim());
+        dao.createAlias(loan1.getOwner());
+        dao.createLoan(loan1);
+        Loan loan2 = dao.getLoanById(loan1.getId());
+        assertEquals(loan1.getId(), loan2.getId());
+        assertEquals(loan1.getVictim().getDescription(), loan2.getVictim().getDescription());
+        assertEquals(loan1.getValue(), loan2.getValue(), (float) 0.001);
     }
 
     @Test
     void deleteLoanById() {
+        Loan loan1 = this.getNextLoan();
+        dao.createVictim(loan1.getVictim());
+        dao.createAlias(loan1.getOwner());
+        dao.createLoan(loan1);
+        long id = loan1.getId();
+        assertNotNull(dao.getLoanById(id));
+        dao.deleteLoanById(id);
+        assertNull(dao.getLoanById(id));
     }
 
     @Test
     void deleteLoan() {
+        Loan loan1 = this.getNextLoan();
+        dao.createVictim(loan1.getVictim());
+        dao.createAlias(loan1.getOwner());
+        dao.createLoan(loan1);
+        long id = loan1.getId();
+        assertNotNull(dao.getLoanById(id));
+        dao.deleteLoan(loan1);
+        assertNull(dao.getLoanById(id));
     }
 
     private Loan getNextLoan() {
