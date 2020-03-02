@@ -70,7 +70,7 @@ public class AliasController {
     @FXML
     void addNewAlias(ActionEvent e) throws IOException {
         String name = nameField.getText();
-        Float equity = Float.parseFloat(equityField.getText());
+        Integer equity = Integer.parseInt(equityField.getText());
         String description = descriptionArea.getText();
         AliasDataModel aliasDataModel = new AliasDataModel();
         aliasDataModel.addNewAlias(name, description, equity);

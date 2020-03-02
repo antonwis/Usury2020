@@ -36,7 +36,7 @@ public class LoanDataModel {
 
         // newit pois ja tilalle viitteet oikeisiin juttuihin
         loanList.setAll(
-                new Loan(new Alias("Ben Shapiro", "Law Jew", 9000f), 2000, new Victim("Jani Toivola", "Homokuja 2", "Ajeli taksilla"), LocalDate.now(), LocalDate.now(), 2)
+                new Loan(new Alias("Ben Shapiro", "Law Jew", 9000), 2000, new Victim("Jani Toivola", "Homokuja 2", "Ajeli taksilla"), LocalDate.now(), LocalDate.now(), 2)
         );
     }
     public void saveData(File file) {
@@ -45,7 +45,7 @@ public class LoanDataModel {
     public void testDao(){
         UsuryDAO usuryDAO = new UsuryDAO();
 
-        Alias testAlias = new Alias("Seppo", "Testimies", 1000f);
+        Alias testAlias = new Alias("Seppo", "Testimies", 1000);
         Victim testVictim = new Victim("Kake", "Piritori", "Nisti");
         Victim testVictim2 = new Victim("Keijo", "Narkkikatu 2", "Työtön");
         Loan testLoan1 = new Loan(testAlias, 500, testVictim, LocalDate.now(), LocalDate.now(), 2);

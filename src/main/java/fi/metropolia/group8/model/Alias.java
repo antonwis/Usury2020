@@ -13,14 +13,14 @@ public class Alias {
     private long id;
     private StringProperty name;
     private StringProperty description;
-    private FloatProperty equity;
+    private IntegerProperty equity;
 
 
     public Alias() {
         // Empty constructor for hibernate
     }
 
-    public Alias(String name, String description, Float equity) {
+    public Alias(String name, String description, int equity) {
         setName(name);
         setDescription(description);
         setEquity(equity);
@@ -56,13 +56,13 @@ public class Alias {
         return description;
     }
 
-    public void setEquity(Float value) { equityProperty().set(value); }
+    public void setEquity(Integer value) { equityProperty().set(value); }
 
     @Column(name="equity")
-    public Float getEquity() { return equityProperty().get(); }
+    public int getEquity() { return equityProperty().get(); }
 
-    public FloatProperty equityProperty() {
-        if(equity == null) equity = new SimpleFloatProperty(this, "equity");
+    public IntegerProperty equityProperty() {
+        if(equity == null) equity = new SimpleIntegerProperty(this, "equity");
         return equity;
     }
 
