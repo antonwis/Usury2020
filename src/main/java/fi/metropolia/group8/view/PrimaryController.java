@@ -54,7 +54,7 @@ public class PrimaryController {
             LoanListController loanListController = loanList.getController();
             LoanDataModel loanDataModel = new LoanDataModel();
             //loanDataModel.loadTestData(); // test
-            //loanDataModel.testDao(); jos haluat luoda ekalla kerralla dataa local database
+            //loanDataModel.testDao();
             loanListController.initModel(loanDataModel);
 
 

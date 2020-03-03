@@ -19,16 +19,17 @@ public class NewUserController {
     @FXML private Button cancelButton;
 
     private LoginManager loginManager;
-    //private UsuryDAO usuryDAO;
+
     private static Stage newUserScreen;
 
     public void initialize() {}
 
     @FXML
     void createNewUser(ActionEvent e) throws IOException {
+        UsuryDAO usuryDAO = new UsuryDAO();
         User newUser = new User(name.getText());
         System.out.println("New User: " + newUser.getName());
-        //usuryDAO.createUser(newUser);
+        usuryDAO.createUser(newUser);
     }
 
     @FXML
