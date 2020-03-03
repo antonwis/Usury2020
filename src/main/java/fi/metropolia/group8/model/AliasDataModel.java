@@ -13,6 +13,8 @@ import java.util.List;
 
 public class AliasDataModel {
 
+    private MenubarController menubarController = new MenubarController();
+
     //alias -> new Observable[] {alias.nameProperty(), alias.equityProperty()}
     private final ObservableList<Alias> aliasList = FXCollections.observableArrayList();
 
@@ -43,8 +45,6 @@ public class AliasDataModel {
         aliasList.setAll(
                 list
         );
-        MenubarController menubarController = new MenubarController();
-
     }
 
     public void saveData(File file) {
@@ -52,18 +52,10 @@ public class AliasDataModel {
     }
     public void addNewAlias(String name, String description, int equity){
         Alias alias = new Alias(name,description,equity);
-        loadTestData();
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createAlias(alias);
+        System.out.println(alias);
+        menubarController.addNewMenuItem(alias);
     }
-
-    public void loadTestData() {
-        UsuryDAO usuryDAO = new UsuryDAO();
-
-        aliasList.setAll(
-
-        );
-    }
-
 }
 

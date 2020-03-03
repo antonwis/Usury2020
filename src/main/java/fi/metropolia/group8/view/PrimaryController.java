@@ -42,6 +42,8 @@ public class PrimaryController implements Initializable {
 
     private UsuryDAO dao = new UsuryDAO();
 
+
+
     @FXML
     void createNewAlias(ActionEvent e) throws IOException {
         AliasController.display();

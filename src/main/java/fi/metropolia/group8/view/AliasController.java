@@ -74,6 +74,7 @@ public class AliasController {
         String description = descriptionArea.getText();
         AliasDataModel aliasDataModel = new AliasDataModel();
         aliasDataModel.addNewAlias(name, description, equity);
+
         aliasWindow.close();
     }
 
@@ -86,7 +87,7 @@ public class AliasController {
         aliasWindow = new Stage();
         FXMLLoader alias = new FXMLLoader();
         AnchorPane aliaSS = FXMLLoader.load(AliasController.class.getResource("newAlias.fxml"));
-        AliasController aliasController = alias.getController();
+
 
         Scene scene = new Scene(aliaSS, 300, 500);
         aliasWindow.setScene(scene);

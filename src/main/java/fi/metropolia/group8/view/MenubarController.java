@@ -5,7 +5,10 @@ import fi.metropolia.group8.model.AliasDataModel;
 import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -25,6 +28,8 @@ public class MenubarController {
     @FXML
     private Menu aliasMenu;
 
+    private Menu menu;
+
     private ObservableList<Alias> aliasList;
 
 
@@ -35,11 +40,30 @@ public class MenubarController {
         for(Alias alias : aliasList) {
             MenuItem menuItem = new MenuItem("Item");
             menuItem.setText(aliasList.get(i).getName());
+            menuItem.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    System.out.println(alias.getName());
+                }
+            });
+            System.out.println(aliasMenu);
             aliasMenu.getItems().add(menuItem);
             i++;
         }
+    }
+    public void addNewMenuItem(Alias alias){
+        System.out.println(alias);
+        MenuItem menuItem = new MenuItem("Item");
+        System.out.println(menuItem);
+        menuItem.setText(alias.getName());
 
-
+        menuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println(alias.getName());
+            }
+        });
+        //aliasMenu.getItems().add(menuItem);
     }
 
     public void exitApp(javafx.event.ActionEvent actionEvent) {
