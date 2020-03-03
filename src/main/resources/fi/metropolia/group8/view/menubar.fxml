@@ -17,14 +17,14 @@
                 <MenuItem text="Settings"/>
                 <MenuItem text="Save"/>
                 <MenuItem text="Load"/>
-                <MenuItem text="Logout"/>
+                <MenuItem fx:id="logoutButton" onAction="#logout" text="Logout"/>
                 <MenuItem fx:id="exitMenuItem" onAction="#exitApp" text="Exit"/>
 
             </items>
         </Menu>
         <Menu fx:id="aliasMenu" text="Alias">
             <items>
-                <MenuItem text="Add new alias" onAction="#createNewAlias"/>
+                <MenuItem text="Add new alias" onAction="#addNewAlias"/>
                 <SeparatorMenuItem  />
 
             </items>
