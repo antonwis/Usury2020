@@ -44,10 +44,7 @@ public class PrimaryController {
 
 
 
-    @FXML
-    void createNewAlias(ActionEvent e) throws IOException {
-        AliasController.display();
-    }
+
 
     public void init(final LoginManager loginManager, String sessionID) {
         try {
@@ -77,7 +74,7 @@ public class PrimaryController {
             AliasController aliasController = new AliasController();
             aliasController.initModel(aliasDataModel);
 
-            menubarController.init(aliasList, loginManager);
+            menubarController.init(aliasList, loginManager,aliasController,aliasDataModel);
 
         } catch (IOException e) {
             e.printStackTrace();

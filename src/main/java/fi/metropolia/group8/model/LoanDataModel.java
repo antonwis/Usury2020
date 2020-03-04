@@ -5,19 +5,16 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.File;
 import java.time.LocalDate;
 
 public class LoanDataModel {
 
-    // loan -> new Observable[] {loan.getOwner().nameProperty(), loan.valueProperty(), loan.getVictim().nameProperty(), loan.interestProperty()}
     private final ObservableList<Loan> loanList = FXCollections.observableArrayList();
-
     private final ObjectProperty<Loan> currentLoan = new SimpleObjectProperty<>(null);
 
 
     public ObjectProperty<Loan> currentLoanProperty() {
-        return currentLoan ;
+        return currentLoan;
     }
 
     public final Loan getCurrentLoan() {
@@ -29,20 +26,22 @@ public class LoanDataModel {
     }
 
     public ObservableList<Loan> getLoanList() {
-        return loanList ;
+        return loanList;
     }
 
-    public void loadData(File file) {
+    public void loadData() {
+        UsuryDAO usuryDAO = new UsuryDAO();
+        loanList.setAll(usuryDAO.readLoans());
+    }
 
-        // newit pois ja tilalle viitteet oikeisiin juttuihin
-        loanList.setAll(
-                new Loan(new Alias("Ben Shapiro", "Law Jew", 9000), 2000, new Victim("Jani Toivola", "Homokuja 2", "Ajeli taksilla"), LocalDate.now(), LocalDate.now(), 2)
-        );
+    public void saveData(Loan loan, Victim victim, Alias alias) {
+        UsuryDAO usuryDAO = new UsuryDAO();
+        usuryDAO.updateAlias(alias);
+        usuryDAO.updateVictim(victim);
+        usuryDAO.updateLoan(loan);
     }
-    public void saveData(File file) {
-        // kys2
-    }
-    public void testDao(){
+
+    public void testDao() {
         UsuryDAO usuryDAO = new UsuryDAO();
 
         Alias testAlias = new Alias("Seppo", "Testimies", 1000);
@@ -64,7 +63,7 @@ public class LoanDataModel {
         usuryDAO.createLoan(testLoan4);
         usuryDAO.createLoan(testLoan5);
 
-        loanList.setAll(testLoan1,testLoan2,testLoan3,testLoan4,testLoan5);
+        loanList.setAll(testLoan1, testLoan2, testLoan3, testLoan4, testLoan5);
     }
 
     // Loanlist for testing

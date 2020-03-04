@@ -39,6 +39,8 @@ public class AliasController {
     private TextArea descriptionArea;
 
     private AliasDataModel aliasDataModel;
+    private MenubarController menubarController;
+    private Stage stage;
 
     public void initModel(AliasDataModel aliasDataModel) {
         if (this.aliasDataModel != null) {
@@ -72,26 +74,23 @@ public class AliasController {
         String name = nameField.getText();
         Integer equity = Integer.parseInt(equityField.getText());
         String description = descriptionArea.getText();
-        AliasDataModel aliasDataModel = new AliasDataModel();
-        aliasDataModel.addNewAlias(name, description, equity);
 
-        aliasWindow.close();
+        this.aliasDataModel.addNewAlias(name, description, equity);
+        this.menubarController.updateView();
+        stage.close();
     }
 
     @FXML
     void closeAliasWindow(ActionEvent e) throws IOException {
-        aliasWindow.close();
+        stage.close();
     }
 
-    public static void display() throws IOException {
-        aliasWindow = new Stage();
-        FXMLLoader alias = new FXMLLoader();
-        AnchorPane aliaSS = FXMLLoader.load(AliasController.class.getResource("newAlias.fxml"));
+    public void display(MenubarController menubarController, AliasDataModel aliasDataModel, Stage stage) throws IOException {
+        this.menubarController = menubarController;
+        this.aliasDataModel = aliasDataModel;
+        this.stage = stage;
+        System.out.println(aliasDataModel);
 
-
-        Scene scene = new Scene(aliaSS, 300, 500);
-        aliasWindow.setScene(scene);
-        aliasWindow.show();
     }
 
 }
