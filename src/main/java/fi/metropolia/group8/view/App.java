@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,12 +21,17 @@ public class App extends Application {
 
         primaryStage.setTitle("Khazar Simulator (Early Access)");
 
-        FXMLLoader primary = new FXMLLoader();
+        //FXMLLoader primary = new FXMLLoader();
         AnchorPane root = FXMLLoader.load(getClass().getResource("primary.fxml"));
 
-        PrimaryController primaryController = primary.getController();
+        //PrimaryController primaryController = primary.getController();
 
         Scene scene = new Scene(root, 1200, 800);
+        //Scene scene = new Scene(new AnchorPane());
+
+        LoginManager loginManager = new LoginManager(scene);
+        loginManager.showLoginScreen();
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }

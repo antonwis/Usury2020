@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class PrimaryController implements Initializable {
+public class PrimaryController {
 
 
     @FXML
@@ -42,20 +42,21 @@ public class PrimaryController implements Initializable {
 
     private UsuryDAO dao = new UsuryDAO();
 
+
+
     @FXML
     void createNewAlias(ActionEvent e) throws IOException {
         AliasController.display();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void init(final LoginManager loginManager, String sessionID) {
         try {
             FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
             LoanDataModel loanDataModel = new LoanDataModel();
             //loanDataModel.loadTestData(); // test
-            //loanDataModel.testDao(); jos haluat luoda ekalla kerralla dataa local database
+            //loanDataModel.testDao();
             loanListController.initModel(loanDataModel);
 
 
@@ -76,11 +77,15 @@ public class PrimaryController implements Initializable {
             AliasController aliasController = new AliasController();
             aliasController.initModel(aliasDataModel);
 
-            menubarController.init(aliasList);
+            menubarController.init(aliasList, loginManager);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void initSessionID(final LoginManager loginManager, String sessionID) {
+
     }
 
     @FXML
