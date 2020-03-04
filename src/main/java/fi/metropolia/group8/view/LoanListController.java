@@ -1,25 +1,25 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.*;
+import fi.metropolia.group8.model.Alias;
+import fi.metropolia.group8.model.Loan;
+import fi.metropolia.group8.model.LoanDataModel;
+import fi.metropolia.group8.model.Victim;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
-import java.util.ResourceBundle;
 
 
 public class LoanListController {
@@ -45,16 +45,30 @@ public class LoanListController {
     private TableColumn<Loan, LocalDate> DueDate;
     @FXML
     private Button newLoanButton;
-    private NewLoanController newLoanController = new NewLoanController();
 
-    @FXML
-    void newLoan(ActionEvent event) throws IOException {
-        newLoanController.display();
-    }
+    private NewLoanController newLoanController;
 
     private LoanDataModel model;
-    private UsuryDAO usuryDAO = new UsuryDAO();
-    private ObservableList<Loan> plsno;
+
+    @FXML
+    void newLoan() throws IOException {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+
+        FXMLLoader loan = new FXMLLoader(getClass().getResource("newLoan.fxml"));
+        Parent root = loan.load();
+        NewLoanController newLoanController = loan.getController();
+        newLoanController.TransferMemes(this, model, stage);
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+
+    public void updateView() {
+        model.loadData();
+        LoanTableView.setItems(model.getLoanList());
+    }
 
 
     public void initModel(LoanDataModel model) throws IOException {
@@ -62,10 +76,8 @@ public class LoanListController {
             throw new IllegalStateException("Model can only be initialized once");
         }
         this.model = model;
-        plsno = FXCollections.observableList(usuryDAO.readLoans());
-        LoanTableView.setItems(plsno);
-        //LoanTableView.setItems(model.getLoanList());
-        ////////////////////////////////////////////
+        updateView();
+
         LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> model.setCurrentLoan(newSelection));
         model.currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
             if (newLoan == null) {
@@ -87,10 +99,6 @@ public class LoanListController {
         Debtor.setCellValueFactory(victim -> new SimpleObjectProperty(victim.getValue().getVictim().getName()));
         Amount.setCellValueFactory(amount -> amount.getValue().valueProperty().asObject());
         DueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
-        //Date.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-        //DueDate.setCellValueFactory(dueDate -> dueDate.getValue().dueDateProperty());
-        //Lender.setCellValueFactory(lender -> new SimpleObjectProperty(lender.getValue().getOwner().getName()));
-        //Interest.setCellValueFactory(interest -> interest.getValue().interestProperty().asObject());
     }
 }
 
