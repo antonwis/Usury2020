@@ -15,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -26,7 +27,7 @@ public class LoanListController {
 
 
     @FXML
-    private AnchorPane LoanDetailsAnchorPane;
+    private VBox LoanDetailsVbox;
     @FXML
     private TableView<Loan> LoanTableView;
     @FXML
@@ -86,7 +87,7 @@ public class LoanListController {
                 LoanTableView.getSelectionModel().select(newLoan);
                 try {
                     FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
-                    LoanDetailsAnchorPane.getChildren().setAll((Node) loanDetails.load());
+                    LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
                     LoanDetailController loanDetailController = loanDetails.getController();
                     loanDetailController.display(model);
                 } catch (IOException e) {
