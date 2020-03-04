@@ -43,7 +43,7 @@ public class AliasDataModel {
         aliasList.setAll(
                 list
         );
-        MenubarController menubarController = new MenubarController();
+
 
     }
 
@@ -55,6 +55,7 @@ public class AliasDataModel {
         loadTestData();
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createAlias(alias);
+
     }
 
     public void loadTestData() {
