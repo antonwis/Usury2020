@@ -2,6 +2,7 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.*;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.function.Predicate;
 
 
 public class LoanListController {
@@ -64,8 +66,24 @@ public class LoanListController {
 
 
     public void updateView() {
-        loanDataModel.loadData();
-        LoanTableView.setItems(loanDataModel.getLoanList());
+            loanDataModel.loadData();
+            LoanTableView.setItems(loanDataModel.getLoanList());
+    }
+
+    // Updates view with loans owned by current alias
+    public void refreshLoans() {
+
+        FilteredList<Loan> filteredList = new FilteredList<>(loanDataModel.getLoanList());
+        // ID:tä ei voinu verrata suoraan jostain syystä. Pitäs tehä oma DB kutsu koko paskalle mut tämäkin toimii.
+        Predicate<Loan> aliasFilter = i -> i.getOwner().getName().equals(aliasDataModel.getCurrentAlias().getName());
+        filteredList.setPredicate(aliasFilter);
+
+        if(filteredList.size() < 1) {
+            LoanTableView.setItems(null);
+        } else {
+            LoanTableView.setItems(filteredList);
+        }
+
     }
 
 

@@ -37,13 +37,15 @@ public class MenubarController {
     private AliasController aliasController;
     private AliasDataModel aliasDataModel;
     private PrimaryController primaryController;
+    private LoanListController loanListController;
 
 
-    public void init(ObservableList<Alias> aliasList, LoginManager loginManager, AliasController aliasController, AliasDataModel aliasDataModel,PrimaryController primaryController){
+    public void init(ObservableList<Alias> aliasList, LoginManager loginManager, AliasController aliasController, AliasDataModel aliasDataModel,PrimaryController primaryController, LoanListController loanListController){
         this.loginManager = loginManager;
         this.aliasDataModel = aliasDataModel;
         this.aliasController = aliasController;
         this.primaryController = primaryController;
+        this.loanListController = loanListController;
         int i = 0;
 
         for(Alias alias : aliasList) {
@@ -55,6 +57,7 @@ public class MenubarController {
                 public void handle(ActionEvent actionEvent) {
                     aliasDataModel.setCurrentAlias(alias);
                     primaryController.setCurrentAliasText();
+                    loanListController.refreshLoans();
                 }
             });
             aliasMenu.getItems().add(menuItem);
