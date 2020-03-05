@@ -9,12 +9,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -35,15 +37,17 @@ public class PrimaryController {
     @FXML
     private Button newAlias;
     @FXML
-
     private AnchorPane primaryAnchor;
     @FXML
     private MenuBar menuBar;
+    @FXML
+    private HBox primaryHbox;
+    @FXML
+    private Label primaryCurrentAlias;
+    @FXML
+    private Label primaryCurrentEquity;
 
     private UsuryDAO dao = new UsuryDAO();
-
-
-
 
 
     public void init(final LoginManager loginManager, String sessionID) {
