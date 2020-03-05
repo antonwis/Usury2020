@@ -24,14 +24,14 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="98.0" prefWidth="179.0" text="CurrentAlias:" GridPane.hgrow="NEVER" />
-            <Label fx:id="primaryCurrentAlias" nodeOrientation="LEFT_TO_RIGHT" prefHeight="57.0" prefWidth="470.0" text="CurrentAliasEdit" GridPane.columnIndex="1" GridPane.hgrow="NEVER">
+            <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="98.0" prefWidth="179.0" text="Selected alias:" GridPane.hgrow="NEVER" />
+            <Label fx:id="primaryCurrentAlias" nodeOrientation="LEFT_TO_RIGHT" prefHeight="57.0" prefWidth="470.0" text="None" GridPane.columnIndex="1" GridPane.hgrow="NEVER">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>
             </Label>
             <Label alignment="CENTER_RIGHT" prefHeight="57.0" prefWidth="95.0" text="Equity:" GridPane.columnIndex="3" GridPane.hgrow="NEVER" />
-            <Label fx:id="primaryCurrentEquity" prefHeight="57.0" prefWidth="94.0" text="AliasEquity" GridPane.columnIndex="4" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
+            <Label fx:id="primaryCurrentEquity" prefHeight="57.0" prefWidth="94.0" text="" GridPane.columnIndex="4" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>

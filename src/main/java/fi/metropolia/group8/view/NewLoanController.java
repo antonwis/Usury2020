@@ -1,9 +1,6 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.Alias;
-import fi.metropolia.group8.model.Loan;
-import fi.metropolia.group8.model.LoanDataModel;
-import fi.metropolia.group8.model.Victim;
+import fi.metropolia.group8.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -41,11 +38,12 @@ public class NewLoanController {
 
     private Stage stage;
     private LoanListController loanListController;
-    private LoanDataModel model;
+    private LoanDataModel loanDataModel;
+    private AliasDataModel aliasDataModel;
 
     @FXML
     void loanCancel() {
-        System.out.println(model);
+        System.out.println(loanDataModel);
         System.out.println(loanListController);
         System.out.println(stage);
         stage.close();
@@ -53,17 +51,25 @@ public class NewLoanController {
 
     @FXML
     void loanConfirm() {
-        Alias alias = new Alias("Teppo Testi", "Nenäklubin jäsen", 9001);
+        //Alias alias = new Alias("Teppo Testi", "Nenäklubin jäsen", 9001);
         Victim victim = new Victim(nameField.getText(), addressField.getText(), descriptionField.getText());
-        Loan loan = new Loan(alias, Float.parseFloat(amountField.getText()), victim, LocalDate.now(), LocalDate.from(dueDatepicker.getValue()), Float.parseFloat(interestField.getText()));
-        model.saveData(loan, victim, alias);
+        Loan loan = new Loan(
+                aliasDataModel.getCurrentAlias(),
+                Float.parseFloat(amountField.getText()),
+                victim,
+                LocalDate.now(),
+                LocalDate.from(dueDatepicker.getValue()),
+                Float.parseFloat(interestField.getText())
+            );
+        loanDataModel.saveData(loan, victim, aliasDataModel.getCurrentAlias());
         loanListController.updateView();
         stage.close();
     }
 
-    public void TransferMemes(LoanListController loanListController, LoanDataModel model, Stage stage) {
+    public void TransferMemes(LoanListController loanListController, LoanDataModel loanDataModel, AliasDataModel aliasDataModel, Stage stage) {
         this.loanListController = loanListController;
-        this.model = model;
+        this.loanDataModel = loanDataModel;
+        this.aliasDataModel = aliasDataModel;
         this.stage = stage;
     }
 }

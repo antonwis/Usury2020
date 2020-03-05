@@ -19,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import jdk.jshell.spi.ExecutionControl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -49,6 +50,7 @@ public class PrimaryController {
 
     private UsuryDAO dao = new UsuryDAO();
     private AliasDataModel aliasDataModel;
+    private LoanDataModel loanDataModel;
 
 
     public void init(final LoginManager loginManager, String sessionID) {
@@ -56,10 +58,16 @@ public class PrimaryController {
             FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
-            LoanDataModel loanDataModel = new LoanDataModel();
-            //loanDataModel.loadTestData(); // test
-            //loanDataModel.testDao();
-            loanListController.initModel(loanDataModel);
+
+            loanDataModel = new LoanDataModel();
+            aliasDataModel = new AliasDataModel();
+
+            aliasDataModel.loadData();
+            ObservableList<Alias> aliasList = aliasDataModel.getAliasList();
+            loanListController.initModel(loanDataModel, aliasDataModel);
+
+            AliasController aliasController = new AliasController();
+            aliasController.initModel(aliasDataModel);
 
 
             FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));
@@ -71,15 +79,9 @@ public class PrimaryController {
 
             MenubarController menubarController = menuBarF.getController();
 
-
-            aliasDataModel = new AliasDataModel();
-            aliasDataModel.loadData();
-            ObservableList<Alias> aliasList = aliasDataModel.getAliasList();
-
-            AliasController aliasController = new AliasController();
-            aliasController.initModel(aliasDataModel);
-
             menubarController.init(aliasList, loginManager,aliasController,aliasDataModel,this);
+
+            setCurrentAliasText();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -90,8 +92,17 @@ public class PrimaryController {
 
     }
     public void setCurrentAliasText(){
-        primaryCurrentAlias.setText(aliasDataModel.getCurrentAlias().getName());
-        primaryCurrentEquity.setText(Integer.toString(aliasDataModel.getCurrentAlias().getEquity()));
+
+        // Check if current alias exists
+        if(aliasDataModel.getCurrentAlias() != null) {
+            try {
+                primaryCurrentAlias.setText(aliasDataModel.getCurrentAlias().getName());
+                primaryCurrentEquity.setText(Integer.toString(aliasDataModel.getCurrentAlias().getEquity()));
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML

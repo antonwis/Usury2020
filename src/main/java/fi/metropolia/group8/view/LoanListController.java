@@ -1,9 +1,6 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.Alias;
-import fi.metropolia.group8.model.Loan;
-import fi.metropolia.group8.model.LoanDataModel;
-import fi.metropolia.group8.model.Victim;
+import fi.metropolia.group8.model.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -49,7 +45,8 @@ public class LoanListController {
 
     private NewLoanController newLoanController;
 
-    private LoanDataModel model;
+    private LoanDataModel loanDataModel;
+    private AliasDataModel aliasDataModel;
 
     @FXML
     void newLoan() throws IOException {
@@ -60,27 +57,28 @@ public class LoanListController {
         FXMLLoader loan = new FXMLLoader(getClass().getResource("newLoan.fxml"));
         Parent root = loan.load();
         NewLoanController newLoanController = loan.getController();
-        newLoanController.TransferMemes(this, model, stage);
+        newLoanController.TransferMemes(this, loanDataModel, aliasDataModel, stage);
         stage.setScene(new Scene(root));
         stage.show();
     }
 
 
     public void updateView() {
-        model.loadData();
-        LoanTableView.setItems(model.getLoanList());
+        loanDataModel.loadData();
+        LoanTableView.setItems(loanDataModel.getLoanList());
     }
 
 
-    public void initModel(LoanDataModel model) throws IOException {
-        if (this.model != null) {
+    public void initModel(LoanDataModel loanDataModel, AliasDataModel aliasDataModel) throws IOException {
+        if (this.loanDataModel != null && this.aliasDataModel != null) {
             throw new IllegalStateException("Model can only be initialized once");
         }
-        this.model = model;
+        this.loanDataModel = loanDataModel;
+        this.aliasDataModel = aliasDataModel;
         updateView();
 
-        LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> model.setCurrentLoan(newSelection));
-        model.currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
+        LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> loanDataModel.setCurrentLoan(newSelection));
+        loanDataModel.currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
             if (newLoan == null) {
                 LoanTableView.getSelectionModel().clearSelection();
             } else {
@@ -89,7 +87,7 @@ public class LoanListController {
                     FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
                     LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
                     LoanDetailController loanDetailController = loanDetails.getController();
-                    loanDetailController.display(model);
+                    loanDetailController.display(loanDataModel);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
