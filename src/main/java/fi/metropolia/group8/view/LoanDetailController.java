@@ -10,6 +10,8 @@ public class LoanDetailController {
     @FXML
     private ImageView ProfileImage;
     @FXML
+    private Label LoanDetailHeader;
+    @FXML
     private Label IssueDate;
     @FXML
     private Label TotalDebt;
@@ -29,8 +31,9 @@ public class LoanDetailController {
     private Label VictimDescription;
 
 
+
     public void display(LoanDataModel m) {
-        //System.out.println(m.getCurrentLoan());
+        LoanDetailHeader.setText(String.format("Details for loan %s", m.getCurrentLoan().getId()));
         IssueDate.setText(m.getCurrentLoan().getStartDate().toString());
         DebtRemaining.setText(String.valueOf(m.getCurrentLoan().getValue()));
         ProjectedEarnings.setText(String.valueOf(m.getCurrentLoan().getValue() + ((m.getCurrentLoan().getInterest()/100)*m.getCurrentLoan().getValue())));

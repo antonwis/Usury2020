@@ -1,5 +1,7 @@
 package fi.metropolia.group8.model;
 
+import fi.metropolia.group8.view.AliasController;
+import fi.metropolia.group8.view.MenubarController;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -7,8 +9,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.File;
+import java.util.List;
 
 public class AliasDataModel {
+
+    private MenubarController menubarController = new MenubarController();
 
     //alias -> new Observable[] {alias.nameProperty(), alias.equityProperty()}
     private final ObservableList<Alias> aliasList = FXCollections.observableArrayList();
@@ -33,24 +38,25 @@ public class AliasDataModel {
 
     public void loadData() {
         // tänne DAOsetit tai luku tiedostosta tms.
+        UsuryDAO usuryDAO = new UsuryDAO();
+        List<Alias> list =  usuryDAO.readAliases();
 
         // Dummy aliases for testing purposes
         aliasList.setAll(
-                new Alias("Ben Shapiro", "Professional jew", 2000),
-                new Alias("Dr. Sheckelstein", "Usury M.D", 5000)
+                list
         );
     }
 
     public void saveData(File file) {
         // kys
     }
-
-    public void loadTestData() {
-        aliasList.setAll(
-                new Alias("Ben Shapiro", "Professional jew", 2000),
-                new Alias("Dr. Sheckelstein", "Usury M.D", 5000)
-        );
+    public void addNewAlias(String name, String description, int equity){
+        Alias alias = new Alias(name,description,equity);
+        UsuryDAO usuryDAO = new UsuryDAO();
+        usuryDAO.createAlias(alias);
+        aliasList.addAll(alias);
+        Alias alias1 = aliasList.get(aliasList.size()-1);
+        System.out.println(alias1.getName());
     }
-
 }
 

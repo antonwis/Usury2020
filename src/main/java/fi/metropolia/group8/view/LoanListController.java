@@ -5,27 +5,29 @@ import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.model.LoanDataModel;
 import fi.metropolia.group8.model.Victim;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
-import java.util.ResourceBundle;
 
 
-public class LoanListController implements Initializable {
+public class LoanListController {
 
 
     @FXML
-    private AnchorPane LoanDetailsAnchorPane;
+    private VBox LoanDetailsVbox;
     @FXML
     private TableView<Loan> LoanTableView;
     @FXML
@@ -45,12 +47,29 @@ public class LoanListController implements Initializable {
     @FXML
     private Button newLoanButton;
 
-    @FXML
-    void newLoan(ActionEvent event) throws IOException {
-      NewLoanController.display();
-    }
+    private NewLoanController newLoanController;
 
     private LoanDataModel model;
+
+    @FXML
+    void newLoan() throws IOException {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+
+        FXMLLoader loan = new FXMLLoader(getClass().getResource("newLoan.fxml"));
+        Parent root = loan.load();
+        NewLoanController newLoanController = loan.getController();
+        newLoanController.TransferMemes(this, model, stage);
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+
+    public void updateView() {
+        model.loadData();
+        LoanTableView.setItems(model.getLoanList());
+    }
 
 
     public void initModel(LoanDataModel model) throws IOException {
@@ -58,8 +77,8 @@ public class LoanListController implements Initializable {
             throw new IllegalStateException("Model can only be initialized once");
         }
         this.model = model;
-        LoanTableView.setItems(model.getLoanList());
-        ////////////////////////////////////////////
+        updateView();
+
         LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> model.setCurrentLoan(newSelection));
         model.currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
             if (newLoan == null) {
@@ -68,7 +87,7 @@ public class LoanListController implements Initializable {
                 LoanTableView.getSelectionModel().select(newLoan);
                 try {
                     FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
-                    LoanDetailsAnchorPane.getChildren().setAll((Node) loanDetails.load());
+                    LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
                     LoanDetailController loanDetailController = loanDetails.getController();
                     loanDetailController.display(model);
                 } catch (IOException e) {
@@ -77,22 +96,11 @@ public class LoanListController implements Initializable {
             }
         });
 
-        //Lender.setCellValueFactory(lender -> new SimpleObjectProperty(lender.getValue().getOwner().getName()));
+        Id.setCellValueFactory(new PropertyValueFactory<>("id"));
         Debtor.setCellValueFactory(victim -> new SimpleObjectProperty(victim.getValue().getVictim().getName()));
         Amount.setCellValueFactory(amount -> amount.getValue().valueProperty().asObject());
-        //Interest.setCellValueFactory(interest -> interest.getValue().interestProperty().asObject());
-        //Date.setCellValueFactory(startDate -> startDate.getValue().startDateProperty());
-        //DueDate.setCellValueFactory(dueDate -> dueDate.getValue().dueDateProperty());
+        DueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
     }
-
-    //System.out.println(model.getCurrentLoan());
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
-
 }
 
 

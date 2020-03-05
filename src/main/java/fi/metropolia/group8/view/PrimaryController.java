@@ -1,9 +1,6 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.Alias;
-import fi.metropolia.group8.model.AliasDataModel;
-import fi.metropolia.group8.model.Loan;
-import fi.metropolia.group8.model.LoanDataModel;
+import fi.metropolia.group8.model.*;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,7 +23,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class PrimaryController implements Initializable {
+public class PrimaryController {
 
 
     @FXML
@@ -43,25 +40,21 @@ public class PrimaryController implements Initializable {
     @FXML
     private MenuBar menuBar;
 
+    private UsuryDAO dao = new UsuryDAO();
 
-    @FXML
-    void createNewAlias(ActionEvent e) throws IOException {
-        AliasController.display();
-    }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
+
+    public void init(final LoginManager loginManager, String sessionID) {
         try {
-
-
             FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
             LoanDataModel loanDataModel = new LoanDataModel();
-            loanDataModel.loadTestData(); // test
+            //loanDataModel.loadTestData(); // test
+            //loanDataModel.testDao();
             loanListController.initModel(loanDataModel);
-
-
 
 
             FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));
@@ -81,11 +74,15 @@ public class PrimaryController implements Initializable {
             AliasController aliasController = new AliasController();
             aliasController.initModel(aliasDataModel);
 
-            menubarController.init(aliasList);
+            menubarController.init(aliasList, loginManager,aliasController,aliasDataModel);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void initSessionID(final LoginManager loginManager, String sessionID) {
+
     }
 
     @FXML

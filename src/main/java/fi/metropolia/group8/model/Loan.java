@@ -2,7 +2,6 @@ package fi.metropolia.group8.model;
 
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -82,6 +81,7 @@ public class Loan {
     public final float getInterest() {
         return interestProperty().get();
     }
+
 
     public final void setInterest(float value) {
         interestProperty().set(value);

@@ -1,9 +1,6 @@
 package fi.metropolia.group8.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import javax.persistence.*;
 
@@ -59,7 +56,7 @@ public class Alias {
         return description;
     }
 
-    public void setEquity(int value) { equityProperty().set(value); }
+    public void setEquity(Integer value) { equityProperty().set(value); }
 
     @Column(name="equity")
     public int getEquity() { return equityProperty().get(); }

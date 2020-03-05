@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -21,6 +22,8 @@ public class AliasController {
 
     private static Stage aliasWindow;
 
+
+
     @FXML
     private Button AddAlias;
     @FXML
@@ -33,9 +36,11 @@ public class AliasController {
     private TextField equityField;
 
     @FXML
-    private TextField descriptionField;
+    private TextArea descriptionArea;
 
     private AliasDataModel aliasDataModel;
+    private MenubarController menubarController;
+    private Stage stage;
 
     public void initModel(AliasDataModel aliasDataModel) {
         if (this.aliasDataModel != null) {
@@ -66,24 +71,26 @@ public class AliasController {
 
     @FXML
     void addNewAlias(ActionEvent e) throws IOException {
+        String name = nameField.getText();
+        Integer equity = Integer.parseInt(equityField.getText());
+        String description = descriptionArea.getText();
 
-        aliasWindow.close();
+        this.aliasDataModel.addNewAlias(name, description, equity);
+        this.menubarController.updateView(this.aliasDataModel);
+        stage.close();
     }
 
     @FXML
     void closeAliasWindow(ActionEvent e) throws IOException {
-        aliasWindow.close();
+        stage.close();
     }
 
-    public static void display() throws IOException {
-        aliasWindow = new Stage();
-        FXMLLoader alias = new FXMLLoader();
-        AnchorPane aliaSS = FXMLLoader.load(AliasController.class.getResource("newAlias.fxml"));
-        AliasController aliasController = alias.getController();
+    public void display(MenubarController menubarController, AliasDataModel aliasDataModel, Stage stage) throws IOException {
+        this.menubarController = menubarController;
+        this.aliasDataModel = aliasDataModel;
+        this.stage = stage;
 
-        Scene scene = new Scene(aliaSS, 300, 500);
-        aliasWindow.setScene(scene);
-        aliasWindow.show();
+
     }
 
 }

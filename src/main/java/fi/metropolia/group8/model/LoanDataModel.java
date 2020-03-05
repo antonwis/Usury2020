@@ -5,19 +5,16 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.File;
 import java.time.LocalDate;
 
 public class LoanDataModel {
 
-    // loan -> new Observable[] {loan.getOwner().nameProperty(), loan.valueProperty(), loan.getVictim().nameProperty(), loan.interestProperty()}
     private final ObservableList<Loan> loanList = FXCollections.observableArrayList();
-
     private final ObjectProperty<Loan> currentLoan = new SimpleObjectProperty<>(null);
 
 
     public ObjectProperty<Loan> currentLoanProperty() {
-        return currentLoan ;
+        return currentLoan;
     }
 
     public final Loan getCurrentLoan() {
@@ -29,22 +26,48 @@ public class LoanDataModel {
     }
 
     public ObservableList<Loan> getLoanList() {
-        return loanList ;
+        return loanList;
     }
 
-    public void loadData(File file) {
-
-        // newit pois ja tilalle viitteet oikeisiin juttuihin
-        loanList.setAll(
-                new Loan(new Alias("Ben Shapiro", "Law Jew", 9000), 2000, new Victim("Jani Toivola", "Homokuja 2", "Ajeli taksilla"), LocalDate.now(), LocalDate.now(), 2)
-        );
+    public void loadData() {
+        UsuryDAO usuryDAO = new UsuryDAO();
+        loanList.setAll(usuryDAO.readLoans());
     }
-    public void saveData(File file) {
-        // kys2
+
+    public void saveData(Loan loan, Victim victim, Alias alias) {
+        UsuryDAO usuryDAO = new UsuryDAO();
+        usuryDAO.updateAlias(alias);
+        usuryDAO.updateVictim(victim);
+        usuryDAO.updateLoan(loan);
+    }
+
+    public void testDao() {
+        UsuryDAO usuryDAO = new UsuryDAO();
+
+        Alias testAlias = new Alias("Seppo", "Testimies", 1000);
+        Victim testVictim = new Victim("Kake", "Piritori", "Nisti");
+        Victim testVictim2 = new Victim("Keijo", "Narkkikatu 2", "Työtön");
+        Loan testLoan1 = new Loan(testAlias, 500, testVictim, LocalDate.now(), LocalDate.now(), 2);
+        Loan testLoan2 = new Loan(testAlias, 800, testVictim2, LocalDate.now(), LocalDate.now(), 3);
+        Loan testLoan3 = new Loan(testAlias, 2200, testVictim, LocalDate.now(), LocalDate.now(), 1);
+        Loan testLoan4 = new Loan(testAlias, 50, testVictim2, LocalDate.now(), LocalDate.now(), 1);
+        Loan testLoan5 = new Loan(testAlias, 9000, testVictim, LocalDate.now(), LocalDate.now(), 1);
+
+        // lel
+        usuryDAO.createAlias(testAlias);
+        usuryDAO.createVictim(testVictim);
+        usuryDAO.createVictim(testVictim2);
+        usuryDAO.createLoan(testLoan1);
+        usuryDAO.createLoan(testLoan2);
+        usuryDAO.createLoan(testLoan3);
+        usuryDAO.createLoan(testLoan4);
+        usuryDAO.createLoan(testLoan5);
+
+        loanList.setAll(testLoan1, testLoan2, testLoan3, testLoan4, testLoan5);
     }
 
     // Loanlist for testing
-    public void loadTestData() {
+/*    public void loadTestData() {
         Alias testAlias = new Alias("Seppo", "Testimies", 1000);
         Victim testVictim = new Victim("Kake", "Piritori", "Nisti");
         Victim testVictim2 = new Victim("Keijo", "Narkkikatu 2", "Työtön");
@@ -55,6 +78,6 @@ public class LoanDataModel {
         Loan testLoan5 = new Loan(testAlias, 9000, testVictim, LocalDate.now(), LocalDate.now(), 1);
 
         loanList.setAll(testLoan1, testLoan2, testLoan3, testLoan4, testLoan5);
-    }
+    }*/
 
 }
