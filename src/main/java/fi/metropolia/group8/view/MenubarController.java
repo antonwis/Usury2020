@@ -51,7 +51,8 @@ public class MenubarController {
             menuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    System.out.println(alias.getName());
+                    aliasDataModel.setCurrentAlias(alias);
+                    System.out.println(aliasDataModel.getCurrentAlias().getName());
                 }
             });
             aliasMenu.getItems().add(menuItem);
@@ -59,13 +60,20 @@ public class MenubarController {
         }
     }
     public void updateView(AliasDataModel aliasDataModel){
-        aliasDataModel.loadData();
+
         this.aliasList = aliasDataModel.getAliasList();
 
         Alias alias = aliasList.get(aliasList.size()-1);
 
         MenuItem menuItem = new MenuItem("Item");
         menuItem.setText(alias.getName());
+        menuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                aliasDataModel.setCurrentAlias(alias);
+                System.out.println(aliasDataModel.getCurrentAlias().getName());
+            }
+        });
         aliasMenu.getItems().add(menuItem);
     }
 
@@ -78,7 +86,7 @@ public class MenubarController {
     }
 
     public void addNewAlias(javafx.event.ActionEvent actionEvent) throws IOException {
-        System.out.println(aliasDataModel);
+
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         FXMLLoader alias = new FXMLLoader(getClass().getResource("newAlias.fxml"));

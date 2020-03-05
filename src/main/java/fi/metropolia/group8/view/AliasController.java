@@ -89,7 +89,7 @@ public class AliasController {
         this.menubarController = menubarController;
         this.aliasDataModel = aliasDataModel;
         this.stage = stage;
-        System.out.println(aliasDataModel);
+
 
     }
 
