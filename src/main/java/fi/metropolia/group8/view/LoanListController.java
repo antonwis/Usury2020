@@ -67,7 +67,11 @@ public class LoanListController {
 
     public void updateView() {
             loanDataModel.loadData();
-            LoanTableView.setItems(loanDataModel.getLoanList());
+            if(aliasDataModel.getCurrentAlias() != null) {
+                LoanTableView.setItems(loanDataModel.getLoanList());
+            } else {
+                LoanTableView.setItems(null);
+            }
     }
 
     // Updates view with loans owned by current alias
