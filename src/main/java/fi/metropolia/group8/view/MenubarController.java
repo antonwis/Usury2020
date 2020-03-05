@@ -58,11 +58,12 @@ public class MenubarController {
             i++;
         }
     }
-    public void updateView(){
+    public void updateView(AliasDataModel aliasDataModel){
         aliasDataModel.loadData();
         this.aliasList = aliasDataModel.getAliasList();
-        System.out.println(aliasList);
+
         Alias alias = aliasList.get(aliasList.size()-1);
+
         MenuItem menuItem = new MenuItem("Item");
         menuItem.setText(alias.getName());
         aliasMenu.getItems().add(menuItem);

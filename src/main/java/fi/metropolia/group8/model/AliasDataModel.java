@@ -54,7 +54,7 @@ public class AliasDataModel {
         Alias alias = new Alias(name,description,equity);
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createAlias(alias);
-
+        aliasList.add(alias);
 
     }
 }

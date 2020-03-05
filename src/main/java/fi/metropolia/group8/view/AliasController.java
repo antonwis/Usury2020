@@ -76,7 +76,7 @@ public class AliasController {
         String description = descriptionArea.getText();
 
         this.aliasDataModel.addNewAlias(name, description, equity);
-        this.menubarController.updateView();
+        this.menubarController.updateView(this.aliasDataModel);
         stage.close();
     }
 
