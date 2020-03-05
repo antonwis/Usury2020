@@ -189,7 +189,7 @@ public class UsuryDAO {
     /**
      * Creates new record to database loan table.
      * Loans <em>{@link fi.metropolia.group8.model.Alias} owner</em> and <em>{@link fi.metropolia.group8.model.Victim} victim</em>
-     * need to exit in database.
+     * need to exists in database.
      * @param loan Loan to be added to database
      * @see #createAlias(Alias)
      * @see #createVictim(Victim)
@@ -201,7 +201,7 @@ public class UsuryDAO {
     /**
      * Updates loan record in database loan table.
      * Loans <em>{@link fi.metropolia.group8.model.Alias} owner</em> and <em>{@link fi.metropolia.group8.model.Victim} victim</em>
-     * need to exit in database.
+     * need to exists in database.
      * @param loan Loan to be updated
      * @see #createAlias(Alias)
      * @see #createVictim(Victim)
