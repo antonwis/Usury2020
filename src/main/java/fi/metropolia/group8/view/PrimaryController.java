@@ -48,6 +48,7 @@ public class PrimaryController {
     private Label primaryCurrentEquity;
 
     private UsuryDAO dao = new UsuryDAO();
+    private AliasDataModel aliasDataModel;
 
 
     public void init(final LoginManager loginManager, String sessionID) {
@@ -71,14 +72,14 @@ public class PrimaryController {
             MenubarController menubarController = menuBarF.getController();
 
 
-            AliasDataModel aliasDataModel = new AliasDataModel();
+            aliasDataModel = new AliasDataModel();
             aliasDataModel.loadData();
             ObservableList<Alias> aliasList = aliasDataModel.getAliasList();
 
             AliasController aliasController = new AliasController();
             aliasController.initModel(aliasDataModel);
 
-            menubarController.init(aliasList, loginManager,aliasController,aliasDataModel);
+            menubarController.init(aliasList, loginManager,aliasController,aliasDataModel,this);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -87,6 +88,10 @@ public class PrimaryController {
 
     public void initSessionID(final LoginManager loginManager, String sessionID) {
 
+    }
+    public void setCurrentAliasText(){
+        primaryCurrentAlias.setText(aliasDataModel.getCurrentAlias().getName());
+        primaryCurrentEquity.setText(Integer.toString(aliasDataModel.getCurrentAlias().getEquity()));
     }
 
     @FXML

@@ -36,12 +36,14 @@ public class MenubarController {
     private LoginManager loginManager;
     private AliasController aliasController;
     private AliasDataModel aliasDataModel;
+    private PrimaryController primaryController;
 
 
-    public void init(ObservableList<Alias> aliasList, LoginManager loginManager, AliasController aliasController, AliasDataModel aliasDataModel){
+    public void init(ObservableList<Alias> aliasList, LoginManager loginManager, AliasController aliasController, AliasDataModel aliasDataModel,PrimaryController primaryController){
         this.loginManager = loginManager;
         this.aliasDataModel = aliasDataModel;
         this.aliasController = aliasController;
+        this.primaryController = primaryController;
         int i = 0;
 
         for(Alias alias : aliasList) {
@@ -52,7 +54,7 @@ public class MenubarController {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     aliasDataModel.setCurrentAlias(alias);
-                    System.out.println(aliasDataModel.getCurrentAlias().getName());
+                    primaryController.setCurrentAliasText();
                 }
             });
             aliasMenu.getItems().add(menuItem);
@@ -71,7 +73,8 @@ public class MenubarController {
             @Override
             public void handle(ActionEvent actionEvent) {
                 aliasDataModel.setCurrentAlias(alias);
-                System.out.println(aliasDataModel.getCurrentAlias().getName());
+                primaryController.setCurrentAliasText();
+
             }
         });
         aliasMenu.getItems().add(menuItem);
