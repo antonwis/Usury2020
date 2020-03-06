@@ -62,6 +62,7 @@ public class NewLoanController {
                 Float.parseFloat(interestField.getText())
             );
         loanDataModel.saveData(loan, victim, aliasDataModel.getCurrentAlias());
+
         loanCalculator = new LoanCalculator(loanDataModel, aliasDataModel);
         loanCalculator.updateEquity(aliasDataModel.getCurrentAlias(), loan);
         loanListController.refreshLoans();

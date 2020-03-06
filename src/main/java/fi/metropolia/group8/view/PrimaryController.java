@@ -4,6 +4,7 @@ import fi.metropolia.group8.model.*;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -51,6 +52,7 @@ public class PrimaryController {
     private UsuryDAO dao = new UsuryDAO();
     private AliasDataModel aliasDataModel;
     private LoanDataModel loanDataModel;
+    private Scene scene;
 
 
     public void init(final LoginManager loginManager, String sessionID) {

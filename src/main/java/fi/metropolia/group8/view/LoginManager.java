@@ -2,8 +2,12 @@ package fi.metropolia.group8.view;
 
 import java.io.IOException;
 import java.util.logging.*;
+
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /** Manages control flow for logins */
 public class LoginManager {
@@ -49,9 +53,11 @@ public class LoginManager {
                     getClass().getResource("primary.fxml")
             );
             scene.setRoot(loader.load());
+
             PrimaryController primaryController =
                     loader.getController();
             primaryController.init(this, sessionID);
+
         } catch (IOException ex) {
             Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
         }
