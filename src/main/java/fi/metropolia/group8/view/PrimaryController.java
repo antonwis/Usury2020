@@ -97,7 +97,7 @@ public class PrimaryController {
         if(aliasDataModel.getCurrentAlias() != null) {
             try {
                 primaryCurrentAlias.setText(aliasDataModel.getCurrentAlias().getName());
-                primaryCurrentEquity.setText(Integer.toString(aliasDataModel.getCurrentAlias().getEquity()));
+                primaryCurrentEquity.setText(Float.toString(aliasDataModel.getCurrentAlias().getEquity()));
             }
             catch (Exception e) {
                 e.printStackTrace();
