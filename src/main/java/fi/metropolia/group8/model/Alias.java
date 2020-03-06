@@ -11,6 +11,7 @@ import javax.persistence.*;
 public class Alias {
 
     private long id;
+    private User user;
     private StringProperty name;
     private StringProperty description;
     private FloatProperty equity;
@@ -20,7 +21,8 @@ public class Alias {
         // Empty constructor for hibernate
     }
 
-    public Alias(String name, String description, int equity) {
+    public Alias(User user, String name, String description, int equity) {
+        this.user = user;
         setName(name);
         setDescription(description);
         setEquity(equity);
@@ -35,6 +37,16 @@ public class Alias {
         this.id = id;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "user")
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public void setName(String value) { nameProperty().set(value); }
 
     @Column(name="name")
@@ -44,7 +56,6 @@ public class Alias {
         if (name == null) name = new SimpleStringProperty(this,"name") ;
         return name;
     }
-
 
     public void setDescription(String value) { descriptionProperty().set(value); }
 

@@ -1,7 +1,6 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.User;
-import fi.metropolia.group8.model.UsuryDAO;
+import fi.metropolia.group8.model.*;
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,32 +18,25 @@ public class NewUserController {
     @FXML private Button cancelButton;
 
     private LoginManager loginManager;
-
-    private static Stage newUserScreen;
+    private UserDataModel userDataModel;
+    private Stage stage;
 
     public void initialize() {}
 
     @FXML
     void createNewUser(ActionEvent e) throws IOException {
-        UsuryDAO usuryDAO = new UsuryDAO();
-        User newUser = new User(name.getText());
-        System.out.println("New User: " + newUser.getName());
-        usuryDAO.createUser(newUser);
+        userDataModel.addNewUser(name.getText());
+        System.out.println("New User: " + name.getText());
     }
 
     @FXML
     void returnToLogin(ActionEvent e) throws IOException {
-        newUserScreen.close();
+        stage.close();
     }
 
-    public static void display() throws IOException {
-        newUserScreen = new Stage();
-        FXMLLoader loader = new FXMLLoader();
-        AnchorPane anchor = FXMLLoader.load(AliasController.class.getResource("newUser.fxml"));
-        NewUserController newUserController = loader.getController();
-
-        Scene scene = new Scene(anchor, 300, 500);
-        newUserScreen.setScene(scene);
-        newUserScreen.show();
+    public void TransferMemes(UserDataModel userDataModel, Stage stage) {
+        this.userDataModel = userDataModel;
+        this.stage = stage;
     }
+
 }

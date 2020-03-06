@@ -2,6 +2,8 @@ package fi.metropolia.group8.view;
 
 import antlr.PreservingFileWriter;
 import fi.metropolia.group8.model.AliasDataModel;
+import fi.metropolia.group8.model.User;
+import fi.metropolia.group8.model.UserDataModel;
 import javafx.beans.property.IntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,11 +43,13 @@ public class AliasController {
     private AliasDataModel aliasDataModel;
     private MenubarController menubarController;
     private Stage stage;
+    private User currentUser;
 
-    public void initModel(AliasDataModel aliasDataModel) {
+    public void initModel(AliasDataModel aliasDataModel, User currentUser) {
         if (this.aliasDataModel != null) {
             throw new IllegalStateException("Model can only be initialized once");
         }
+        this.currentUser = currentUser;
         this.aliasDataModel = aliasDataModel;
         aliasDataModel.currentAliasProperty().addListener((obs, oldAlias, newAlias) -> {
 
@@ -75,7 +79,7 @@ public class AliasController {
         Integer equity = Integer.parseInt(equityField.getText());
         String description = descriptionArea.getText();
 
-        this.aliasDataModel.addNewAlias(name, description, equity);
+        this.aliasDataModel.addNewAlias(currentUser, name, description, equity);
         this.menubarController.updateView(this.aliasDataModel);
         stage.close();
     }
