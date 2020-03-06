@@ -12,10 +12,10 @@
 
 <MenuBar  fx:id="menuBar" focusTraversable="true" >
     <menus>
-        <Menu text="System">
+        <Menu text="System" fx:id="systemMenu">
             <items>
                 <MenuItem text="Settings"/>
-                <MenuItem text="Save"/>
+                <MenuItem text="Save" fx:id="saveMenuItem"/>
                 <MenuItem text="Load"/>
                 <MenuItem fx:id="logoutButton" onAction="#logout" text="Logout"/>
                 <MenuItem fx:id="exitMenuItem" onAction="#exitApp" text="Exit"/>

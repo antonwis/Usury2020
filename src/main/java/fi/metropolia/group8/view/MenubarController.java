@@ -10,9 +10,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -31,6 +35,10 @@ public class MenubarController {
     private MenuItem exitMenuItem;
     @FXML
     private Menu aliasMenu;
+    @FXML
+    private MenuItem saveMenuItem;
+    @FXML
+    private MenuItem logoutButton;
 
     private ObservableList<Alias> aliasList;
     private LoginManager loginManager;
@@ -46,18 +54,28 @@ public class MenubarController {
         this.aliasController = aliasController;
         this.primaryController = primaryController;
         this.loanListController = loanListController;
+        exitMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
+        saveMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+        logoutButton.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
         int i = 0;
 
         for(Alias alias : aliasList) {
 
-            MenuItem menuItem = new MenuItem("Item");
+            CheckMenuItem menuItem = new CheckMenuItem("Item");
             menuItem.setText(aliasList.get(i).getName());
+            String s = ""+(i+1);
+            menuItem.setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(s), KeyCombination.CONTROL_DOWN));
             menuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
+                    for(int i = 2; i<aliasMenu.getItems().size();i++){
+                        CheckMenuItem c = (CheckMenuItem) aliasMenu.getItems().get(i);
+                        c.setSelected(false);
+                    }
                     aliasDataModel.setCurrentAlias(alias);
                     primaryController.setCurrentAliasText();
                     loanListController.refreshLoans();
+                    menuItem.setSelected(true);
                 }
             });
             aliasMenu.getItems().add(menuItem);
@@ -70,14 +88,21 @@ public class MenubarController {
 
         Alias alias = aliasList.get(aliasList.size()-1);
 
-        MenuItem menuItem = new MenuItem("Item");
+        CheckMenuItem menuItem = new CheckMenuItem("Item");
         menuItem.setText(alias.getName());
+
+        String s = ""+aliasList.size();
+        menuItem.setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(s), KeyCombination.CONTROL_DOWN));
         menuItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                for(int i = 2; i<aliasMenu.getItems().size();i++){
+                    CheckMenuItem c = (CheckMenuItem) aliasMenu.getItems().get(i);
+                    c.setSelected(false);
+                }
                 aliasDataModel.setCurrentAlias(alias);
                 primaryController.setCurrentAliasText();
-
+                menuItem.setSelected(true);
             }
         });
         aliasMenu.getItems().add(menuItem);
