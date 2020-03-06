@@ -66,7 +66,7 @@ public class PrimaryController {
 
             aliasDataModel.loadData();
             ObservableList<Alias> aliasList = aliasDataModel.getAliasList();
-            loanListController.initModel(loanDataModel, aliasDataModel);
+            loanListController.initModel(loanDataModel, aliasDataModel,this);
 
             AliasController aliasController = new AliasController();
             aliasController.initModel(aliasDataModel);
