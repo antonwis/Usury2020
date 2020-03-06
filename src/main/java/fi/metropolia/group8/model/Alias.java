@@ -1,9 +1,6 @@
 package fi.metropolia.group8.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import javax.persistence.*;
 
@@ -16,7 +13,7 @@ public class Alias {
     private long id;
     private StringProperty name;
     private StringProperty description;
-    private IntegerProperty equity;
+    private FloatProperty equity;
 
 
     public Alias() {
@@ -59,13 +56,13 @@ public class Alias {
         return description;
     }
 
-    public void setEquity(int value) { equityProperty().set(value); }
+    public void setEquity(float value) { equityProperty().set(value); }
 
     @Column(name="equity")
-    public int getEquity() { return equityProperty().get(); }
+    public float getEquity() { return equityProperty().get(); }
 
-    public IntegerProperty equityProperty() {
-        if(equity == null) equity = new SimpleIntegerProperty(this, "equity");
+    public FloatProperty equityProperty() {
+        if(equity == null) equity = new SimpleFloatProperty(this, "equity");
         return equity;
     }
 

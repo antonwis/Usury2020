@@ -1,6 +1,6 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.LoanDataModel;
+import fi.metropolia.group8.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -9,6 +9,8 @@ public class LoanDetailController {
 
     @FXML
     private ImageView ProfileImage;
+    @FXML
+    private Label LoanDetailHeader;
     @FXML
     private Label IssueDate;
     @FXML
@@ -28,17 +30,45 @@ public class LoanDetailController {
     @FXML
     private Label VictimDescription;
 
+    private LoanDataModel loanDataModel;
+    private AliasDataModel aliasDataModel;
+    private LoanCalculator loanCalculator;
 
-    public void display(LoanDataModel m) {
-        //System.out.println(m.getCurrentLoan());
-        IssueDate.setText(m.getCurrentLoan().getStartDate().toString());
-        DebtRemaining.setText(String.valueOf(m.getCurrentLoan().getValue()));
-        ProjectedEarnings.setText(String.valueOf(m.getCurrentLoan().getValue() + ((m.getCurrentLoan().getInterest()/100)*m.getCurrentLoan().getValue())));
-        TotalDebt.setText(String.valueOf(m.getCurrentLoan().getValue()));
-        Interest.setText(String.valueOf(m.getCurrentLoan().getInterest()));
-        DueDate.setText(m.getCurrentLoan().getDueDate().toString());
-        VictimName.setText(m.getCurrentLoan().getVictim().getName());
-        VictimAddress.setText(m.getCurrentLoan().getVictim().getAddress());
-        VictimDescription.setText(m.getCurrentLoan().getVictim().getDescription());
+    public void display(LoanDataModel loanDataModel, AliasDataModel aliasDataModel) {
+
+        this.loanDataModel = loanDataModel;
+        this.aliasDataModel = aliasDataModel;
+        loanCalculator = new LoanCalculator(loanDataModel, aliasDataModel);
+
+        // Detail header
+        LoanDetailHeader.setText(String.format("Details for loan %s", loanDataModel.getCurrentLoan().getId()));
+
+        // Dates
+        IssueDate.setText(loanDataModel.getCurrentLoan().getStartDate().toString());
+        DueDate.setText(loanDataModel.getCurrentLoan().getDueDate().toString());
+
+        // Original loaned sum
+        TotalDebt.setText(String.valueOf(loanDataModel.getCurrentLoan().getValue()));
+
+        // Total Debt remaining
+        DebtRemaining.setText(String.valueOf(loanCalculator.getLoanTotalSum(loanDataModel.getCurrentLoan())));
+
+        // Interest percentage
+        Interest.setText(String.valueOf(loanDataModel.getCurrentLoan().getInterest()));
+
+        // Interest profit
+        ProjectedEarnings.setText(String.valueOf(loanCalculator.getInterestProfit(loanDataModel.getCurrentLoan())));
+
+        // Victim details
+        VictimName.setText(loanDataModel.getCurrentLoan().getVictim().getName());
+        VictimAddress.setText(loanDataModel.getCurrentLoan().getVictim().getAddress());
+        VictimDescription.setText(loanDataModel.getCurrentLoan().getVictim().getDescription());
+    }
+
+    // Placeholder
+    public void modifyLoan() {
+
+        float newInterest = 10;
+        loanCalculator.modifyLoan(loanDataModel.getCurrentLoan(), newInterest);
     }
 }

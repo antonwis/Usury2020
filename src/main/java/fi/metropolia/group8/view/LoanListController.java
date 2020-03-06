@@ -1,31 +1,31 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.Alias;
-import fi.metropolia.group8.model.Loan;
-import fi.metropolia.group8.model.LoanDataModel;
-import fi.metropolia.group8.model.Victim;
+import fi.metropolia.group8.model.*;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.ActionEvent;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
-import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 
-public class LoanListController implements Initializable {
+public class LoanListController {
 
 
     @FXML
-    private AnchorPane LoanDetailsAnchorPane;
+    private VBox LoanDetailsVbox;
     @FXML
     private TableView<Loan> LoanTableView;
     @FXML
@@ -45,54 +45,86 @@ public class LoanListController implements Initializable {
     @FXML
     private Button newLoanButton;
 
+    private NewLoanController newLoanController;
+
+    private LoanDataModel loanDataModel;
+    private AliasDataModel aliasDataModel;
+    private PrimaryController primaryController;
+
     @FXML
-    void newLoan(ActionEvent event) throws IOException {
-      NewLoanController.display();
+    void newLoan() throws IOException {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+
+        FXMLLoader loan = new FXMLLoader(getClass().getResource("newLoan.fxml"));
+        Parent root = loan.load();
+        NewLoanController newLoanController = loan.getController();
+        newLoanController.TransferMemes(this, loanDataModel, aliasDataModel, stage,primaryController);
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
-    private LoanDataModel model;
+
+    public void updateView() {
+            loanDataModel.loadData();
+            if(aliasDataModel.getCurrentAlias() != null) {
+                LoanTableView.setItems(loanDataModel.getLoanList());
+            } else {
+                LoanTableView.setItems(null);
+            }
+    }
+
+    // Updates view with loans owned by current alias
+    public void refreshLoans() {
+
+        loanDataModel.loadData();
+        FilteredList<Loan> filteredList = new FilteredList<>(loanDataModel.getLoanList());
+
+        // ID:tä ei voinu verrata suoraan jostain syystä. Pitäs tehä oma DB kutsu koko paskalle mut tämäkin toimii.
+        Predicate<Loan> aliasFilter = i -> i.getOwner().getName().equals(aliasDataModel.getCurrentAlias().getName());
+        filteredList.setPredicate(aliasFilter);
 
 
-    public void initModel(LoanDataModel model) throws IOException {
-        if (this.model != null) {
+        if(filteredList.size() < 1) {
+            LoanTableView.setItems(null);
+        } else {
+            LoanTableView.setItems(filteredList);
+        }
+
+    }
+
+    public void initModel(LoanDataModel loanDataModel, AliasDataModel aliasDataModel,PrimaryController primaryController) throws IOException {
+        if (this.loanDataModel != null && this.aliasDataModel != null) {
             throw new IllegalStateException("Model can only be initialized once");
         }
-        this.model = model;
-        LoanTableView.setItems(model.getLoanList());
-        ////////////////////////////////////////////
-        LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> model.setCurrentLoan(newSelection));
-        model.currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
+        this.loanDataModel = loanDataModel;
+        this.aliasDataModel = aliasDataModel;
+        this.primaryController = primaryController;
+        updateView();
+
+        LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> loanDataModel.setCurrentLoan(newSelection));
+        loanDataModel.currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
             if (newLoan == null) {
                 LoanTableView.getSelectionModel().clearSelection();
             } else {
                 LoanTableView.getSelectionModel().select(newLoan);
                 try {
                     FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
-                    LoanDetailsAnchorPane.getChildren().setAll((Node) loanDetails.load());
+                    LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
                     LoanDetailController loanDetailController = loanDetails.getController();
-                    loanDetailController.display(model);
+                    loanDetailController.display(loanDataModel, aliasDataModel);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        //Lender.setCellValueFactory(lender -> new SimpleObjectProperty(lender.getValue().getOwner().getName()));
+        Id.setCellValueFactory(new PropertyValueFactory<>("id"));
         Debtor.setCellValueFactory(victim -> new SimpleObjectProperty(victim.getValue().getVictim().getName()));
         Amount.setCellValueFactory(amount -> amount.getValue().valueProperty().asObject());
-        //Interest.setCellValueFactory(interest -> interest.getValue().interestProperty().asObject());
-        //Date.setCellValueFactory(startDate -> startDate.getValue().startDateProperty());
-        //DueDate.setCellValueFactory(dueDate -> dueDate.getValue().dueDateProperty());
+        DueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
     }
-
-    //System.out.println(model.getCurrentLoan());
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
-
 }
 
 

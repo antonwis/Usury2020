@@ -1,16 +1,34 @@
 package fi.metropolia.group8.view;
 
-import javafx.event.ActionEvent;
+import fi.metropolia.group8.model.*;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import java.io.IOException;
+
+import java.time.LocalDate;
 
 public class NewLoanController {
+
+    @FXML
+    private TextField nameField;
+
+    @FXML
+    private TextField addressField;
+
+    @FXML
+    private TextArea descriptionField;
+
+    @FXML
+    private TextField amountField;
+
+    @FXML
+    private TextField interestField;
+
+    @FXML
+    private DatePicker dueDatepicker;
 
     @FXML
     private Button loanConfirmButton;
@@ -18,28 +36,46 @@ public class NewLoanController {
     @FXML
     private Button loanCancelButton;
 
+    private Stage stage;
+    private LoanListController loanListController;
+    private LoanDataModel loanDataModel;
+    private AliasDataModel aliasDataModel;
+    private LoanCalculator loanCalculator;
+    private PrimaryController primaryController;
+
     @FXML
-    void loanCancel(ActionEvent event) {
-        newLoan.close();
+    void loanCancel() {
+        System.out.println(loanDataModel);
+        System.out.println(loanListController);
+        System.out.println(stage);
+        stage.close();
     }
 
     @FXML
-    void loanConfirm(ActionEvent event) {
-        System.out.println("LOOOL");
+    void loanConfirm() {
+        Victim victim = new Victim(nameField.getText(), addressField.getText(), descriptionField.getText());
+        Loan loan = new Loan(
+                aliasDataModel.getCurrentAlias(),
+                Float.parseFloat(amountField.getText()),
+                victim,
+                LocalDate.now(),
+                LocalDate.from(dueDatepicker.getValue()),
+                Float.parseFloat(interestField.getText())
+            );
+        loanDataModel.saveData(loan, victim, aliasDataModel.getCurrentAlias());
+        aliasDataModel.loadData();
+        loanCalculator = new LoanCalculator(loanDataModel, aliasDataModel);
+        loanCalculator.updateEquity(aliasDataModel.getCurrentAlias(), loan);
+        loanListController.refreshLoans();
+        primaryController.setCurrentAliasText();
+        stage.close();
     }
 
-
-    private static Stage newLoan;
-
-    public static void display() throws IOException {
-        newLoan = new Stage();
-        newLoan.initModality(Modality.APPLICATION_MODAL);
-        newLoan.setResizable(false);
-        FXMLLoader loan = new FXMLLoader();
-        AnchorPane newLoanFxml = FXMLLoader.load(NewLoanController.class.getResource("newLoan.fxml"));
-        NewLoanController newLoanController = loan.getController();
-        Scene scene = new Scene(newLoanFxml, 430, 525);
-        newLoan.setScene(scene);
-        newLoan.show();
+    public void TransferMemes(LoanListController loanListController, LoanDataModel loanDataModel, AliasDataModel aliasDataModel, Stage stage,PrimaryController primaryController) {
+        this.loanListController = loanListController;
+        this.loanDataModel = loanDataModel;
+        this.aliasDataModel = aliasDataModel;
+        this.primaryController = primaryController;
+        this.stage = stage;
     }
 }
