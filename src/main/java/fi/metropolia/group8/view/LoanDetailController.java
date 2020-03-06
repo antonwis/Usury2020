@@ -2,8 +2,13 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.*;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.ImageView;
+
+import java.io.IOException;
 
 public class LoanDetailController {
 
@@ -16,7 +21,7 @@ public class LoanDetailController {
     @FXML
     private Label TotalDebt;
     @FXML
-    private Label Interest;
+    private Spinner Interest;
     @FXML
     private Label DueDate;
     @FXML
@@ -33,11 +38,37 @@ public class LoanDetailController {
     private LoanDataModel loanDataModel;
     private AliasDataModel aliasDataModel;
     private LoanCalculator loanCalculator;
+    private LoanListController loanListController;
 
-    public void display(LoanDataModel loanDataModel, AliasDataModel aliasDataModel) {
+    @FXML
+    private Button enforceP;
+    @FXML
+    private Button modifyL;
+    @FXML
+    private Button completeL;
+
+    @FXML
+    void completeLoan() {
+
+    }
+
+    @FXML
+    void enforcePayment() {
+
+    }
+
+    @FXML
+    void modifyLoan() throws IOException {
+        Interest.commitValue();
+        loanCalculator.modifyLoan(loanDataModel.getCurrentLoan(), (float) (double) Interest.getValue());
+        loanListController.refreshDetails();
+    }
+
+    public void display(LoanDataModel loanDataModel, AliasDataModel aliasDataModel, LoanListController loanListController) {
 
         this.loanDataModel = loanDataModel;
         this.aliasDataModel = aliasDataModel;
+        this.loanListController = loanListController;
         loanCalculator = new LoanCalculator(loanDataModel, aliasDataModel);
 
         // Detail header
@@ -54,7 +85,9 @@ public class LoanDetailController {
         DebtRemaining.setText(String.valueOf(loanCalculator.getLoanTotalSum(loanDataModel.getCurrentLoan())));
 
         // Interest percentage
-        Interest.setText(String.valueOf(loanDataModel.getCurrentLoan().getInterest()));
+        //Interest.setText(String.valueOf(loanDataModel.getCurrentLoan().getInterest()));
+        SpinnerValueFactory spinnerValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1.0,1000.0,loanDataModel.getCurrentLoan().getInterest());
+        Interest.setValueFactory(spinnerValueFactory);
 
         // Interest profit
         ProjectedEarnings.setText(String.valueOf(loanCalculator.getInterestProfit(loanDataModel.getCurrentLoan())));
@@ -63,12 +96,5 @@ public class LoanDetailController {
         VictimName.setText(loanDataModel.getCurrentLoan().getVictim().getName());
         VictimAddress.setText(loanDataModel.getCurrentLoan().getVictim().getAddress());
         VictimDescription.setText(loanDataModel.getCurrentLoan().getVictim().getDescription());
-    }
-
-    // Placeholder
-    public void modifyLoan() {
-
-        float newInterest = 10;
-        loanCalculator.modifyLoan(loanDataModel.getCurrentLoan(), newInterest);
     }
 }

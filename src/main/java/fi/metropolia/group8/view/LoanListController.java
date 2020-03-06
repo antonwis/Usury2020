@@ -46,7 +46,6 @@ public class LoanListController {
     private Button newLoanButton;
 
     private NewLoanController newLoanController;
-
     private LoanDataModel loanDataModel;
     private AliasDataModel aliasDataModel;
     private PrimaryController primaryController;
@@ -93,6 +92,12 @@ public class LoanListController {
         }
 
     }
+    public void refreshDetails() throws IOException {
+        FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
+        LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
+        LoanDetailController loanDetailController = loanDetails.getController();
+        loanDetailController.display(loanDataModel, aliasDataModel,this);
+    }
 
     public void initModel(LoanDataModel loanDataModel, AliasDataModel aliasDataModel,PrimaryController primaryController) throws IOException {
         if (this.loanDataModel != null && this.aliasDataModel != null) {
@@ -110,10 +115,7 @@ public class LoanListController {
             } else {
                 LoanTableView.getSelectionModel().select(newLoan);
                 try {
-                    FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
-                    LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
-                    LoanDetailController loanDetailController = loanDetails.getController();
-                    loanDetailController.display(loanDataModel, aliasDataModel);
+                    refreshDetails();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
