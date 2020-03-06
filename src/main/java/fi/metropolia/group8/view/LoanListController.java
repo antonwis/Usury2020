@@ -77,6 +77,7 @@ public class LoanListController {
     // Updates view with loans owned by current alias
     public void refreshLoans() {
 
+        loanDataModel.loadData();
         FilteredList<Loan> filteredList = new FilteredList<>(loanDataModel.getLoanList());
         // ID:tä ei voinu verrata suoraan jostain syystä. Pitäs tehä oma DB kutsu koko paskalle mut tämäkin toimii.
         Predicate<Loan> aliasFilter = i -> i.getOwner().getName().equals(aliasDataModel.getCurrentAlias().getName());
@@ -89,7 +90,6 @@ public class LoanListController {
         }
 
     }
-
 
     public void initModel(LoanDataModel loanDataModel, AliasDataModel aliasDataModel) throws IOException {
         if (this.loanDataModel != null && this.aliasDataModel != null) {

@@ -34,6 +34,20 @@ public class LoanCalculator {
         aliasDataModel.saveData(alias);
     }
 
+    // Add loan total value to alias equity and delete loan from database
+    public void completeLoan(Alias alias, Loan loan) {
+        float totalProfit = getLoanTotalSum(loan);
+        float newEquity = alias.getEquity() + totalProfit;
+        alias.setEquity(newEquity);
+        aliasDataModel.saveData(alias);
+        loanDataModel.deleteLoan(loan);
+    }
+
+    public void modifyLoan(Loan loan, float newInterest) {
+        loan.setInterest(newInterest);
+        loanDataModel.saveData(loan);
+    }
+
     public void CalculateInterest(Loan loan){
         this.amount = loan.getValue();
         this.interest = loan.getInterest();

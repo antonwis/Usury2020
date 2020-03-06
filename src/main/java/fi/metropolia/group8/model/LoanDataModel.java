@@ -42,4 +42,15 @@ public class LoanDataModel {
         usuryDAO.updateVictim(victim);
         usuryDAO.updateLoan(loan);
     }
+
+    public void saveData(Loan loan) {
+        UsuryDAO usuryDAO = new UsuryDAO();
+        usuryDAO.updateLoan(loan);
+    }
+
+    public void deleteLoan(Loan loan) {
+        UsuryDAO usuryDAO = new UsuryDAO();
+        usuryDAO.deleteLoan(loan);
+    }
+
 }

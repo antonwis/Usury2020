@@ -1,9 +1,6 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.AliasDataModel;
-import fi.metropolia.group8.model.Loan;
-import fi.metropolia.group8.model.LoanCalculator;
-import fi.metropolia.group8.model.LoanDataModel;
+import fi.metropolia.group8.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -33,10 +30,14 @@ public class LoanDetailController {
     @FXML
     private Label VictimDescription;
 
+    private LoanDataModel loanDataModel;
+    private AliasDataModel aliasDataModel;
     private LoanCalculator loanCalculator;
 
     public void display(LoanDataModel loanDataModel, AliasDataModel aliasDataModel) {
 
+        this.loanDataModel = loanDataModel;
+        this.aliasDataModel = aliasDataModel;
         loanCalculator = new LoanCalculator(loanDataModel, aliasDataModel);
 
         // Detail header
@@ -62,5 +63,12 @@ public class LoanDetailController {
         VictimName.setText(loanDataModel.getCurrentLoan().getVictim().getName());
         VictimAddress.setText(loanDataModel.getCurrentLoan().getVictim().getAddress());
         VictimDescription.setText(loanDataModel.getCurrentLoan().getVictim().getDescription());
+    }
+
+    // Placeholder
+    public void modifyLoan() {
+
+        float newInterest = 10;
+        loanCalculator.modifyLoan(loanDataModel.getCurrentLoan(), newInterest);
     }
 }
