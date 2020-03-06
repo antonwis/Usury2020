@@ -40,6 +40,7 @@ public class NewLoanController {
     private LoanListController loanListController;
     private LoanDataModel loanDataModel;
     private AliasDataModel aliasDataModel;
+    private LoanCalculator loanCalculator;
 
     @FXML
     void loanCancel() {
@@ -51,7 +52,6 @@ public class NewLoanController {
 
     @FXML
     void loanConfirm() {
-        //Alias alias = new Alias("Teppo Testi", "Nenäklubin jäsen", 9001);
         Victim victim = new Victim(nameField.getText(), addressField.getText(), descriptionField.getText());
         Loan loan = new Loan(
                 aliasDataModel.getCurrentAlias(),
@@ -62,7 +62,9 @@ public class NewLoanController {
                 Float.parseFloat(interestField.getText())
             );
         loanDataModel.saveData(loan, victim, aliasDataModel.getCurrentAlias());
-        loanListController.updateView();
+        loanCalculator = new LoanCalculator(loanDataModel, aliasDataModel);
+        loanCalculator.updateEquity(aliasDataModel.getCurrentAlias(), loan);
+        loanListController.refreshLoans();
         stage.close();
     }
 

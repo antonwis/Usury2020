@@ -41,7 +41,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-                <Label alignment="CENTER" prefHeight="62.0" prefWidth="147.0" text="Total Debt:">
+                <Label alignment="CENTER" prefHeight="62.0" prefWidth="147.0" text="Original loan:">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -49,13 +49,13 @@
                 <Label fx:id="TotalDebt" prefHeight="38.0" prefWidth="155.0" text="totalDebtField" GridPane.columnIndex="1" />
                 <Label alignment="CENTER" prefHeight="38.0" prefWidth="150.0" text="Issue date:" GridPane.columnIndex="2" />
                 <Label fx:id="IssueDate" prefHeight="74.0" prefWidth="185.0" text="issueDateField" GridPane.columnIndex="3" />
-                <Label alignment="CENTER" prefHeight="79.0" prefWidth="149.0" text="Remaining:" GridPane.rowIndex="1" />
+                <Label alignment="CENTER" prefHeight="79.0" prefWidth="149.0" text="Debt Remaining:" GridPane.rowIndex="1" />
                 <Label fx:id="DebtRemaining" prefHeight="68.0" prefWidth="178.0" text="remainingField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <Label alignment="CENTER" prefHeight="37.0" prefWidth="143.0" text="Due date:" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                 <Label fx:id="DueDate" prefHeight="62.0" prefWidth="173.0" text="dueDateField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                 <Label alignment="CENTER" prefHeight="111.0" prefWidth="138.0" text="Interest(%):" GridPane.rowIndex="2" />
                 <Label fx:id="Interest" prefHeight="60.0" prefWidth="164.0" text="interestField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Label alignment="CENTER" prefHeight="37.0" prefWidth="134.0" text="Projected earnings:" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                <Label alignment="CENTER" prefHeight="37.0" prefWidth="134.0" text="Interest Profit:" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                 <Label fx:id="ProjectedEarnings" prefHeight="58.0" prefWidth="157.0" text="projectedEarningsField" GridPane.columnIndex="3" GridPane.rowIndex="2" />
          </children>
       </GridPane>

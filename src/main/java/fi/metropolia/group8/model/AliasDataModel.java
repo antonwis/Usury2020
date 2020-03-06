@@ -47,8 +47,9 @@ public class AliasDataModel {
         );
     }
 
-    public void saveData(File file) {
-        // kys
+    public void saveData(Alias alias) {
+        UsuryDAO usuryDAO = new UsuryDAO();
+        usuryDAO.updateAlias(alias);
     }
     public void addNewAlias(String name, String description, int equity){
         Alias alias = new Alias(name,description,equity);
