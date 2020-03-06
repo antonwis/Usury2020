@@ -49,6 +49,7 @@ public class LoanListController {
 
     private LoanDataModel loanDataModel;
     private AliasDataModel aliasDataModel;
+    private PrimaryController primaryController;
 
     @FXML
     void newLoan() throws IOException {
@@ -59,7 +60,7 @@ public class LoanListController {
         FXMLLoader loan = new FXMLLoader(getClass().getResource("newLoan.fxml"));
         Parent root = loan.load();
         NewLoanController newLoanController = loan.getController();
-        newLoanController.TransferMemes(this, loanDataModel, aliasDataModel, stage);
+        newLoanController.TransferMemes(this, loanDataModel, aliasDataModel, stage,primaryController);
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -93,12 +94,13 @@ public class LoanListController {
 
     }
 
-    public void initModel(LoanDataModel loanDataModel, AliasDataModel aliasDataModel) throws IOException {
+    public void initModel(LoanDataModel loanDataModel, AliasDataModel aliasDataModel,PrimaryController primaryController) throws IOException {
         if (this.loanDataModel != null && this.aliasDataModel != null) {
             throw new IllegalStateException("Model can only be initialized once");
         }
         this.loanDataModel = loanDataModel;
         this.aliasDataModel = aliasDataModel;
+        this.primaryController = primaryController;
         updateView();
 
         LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> loanDataModel.setCurrentLoan(newSelection));
