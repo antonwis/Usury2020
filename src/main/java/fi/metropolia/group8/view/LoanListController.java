@@ -109,7 +109,7 @@ public class LoanListController {
                     FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
                     LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
                     LoanDetailController loanDetailController = loanDetails.getController();
-                    loanDetailController.display(loanDataModel);
+                    loanDetailController.display(loanDataModel, aliasDataModel);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
