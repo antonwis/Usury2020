@@ -103,6 +103,7 @@ public class MenubarController {
                 aliasDataModel.setCurrentAlias(alias);
                 primaryController.setCurrentAliasText();
                 menuItem.setSelected(true);
+                loanListController.refreshLoans();
             }
         });
         aliasMenu.getItems().add(menuItem);

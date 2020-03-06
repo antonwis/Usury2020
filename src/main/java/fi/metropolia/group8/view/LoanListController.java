@@ -76,11 +76,13 @@ public class LoanListController {
 
     // Updates view with loans owned by current alias
     public void refreshLoans() {
-
+        loanDataModel.loadData();
         FilteredList<Loan> filteredList = new FilteredList<>(loanDataModel.getLoanList());
+
         // ID:tä ei voinu verrata suoraan jostain syystä. Pitäs tehä oma DB kutsu koko paskalle mut tämäkin toimii.
         Predicate<Loan> aliasFilter = i -> i.getOwner().getName().equals(aliasDataModel.getCurrentAlias().getName());
         filteredList.setPredicate(aliasFilter);
+
 
         if(filteredList.size() < 1) {
             LoanTableView.setItems(null);
