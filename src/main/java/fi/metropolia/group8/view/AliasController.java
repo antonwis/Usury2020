@@ -10,13 +10,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 public class AliasController {
 
@@ -70,14 +72,21 @@ public class AliasController {
 
 
     @FXML
-    void addNewAlias(ActionEvent e) throws IOException {
-        String name = nameField.getText();
-        Integer equity = Integer.parseInt(equityField.getText());
-        String description = descriptionArea.getText();
+    void addNewAlias(ActionEvent e) {
 
-        this.aliasDataModel.addNewAlias(name, description, equity);
-        this.menubarController.updateView(this.aliasDataModel);
-        stage.close();
+        try {
+            String name = nameField.getText();
+            Integer equity = Integer.parseInt(equityField.getText());
+            String description = descriptionArea.getText();
+
+            this.aliasDataModel.addNewAlias(name, description, equity);
+            this.menubarController.updateView(this.aliasDataModel);
+            stage.close();
+        }catch (NumberFormatException numE){
+            equityField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(3))));
+        }
+
+
     }
 
     @FXML

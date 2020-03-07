@@ -104,6 +104,9 @@ public class PrimaryController {
             catch (Exception e) {
                 e.printStackTrace();
             }
+        }else {
+            primaryCurrentAlias.setText("No current alias Selected");
+            primaryCurrentEquity.setText("");
         }
     }
 

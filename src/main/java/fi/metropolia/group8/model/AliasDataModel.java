@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AliasDataModel {
 
-    private MenubarController menubarController = new MenubarController();
+
 
     //alias -> new Observable[] {alias.nameProperty(), alias.equityProperty()}
     private final ObservableList<Alias> aliasList = FXCollections.observableArrayList();

@@ -25,12 +25,14 @@ public class ModifyAliasesController {
     private AliasDataModel aliasDataModel;
     private Stage stage;
     private MenubarController menubarController;
+    private PrimaryController primaryController;
 
-    public void init(AliasController aliasController, AliasDataModel aliasDataModel, Stage stage, MenubarController menubarController){
+    public void init(AliasController aliasController, AliasDataModel aliasDataModel, Stage stage, MenubarController menubarController, PrimaryController primaryController){
         this.aliasController = aliasController;
         this.aliasDataModel = aliasDataModel;
         this.stage = stage;
         this.menubarController = menubarController;
+        this.primaryController = primaryController;
 
         for(Alias alias : aliasDataModel.getAliasList()){
 
@@ -46,17 +48,54 @@ public class ModifyAliasesController {
             delete.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
+                    if(aliasDataModel.getCurrentAlias() == alias){
+                        aliasDataModel.setCurrentAlias(null);
+
+                    }
                     aliasDataModel.deleteAlias(alias);
                     aliasDataModel.loadData();
                     menubarController.updateView(aliasDataModel);
+                    primaryController.setCurrentAliasText();
+                    updateView();
                 }
             });
             hBox1.getChildren().addAll(label,modify,delete);
-
-
-
             aliasBox.getChildren().add(hBox1);
         }
+    }
+    public void updateView() {
+        aliasDataModel.loadData();
+        aliasBox.getChildren().clear();
+        for (Alias alias : aliasDataModel.getAliasList()) {
 
+            HBox hBox1 = new HBox();
+            hBox1.setSpacing(10);
+            Label label = new Label(alias.getName());
+            label.setPrefWidth(300);
+            label.setMinWidth(50);
+            Button modify = new Button("Modify");
+            modify.setMinWidth(60);
+            Button delete = new Button("Delete");
+            delete.setMinWidth(60);
+            delete.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (aliasDataModel.getCurrentAlias() == alias) {
+                        aliasDataModel.setCurrentAlias(null);
+
+                    }
+                    aliasDataModel.deleteAlias(alias);
+                    aliasDataModel.loadData();
+                    menubarController.updateView(aliasDataModel);
+                    primaryController.setCurrentAliasText();
+                    updateView();
+                }
+            });
+            hBox1.getChildren().addAll(label,modify,delete);
+            aliasBox.getChildren().add(hBox1);
+        }
+    }
+    public void closeWindow(){
+        stage.close();
     }
 }
