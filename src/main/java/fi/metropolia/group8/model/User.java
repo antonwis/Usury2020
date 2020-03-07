@@ -6,22 +6,18 @@ import javafx.beans.property.StringProperty;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name="User")
+@Access(value= AccessType.PROPERTY)
 public class User {
 
     private long id;
     private StringProperty name;
-
-    // TODO joku yhteys userille ja aliaksille
-    private Alias[] aliases;
-
 
     public User(){
         // Empty Constructor for hibernate
     }
     public User(String name){
         setName(name);
-
     }
 
     @Id

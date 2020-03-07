@@ -15,7 +15,6 @@ public class AliasDataModel {
 
     private MenubarController menubarController = new MenubarController();
 
-    //alias -> new Observable[] {alias.nameProperty(), alias.equityProperty()}
     private final ObservableList<Alias> aliasList = FXCollections.observableArrayList();
 
     private final ObjectProperty<Alias> currentAlias = new SimpleObjectProperty<>(null);
@@ -37,22 +36,17 @@ public class AliasDataModel {
     }
 
     public void loadData() {
-        // tänne DAOsetit tai luku tiedostosta tms.
         UsuryDAO usuryDAO = new UsuryDAO();
-        List<Alias> list =  usuryDAO.readAliases();
-
-        // Dummy aliases for testing purposes
-        aliasList.setAll(
-                list
-        );
+        aliasList.setAll(usuryDAO.readAliases());
     }
 
     public void saveData(Alias alias) {
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.updateAlias(alias);
     }
-    public void addNewAlias(String name, String description, int equity){
-        Alias alias = new Alias(name,description,equity);
+
+    public void addNewAlias(User user, String name, String description, int equity){
+        Alias alias = new Alias(user, name, description, equity);
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createAlias(alias);
         aliasList.addAll(alias);

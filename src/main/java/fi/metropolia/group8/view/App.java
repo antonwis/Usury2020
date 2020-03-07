@@ -1,6 +1,7 @@
 package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.LoanDataModel;
+import fi.metropolia.group8.model.UserDataModel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,15 +22,13 @@ public class App extends Application {
 
         primaryStage.setTitle("Khazar Simulator (Early Access)");
 
-        //FXMLLoader primary = new FXMLLoader();
         AnchorPane root = FXMLLoader.load(getClass().getResource("primary.fxml"));
 
-        //PrimaryController primaryController = primary.getController();
-
         Scene scene = new Scene(root, 1200, 800);
-        //Scene scene = new Scene(new AnchorPane());
 
-        LoginManager loginManager = new LoginManager(scene);
+        UserDataModel userDataModel = new UserDataModel();
+
+        LoginManager loginManager = new LoginManager(scene, userDataModel);
         loginManager.showLoginScreen();
 
         primaryStage.setScene(scene);

@@ -50,13 +50,15 @@ public class PrimaryController {
     private Label primaryCurrentEquity;
 
     private UsuryDAO dao = new UsuryDAO();
+    private User currentUser;
     private AliasDataModel aliasDataModel;
     private LoanDataModel loanDataModel;
     private Scene scene;
 
 
-    public void init(final LoginManager loginManager, String sessionID) {
+    public void init(final LoginManager loginManager, User currentUser, String sessionID) {
         try {
+            this.currentUser = currentUser;
             FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
@@ -68,8 +70,9 @@ public class PrimaryController {
             ObservableList<Alias> aliasList = aliasDataModel.getAliasList();
             loanListController.initModel(loanDataModel, aliasDataModel,this);
 
+
             AliasController aliasController = new AliasController();
-            aliasController.initModel(aliasDataModel);
+            aliasController.initModel(aliasDataModel, currentUser);
 
 
             FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));
