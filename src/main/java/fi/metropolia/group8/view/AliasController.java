@@ -12,10 +12,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
-import javafx.stage.Modality;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.converter.NumberStringConverter;
-import org.w3c.dom.Text;
+
+
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -78,12 +78,20 @@ public class AliasController {
             String name = nameField.getText();
             Integer equity = Integer.parseInt(equityField.getText());
             String description = descriptionArea.getText();
+            if(nameField.getText().isBlank()) {
+                nameField.setPromptText("You must choose a name");
+                nameField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
 
-            this.aliasDataModel.addNewAlias(name, description, equity);
-            this.menubarController.updateView(this.aliasDataModel);
-            stage.close();
+            }else{
+                this.aliasDataModel.addNewAlias(name, description, equity);
+                this.menubarController.updateView(this.aliasDataModel);
+                stage.close();
+            }
+
         }catch (NumberFormatException numE){
-            equityField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(3))));
+            equityField.setText("");
+            equityField.setPromptText("Equity must be a number");
+            equityField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
         }
 
 
