@@ -57,5 +57,9 @@ public class AliasDataModel {
         usuryDAO.createAlias(alias);
         aliasList.addAll(alias);
     }
+    public void deleteAlias(Alias alias){
+        UsuryDAO usuryDAO = new UsuryDAO();
+        usuryDAO.deleteAlias(alias);
+    }
 }
 

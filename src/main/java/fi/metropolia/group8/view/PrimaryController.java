@@ -81,7 +81,7 @@ public class PrimaryController {
 
             MenubarController menubarController = menuBarF.getController();
 
-            menubarController.init(aliasList, loginManager,aliasController,aliasDataModel,this, loanListController);
+            menubarController.init(loginManager,aliasController,aliasDataModel,this, loanListController);
 
             setCurrentAliasText();
 
