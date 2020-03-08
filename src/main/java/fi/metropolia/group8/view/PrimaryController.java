@@ -1,13 +1,12 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.*;
+import fi.metropolia.group8.model.Alias;
+import fi.metropolia.group8.model.DataModel;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,14 +17,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import jdk.jshell.spi.ExecutionControl;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 
 public class PrimaryController {
 
@@ -63,12 +57,10 @@ public class PrimaryController {
             loanListController.initModel(this);
 
             /// Overview
-            DataModel.getInstance().setCurrentAlias(DataModel.getInstance().getAliasList().get(0)); /// autism
             FXMLLoader overview = new FXMLLoader(getClass().getResource("Overview.fxml"));
             Overview.setContent(overview.load());
             OverviewController overviewController = overview.getController();
             overviewController.initModel(this);
-
 
 
             AliasController aliasController = new AliasController();
@@ -79,12 +71,12 @@ public class PrimaryController {
             VBox menuBar = menuBarF.load();
 
             primaryAnchor.getChildren().add(menuBar);
-            AnchorPane.setLeftAnchor(menuBar,0d);
-            AnchorPane.setTopAnchor(menuBar,0d);
+            AnchorPane.setLeftAnchor(menuBar, 0d);
+            AnchorPane.setTopAnchor(menuBar, 0d);
 
             MenubarController menubarController = menuBarF.getController();
 
-            menubarController.init(loginManager, aliasController,this, loanListController);
+            menubarController.init(loginManager, aliasController, this, loanListController, overviewController);
 
             setCurrentAliasText();
 
@@ -96,18 +88,18 @@ public class PrimaryController {
     public void initSessionID(final LoginManager loginManager, String sessionID) {
 
     }
-    public void setCurrentAliasText(){
+
+    public void setCurrentAliasText() {
 
         // Check if current alias exists
-        if(DataModel.getInstance().getCurrentAlias() != null) {
+        if (DataModel.getInstance().getCurrentAlias() != null) {
             try {
                 primaryCurrentAlias.setText(DataModel.getInstance().getCurrentAlias().getName());
                 primaryCurrentEquity.setText(Float.toString(DataModel.getInstance().getCurrentAlias().getEquity()));
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else {
+        } else {
             primaryCurrentAlias.setText("No current alias Selected");
             primaryCurrentEquity.setText("");
         }
@@ -117,7 +109,7 @@ public class PrimaryController {
     private void handleKeyInput(final InputEvent event) {
         if (event instanceof KeyEvent) {
             final KeyEvent keyEvent = (KeyEvent) event;
-            if(keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.Q) {
+            if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.Q) {
                 exitFunction();
             }
         }

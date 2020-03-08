@@ -15,6 +15,7 @@ public class Alias {
     private StringProperty name;
     private StringProperty description;
     private FloatProperty equity;
+    private IntegerProperty completedLoans;
 
 
     public Alias() {
@@ -26,6 +27,7 @@ public class Alias {
         setName(name);
         setDescription(description);
         setEquity(equity);
+        setCompletedLoans(0);
     }
 
     @Id
@@ -75,6 +77,16 @@ public class Alias {
     public FloatProperty equityProperty() {
         if(equity == null) equity = new SimpleFloatProperty(this, "equity");
         return equity;
+    }
+
+    public void setCompletedLoans(int value) { completedLoansProperty().set(value); }
+
+    @Column(name="completed_loans")
+    public int getCompletedLoans() { return completedLoansProperty().get(); }
+
+    public IntegerProperty completedLoansProperty() {
+        if(completedLoans == null) completedLoans = new SimpleIntegerProperty(this, "completedLoans");
+        return completedLoans;
     }
 
 
