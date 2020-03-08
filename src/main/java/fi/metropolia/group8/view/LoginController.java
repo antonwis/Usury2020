@@ -82,7 +82,7 @@ public class LoginController {
     void createNewUser() throws IOException {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setResizable(false);
+
 
         FXMLLoader newUser = new FXMLLoader(getClass().getResource("newUser.fxml"));
         Parent root = newUser.load();
