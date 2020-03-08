@@ -31,14 +31,16 @@ public class ModifyAliasController {
     private Stage stage;
     private MenubarController menubarController;
     private PrimaryController primaryController;
+    private OverviewController overviewController;
     private Alias alias;
 
-    public void init(AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController, Alias alias) {
+    public void init(AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController, OverviewController overviewController, Alias alias) {
         if (this.aliasController == null) {
             this.aliasController = aliasController;
             this.stage = stage;
             this.menubarController = menubarController;
             this.primaryController = primaryController;
+            this.overviewController = overviewController;
             this.alias = alias;
         }
 
@@ -53,7 +55,7 @@ public class ModifyAliasController {
         FXMLLoader modifyAlias = new FXMLLoader(getClass().getResource("modifyAliases.fxml"));
         Parent root = modifyAlias.load();
         ModifyAliasesController modifyAliasesController = modifyAlias.getController();
-        modifyAliasesController.init(aliasController, stage, menubarController, primaryController);
+        modifyAliasesController.init(aliasController, stage, menubarController, primaryController, overviewController);
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -94,6 +96,7 @@ public class ModifyAliasController {
                 }
                 primaryController.setCurrentAliasText();
                 menubarController.updateView();
+                overviewController.updateOverview();
                 stage.close();
 
             }
