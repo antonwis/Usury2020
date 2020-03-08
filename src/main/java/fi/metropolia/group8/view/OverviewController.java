@@ -57,7 +57,7 @@ public class OverviewController {
         filteredList.setPredicate(aliasFilter);
 
         /// Current User
-        user.setText(DataModel.getInstance().getCurrentUser().getName());
+        user.setText("Summary for " + DataModel.getInstance().getCurrentAlias().getName());
 
         // Current user alias list
         filter.setItems(filteredList);
@@ -72,8 +72,13 @@ public class OverviewController {
         loansComplete.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getCompletedLoans()));
         // Total Loans
         loans.setText(String.valueOf(Integer.sum(DataModel.getInstance().getCurrentAlias().getCompletedLoans(),DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).size())));
-        // loans due
-        loansDue.setText(String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getDueDate().isBefore(LocalDate.now())).size()));
+
+        // Active loans past due date
+        loansDue.setText((String.valueOf(DataModel.getInstance().getLoanList().filtered(
+                loan -> loan.getOwner().getName().equals(
+                        DataModel.getInstance().getCurrentAlias().getName())).filtered(
+                                loan -> loan.getDueDate().isBefore(LocalDate.now())).size()
+        )));
         // Profits
 
     }

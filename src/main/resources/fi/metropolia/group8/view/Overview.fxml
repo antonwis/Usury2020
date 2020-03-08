@@ -13,7 +13,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.OverviewController">
    <children>
-      <Label fx:id="user" layoutX="14.0" layoutY="14.0" prefHeight="45.0" prefWidth="240.0" text="User" textAlignment="CENTER" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+      <Label fx:id="user" layoutX="14.0" layoutY="14.0" prefHeight="45.0" prefWidth="500.0" text="User" textAlignment="CENTER" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font size="26.0" />
          </font>

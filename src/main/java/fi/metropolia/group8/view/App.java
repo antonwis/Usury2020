@@ -20,7 +20,7 @@ public class App extends Application {
 
         AnchorPane root = FXMLLoader.load(getClass().getResource("primary.fxml"));
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 1400, 800);
 
         LoginManager loginManager = new LoginManager(scene);
         loginManager.showLoginScreen();

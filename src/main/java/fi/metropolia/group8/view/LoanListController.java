@@ -119,7 +119,7 @@ public class LoanListController {
         FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
         LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
         LoanDetailController loanDetailController = loanDetails.getController();
-        loanDetailController.display(this, primaryController);
+        loanDetailController.display(this, primaryController, overviewController);
     }
 
     public void initModel(PrimaryController primaryController, OverviewController overviewController) throws IOException {

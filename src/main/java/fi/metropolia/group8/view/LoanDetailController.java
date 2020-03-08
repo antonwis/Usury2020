@@ -38,6 +38,7 @@ public class LoanDetailController {
     private LoanCalculator loanCalculator;
     private LoanListController loanListController;
     private PrimaryController primaryController;
+    private OverviewController overviewController;
 
     @FXML
     private Button enforceP;
@@ -52,6 +53,7 @@ public class LoanDetailController {
         DataModel.getInstance().loadAliasData();
         primaryController.setCurrentAliasText();
         loanListController.refreshLoans();
+        overviewController.updateOverview();
     }
 
     @FXML
@@ -66,10 +68,12 @@ public class LoanDetailController {
         loanListController.refreshDetails();
     }
 
-    public void display(LoanListController loanListController, PrimaryController primaryController) {
+    public void display(LoanListController loanListController, PrimaryController primaryController, OverviewController overviewController) {
 
         this.loanListController = loanListController;
         this.primaryController = primaryController;
+        this.overviewController = overviewController;
+
         loanCalculator = new LoanCalculator();
 
         // Detail header
