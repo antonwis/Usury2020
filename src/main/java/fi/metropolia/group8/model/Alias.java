@@ -3,6 +3,7 @@ package fi.metropolia.group8.model;
 import javafx.beans.property.*;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 
 
 @Entity
@@ -16,6 +17,8 @@ public class Alias {
     private StringProperty description;
     private FloatProperty equity;
     private IntegerProperty completedLoans;
+    private FloatProperty totalProfits;
+    private IntegerProperty enforcerActions;
 
 
     public Alias() {
@@ -87,6 +90,26 @@ public class Alias {
     public IntegerProperty completedLoansProperty() {
         if(completedLoans == null) completedLoans = new SimpleIntegerProperty(this, "completedLoans");
         return completedLoans;
+    }
+
+    public void setTotalProfits(float value) { totalProfitsProperty().set(value); }
+
+    @Column(name="total_profits")
+    public float getTotalProfits() { return totalProfitsProperty().get(); }
+
+    public FloatProperty totalProfitsProperty() {
+        if(totalProfits == null) totalProfits = new SimpleFloatProperty(this, "totalProfits");
+        return totalProfits;
+    }
+
+    public void setEnforcerActions(int value) { enforcerActionsProperty().set(value); }
+
+    @Column(name="enforcer_actions")
+    public int getEnforcerActions() { return enforcerActionsProperty().get(); }
+
+    public IntegerProperty enforcerActionsProperty() {
+        if(enforcerActions == null) enforcerActions = new SimpleIntegerProperty(this, "enforcerActions");
+        return enforcerActions;
     }
 
 

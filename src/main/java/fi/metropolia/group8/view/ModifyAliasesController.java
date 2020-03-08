@@ -40,7 +40,6 @@ public class ModifyAliasesController {
     }
     public void updateView() {
 
-        DataModel.getInstance().loadAliasData();
         FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
 
         Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());

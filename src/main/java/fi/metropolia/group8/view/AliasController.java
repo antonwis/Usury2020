@@ -44,6 +44,7 @@ public class AliasController {
     private MenubarController menubarController;
     private Stage stage;
     private PrimaryController primaryController;
+    private OverviewController overviewController;
 
     @FXML
     void addNewAlias(ActionEvent e) {
@@ -55,7 +56,6 @@ public class AliasController {
             Boolean alreadyExists = false;
             FilteredList<Alias> aliasList = new FilteredList<>(DataModel.getInstance().getAliasList());
 
-            // ID:tä ei voinu verrata suoraan jostain syystä. Pitäs tehä oma DB kutsu koko paskalle mut tämäkin toimii.
             Predicate<Alias> aliasFilter = i -> i.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
             aliasList.setPredicate(aliasFilter);
             for(Alias alias: aliasList){
@@ -82,6 +82,7 @@ public class AliasController {
                 DataModel.getInstance().setCurrentAlias(list.get(list.size()-1));
                 this.primaryController.setCurrentAliasText();
                 this.menubarController.updateView();
+                overviewController.updateOverview();
                 stage.close();
             }
 
@@ -98,10 +99,11 @@ public class AliasController {
         stage.close();
     }
 
-    public void display(MenubarController menubarController, Stage stage,PrimaryController primaryController) throws IOException {
+    public void display(MenubarController menubarController, Stage stage,PrimaryController primaryController, OverviewController overviewController) throws IOException {
         this.menubarController = menubarController;
         this.stage = stage;
         this.primaryController = primaryController;
+        this.overviewController = overviewController;
     }
 
 }

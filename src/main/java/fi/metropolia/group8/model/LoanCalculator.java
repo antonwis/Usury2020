@@ -29,12 +29,15 @@ public class LoanCalculator {
         DataModel.getInstance().saveAliasData(alias);
     }
 
-    // Add loan total value to alias equity and delete loan from database
+    // Update alias with loan values and delete completed loan from database
     public void completeLoan(Alias alias, Loan loan) {
-        float totalProfit = getLoanTotalSum(loan);
-        float newEquity = alias.getEquity() + totalProfit;
+        float totalSum = getLoanTotalSum(loan);
+        float totalProfit = getInterestProfit(loan);
+        float newProfitTotal = alias.getTotalProfits() + totalProfit;
+        float newEquity = alias.getEquity() + totalSum;
         int newCompletedLoans = alias.getCompletedLoans() + 1;
         alias.setEquity(newEquity);
+        alias.setTotalProfits(newProfitTotal);
         alias.setCompletedLoans(newCompletedLoans);
         DataModel.getInstance().saveAliasData(alias);
         DataModel.getInstance().deleteLoan(loan);

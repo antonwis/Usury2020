@@ -120,7 +120,7 @@ public class MenubarController {
         FXMLLoader alias = new FXMLLoader(getClass().getResource("newAlias.fxml"));
         Parent root = alias.load();
         aliasController = alias.getController();
-        aliasController.display(this, stage,primaryController);
+        aliasController.display(this, stage,primaryController, overviewController);
         stage.setScene(new Scene(root));
         stage.show();
     }
