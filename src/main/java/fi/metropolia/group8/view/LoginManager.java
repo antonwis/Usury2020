@@ -35,10 +35,8 @@ public class LoginManager {
         DataModel.getInstance().setCurrentUser(null);
         DataModel.getInstance().setCurrentAlias(null);
         DataModel.getInstance().setCurrentLoan(null);
+        System.out.println("Logout: All current properties set to null");
 
-        System.out.println(DataModel.getInstance().getCurrentAlias());
-        System.out.println(DataModel.getInstance().getCurrentUser());
-        System.out.println(DataModel.getInstance().getCurrentLoan());
         showLoginScreen();
     }
 
