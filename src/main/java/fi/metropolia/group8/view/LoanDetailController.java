@@ -114,7 +114,8 @@ public class LoanDetailController {
 
     @FXML
     void enforcePayment() {
-
+        loanCalculator.updateEnforcedActions(DataModel.getInstance().getCurrentAlias());
+        overviewController.updateOverview();
     }
 
     @FXML

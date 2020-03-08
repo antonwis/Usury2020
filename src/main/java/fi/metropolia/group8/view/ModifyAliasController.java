@@ -65,7 +65,6 @@ public class ModifyAliasController {
             String description = descriptionArea.getText();
 
             FilteredList<Alias> aliasList = new FilteredList<>(DataModel.getInstance().getAliasList());
-            // ID:tä ei voinu verrata suoraan jostain syystä. Pitäs tehä oma DB kutsu koko paskalle mut tämäkin toimii.
             Predicate<Alias> aliasFilter = i -> i.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
             aliasList.setPredicate(aliasFilter);
 
@@ -85,9 +84,6 @@ public class ModifyAliasController {
                     DataModel.getInstance().saveAliasData(alias);
                     DataModel.getInstance().loadAliasData();
                     DataModel.getInstance().setCurrentAlias(alias);
-                    this.primaryController.setCurrentAliasText();
-                    this.menubarController.updateView();
-                    stage.close();
                 }else{
                     alias.setName(name);
                     alias.setEquity(equity);
@@ -95,10 +91,10 @@ public class ModifyAliasController {
                     DataModel.getInstance().saveAliasData(alias);
                     DataModel.getInstance().loadAliasData();
 
-                    this.primaryController.setCurrentAliasText();
-                    this.menubarController.updateView();
-                    stage.close();
                 }
+                primaryController.setCurrentAliasText();
+                menubarController.updateView();
+                stage.close();
 
             }
 

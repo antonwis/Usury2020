@@ -59,6 +59,7 @@ public class ModifyAliasesController {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     try {
+                        DataModel.getInstance().setCurrentAlias(alias);
                         stage.close();
                         Stage stage = new Stage();
                         FXMLLoader modifyAlias = new FXMLLoader(getClass().getResource("modifyAlias.fxml"));
