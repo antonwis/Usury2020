@@ -9,12 +9,7 @@ public class LoanCalculator {
     private long daysBetween;
     private float finalSum;
 
-    private LoanDataModel loanDataModel;
-    private AliasDataModel aliasDataModel;
-
-    public LoanCalculator(LoanDataModel loanDataModel, AliasDataModel aliasDataModel) {
-        this.loanDataModel = loanDataModel;
-        this.aliasDataModel = aliasDataModel;
+    public LoanCalculator() {
     }
 
     public float getLoanTotalSum(Loan loan) {
@@ -31,7 +26,7 @@ public class LoanCalculator {
     public void updateEquity(Alias alias, Loan loan) {
         float newEquity = alias.getEquity() - loan.getValue();
         alias.setEquity(newEquity);
-        aliasDataModel.saveData(alias);
+        DataModel.getInstance().saveAliasData(alias);
     }
 
     // Add loan total value to alias equity and delete loan from database
@@ -39,13 +34,13 @@ public class LoanCalculator {
         float totalProfit = getLoanTotalSum(loan);
         float newEquity = alias.getEquity() + totalProfit;
         alias.setEquity(newEquity);
-        aliasDataModel.saveData(alias);
-        loanDataModel.deleteLoan(loan);
+        DataModel.getInstance().saveAliasData(alias);
+        DataModel.getInstance().deleteLoan(loan);
     }
 
     public void modifyLoan(Loan loan, float newInterest) {
         loan.setInterest(newInterest);
-        loanDataModel.saveData(loan);
+        DataModel.getInstance().saveLoanData(loan);
     }
 
     public void CalculateInterest(Loan loan){

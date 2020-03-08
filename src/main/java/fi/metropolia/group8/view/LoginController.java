@@ -1,5 +1,6 @@
 package fi.metropolia.group8.view;
 
+import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.User;
 import fi.metropolia.group8.model.UserDataModel;
 import javafx.event.*;
@@ -27,17 +28,15 @@ public class LoginController {
     @FXML private Button loginButton;
 
     private LoginManager loginManager;
-    private UserDataModel userDataModel;
 
     public void initialize() {}
 
-    public void initManager(final LoginManager loginManager, UserDataModel userDataModel) {
+    public void initManager(LoginManager loginManager) {
         this.loginManager = loginManager;
-        this.userDataModel = userDataModel;
         updateView();
 
-        userList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> userDataModel.setCurrentUser(newSelection));
-        userDataModel.currentUserProperty().addListener((obs, oldLoan, newUser) -> {
+        userList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentUser(newSelection));
+        DataModel.getInstance().currentUserProperty().addListener((obs, oldLoan, newUser) -> {
             if (newUser == null) {
                 userList.getSelectionModel().clearSelection();
             } else {
@@ -48,18 +47,17 @@ public class LoginController {
         loginButton.setOnAction(event -> {
             String sessionID = authorize();
             if (sessionID != null) {
-                userDataModel.setCurrentUser(userList.getSelectionModel().selectedItemProperty().getValue());
-                loginManager.authenticated(sessionID, userDataModel.getCurrentUser());
-                System.out.println("Logging in as: " + userDataModel.getCurrentUser().getName());
+                DataModel.getInstance().setCurrentUser(userList.getSelectionModel().selectedItemProperty().getValue());
+                loginManager.authenticated(sessionID);
+                System.out.println("Logging in as: " + DataModel.getInstance().getCurrentUser().getName());
             }
         });
 
     }
 
-
     public void updateView() {
-        userDataModel.loadData();
-        userList.setItems(userDataModel.getUserList());
+        DataModel.getInstance().loadUserData();
+        userList.setItems(DataModel.getInstance().getUserList());
     }
 
     /**
@@ -92,7 +90,7 @@ public class LoginController {
         FXMLLoader newUser = new FXMLLoader(getClass().getResource("newUser.fxml"));
         Parent root = newUser.load();
         NewUserController newUserController = newUser.getController();
-        newUserController.TransferMemes(this.userDataModel, stage);
+        newUserController.TransferMemes(stage, this);
         stage.setScene(new Scene(root));
         stage.show();
     }

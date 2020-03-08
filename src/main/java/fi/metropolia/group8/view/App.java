@@ -1,5 +1,6 @@
 package fi.metropolia.group8.view;
 
+import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.LoanDataModel;
 import fi.metropolia.group8.model.UserDataModel;
 import javafx.application.Application;
@@ -26,9 +27,7 @@ public class App extends Application {
 
         Scene scene = new Scene(root, 1200, 800);
 
-        UserDataModel userDataModel = new UserDataModel();
-
-        LoginManager loginManager = new LoginManager(scene, userDataModel);
+        LoginManager loginManager = new LoginManager(scene);
         loginManager.showLoginScreen();
 
         primaryStage.setScene(scene);

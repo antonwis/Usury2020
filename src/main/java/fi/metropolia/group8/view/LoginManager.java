@@ -15,20 +15,17 @@ import javafx.scene.input.KeyEvent;
 public class LoginManager {
 
     private Scene scene;
-    private UserDataModel userDataModel;
-    private User currentUser;
 
-    public LoginManager(Scene scene, UserDataModel userDataModel) {
+    public LoginManager(Scene scene) {
         this.scene = scene;
-        this.userDataModel = userDataModel;
     }
 
     /**
      * Callback method invoked to notify that a user has been authenticated.
      * Will show the main application screen.
      */
-    public void authenticated(String sessionID, User currentUser) {
-        showMainView(sessionID, currentUser);
+    public void authenticated(String sessionID) {
+        showMainView(sessionID);
     }
 
     /**
@@ -47,13 +44,13 @@ public class LoginManager {
             scene.setRoot(loader.load());
             LoginController controller =
                     loader.getController();
-            controller.initManager(this, userDataModel);
+            controller.initManager(this);
         } catch (IOException ex) {
             Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void showMainView(String sessionID, User currentUser) {
+    private void showMainView(String sessionID) {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("primary.fxml")
@@ -62,15 +59,10 @@ public class LoginManager {
 
             PrimaryController primaryController =
                     loader.getController();
-            primaryController.init(this, currentUser, sessionID);
+            primaryController.init(this, sessionID);
 
         } catch (IOException ex) {
             Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void showNewUserScreen() {
-
-    }
-
 }

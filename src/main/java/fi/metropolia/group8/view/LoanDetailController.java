@@ -35,8 +35,6 @@ public class LoanDetailController {
     @FXML
     private Label VictimDescription;
 
-    private LoanDataModel loanDataModel;
-    private AliasDataModel aliasDataModel;
     private LoanCalculator loanCalculator;
     private LoanListController loanListController;
     private PrimaryController primaryController;
@@ -50,8 +48,8 @@ public class LoanDetailController {
 
     @FXML
     void completeLoan() {
-        loanCalculator.completeLoan(aliasDataModel.getCurrentAlias(),loanDataModel.getCurrentLoan());
-        aliasDataModel.loadData();
+        loanCalculator.completeLoan(DataModel.getInstance().getCurrentAlias(), DataModel.getInstance().getCurrentLoan());
+        DataModel.getInstance().loadAliasData();
         primaryController.setCurrentAliasText();
         loanListController.refreshLoans();
     }
@@ -64,42 +62,40 @@ public class LoanDetailController {
     @FXML
     void modifyLoan() throws IOException {
         Interest.commitValue();
-        loanCalculator.modifyLoan(loanDataModel.getCurrentLoan(), (float) (double) Interest.getValue());
+        loanCalculator.modifyLoan(DataModel.getInstance().getCurrentLoan(), (float) (double) Interest.getValue());
         loanListController.refreshDetails();
     }
 
-    public void display(LoanDataModel loanDataModel, AliasDataModel aliasDataModel, LoanListController loanListController, PrimaryController primaryController) {
+    public void display(LoanListController loanListController, PrimaryController primaryController) {
 
-        this.loanDataModel = loanDataModel;
-        this.aliasDataModel = aliasDataModel;
         this.loanListController = loanListController;
         this.primaryController = primaryController;
-        loanCalculator = new LoanCalculator(loanDataModel, aliasDataModel);
+        loanCalculator = new LoanCalculator();
 
         // Detail header
-        LoanDetailHeader.setText(String.format("Details for loan %s", loanDataModel.getCurrentLoan().getId()));
+        LoanDetailHeader.setText(String.format("Details for loan %s", DataModel.getInstance().getCurrentLoan().getId()));
 
         // Dates
-        IssueDate.setText(loanDataModel.getCurrentLoan().getStartDate().toString());
-        DueDate.setText(loanDataModel.getCurrentLoan().getDueDate().toString());
+        IssueDate.setText(DataModel.getInstance().getCurrentLoan().getStartDate().toString());
+        DueDate.setText(DataModel.getInstance().getCurrentLoan().getDueDate().toString());
 
         // Original loaned sum
-        TotalDebt.setText(String.valueOf(loanDataModel.getCurrentLoan().getValue()));
+        TotalDebt.setText(String.valueOf(DataModel.getInstance().getCurrentLoan().getValue()));
 
         // Total Debt remaining
-        DebtRemaining.setText(String.valueOf(loanCalculator.getLoanTotalSum(loanDataModel.getCurrentLoan())));
+        DebtRemaining.setText(String.valueOf(loanCalculator.getLoanTotalSum(DataModel.getInstance().getCurrentLoan())));
 
         // Interest percentage
         //Interest.setText(String.valueOf(loanDataModel.getCurrentLoan().getInterest()));
-        SpinnerValueFactory spinnerValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1.0,1000.0,loanDataModel.getCurrentLoan().getInterest());
+        SpinnerValueFactory spinnerValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1.0,1000.0, DataModel.getInstance().getCurrentLoan().getInterest());
         Interest.setValueFactory(spinnerValueFactory);
 
         // Interest profit
-        ProjectedEarnings.setText(String.valueOf(loanCalculator.getInterestProfit(loanDataModel.getCurrentLoan())));
+        ProjectedEarnings.setText(String.valueOf(loanCalculator.getInterestProfit(DataModel.getInstance().getCurrentLoan())));
 
         // Victim details
-        VictimName.setText(loanDataModel.getCurrentLoan().getVictim().getName());
-        VictimAddress.setText(loanDataModel.getCurrentLoan().getVictim().getAddress());
-        VictimDescription.setText(loanDataModel.getCurrentLoan().getVictim().getDescription());
+        VictimName.setText(DataModel.getInstance().getCurrentLoan().getVictim().getName());
+        VictimAddress.setText(DataModel.getInstance().getCurrentLoan().getVictim().getAddress());
+        VictimDescription.setText(DataModel.getInstance().getCurrentLoan().getVictim().getDescription());
     }
 }

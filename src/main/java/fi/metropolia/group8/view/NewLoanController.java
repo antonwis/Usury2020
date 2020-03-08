@@ -38,16 +38,11 @@ public class NewLoanController {
 
     private Stage stage;
     private LoanListController loanListController;
-    private LoanDataModel loanDataModel;
-    private AliasDataModel aliasDataModel;
     private LoanCalculator loanCalculator;
     private PrimaryController primaryController;
 
     @FXML
     void loanCancel() {
-        System.out.println(loanDataModel);
-        System.out.println(loanListController);
-        System.out.println(stage);
         stage.close();
     }
 
@@ -55,26 +50,24 @@ public class NewLoanController {
     void loanConfirm() {
         Victim victim = new Victim(nameField.getText(), addressField.getText(), descriptionField.getText());
         Loan loan = new Loan(
-                aliasDataModel.getCurrentAlias(),
+                DataModel.getInstance().getCurrentAlias(),
                 Float.parseFloat(amountField.getText()),
                 victim,
                 LocalDate.now(),
                 LocalDate.from(dueDatepicker.getValue()),
                 Float.parseFloat(interestField.getText())
             );
-        loanDataModel.saveData(loan, victim, aliasDataModel.getCurrentAlias());
-        aliasDataModel.loadData();
-        loanCalculator = new LoanCalculator(loanDataModel, aliasDataModel);
-        loanCalculator.updateEquity(aliasDataModel.getCurrentAlias(), loan);
+        DataModel.getInstance().saveLoanData(loan, victim, DataModel.getInstance().getCurrentAlias());
+        DataModel.getInstance().loadAliasData();
+        loanCalculator = new LoanCalculator();
+        loanCalculator.updateEquity(DataModel.getInstance().getCurrentAlias(), loan);
         loanListController.refreshLoans();
         primaryController.setCurrentAliasText();
         stage.close();
     }
 
-    public void TransferMemes(LoanListController loanListController, LoanDataModel loanDataModel, AliasDataModel aliasDataModel, Stage stage,PrimaryController primaryController) {
+    public void TransferMemes(LoanListController loanListController, Stage stage, PrimaryController primaryController) {
         this.loanListController = loanListController;
-        this.loanDataModel = loanDataModel;
-        this.aliasDataModel = aliasDataModel;
         this.primaryController = primaryController;
         this.stage = stage;
     }
