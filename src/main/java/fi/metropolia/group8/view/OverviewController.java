@@ -51,7 +51,7 @@ public class OverviewController {
         DataModel.getInstance().loadAliasData();
         filter.setItems(DataModel.getInstance().getAliasList());
         /// Current alias
-        user.setText(DataModel.getInstance().getCurrentAlias().getName());
+        user.setText(DataModel.getInstance().getCurrentUser().getName());
         // balance
         balance.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEquity()));
         // loans active

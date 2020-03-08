@@ -45,7 +45,7 @@ public class LoginController {
 
         loginButton.setOnAction(event -> {
             String sessionID = authorize();
-            if (sessionID != null) {
+            if (sessionID != null && !userList.getSelectionModel().isEmpty()) {
                 DataModel.getInstance().setCurrentUser(userList.getSelectionModel().selectedItemProperty().getValue());
                 loginManager.authenticated(sessionID);
                 System.out.println("Logging in as: " + DataModel.getInstance().getCurrentUser().getName());
@@ -66,10 +66,8 @@ public class LoginController {
      * otherwise, return null.
      */
     private String authorize() {
-        return
-                "password".equals(password.getText())
-                        ? generateSessionID()
-                        : null;
+        //return "password".equals(password.getText()) ? generateSessionID() : null;
+        return generateSessionID();
     }
 
     private static int sessionID = 0;
