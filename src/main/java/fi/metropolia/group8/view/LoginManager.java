@@ -3,8 +3,7 @@ package fi.metropolia.group8.view;
 import java.io.IOException;
 import java.util.logging.*;
 
-import fi.metropolia.group8.model.User;
-import fi.metropolia.group8.model.UserDataModel;
+import fi.metropolia.group8.model.DataModel;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
@@ -33,6 +32,13 @@ public class LoginManager {
      * Will show the login application screen.
      */
     public void logout() {
+        DataModel.getInstance().setCurrentUser(null);
+        DataModel.getInstance().setCurrentAlias(null);
+        DataModel.getInstance().setCurrentLoan(null);
+
+        System.out.println(DataModel.getInstance().getCurrentAlias());
+        System.out.println(DataModel.getInstance().getCurrentUser());
+        System.out.println(DataModel.getInstance().getCurrentLoan());
         showLoginScreen();
     }
 
