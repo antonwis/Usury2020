@@ -40,6 +40,7 @@ public class NewLoanController {
     private LoanListController loanListController;
     private LoanCalculator loanCalculator;
     private PrimaryController primaryController;
+    private OverviewController overviewController;
 
     @FXML
     void loanCancel() {
@@ -63,12 +64,15 @@ public class NewLoanController {
         loanCalculator.updateEquity(DataModel.getInstance().getCurrentAlias(), loan);
         loanListController.refreshLoans();
         primaryController.setCurrentAliasText();
+        overviewController.updateOverview();
         stage.close();
     }
 
-    public void TransferMemes(LoanListController loanListController, Stage stage, PrimaryController primaryController) {
+    public void TransferMemes(LoanListController loanListController, Stage stage, PrimaryController primaryController, OverviewController overviewController) {
         this.loanListController = loanListController;
         this.primaryController = primaryController;
         this.stage = stage;
+        this.overviewController = overviewController;
+
     }
 }

@@ -65,10 +65,11 @@ public class MenubarController {
     public void updateView() {
 
         DataModel.getInstance().loadAliasData();
-        FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
 
+        FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
         Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
         filteredList.setPredicate(aliasFilter);
+
         sub.getItems().clear();
         System.out.println(filteredList);
 

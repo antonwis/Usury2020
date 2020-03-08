@@ -47,6 +47,7 @@ public class LoanListController {
 
     private NewLoanController newLoanController;
     private PrimaryController primaryController;
+    private OverviewController overviewController;
 
     @FXML
     void newLoan() throws IOException {
@@ -57,7 +58,7 @@ public class LoanListController {
         FXMLLoader loan = new FXMLLoader(getClass().getResource("newLoan.fxml"));
         Parent root = loan.load();
         NewLoanController newLoanController = loan.getController();
-        newLoanController.TransferMemes(this, stage, primaryController);
+        newLoanController.TransferMemes(this, stage, primaryController, overviewController);
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -109,11 +110,10 @@ public class LoanListController {
         loanDetailController.display(this, primaryController);
     }
 
-    public void initModel(PrimaryController primaryController) throws IOException {
+    public void initModel(PrimaryController primaryController, OverviewController overviewController) throws IOException {
         if (this.primaryController == null) {
             this.primaryController = primaryController;
-
-        //refreshLoans();
+            this.overviewController = overviewController;
 
         LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentLoan(newSelection));
         DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {

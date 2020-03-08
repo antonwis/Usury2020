@@ -26,8 +26,6 @@ public class AliasController {
 
     private static Stage aliasWindow;
 
-
-
     @FXML
     private Button AddAlias;
     @FXML
@@ -44,30 +42,6 @@ public class AliasController {
 
     private MenubarController menubarController;
     private Stage stage;
-
-    public void initModel() {
-
-        DataModel.getInstance().currentAliasProperty().addListener((obs, oldAlias, newAlias) -> {
-
-            /*
-            if(oldAlias != null) {
-                nameField.textProperty().unbindBidirectional(oldAlias.nameProperty());
-                equityField.textProperty().unbindBidirectional(oldAlias.equityProperty());
-                descriptionField.textProperty().unbindBidirectional(oldAlias.descriptionProperty());
-            }
-            if(newAlias == null) {
-                nameField.setText("");
-                equityField.setText("");
-                descriptionField.setText("");
-            } else {
-                nameField.textProperty().bindBidirectional(newAlias.nameProperty());
-                equityField.textProperty().bindBidirectional(newAlias.equityProperty(), new NumberStringConverter());
-                descriptionField.textProperty().bindBidirectional(newAlias.descriptionProperty());
-            }
-            */
-        });
-    }
-
 
     @FXML
     void addNewAlias(ActionEvent e) {

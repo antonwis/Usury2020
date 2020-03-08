@@ -52,16 +52,16 @@ public class PrimaryController {
 
             DataModel.getInstance().loadAliasData();
 
-            loanListController.initModel(this);
-
             /// ei välttämät tarvii tehä mut nii...
             FXMLLoader overview = new FXMLLoader(getClass().getResource("Overview.fxml"));
             Overview.setContent(overview.load());
             OverviewController overviewController = overview.getController();
             overviewController.initModel();
 
+            loanListController.initModel(this, overviewController);
+
+
             AliasController aliasController = new AliasController();
-            //aliasController.initModel();
 
             FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));
             VBox menuBar = menuBarF.load();
