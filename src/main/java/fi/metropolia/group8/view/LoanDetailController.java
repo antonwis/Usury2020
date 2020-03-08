@@ -1,39 +1,77 @@
 package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
 public class LoanDetailController {
 
     @FXML
-    private ImageView ProfileImage;
+    private VBox loanDetailVbox;
+
     @FXML
     private Label LoanDetailHeader;
-    @FXML
-    private Label IssueDate;
+
     @FXML
     private Label TotalDebt;
+
     @FXML
-    private Spinner Interest;
-    @FXML
-    private Label DueDate;
+    private Label IssueDate;
+
     @FXML
     private Label DebtRemaining;
+
     @FXML
     private Label ProjectedEarnings;
+
+    @FXML
+    private Label Interest;
+
+    @FXML
+    private Label DueDate;
+
+    @FXML
+    private ImageView ProfileImage;
+
     @FXML
     private Label VictimName;
+
     @FXML
     private Label VictimAddress;
+
     @FXML
     private Label VictimDescription;
+
+    @FXML
+    private HBox modifyHbox1;
+    @FXML
+    private Spinner interestSpinner;
+    @FXML
+    private DatePicker dueDatePicker;
+
+    @FXML
+    private Button enforceP;
+
+    @FXML
+    private Button modifyL;
+
+    @FXML
+    private Button completeL;
+
+    @FXML
+    private HBox modifyHbox2;
+
+    @FXML
+    private Button applyModify;
+
+    @FXML
+    private Button cancelModify;
 
     private LoanCalculator loanCalculator;
     private LoanListController loanListController;
@@ -41,11 +79,29 @@ public class LoanDetailController {
     private OverviewController overviewController;
 
     @FXML
-    private Button enforceP;
+    void applyModify() throws IOException {
+        interestSpinner.commitValue();
+        loanCalculator.modifyLoan(DataModel.getInstance().getCurrentLoan(), (float) (double) interestSpinner.getValue(),dueDatePicker.getValue());
+        loanListController.refreshDetails();
+
+        modifyHbox1.setVisible(!false);
+        modifyHbox2.setVisible(!true);
+        DueDate.setVisible(!false);
+        dueDatePicker.setVisible(!true);
+        interestSpinner.setVisible(!true);
+        Interest.setVisible(!false);
+        overviewController.updateOverview();
+    }
+
     @FXML
-    private Button modifyL;
-    @FXML
-    private Button completeL;
+    void cancelModify() {
+        modifyHbox1.setVisible(!false);
+        modifyHbox2.setVisible(!true);
+        DueDate.setVisible(!false);
+        dueDatePicker.setVisible(!true);
+        interestSpinner.setVisible(!true);
+        Interest.setVisible(!false);
+    }
 
     @FXML
     void completeLoan() {
@@ -62,10 +118,16 @@ public class LoanDetailController {
     }
 
     @FXML
-    void modifyLoan() throws IOException {
-        Interest.commitValue();
-        loanCalculator.modifyLoan(DataModel.getInstance().getCurrentLoan(), (float) (double) Interest.getValue());
-        loanListController.refreshDetails();
+    void modifyLoan() {
+        modifyHbox1.setVisible(false);
+        modifyHbox2.setVisible(true);
+        DueDate.setVisible(false);
+        dueDatePicker.setVisible(true);
+        interestSpinner.setVisible(true);
+        Interest.setVisible(false);
+        dueDatePicker.setValue(DataModel.getInstance().getCurrentLoan().getDueDate());
+        SpinnerValueFactory spinnerValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1.0,1000.0, DataModel.getInstance().getCurrentLoan().getInterest());
+        interestSpinner.setValueFactory(spinnerValueFactory);
     }
 
     public void display(LoanListController loanListController, PrimaryController primaryController, OverviewController overviewController) {
@@ -90,9 +152,7 @@ public class LoanDetailController {
         DebtRemaining.setText(String.valueOf(loanCalculator.getLoanTotalSum(DataModel.getInstance().getCurrentLoan())));
 
         // Interest percentage
-        //Interest.setText(String.valueOf(loanDataModel.getCurrentLoan().getInterest()));
-        SpinnerValueFactory spinnerValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1.0,1000.0, DataModel.getInstance().getCurrentLoan().getInterest());
-        Interest.setValueFactory(spinnerValueFactory);
+        Interest.setText(String.valueOf(DataModel.getInstance().getCurrentLoan().getInterest()));
 
         // Interest profit
         ProjectedEarnings.setText(String.valueOf(loanCalculator.getInterestProfit(DataModel.getInstance().getCurrentLoan())));
