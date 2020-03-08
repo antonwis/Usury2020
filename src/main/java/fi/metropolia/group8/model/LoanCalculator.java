@@ -2,12 +2,10 @@ package fi.metropolia.group8.model;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+/**
+ * Handles updating loan-related data values, e.g. updating alias' equity after completing a loan.
+ */
 public class LoanCalculator {
-    private float amount;
-    private float interest;
-    private Loan loan;
-    private long daysBetween;
-    private float finalSum;
 
     public LoanCalculator() {
     }
@@ -48,18 +46,10 @@ public class LoanCalculator {
         DataModel.getInstance().saveLoanData(loan);
     }
 
-    public void CalculateInterest(Loan loan){
-        this.amount = loan.getValue();
-        this.interest = loan.getInterest();
-        this.daysBetween = DAYS.between(loan.getStartDate(),loan.getDueDate());
-        for(int i = 0; i<daysBetween;i++) {
-            finalSum = this.amount * this.interest;
-        }
+    public void updateEnforcedActions(Alias alias) {
+        int newEnforcerTotal = alias.getEnforcerActions() + 1;
+        alias.setEnforcerActions(newEnforcerTotal);
+        DataModel.getInstance().saveAliasData(alias);
     }
-    public void setLoan(Loan loan){
-        this.loan = loan;
-    }
-    public void setAmount(){
-        this.amount = loan.getValue();
-    }
+
 }
