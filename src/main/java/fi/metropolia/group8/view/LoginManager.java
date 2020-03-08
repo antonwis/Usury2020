@@ -3,13 +3,8 @@ package fi.metropolia.group8.view;
 import java.io.IOException;
 import java.util.logging.*;
 
-import fi.metropolia.group8.model.User;
-import fi.metropolia.group8.model.UserDataModel;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 /** Manages control flow for logins */
 public class LoginManager {

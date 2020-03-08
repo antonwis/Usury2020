@@ -33,9 +33,7 @@ public class PrimaryController {
     @FXML
     private Tab Loans;
     @FXML
-    private Tab Summary;
-    @FXML
-    private Tab Calendar;
+    private Tab Overview;
     @FXML
     private Button newAlias;
     @FXML
@@ -54,15 +52,23 @@ public class PrimaryController {
 
     public void init(final LoginManager loginManager, String sessionID) {
         try {
+            //// Lainat
             FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
-
 
             DataModel.getInstance().loadAliasData();
 
             ObservableList<Alias> aliasList = DataModel.getInstance().getAliasList();
             loanListController.initModel(this);
+
+            /// Overview
+            DataModel.getInstance().setCurrentAlias(DataModel.getInstance().getAliasList().get(0)); /// autism
+            FXMLLoader overview = new FXMLLoader(getClass().getResource("Overview.fxml"));
+            Overview.setContent(overview.load());
+            OverviewController overviewController = overview.getController();
+            overviewController.initModel(this);
+
 
 
             AliasController aliasController = new AliasController();

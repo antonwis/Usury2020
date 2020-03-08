@@ -1,9 +1,7 @@
 package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.Alias;
-import fi.metropolia.group8.model.AliasDataModel;
 import fi.metropolia.group8.model.DataModel;
-import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,14 +16,10 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
-import java.util.List;
 
 
 public class MenubarController {

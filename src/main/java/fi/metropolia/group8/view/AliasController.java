@@ -1,27 +1,18 @@
 package fi.metropolia.group8.view;
 
-import antlr.PreservingFileWriter;
-import fi.metropolia.group8.model.AliasDataModel;
 import fi.metropolia.group8.model.DataModel;
-import fi.metropolia.group8.model.User;
-import fi.metropolia.group8.model.UserDataModel;
-import javafx.beans.property.IntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 public class AliasController {
 

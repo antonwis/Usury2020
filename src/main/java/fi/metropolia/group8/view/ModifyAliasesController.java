@@ -1,7 +1,6 @@
 package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.Alias;
-import fi.metropolia.group8.model.AliasDataModel;
 import fi.metropolia.group8.model.DataModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

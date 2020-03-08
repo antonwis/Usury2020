@@ -2,11 +2,8 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.User;
-import fi.metropolia.group8.model.UserDataModel;
-import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
