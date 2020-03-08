@@ -22,6 +22,7 @@ public class ModifyAliasController {
     }
 
     public void closeAliasWindow(ActionEvent actionEvent) {
+        System.out.println(stage);
         stage.close();
         System.out.println("fuck");
     }
