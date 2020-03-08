@@ -1,6 +1,8 @@
 package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.*;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -83,10 +85,20 @@ public class LoanListController {
         if (DataModel.getInstance().getCurrentAlias() != null) {
 
             try {
-                Predicate<Loan> aliasFilter = i -> i.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName());
-                Predicate<Loan> userFilter = i -> i.getOwner().getUser().getName().equals(DataModel.getInstance().getCurrentAlias().getUser().getName());
-                filteredList.setPredicate(aliasFilter);
-                filteredList.setPredicate(userFilter);
+
+                ObjectProperty<Predicate<Loan>> userFilter = new SimpleObjectProperty<>();
+                ObjectProperty<Predicate<Loan>> aliasFilter = new SimpleObjectProperty<>();
+
+                userFilter.bind(Bindings.createObjectBinding(() ->
+                        i -> i.getOwner().getUser().getName().equals(DataModel.getInstance().getCurrentAlias().getUser().getName())));
+
+
+                aliasFilter.bind(Bindings.createObjectBinding(() ->
+                        i -> i.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())));
+
+                filteredList.predicateProperty().bind(Bindings.createObjectBinding(
+                        () -> userFilter.get().and(aliasFilter.get()),
+                        userFilter, aliasFilter));
 
                 if (filteredList.size() < 1) {
                     LoanTableView.setItems(null);
