@@ -77,11 +77,11 @@ public class AliasController {
             }
             else{
                 DataModel.getInstance().addNewAlias(DataModel.getInstance().getCurrentUser(), name, description, equity);
-                DataModel.getInstance().loadData();
+                DataModel.getInstance().loadAliasData();
                 ObservableList<Alias> list = DataModel.getInstance().getAliasList();
                 DataModel.getInstance().setCurrentAlias(list.get(list.size()-1));
-                this.primaryController.setCurrentAliasText();
-                this.menubarController.updateView();
+                primaryController.setCurrentAliasText();
+                menubarController.updateView();
                 overviewController.updateOverview();
                 stage.close();
             }
@@ -100,10 +100,13 @@ public class AliasController {
     }
 
     public void display(MenubarController menubarController, Stage stage,PrimaryController primaryController, OverviewController overviewController) throws IOException {
-        this.menubarController = menubarController;
-        this.stage = stage;
-        this.primaryController = primaryController;
-        this.overviewController = overviewController;
+        if (this.menubarController == null) {
+            this.menubarController = menubarController;
+            this.stage = stage;
+            this.primaryController = primaryController;
+            this.overviewController = overviewController;
+        }
     }
+
 
 }

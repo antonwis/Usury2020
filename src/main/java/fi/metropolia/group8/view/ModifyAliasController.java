@@ -33,16 +33,18 @@ public class ModifyAliasController {
     private PrimaryController primaryController;
     private Alias alias;
 
-    public void init(AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController, Alias alias){
-        this.aliasController = aliasController;
-        this.stage = stage;
-        this.menubarController = menubarController;
-        this.primaryController = primaryController;
-        this.alias = alias;
+    public void init(AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController, Alias alias) {
+        if (this.aliasController == null) {
+            this.aliasController = aliasController;
+            this.stage = stage;
+            this.menubarController = menubarController;
+            this.primaryController = primaryController;
+            this.alias = alias;
+        }
 
-        nameField.setText(alias.getName());
-        equityField.setText(Float.toString(alias.getEquity()));
-        descriptionArea.setText(alias.getDescription());
+            nameField.setText(alias.getName());
+            equityField.setText(Float.toString(alias.getEquity()));
+            descriptionArea.setText(alias.getDescription());
     }
 
     public void closeAliasWindow(ActionEvent actionEvent) throws IOException {

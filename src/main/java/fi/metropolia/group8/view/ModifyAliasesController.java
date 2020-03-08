@@ -31,11 +31,12 @@ public class ModifyAliasesController {
     private PrimaryController primaryController;
 
     public void init(AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController){
-        this.aliasController = aliasController;
-        this.stage = stage;
-        this.menubarController = menubarController;
-        this.primaryController = primaryController;
-
+        if(this.aliasController == null) {
+            this.aliasController = aliasController;
+            this.stage = stage;
+            this.menubarController = menubarController;
+            this.primaryController = primaryController;
+        }
         updateView();
     }
     public void updateView() {

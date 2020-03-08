@@ -31,6 +31,8 @@ public class Alias {
         setDescription(description);
         setEquity(equity);
         setCompletedLoans(0);
+        setTotalProfits(0);
+        setEnforcerActions(0);
     }
 
     @Id

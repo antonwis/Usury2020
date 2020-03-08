@@ -52,15 +52,15 @@ public class OverviewController {
     public void updateOverview(){
 
         // Filter aliases for current user
-        FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
-        Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
-        filteredList.setPredicate(aliasFilter);
+        //FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
+        //Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
+        //filteredList.setPredicate(aliasFilter);
 
         /// Current User
         user.setText("Summary for " + DataModel.getInstance().getCurrentAlias().getName());
 
         // Current user alias list
-        filter.setItems(filteredList);
+        //filter.setItems(filteredList);
 
         // balance
         balance.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEquity()));
@@ -80,6 +80,10 @@ public class OverviewController {
                                 loan -> loan.getDueDate().isBefore(LocalDate.now())).size()
         )));
         // Profits
+        profits.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getTotalProfits()));
+
+        // Enforcer actions
+        enforcerActions.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEnforcerActions()));
 
     }
 
@@ -87,8 +91,8 @@ public class OverviewController {
         if (DataModel.getInstance().getCurrentAlias() != null) updateOverview();
         user.setText("Welcome " + DataModel.getInstance().getCurrentUser().getName() +"!");
         //WIP
-/*      profits.setText(String.valueOf(DataModel.getInstance().getLoanList().size()));
-        enforcerActions.setText(String.valueOf(DataModel.getInstance().getLoanList().size()));
+/*
+
         forecast.setText(String.valueOf(DataModel.getInstance().getLoanList().size()));*/
     }
 }

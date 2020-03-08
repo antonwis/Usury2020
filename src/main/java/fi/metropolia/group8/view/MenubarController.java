@@ -47,21 +47,23 @@ public class MenubarController {
 
 
     public void init(LoginManager loginManager, AliasController aliasController, PrimaryController primaryController, LoanListController loanListController, OverviewController overviewController){
-        sub = new Menu("Select Alias");
-        aliasMenu.getItems().add(sub);
-        this.loginManager = loginManager;
-        this.aliasController = aliasController;
-        this.primaryController = primaryController;
-        this.loanListController = loanListController;
-        this.overviewController = overviewController;
-        exitMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
-        saveMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
-        logoutButton.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
 
-        updateView();
+        if (this.loginManager == null && this.primaryController == null) {
 
-
+            sub = new Menu("Select Alias");
+            aliasMenu.getItems().add(sub);
+            this.loginManager = loginManager;
+            this.aliasController = aliasController;
+            this.primaryController = primaryController;
+            this.loanListController = loanListController;
+            this.overviewController = overviewController;
+            exitMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
+            saveMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+            logoutButton.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
+        }
+        //updateView();
     }
+
     public void updateView() {
 
         DataModel.getInstance().loadAliasData();
