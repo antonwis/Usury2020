@@ -51,11 +51,11 @@ public class OverviewController {
         DataModel.getInstance().loadAliasData();
         filter.setItems(DataModel.getInstance().getAliasList());
         /// Current alias
-        user.setText(DataModel.getInstance().getCurrentAlias().getName());
+        user.setText(DataModel.getInstance().getCurrentUser().getName());
         // balance
         balance.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEquity()));
         // loans active
-        loansActive.setText(String.valueOf(DataModel.getInstance().getLoanList().size()));
+        loansActive.setText(String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName() == DataModel.getInstance().getCurrentAlias().getName()).size()));
         // Loans Completed
         loansComplete.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getCompletedLoans()));
         // Total Loans
