@@ -12,7 +12,8 @@ class AliasTest {
 
     @BeforeEach
     void init() {
-        alias = new Alias("Ben Shapiro", "Professional Jew", 9001);
+        User user1 = new User("nameRead1");
+        alias = new Alias(user1, "Ben Shapiro", "Professional Jew", 9001);
     }
 
     @Test
