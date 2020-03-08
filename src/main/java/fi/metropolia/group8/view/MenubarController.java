@@ -1,10 +1,7 @@
 package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.Alias;
-import fi.metropolia.group8.model.AliasDataModel;
 import fi.metropolia.group8.model.DataModel;
-import fi.metropolia.group8.model.Loan;
-import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
@@ -20,14 +17,10 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
-import java.util.List;
 import java.util.function.Predicate;
 
 
@@ -49,16 +42,18 @@ public class MenubarController {
     private AliasController aliasController;
     private PrimaryController primaryController;
     private LoanListController loanListController;
+    private OverviewController overviewController;
     private Menu sub;
 
 
-    public void init( LoginManager loginManager, AliasController aliasController, PrimaryController primaryController, LoanListController loanListController){
+    public void init(LoginManager loginManager, AliasController aliasController, PrimaryController primaryController, LoanListController loanListController, OverviewController overviewController){
         sub = new Menu("Select Alias");
         aliasMenu.getItems().add(sub);
         this.loginManager = loginManager;
         this.aliasController = aliasController;
         this.primaryController = primaryController;
         this.loanListController = loanListController;
+        this.overviewController = overviewController;
         exitMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
         saveMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
         logoutButton.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
@@ -94,6 +89,7 @@ public class MenubarController {
                     DataModel.getInstance().setCurrentAlias(alias);
                     primaryController.setCurrentAliasText();
                     loanListController.refreshLoans();
+                    overviewController.updateOverview();
                     menuItem.setSelected(true);
                 }
             });

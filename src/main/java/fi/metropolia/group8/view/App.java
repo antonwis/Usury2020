@@ -1,14 +1,9 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.DataModel;
-import fi.metropolia.group8.model.LoanDataModel;
-import fi.metropolia.group8.model.UserDataModel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
