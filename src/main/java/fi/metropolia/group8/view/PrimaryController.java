@@ -84,7 +84,7 @@ public class PrimaryController {
 
             MenubarController menubarController = menuBarF.getController();
 
-            menubarController.init(aliasList, loginManager,aliasController,aliasDataModel,this, loanListController);
+            menubarController.init(loginManager,aliasController,aliasDataModel,this, loanListController);
 
             setCurrentAliasText();
 
@@ -107,6 +107,9 @@ public class PrimaryController {
             catch (Exception e) {
                 e.printStackTrace();
             }
+        }else {
+            primaryCurrentAlias.setText("No current alias Selected");
+            primaryCurrentEquity.setText("");
         }
     }
 

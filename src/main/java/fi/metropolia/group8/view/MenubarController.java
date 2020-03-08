@@ -46,14 +46,19 @@ public class MenubarController {
     private AliasDataModel aliasDataModel;
     private PrimaryController primaryController;
     private LoanListController loanListController;
+    private Menu sub;
 
 
-    public void init(ObservableList<Alias> aliasList, LoginManager loginManager, AliasController aliasController, AliasDataModel aliasDataModel,PrimaryController primaryController, LoanListController loanListController){
+    public void init( LoginManager loginManager, AliasController aliasController, AliasDataModel aliasDataModel,PrimaryController primaryController, LoanListController loanListController){
+        sub = new Menu("Select Alias");
+        aliasMenu.getItems().add(sub);
         this.loginManager = loginManager;
         this.aliasDataModel = aliasDataModel;
         this.aliasController = aliasController;
         this.primaryController = primaryController;
         this.loanListController = loanListController;
+        aliasDataModel.loadData();
+        ObservableList<Alias> aliasList = aliasDataModel.getAliasList();
         exitMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
         saveMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
         logoutButton.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
@@ -68,8 +73,8 @@ public class MenubarController {
             menuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    for(int i = 2; i<aliasMenu.getItems().size();i++){
-                        CheckMenuItem c = (CheckMenuItem) aliasMenu.getItems().get(i);
+                    for(int i = 0; i<sub.getItems().size();i++){
+                        CheckMenuItem c = (CheckMenuItem) sub.getItems().get(i);
                         c.setSelected(false);
                     }
                     aliasDataModel.setCurrentAlias(alias);
@@ -78,35 +83,38 @@ public class MenubarController {
                     menuItem.setSelected(true);
                 }
             });
-            aliasMenu.getItems().add(menuItem);
+            sub.getItems().add(menuItem);
             i++;
         }
     }
     public void updateView(AliasDataModel aliasDataModel){
-
+        aliasDataModel.loadData();
         this.aliasList = aliasDataModel.getAliasList();
+        sub.getItems().clear();
+        int i = 0;
 
-        Alias alias = aliasList.get(aliasList.size()-1);
+        for(Alias alias : aliasList) {
 
-        CheckMenuItem menuItem = new CheckMenuItem("Item");
-        menuItem.setText(alias.getName());
-
-        String s = ""+aliasList.size();
-        menuItem.setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(s), KeyCombination.CONTROL_DOWN));
-        menuItem.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                for(int i = 2; i<aliasMenu.getItems().size();i++){
-                    CheckMenuItem c = (CheckMenuItem) aliasMenu.getItems().get(i);
-                    c.setSelected(false);
+            CheckMenuItem menuItem = new CheckMenuItem("Item");
+            menuItem.setText(aliasList.get(i).getName());
+            String s = ""+(i+1);
+            menuItem.setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(s), KeyCombination.CONTROL_DOWN));
+            menuItem.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    for(int i = 0; i<sub.getItems().size();i++){
+                        CheckMenuItem c = (CheckMenuItem) sub.getItems().get(i);
+                        c.setSelected(false);
+                    }
+                    aliasDataModel.setCurrentAlias(alias);
+                    primaryController.setCurrentAliasText();
+                    loanListController.refreshLoans();
+                    menuItem.setSelected(true);
                 }
-                aliasDataModel.setCurrentAlias(alias);
-                primaryController.setCurrentAliasText();
-                menuItem.setSelected(true);
-                loanListController.refreshLoans();
-            }
-        });
-        aliasMenu.getItems().add(menuItem);
+            });
+            sub.getItems().add(menuItem);
+            i++;
+        }
     }
 
     public void exitApp(javafx.event.ActionEvent actionEvent) {
@@ -125,6 +133,17 @@ public class MenubarController {
         Parent root = alias.load();
         aliasController = alias.getController();
         aliasController.display(this,aliasDataModel,stage);
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    @FXML
+    public void modifyAliases(javafx.event.ActionEvent actionEvent) throws  IOException{
+        Stage stage = new Stage();
+        FXMLLoader modifyAlias = new FXMLLoader(getClass().getResource("modifyAliases.fxml"));
+        Parent root = modifyAlias.load();
+        ModifyAliasesController modifyAliasesController = modifyAlias.getController();
+        modifyAliasesController.init(aliasController,aliasDataModel,stage,this,primaryController);
         stage.setScene(new Scene(root));
         stage.show();
     }

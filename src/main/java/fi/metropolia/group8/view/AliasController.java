@@ -12,13 +12,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.converter.NumberStringConverter;
-import org.w3c.dom.Text;
+
+
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 public class AliasController {
 
@@ -74,14 +76,28 @@ public class AliasController {
 
 
     @FXML
-    void addNewAlias(ActionEvent e) throws IOException {
-        String name = nameField.getText();
-        Integer equity = Integer.parseInt(equityField.getText());
-        String description = descriptionArea.getText();
+    void addNewAlias(ActionEvent e) {
 
-        this.aliasDataModel.addNewAlias(currentUser, name, description, equity);
-        this.menubarController.updateView(this.aliasDataModel);
-        stage.close();
+        try {
+            String name = nameField.getText();
+            Integer equity = Integer.parseInt(equityField.getText());
+            String description = descriptionArea.getText();
+            if(nameField.getText().isBlank()) {
+                nameField.setPromptText("You must choose a name");
+                nameField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
+
+            }else{
+                this.aliasDataModel.addNewAlias(name, description, equity);
+                this.menubarController.updateView(this.aliasDataModel);
+                stage.close();
+            }
+
+        }catch (NumberFormatException numE){
+            equityField.setText("");
+            equityField.setPromptText("Equity must be a number");
+            equityField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
+        }
+
     }
 
     @FXML
