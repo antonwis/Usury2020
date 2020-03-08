@@ -64,8 +64,10 @@ public class OverviewController {
 
         // balance
         balance.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEquity()));
+
         // loans active
         loansActive.setText(String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).size()));
+
         // Loans Completed
         loansComplete.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getCompletedLoans()));
         // Total Loans
