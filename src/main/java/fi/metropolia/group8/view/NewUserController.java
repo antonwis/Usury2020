@@ -37,7 +37,7 @@ public class NewUserController {
         else {
             DataModel.getInstance().addNewUser(name.getText());
             System.out.println("New User: " + name.getText());
-            loginController.updateTextField(name.getText());
+            //loginController.updateTextField(name.getText());
             stage.close();
         }
     }

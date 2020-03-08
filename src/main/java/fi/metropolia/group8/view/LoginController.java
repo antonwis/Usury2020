@@ -92,9 +92,9 @@ public class LoginController {
         stage.show();
     }
 
-    public void updateTextField(String newUserName) {
+/*    public void updateTextField(String newUserName) {
         user.setText(newUserName);
         password.setText("");
-    }
+    }*/
 
 }
