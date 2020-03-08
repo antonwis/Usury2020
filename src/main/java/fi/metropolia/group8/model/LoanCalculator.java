@@ -1,5 +1,7 @@
 package fi.metropolia.group8.model;
 
+import java.time.LocalDate;
+
 import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
@@ -41,7 +43,8 @@ public class LoanCalculator {
         DataModel.getInstance().deleteLoan(loan);
     }
 
-    public void modifyLoan(Loan loan, float newInterest) {
+    public void modifyLoan(Loan loan, float newInterest, LocalDate dueDate) {
+        loan.setDueDate(dueDate);
         loan.setInterest(newInterest);
         DataModel.getInstance().saveLoanData(loan);
     }
