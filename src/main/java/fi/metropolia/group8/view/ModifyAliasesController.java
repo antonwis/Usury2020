@@ -32,34 +32,7 @@ public class ModifyAliasesController {
         this.menubarController = menubarController;
         this.primaryController = primaryController;
 
-        for(Alias alias : DataModel.getInstance().getAliasList()){
-
-            HBox hBox1 = new HBox();
-            hBox1.setSpacing(10);
-            Label label = new Label(alias.getName());
-            label.setPrefWidth(300);
-            label.setMinWidth(50);
-            Button modify = new Button("Modify");
-            modify.setMinWidth(60);
-            Button delete = new Button("Delete");
-            delete.setMinWidth(60);
-            delete.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    if(DataModel.getInstance().getCurrentAlias() == alias){
-                        DataModel.getInstance().setCurrentAlias(null);
-
-                    }
-                    DataModel.getInstance().deleteAlias(alias);
-                    DataModel.getInstance().loadAliasData();
-                    menubarController.updateView();
-                    primaryController.setCurrentAliasText();
-                    updateView();
-                }
-            });
-            hBox1.getChildren().addAll(label,modify,delete);
-            aliasBox.getChildren().add(hBox1);
-        }
+        updateView();
     }
     public void updateView() {
         DataModel.getInstance().loadAliasData();
@@ -78,15 +51,17 @@ public class ModifyAliasesController {
             delete.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (DataModel.getInstance().getCurrentAlias() == alias) {
+                    if (DataModel.getInstance().getCurrentAlias().getName().equals(alias.getName())) {
                         DataModel.getInstance().setCurrentAlias(null);
-
+                        System.out.println(DataModel.getInstance().getCurrentAlias());
                     }
+
                     DataModel.getInstance().deleteAlias(alias);
                     DataModel.getInstance().loadAliasData();
                     menubarController.updateView();
                     primaryController.setCurrentAliasText();
                     updateView();
+
                 }
             });
             hBox1.getChildren().addAll(label,modify,delete);

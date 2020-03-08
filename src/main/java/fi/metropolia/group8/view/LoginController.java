@@ -29,7 +29,9 @@ public class LoginController {
     public void initialize() {}
 
     public void initManager(LoginManager loginManager) {
-        this.loginManager = loginManager;
+        if(this.loginManager == null) {
+            this.loginManager = loginManager;
+        }
         updateView();
 
         userList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentUser(newSelection));

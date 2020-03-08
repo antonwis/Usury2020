@@ -33,7 +33,9 @@ public class LoanCalculator {
     public void completeLoan(Alias alias, Loan loan) {
         float totalProfit = getLoanTotalSum(loan);
         float newEquity = alias.getEquity() + totalProfit;
+        int newCompletedLoans = alias.getCompletedLoans() + 1;
         alias.setEquity(newEquity);
+        alias.setCompletedLoans(newCompletedLoans);
         DataModel.getInstance().saveAliasData(alias);
         DataModel.getInstance().deleteLoan(loan);
     }

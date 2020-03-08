@@ -1,9 +1,7 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +27,8 @@ public class PrimaryController {
     @FXML
     private Tab Overview;
     @FXML
+    private Tab Calendar;
+    @FXML
     private Button newAlias;
     @FXML
     private AnchorPane primaryAnchor;
@@ -44,28 +44,24 @@ public class PrimaryController {
     private Scene scene;
 
 
-    public void init(final LoginManager loginManager, String sessionID) {
+    public void init(LoginManager loginManager, String sessionID) {
         try {
-            //// Lainat
             FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
 
             DataModel.getInstance().loadAliasData();
 
-            ObservableList<Alias> aliasList = DataModel.getInstance().getAliasList();
             loanListController.initModel(this);
 
-            /// Overview
+            /// ei välttämät tarvii tehä mut nii...
             FXMLLoader overview = new FXMLLoader(getClass().getResource("Overview.fxml"));
             Overview.setContent(overview.load());
             OverviewController overviewController = overview.getController();
-            overviewController.initModel(this);
-
+            overviewController.initModel();
 
             AliasController aliasController = new AliasController();
-            aliasController.initModel();
-
+            //aliasController.initModel();
 
             FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));
             VBox menuBar = menuBarF.load();

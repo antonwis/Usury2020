@@ -2,6 +2,7 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.ComboBox;
@@ -65,9 +66,8 @@ public class OverviewController {
 
     }
 
-    public void initModel(PrimaryController primaryController) {
+    public void initModel() {
         if (DataModel.getInstance().getCurrentAlias() != null) updateOverview();
-
         //WIP
 /*      profits.setText(String.valueOf(DataModel.getInstance().getLoanList().size()));
         enforcerActions.setText(String.valueOf(DataModel.getInstance().getLoanList().size()));

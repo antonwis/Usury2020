@@ -2,6 +2,7 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -36,6 +37,7 @@ public class MenubarController {
     @FXML
     private MenuItem logoutButton;
 
+    private ObservableList<Alias> aliasList;
     private LoginManager loginManager;
     private AliasController aliasController;
     private PrimaryController primaryController;
@@ -44,7 +46,7 @@ public class MenubarController {
     private Menu sub;
 
 
-    public void init(LoginManager loginManager, AliasController aliasController, PrimaryController primaryController, LoanListController loanListController, OverviewController overviewController) {
+    public void init(LoginManager loginManager, AliasController aliasController, PrimaryController primaryController, LoanListController loanListController, OverviewController overviewController){
         sub = new Menu("Select Alias");
         aliasMenu.getItems().add(sub);
         this.loginManager = loginManager;
@@ -55,41 +57,11 @@ public class MenubarController {
         exitMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
         saveMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
         logoutButton.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
-        int i = 0;
 
-        DataModel.getInstance().loadAliasData();
-        FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
+        updateView();
 
-        // ID:tä ei voinu verrata suoraan jostain syystä. Pitäs tehä oma DB kutsu koko paskalle mut tämäkin toimii.
-        Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
-        filteredList.setPredicate(aliasFilter);
-
-        for (Alias alias : filteredList) {
-
-            CheckMenuItem menuItem = new CheckMenuItem("Item");
-            menuItem.setText(filteredList.get(i).getName());
-            String s = "" + (i + 1);
-            menuItem.setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(s), KeyCombination.CONTROL_DOWN));
-            menuItem.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    for (int i = 0; i < sub.getItems().size(); i++) {
-                        CheckMenuItem c = (CheckMenuItem) sub.getItems().get(i);
-                        c.setSelected(false);
-                    }
-                    DataModel.getInstance().setCurrentAlias(alias);
-                    primaryController.setCurrentAliasText();
-                    loanListController.refreshLoans();
-                    overviewController.updateOverview();
-                    menuItem.setSelected(true);
-                }
-            });
-            sub.getItems().add(menuItem);
-            i++;
-        }
 
     }
-
     public void updateView() {
 
         DataModel.getInstance().loadAliasData();
@@ -98,19 +70,20 @@ public class MenubarController {
         Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
         filteredList.setPredicate(aliasFilter);
         sub.getItems().clear();
-        int i = 0;
+        System.out.println(filteredList);
 
-        for (Alias alias : filteredList) {
+        for(int i = 0; i<filteredList.size();i++) {
 
             CheckMenuItem menuItem = new CheckMenuItem("Item");
             menuItem.setText(filteredList.get(i).getName());
-            String s = "" + (i + 1);
+            String s = ""+(i+1);
+            Alias alias = filteredList.get(i);
             menuItem.setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(s), KeyCombination.CONTROL_DOWN));
             menuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    for (int i = 0; i < sub.getItems().size(); i++) {
-                        CheckMenuItem c = (CheckMenuItem) sub.getItems().get(i);
+                    for(int j = 0; j<sub.getItems().size();j++){
+                        CheckMenuItem c = (CheckMenuItem) sub.getItems().get(j);
                         c.setSelected(false);
                     }
                     DataModel.getInstance().setCurrentAlias(alias);
@@ -121,7 +94,6 @@ public class MenubarController {
                 }
             });
             sub.getItems().add(menuItem);
-            i++;
         }
     }
 
@@ -130,6 +102,7 @@ public class MenubarController {
     }
 
     public void logout(javafx.event.ActionEvent actionEvent) {
+        DataModel.getInstance().setCurrentAlias(null);
         loginManager.logout();
     }
 
@@ -146,7 +119,7 @@ public class MenubarController {
     }
 
     @FXML
-    public void modifyAliases(javafx.event.ActionEvent actionEvent) throws IOException {
+    public void modifyAliases(javafx.event.ActionEvent actionEvent) throws  IOException{
         Stage stage = new Stage();
         FXMLLoader modifyAlias = new FXMLLoader(getClass().getResource("modifyAliases.fxml"));
         Parent root = modifyAlias.load();
@@ -155,6 +128,7 @@ public class MenubarController {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
 
 
 }
