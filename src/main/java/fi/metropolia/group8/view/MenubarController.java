@@ -70,7 +70,7 @@ public class MenubarController {
         Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
         filteredList.setPredicate(aliasFilter);
         sub.getItems().clear();
-        System.out.println(filteredList);
+
 
         for(int i = 0; i<filteredList.size();i++) {
 
@@ -95,6 +95,12 @@ public class MenubarController {
             });
             sub.getItems().add(menuItem);
         }
+        for(MenuItem menuItem : sub.getItems()){
+            if(DataModel.getInstance().getCurrentAlias() != null && menuItem.getText().equals(DataModel.getInstance().getCurrentAlias().getName())) {
+                CheckMenuItem checkMenuItem = (CheckMenuItem) menuItem;
+                checkMenuItem.setSelected(true);
+            }
+        }
     }
 
     public void exitApp(javafx.event.ActionEvent actionEvent) {
@@ -113,7 +119,7 @@ public class MenubarController {
         FXMLLoader alias = new FXMLLoader(getClass().getResource("newAlias.fxml"));
         Parent root = alias.load();
         aliasController = alias.getController();
-        aliasController.display(this, stage);
+        aliasController.display(this, stage,primaryController);
         stage.setScene(new Scene(root));
         stage.show();
     }

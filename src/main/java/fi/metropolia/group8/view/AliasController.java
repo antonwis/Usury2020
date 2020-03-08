@@ -3,6 +3,7 @@ package fi.metropolia.group8.view;
 import antlr.PreservingFileWriter;
 import fi.metropolia.group8.model.*;
 import javafx.beans.property.IntegerProperty;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,6 +45,7 @@ public class AliasController {
 
     private MenubarController menubarController;
     private Stage stage;
+    private PrimaryController primaryController;
 
     public void initModel() {
 
@@ -101,6 +103,10 @@ public class AliasController {
             }
             else{
                 DataModel.getInstance().addNewAlias(DataModel.getInstance().getCurrentUser(), name, description, equity);
+                DataModel.getInstance().loadData();
+                ObservableList<Alias> list = DataModel.getInstance().getAliasList();
+                DataModel.getInstance().setCurrentAlias(list.get(list.size()-1));
+                this.primaryController.setCurrentAliasText();
                 this.menubarController.updateView();
                 stage.close();
             }
@@ -118,9 +124,10 @@ public class AliasController {
         stage.close();
     }
 
-    public void display(MenubarController menubarController, Stage stage) throws IOException {
+    public void display(MenubarController menubarController, Stage stage,PrimaryController primaryController) throws IOException {
         this.menubarController = menubarController;
         this.stage = stage;
+        this.primaryController = primaryController;
     }
 
 }
