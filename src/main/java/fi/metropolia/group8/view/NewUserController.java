@@ -17,16 +17,17 @@ public class NewUserController {
     @FXML private Button createUser;
     @FXML private Button cancelButton;
 
-    private LoginManager loginManager;
-    private UserDataModel userDataModel;
+    private LoginController loginController;
     private Stage stage;
 
     public void initialize() {}
 
     @FXML
     void createNewUser(ActionEvent e) throws IOException {
-        userDataModel.addNewUser(name.getText());
+        DataModel.getInstance().addNewUser(name.getText());
         System.out.println("New User: " + name.getText());
+        loginController.updateTextField(name.getText());
+        stage.close();
     }
 
     @FXML
@@ -34,9 +35,9 @@ public class NewUserController {
         stage.close();
     }
 
-    public void TransferMemes(UserDataModel userDataModel, Stage stage) {
-        this.userDataModel = userDataModel;
+    public void TransferMemes(Stage stage, LoginController loginController) {
         this.stage = stage;
+        this.loginController = loginController;
     }
 
 }

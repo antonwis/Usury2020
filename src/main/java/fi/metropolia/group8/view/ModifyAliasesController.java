@@ -2,6 +2,7 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.AliasDataModel;
+import fi.metropolia.group8.model.DataModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,19 +23,17 @@ public class ModifyAliasesController {
     private VBox aliasBox;
 
     private AliasController aliasController;
-    private AliasDataModel aliasDataModel;
     private Stage stage;
     private MenubarController menubarController;
     private PrimaryController primaryController;
 
-    public void init(AliasController aliasController, AliasDataModel aliasDataModel, Stage stage, MenubarController menubarController, PrimaryController primaryController){
+    public void init(AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController){
         this.aliasController = aliasController;
-        this.aliasDataModel = aliasDataModel;
         this.stage = stage;
         this.menubarController = menubarController;
         this.primaryController = primaryController;
 
-        for(Alias alias : aliasDataModel.getAliasList()){
+        for(Alias alias : DataModel.getInstance().getAliasList()){
 
             HBox hBox1 = new HBox();
             hBox1.setSpacing(10);
@@ -48,13 +47,13 @@ public class ModifyAliasesController {
             delete.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if(aliasDataModel.getCurrentAlias() == alias){
-                        aliasDataModel.setCurrentAlias(null);
+                    if(DataModel.getInstance().getCurrentAlias() == alias){
+                        DataModel.getInstance().setCurrentAlias(null);
 
                     }
-                    aliasDataModel.deleteAlias(alias);
-                    aliasDataModel.loadData();
-                    menubarController.updateView(aliasDataModel);
+                    DataModel.getInstance().deleteAlias(alias);
+                    DataModel.getInstance().loadAliasData();
+                    menubarController.updateView();
                     primaryController.setCurrentAliasText();
                     updateView();
                 }
@@ -64,9 +63,9 @@ public class ModifyAliasesController {
         }
     }
     public void updateView() {
-        aliasDataModel.loadData();
+        DataModel.getInstance().loadAliasData();
         aliasBox.getChildren().clear();
-        for (Alias alias : aliasDataModel.getAliasList()) {
+        for (Alias alias : DataModel.getInstance().getAliasList()) {
 
             HBox hBox1 = new HBox();
             hBox1.setSpacing(10);
@@ -80,13 +79,13 @@ public class ModifyAliasesController {
             delete.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (aliasDataModel.getCurrentAlias() == alias) {
-                        aliasDataModel.setCurrentAlias(null);
+                    if (DataModel.getInstance().getCurrentAlias() == alias) {
+                        DataModel.getInstance().setCurrentAlias(null);
 
                     }
-                    aliasDataModel.deleteAlias(alias);
-                    aliasDataModel.loadData();
-                    menubarController.updateView(aliasDataModel);
+                    DataModel.getInstance().deleteAlias(alias);
+                    DataModel.getInstance().loadAliasData();
+                    menubarController.updateView();
                     primaryController.setCurrentAliasText();
                     updateView();
                 }

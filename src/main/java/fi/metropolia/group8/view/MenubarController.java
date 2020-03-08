@@ -2,6 +2,7 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.AliasDataModel;
+import fi.metropolia.group8.model.DataModel;
 import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,22 +44,20 @@ public class MenubarController {
     private ObservableList<Alias> aliasList;
     private LoginManager loginManager;
     private AliasController aliasController;
-    private AliasDataModel aliasDataModel;
     private PrimaryController primaryController;
     private LoanListController loanListController;
     private Menu sub;
 
 
-    public void init( LoginManager loginManager, AliasController aliasController, AliasDataModel aliasDataModel,PrimaryController primaryController, LoanListController loanListController){
+    public void init( LoginManager loginManager, AliasController aliasController, PrimaryController primaryController, LoanListController loanListController){
         sub = new Menu("Select Alias");
         aliasMenu.getItems().add(sub);
         this.loginManager = loginManager;
-        this.aliasDataModel = aliasDataModel;
         this.aliasController = aliasController;
         this.primaryController = primaryController;
         this.loanListController = loanListController;
-        aliasDataModel.loadData();
-        ObservableList<Alias> aliasList = aliasDataModel.getAliasList();
+        DataModel.getInstance().loadAliasData();
+        ObservableList<Alias> aliasList = DataModel.getInstance().getAliasList();
         exitMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
         saveMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
         logoutButton.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
@@ -77,7 +76,7 @@ public class MenubarController {
                         CheckMenuItem c = (CheckMenuItem) sub.getItems().get(i);
                         c.setSelected(false);
                     }
-                    aliasDataModel.setCurrentAlias(alias);
+                    DataModel.getInstance().setCurrentAlias(alias);
                     primaryController.setCurrentAliasText();
                     loanListController.refreshLoans();
                     menuItem.setSelected(true);
@@ -87,9 +86,9 @@ public class MenubarController {
             i++;
         }
     }
-    public void updateView(AliasDataModel aliasDataModel){
-        aliasDataModel.loadData();
-        this.aliasList = aliasDataModel.getAliasList();
+    public void updateView(){
+        DataModel.getInstance().loadAliasData();
+        this.aliasList = DataModel.getInstance().getAliasList();
         sub.getItems().clear();
         int i = 0;
 
@@ -106,7 +105,7 @@ public class MenubarController {
                         CheckMenuItem c = (CheckMenuItem) sub.getItems().get(i);
                         c.setSelected(false);
                     }
-                    aliasDataModel.setCurrentAlias(alias);
+                    DataModel.getInstance().setCurrentAlias(alias);
                     primaryController.setCurrentAliasText();
                     loanListController.refreshLoans();
                     menuItem.setSelected(true);
@@ -132,7 +131,7 @@ public class MenubarController {
         FXMLLoader alias = new FXMLLoader(getClass().getResource("newAlias.fxml"));
         Parent root = alias.load();
         aliasController = alias.getController();
-        aliasController.display(this,aliasDataModel,stage);
+        aliasController.display(this, stage);
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -143,7 +142,7 @@ public class MenubarController {
         FXMLLoader modifyAlias = new FXMLLoader(getClass().getResource("modifyAliases.fxml"));
         Parent root = modifyAlias.load();
         ModifyAliasesController modifyAliasesController = modifyAlias.getController();
-        modifyAliasesController.init(aliasController,aliasDataModel,stage,this,primaryController);
+        modifyAliasesController.init(aliasController, stage, this, primaryController);
         stage.setScene(new Scene(root));
         stage.show();
     }

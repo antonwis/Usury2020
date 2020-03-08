@@ -46,8 +46,6 @@ public class LoanListController {
     private Button newLoanButton;
 
     private NewLoanController newLoanController;
-    private LoanDataModel loanDataModel;
-    private AliasDataModel aliasDataModel;
     private PrimaryController primaryController;
 
     @FXML
@@ -59,16 +57,16 @@ public class LoanListController {
         FXMLLoader loan = new FXMLLoader(getClass().getResource("newLoan.fxml"));
         Parent root = loan.load();
         NewLoanController newLoanController = loan.getController();
-        newLoanController.TransferMemes(this, loanDataModel, aliasDataModel, stage, primaryController);
+        newLoanController.TransferMemes(this, stage, primaryController);
         stage.setScene(new Scene(root));
         stage.show();
     }
 
 
     public void updateView() {
-        loanDataModel.loadData();
-        if (aliasDataModel.getCurrentAlias() != null) {
-            LoanTableView.setItems(loanDataModel.getLoanList());
+        DataModel.getInstance().loadLoanData();
+        if (DataModel.getInstance().getCurrentAlias() != null) {
+            LoanTableView.setItems(DataModel.getInstance().getLoanList());
         } else {
             LoanTableView.setItems(null);
         }
@@ -77,11 +75,11 @@ public class LoanListController {
     // Updates view with loans owned by current alias
     public void refreshLoans() {
 
-        loanDataModel.loadData();
-        FilteredList<Loan> filteredList = new FilteredList<>(loanDataModel.getLoanList());
+        DataModel.getInstance().loadLoanData();
+        FilteredList<Loan> filteredList = new FilteredList<>(DataModel.getInstance().getLoanList());
 
         // ID:tä ei voinu verrata suoraan jostain syystä. Pitäs tehä oma DB kutsu koko paskalle mut tämäkin toimii.
-        Predicate<Loan> aliasFilter = i -> i.getOwner().getName().equals(aliasDataModel.getCurrentAlias().getName());
+        Predicate<Loan> aliasFilter = i -> i.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName());
         filteredList.setPredicate(aliasFilter);
 
 
@@ -97,20 +95,16 @@ public class LoanListController {
         FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
         LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
         LoanDetailController loanDetailController = loanDetails.getController();
-        loanDetailController.display(loanDataModel, aliasDataModel, this, primaryController);
+        loanDetailController.display(this, primaryController);
     }
 
-    public void initModel(LoanDataModel loanDataModel, AliasDataModel aliasDataModel, PrimaryController primaryController) throws IOException {
-        if (this.loanDataModel != null && this.aliasDataModel != null) {
-            throw new IllegalStateException("Model can only be initialized once");
-        }
-        this.loanDataModel = loanDataModel;
-        this.aliasDataModel = aliasDataModel;
+    public void initModel(PrimaryController primaryController) throws IOException {
+
         this.primaryController = primaryController;
         updateView();
 
-        LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> loanDataModel.setCurrentLoan(newSelection));
-        loanDataModel.currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
+        LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentLoan(newSelection));
+        DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
             if (newLoan == null) {
                 LoanTableView.getSelectionModel().clearSelection();
             } else {

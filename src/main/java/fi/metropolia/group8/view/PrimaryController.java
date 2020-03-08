@@ -49,30 +49,24 @@ public class PrimaryController {
     @FXML
     private Label primaryCurrentEquity;
 
-    private UsuryDAO dao = new UsuryDAO();
-    private User currentUser;
-    private AliasDataModel aliasDataModel;
-    private LoanDataModel loanDataModel;
     private Scene scene;
 
 
-    public void init(final LoginManager loginManager, User currentUser, String sessionID) {
+    public void init(final LoginManager loginManager, String sessionID) {
         try {
-            this.currentUser = currentUser;
             FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
 
-            loanDataModel = new LoanDataModel();
-            aliasDataModel = new AliasDataModel();
 
-            aliasDataModel.loadData();
-            ObservableList<Alias> aliasList = aliasDataModel.getAliasList();
-            loanListController.initModel(loanDataModel, aliasDataModel,this);
+            DataModel.getInstance().loadAliasData();
+
+            ObservableList<Alias> aliasList = DataModel.getInstance().getAliasList();
+            loanListController.initModel(this);
 
 
             AliasController aliasController = new AliasController();
-            aliasController.initModel(aliasDataModel, currentUser);
+            aliasController.initModel();
 
 
             FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));
@@ -84,7 +78,7 @@ public class PrimaryController {
 
             MenubarController menubarController = menuBarF.getController();
 
-            menubarController.init(loginManager,aliasController,aliasDataModel,this, loanListController);
+            menubarController.init(loginManager, aliasController,this, loanListController);
 
             setCurrentAliasText();
 
@@ -99,10 +93,10 @@ public class PrimaryController {
     public void setCurrentAliasText(){
 
         // Check if current alias exists
-        if(aliasDataModel.getCurrentAlias() != null) {
+        if(DataModel.getInstance().getCurrentAlias() != null) {
             try {
-                primaryCurrentAlias.setText(aliasDataModel.getCurrentAlias().getName());
-                primaryCurrentEquity.setText(Float.toString(aliasDataModel.getCurrentAlias().getEquity()));
+                primaryCurrentAlias.setText(DataModel.getInstance().getCurrentAlias().getName());
+                primaryCurrentEquity.setText(Float.toString(DataModel.getInstance().getCurrentAlias().getEquity()));
             }
             catch (Exception e) {
                 e.printStackTrace();
