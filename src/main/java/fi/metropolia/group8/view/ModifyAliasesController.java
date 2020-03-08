@@ -59,11 +59,12 @@ public class ModifyAliasesController {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     try {
-                        Stage stage1 = new Stage();
+                        stage.close();
+                        Stage stage = new Stage();
                         FXMLLoader modifyAlias = new FXMLLoader(getClass().getResource("modifyAlias.fxml"));
                         Parent root = modifyAlias.load();
                         ModifyAliasController modifyAliasController = modifyAlias.getController();
-                        modifyAliasController.init(aliasController, stage1,menubarController, primaryController,alias);
+                        modifyAliasController.init(aliasController, stage,menubarController, primaryController,alias);
                         stage.setScene(new Scene(root));
                         stage.show();
                     }catch (IOException e){
