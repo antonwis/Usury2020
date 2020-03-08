@@ -76,11 +76,18 @@ public class LoanListController {
     public void refreshLoans() {
 
         DataModel.getInstance().loadLoanData();
+        DataModel.getInstance().loadAliasData();
         FilteredList<Loan> filteredList = new FilteredList<>(DataModel.getInstance().getLoanList());
 
         // ID:tä ei voinu verrata suoraan jostain syystä. Pitäs tehä oma DB kutsu koko paskalle mut tämäkin toimii.
+
+
         Predicate<Loan> aliasFilter = i -> i.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName());
+        Predicate<Loan> userFilter = i -> i.getOwner().getUser().getName().equals(DataModel.getInstance().getCurrentAlias().getUser().getName());
         filteredList.setPredicate(aliasFilter);
+        filteredList.setPredicate(userFilter);
+
+
 
 
         if (filteredList.size() < 1) {

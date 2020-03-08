@@ -106,6 +106,7 @@ public class MenubarController {
     }
 
     public void logout(javafx.event.ActionEvent actionEvent) {
+        DataModel.getInstance().setCurrentAlias(null);
         loginManager.logout();
     }
 
