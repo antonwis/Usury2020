@@ -84,19 +84,16 @@ public class LoanListController {
             try {
         // ID:tä ei voinu verrata suoraan jostain syystä. Pitäs tehä oma DB kutsu koko paskalle mut tämäkin toimii.
 
+                    Predicate<Loan> aliasFilter = i -> i.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName());
+                    Predicate<Loan> userFilter = i -> i.getOwner().getUser().getName().equals(DataModel.getInstance().getCurrentAlias().getUser().getName());
+                    filteredList.setPredicate(aliasFilter);
+                    filteredList.setPredicate(userFilter);
 
-        Predicate<Loan> aliasFilter = i -> i.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName());
-        Predicate<Loan> userFilter = i -> i.getOwner().getUser().getName().equals(DataModel.getInstance().getCurrentAlias().getUser().getName());
-        filteredList.setPredicate(aliasFilter);
-        filteredList.setPredicate(userFilter);
-
-
-
-                if (filteredList.size() < 1) {
-                    LoanTableView.setItems(null);
-                } else {
-                    LoanTableView.setItems(filteredList);
-                }
+                    if (filteredList.size() < 1) {
+                        LoanTableView.setItems(null);
+                    } else {
+                        LoanTableView.setItems(filteredList);
+                    }
             } catch (Exception e) {
                 System.out.println("Loan refresh failed");
             }
