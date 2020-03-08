@@ -79,6 +79,9 @@ public class LoanListController {
         DataModel.getInstance().loadAliasData();
         FilteredList<Loan> filteredList = new FilteredList<>(DataModel.getInstance().getLoanList());
 
+        if (DataModel.getInstance().getCurrentAlias() != null) {
+
+            try {
         // ID:tä ei voinu verrata suoraan jostain syystä. Pitäs tehä oma DB kutsu koko paskalle mut tämäkin toimii.
 
 
@@ -89,11 +92,16 @@ public class LoanListController {
 
 
 
-
-        if (filteredList.size() < 1) {
-            LoanTableView.setItems(null);
+                if (filteredList.size() < 1) {
+                    LoanTableView.setItems(null);
+                } else {
+                    LoanTableView.setItems(filteredList);
+                }
+            } catch (Exception e) {
+                System.out.println("Loan refresh failed");
+            }
         } else {
-            LoanTableView.setItems(filteredList);
+            LoanTableView.setItems(null);
         }
 
     }
@@ -106,9 +114,10 @@ public class LoanListController {
     }
 
     public void initModel(PrimaryController primaryController) throws IOException {
+        if (this.primaryController == null) {
+            this.primaryController = primaryController;
 
-        this.primaryController = primaryController;
-        updateView();
+        //refreshLoans();
 
         LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentLoan(newSelection));
         DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
@@ -128,6 +137,7 @@ public class LoanListController {
         Debtor.setCellValueFactory(victim -> new SimpleObjectProperty(victim.getValue().getVictim().getName()));
         Amount.setCellValueFactory(amount -> amount.getValue().valueProperty().asObject());
         DueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+    }
     }
 }
 

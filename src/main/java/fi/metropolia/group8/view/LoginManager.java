@@ -34,6 +34,10 @@ public class LoginManager {
      * Will show the login application screen.
      */
     public void logout() {
+        DataModel.getInstance().setCurrentUser(null);
+        DataModel.getInstance().setCurrentAlias(null);
+        DataModel.getInstance().setCurrentLoan(null);
+        System.out.println("Logout: All current properties set to null");
 
         showLoginScreen();
     }
@@ -62,7 +66,7 @@ public class LoginManager {
             PrimaryController primaryController =
                     loader.getController();
             primaryController.init(this, sessionID);
-            System.out.println(DataModel.getInstance().getCurrentAlias());
+
         } catch (IOException ex) {
             Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
         }

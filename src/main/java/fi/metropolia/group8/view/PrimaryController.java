@@ -52,22 +52,18 @@ public class PrimaryController {
     private Scene scene;
 
 
-    public void init(final LoginManager loginManager, String sessionID) {
+    public void init(LoginManager loginManager, String sessionID) {
         try {
             FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
 
-
             DataModel.getInstance().loadAliasData();
 
-            ObservableList<Alias> aliasList = DataModel.getInstance().getAliasList();
             loanListController.initModel(this);
 
-
             AliasController aliasController = new AliasController();
-            aliasController.initModel();
-
+            //aliasController.initModel();
 
             FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));
             VBox menuBar = menuBarF.load();
