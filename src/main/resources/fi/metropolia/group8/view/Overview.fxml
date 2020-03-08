@@ -23,12 +23,11 @@
             <Font size="22.0" />
          </font>
       </Label>
-      <Label layoutX="15.0" layoutY="75.0" text="Choose filter:" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="75.0">
+      <Label fx:id="alias" layoutX="15.0" layoutY="75.0" text="Select an alias to view statistics" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="75.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <ComboBox fx:id="filter" layoutX="113.0" layoutY="73.0" prefWidth="150.0" />
       <GridPane gridLinesVisible="true" layoutX="409.0" layoutY="175.0" prefHeight="554.0" prefWidth="480.0" AnchorPane.bottomAnchor="71.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="175.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" prefWidth="100.0" />
@@ -77,7 +76,7 @@
                </font>
             </Label>
             <Label fx:id="enforcerActions" alignment="CENTER" prefHeight="194.0" prefWidth="442.0" text="EnforcerActions" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-            <Label alignment="TOP_CENTER" prefHeight="170.0" prefWidth="312.0" text="Loans Due" GridPane.rowIndex="3">
+            <Label alignment="TOP_CENTER" prefHeight="170.0" prefWidth="312.0" text="Loans Past Due" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

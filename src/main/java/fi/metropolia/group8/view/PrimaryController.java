@@ -97,7 +97,7 @@ public class PrimaryController {
                 e.printStackTrace();
             }
         } else {
-            primaryCurrentAlias.setText("No current alias Selected");
+            primaryCurrentAlias.setText("None");
             primaryCurrentEquity.setText("");
         }
     }

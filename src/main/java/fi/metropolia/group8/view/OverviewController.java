@@ -20,7 +20,7 @@ public class OverviewController {
     private Label user;
 
     @FXML
-    private ComboBox<Alias> filter;
+    private Label alias;
 
     @FXML
     private Label balance;
@@ -57,10 +57,10 @@ public class OverviewController {
         //filteredList.setPredicate(aliasFilter);
 
         /// Current User
-        user.setText("Summary for " + DataModel.getInstance().getCurrentAlias().getName());
+        user.setText("Summary for " + DataModel.getInstance().getCurrentUser().getName());
 
-        // Current user alias list
-        //filter.setItems(filteredList);
+        // Current alias
+        alias.setText("Selected alias: " + DataModel.getInstance().getCurrentAlias().getName());
 
         // balance
         balance.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEquity()));
