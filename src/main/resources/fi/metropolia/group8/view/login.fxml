@@ -22,7 +22,7 @@
                           <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                           <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                           <TextField fx:id="user" prefHeight="25.0" prefWidth="272.0" promptText="Use &quot;open&quot; to login" text="open" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                          <TextField fx:id="password" prefHeight="25.0" prefWidth="275.0" promptText="Use &quot;sesame&quot; to login" text="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                          <TextField fx:id="password" prefHeight="25.0" prefWidth="275.0" promptText="Use &quot;password&quot; to login" text="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                       </children>
                       <columnConstraints>
                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="61.0" />

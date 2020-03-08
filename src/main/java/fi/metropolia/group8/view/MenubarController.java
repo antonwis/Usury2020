@@ -59,65 +59,36 @@ public class MenubarController {
         this.aliasController = aliasController;
         this.primaryController = primaryController;
         this.loanListController = loanListController;
-
-        DataModel.getInstance().loadAliasData();
-
-        FilteredList<Alias> aliasList = new FilteredList<>(DataModel.getInstance().getAliasList());
-
-        // ID:tä ei voinu verrata suoraan jostain syystä. Pitäs tehä oma DB kutsu koko paskalle mut tämäkin toimii.
-        Predicate<Alias> aliasFilter = i -> i.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
-        aliasList.setPredicate(aliasFilter);
-
         exitMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
         saveMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
         logoutButton.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
 
-        int i = 0;
+        updateView();
 
-        for(Alias alias : aliasList) {
 
-            CheckMenuItem menuItem = new CheckMenuItem("Item");
-            menuItem.setText(aliasList.get(i).getName());
-            String s = ""+(i+1);
-            menuItem.setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(s), KeyCombination.CONTROL_DOWN));
-            menuItem.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    for(int i = 0; i<sub.getItems().size();i++){
-                        CheckMenuItem c = (CheckMenuItem) sub.getItems().get(i);
-                        c.setSelected(false);
-                    }
-                    DataModel.getInstance().setCurrentAlias(alias);
-                    primaryController.setCurrentAliasText();
-                    loanListController.refreshLoans();
-                    menuItem.setSelected(true);
-                }
-            });
-            sub.getItems().add(menuItem);
-            i++;
-        }
     }
-    public void updateView(){
+    public void updateView() {
+
         DataModel.getInstance().loadAliasData();
-        FilteredList<Alias> aliasList = new FilteredList<>(DataModel.getInstance().getAliasList());
+        FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
 
-        // ID:tä ei voinu verrata suoraan jostain syystä. Pitäs tehä oma DB kutsu koko paskalle mut tämäkin toimii.
-        Predicate<Alias> aliasFilter = i -> i.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
-        aliasList.setPredicate(aliasFilter);
+        Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
+        filteredList.setPredicate(aliasFilter);
         sub.getItems().clear();
-        int i = 0;
+        System.out.println(filteredList);
 
-        for(Alias alias : aliasList) {
+        for(int i = 0; i<filteredList.size();i++) {
 
             CheckMenuItem menuItem = new CheckMenuItem("Item");
-            menuItem.setText(aliasList.get(i).getName());
+            menuItem.setText(filteredList.get(i).getName());
             String s = ""+(i+1);
+            Alias alias = filteredList.get(i);
             menuItem.setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(s), KeyCombination.CONTROL_DOWN));
             menuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    for(int i = 0; i<sub.getItems().size();i++){
-                        CheckMenuItem c = (CheckMenuItem) sub.getItems().get(i);
+                    for(int j = 0; j<sub.getItems().size();j++){
+                        CheckMenuItem c = (CheckMenuItem) sub.getItems().get(j);
                         c.setSelected(false);
                     }
                     DataModel.getInstance().setCurrentAlias(alias);
@@ -127,7 +98,6 @@ public class MenubarController {
                 }
             });
             sub.getItems().add(menuItem);
-            i++;
         }
     }
 
@@ -161,6 +131,7 @@ public class MenubarController {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
 
 
 }
