@@ -92,8 +92,10 @@ class UsuryDAOTest {
 
     @Test
     void readAliases() {
-        Alias alias1 = new Alias("name1", "desc1", 100);
-        Alias alias2 = new Alias("name2", "desc2", 200);
+        User user1 = new User("nameRead1");
+        dao.createUser(user1);
+        Alias alias1 = new Alias(user1, "name1", "desc1", 100);
+        Alias alias2 = new Alias(user1, "name2", "desc2", 200);
         dao.createAlias(alias1);
         dao.createAlias(alias2);
         List<Alias> aliases = dao.readAliases();
@@ -114,7 +116,8 @@ class UsuryDAOTest {
 
     @Test
     void createAlias() {
-        Alias alias1 = new Alias("nameCreateAlias1", "descCreateAlias1", 110);
+        User user1 = new User("nameRead1");
+        Alias alias1 = new Alias(user1, "nameCreateAlias1", "descCreateAlias1", 110);
         int sizeStart = dao.readAliases().size();
         dao.createAlias(alias1);
         int sizeEnd = dao.readAliases().size();
@@ -130,7 +133,8 @@ class UsuryDAOTest {
 
     @Test
     void updateAlias() {
-        Alias alias1 = new Alias("nameUpdateAlias1", "descUpdateAlias1", 120);
+        User user1 = new User("nameRead1");
+        Alias alias1 = new Alias(user1, "nameUpdateAlias1", "descUpdateAlias1", 120);
         dao.createAlias(alias1);
         long id = alias1.getId();
         alias1.setName("updatedName1");
@@ -143,7 +147,8 @@ class UsuryDAOTest {
 
     @Test
     void getAliasById() {
-        Alias alias1 = new Alias("nameAliasById1", "descAliasById1", 130);
+        User user1 = new User("nameRead1");
+        Alias alias1 = new Alias(user1, "nameAliasById1", "descAliasById1", 130);
         dao.createAlias(alias1);
         long id = alias1.getId();
         Alias alias2 = dao.getAliasById(id);
@@ -155,7 +160,8 @@ class UsuryDAOTest {
 
     @Test
     void deleteAliasById() {
-        Alias alias1 = new Alias("nameDeleteAliasById1", "descDeleteAliasById1", 140);
+        User user1 = new User("nameRead1");
+        Alias alias1 = new Alias(user1, "nameDeleteAliasById1", "descDeleteAliasById1", 140);
         dao.createAlias(alias1);
         long id = alias1.getId();
         int sizeStart = dao.readAliases().size();
@@ -167,7 +173,8 @@ class UsuryDAOTest {
 
     @Test
     void deleteAlias() {
-        Alias alias1 = new Alias("nameDeleteAlias1", "descDeleteAlias1", 150);
+        User user1 = new User("nameRead1");
+        Alias alias1 = new Alias(user1, "nameDeleteAlias1", "descDeleteAlias1", 150);
         dao.createAlias(alias1);
         long id = alias1.getId();
         int sizeStart = dao.readAliases().size();
@@ -305,7 +312,8 @@ class UsuryDAOTest {
         dao.createAlias(loan1.getOwner());
         dao.createLoan(loan1);
         int startSize = dao.readLoans().size();
-        Alias alias1 = new Alias("updateLoanAliasName1", "updateLoanAliasDescription1", 122);
+        User user1 = new User("nameRead1");
+        Alias alias1 = new Alias(user1, "updateLoanAliasName1", "updateLoanAliasDescription1", 122);
         dao.createAlias(alias1);
         loan1.setOwner(alias1);
         dao.updateLoan(loan1);
@@ -352,7 +360,8 @@ class UsuryDAOTest {
     }
 
     private Loan getNextLoan() {
-        Alias alias = new Alias("LoanAliasName" + loanCount, "LoanAliasDescription" + loanCount, 110 * loanCount);
+        User user1 = new User("nameRead1");
+        Alias alias = new Alias(user1, "LoanAliasName" + loanCount, "LoanAliasDescription" + loanCount, 110 * loanCount);
         Victim victim = new Victim("LoanVictimName" + loanCount, "LoanVictimAddress" + loanCount, "LoanVictimDescription" + loanCount);
         Loan loan = new Loan(alias, (float) 1.1 * loanCount, victim, localDate.minusDays(loanCount), localDate.plusDays(loanCount), (float) 0.1 * loanCount);
         loanCount++;

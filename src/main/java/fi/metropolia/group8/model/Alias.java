@@ -1,11 +1,9 @@
 package fi.metropolia.group8.model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 
 
 @Entity
@@ -14,19 +12,27 @@ import javax.persistence.*;
 public class Alias {
 
     private long id;
+    private User user;
     private StringProperty name;
     private StringProperty description;
-    private IntegerProperty equity;
+    private FloatProperty equity;
+    private IntegerProperty completedLoans;
+    private FloatProperty totalProfits;
+    private IntegerProperty enforcerActions;
 
 
     public Alias() {
         // Empty constructor for hibernate
     }
 
-    public Alias(String name, String description, int equity) {
+    public Alias(User user, String name, String description, int equity) {
+        this.user = user;
         setName(name);
         setDescription(description);
         setEquity(equity);
+        setCompletedLoans(0);
+        setTotalProfits(0);
+        setEnforcerActions(0);
     }
 
     @Id
@@ -36,6 +42,16 @@ public class Alias {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "user")
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setName(String value) { nameProperty().set(value); }
@@ -48,7 +64,6 @@ public class Alias {
         return name;
     }
 
-
     public void setDescription(String value) { descriptionProperty().set(value); }
 
     @Column(name="description")
@@ -59,14 +74,44 @@ public class Alias {
         return description;
     }
 
-    public void setEquity(int value) { equityProperty().set(value); }
+    public void setEquity(float value) { equityProperty().set(value); }
 
     @Column(name="equity")
-    public int getEquity() { return equityProperty().get(); }
+    public float getEquity() { return equityProperty().get(); }
 
-    public IntegerProperty equityProperty() {
-        if(equity == null) equity = new SimpleIntegerProperty(this, "equity");
+    public FloatProperty equityProperty() {
+        if(equity == null) equity = new SimpleFloatProperty(this, "equity");
         return equity;
+    }
+
+    public void setCompletedLoans(int value) { completedLoansProperty().set(value); }
+
+    @Column(name="completed_loans")
+    public int getCompletedLoans() { return completedLoansProperty().get(); }
+
+    public IntegerProperty completedLoansProperty() {
+        if(completedLoans == null) completedLoans = new SimpleIntegerProperty(this, "completedLoans");
+        return completedLoans;
+    }
+
+    public void setTotalProfits(float value) { totalProfitsProperty().set(value); }
+
+    @Column(name="total_profits")
+    public float getTotalProfits() { return totalProfitsProperty().get(); }
+
+    public FloatProperty totalProfitsProperty() {
+        if(totalProfits == null) totalProfits = new SimpleFloatProperty(this, "totalProfits");
+        return totalProfits;
+    }
+
+    public void setEnforcerActions(int value) { enforcerActionsProperty().set(value); }
+
+    @Column(name="enforcer_actions")
+    public int getEnforcerActions() { return enforcerActionsProperty().get(); }
+
+    public IntegerProperty enforcerActionsProperty() {
+        if(enforcerActions == null) enforcerActions = new SimpleIntegerProperty(this, "enforcerActions");
+        return enforcerActions;
     }
 
 

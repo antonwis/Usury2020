@@ -1,21 +1,27 @@
 package fi.metropolia.group8.view;
 
 import antlr.PreservingFileWriter;
-import fi.metropolia.group8.model.AliasDataModel;
+import fi.metropolia.group8.model.*;
 import javafx.beans.property.IntegerProperty;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.converter.NumberStringConverter;
-import org.w3c.dom.Text;
+
+
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.function.Predicate;
 
 public class AliasController {
 
@@ -33,57 +39,74 @@ public class AliasController {
     private TextField equityField;
 
     @FXML
-    private TextField descriptionField;
+    private TextArea descriptionArea;
 
-    private AliasDataModel aliasDataModel;
-
-    public void initModel(AliasDataModel aliasDataModel) {
-        if (this.aliasDataModel != null) {
-            throw new IllegalStateException("Model can only be initialized once");
-        }
-        this.aliasDataModel = aliasDataModel;
-        aliasDataModel.currentAliasProperty().addListener((obs, oldAlias, newAlias) -> {
-
-            /*
-            if(oldAlias != null) {
-                nameField.textProperty().unbindBidirectional(oldAlias.nameProperty());
-                equityField.textProperty().unbindBidirectional(oldAlias.equityProperty());
-                descriptionField.textProperty().unbindBidirectional(oldAlias.descriptionProperty());
-            }
-            if(newAlias == null) {
-                nameField.setText("");
-                equityField.setText("");
-                descriptionField.setText("");
-            } else {
-                nameField.textProperty().bindBidirectional(newAlias.nameProperty());
-                equityField.textProperty().bindBidirectional(newAlias.equityProperty(), new NumberStringConverter());
-                descriptionField.textProperty().bindBidirectional(newAlias.descriptionProperty());
-            }
-            */
-        });
-    }
-
+    private MenubarController menubarController;
+    private Stage stage;
+    private PrimaryController primaryController;
+    private OverviewController overviewController;
 
     @FXML
-    void addNewAlias(ActionEvent e) throws IOException {
+    void addNewAlias(ActionEvent e) {
 
-        aliasWindow.close();
+        try {
+            String name = nameField.getText();
+            Integer equity = Integer.parseInt(equityField.getText());
+            String description = descriptionArea.getText();
+            Boolean alreadyExists = false;
+            FilteredList<Alias> aliasList = new FilteredList<>(DataModel.getInstance().getAliasList());
+
+            Predicate<Alias> aliasFilter = i -> i.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
+            aliasList.setPredicate(aliasFilter);
+            for(Alias alias: aliasList){
+                System.out.println(alias.getName()+""+name);
+                if(alias.getName().equals(name)){
+                    alreadyExists = true;
+                }
+            }
+
+            if(nameField.getText().isBlank()) {
+                nameField.setPromptText("You must choose a name");
+                nameField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
+
+            }
+            if(alreadyExists == true){
+                nameField.setText("");
+                nameField.setPromptText("Alias already exists");
+                nameField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
+            }
+            else{
+                DataModel.getInstance().addNewAlias(DataModel.getInstance().getCurrentUser(), name, description, equity);
+                DataModel.getInstance().loadAliasData();
+                ObservableList<Alias> list = DataModel.getInstance().getAliasList();
+                DataModel.getInstance().setCurrentAlias(list.get(list.size()-1));
+                primaryController.setCurrentAliasText();
+                menubarController.updateView();
+                overviewController.updateOverview();
+                stage.close();
+            }
+
+        }catch (NumberFormatException numE){
+            equityField.setText("");
+            equityField.setPromptText("Equity must be a number");
+            equityField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
+        }
+
     }
 
     @FXML
     void closeAliasWindow(ActionEvent e) throws IOException {
-        aliasWindow.close();
+        stage.close();
     }
 
-    public static void display() throws IOException {
-        aliasWindow = new Stage();
-        FXMLLoader alias = new FXMLLoader();
-        AnchorPane aliaSS = FXMLLoader.load(AliasController.class.getResource("newAlias.fxml"));
-        AliasController aliasController = alias.getController();
-
-        Scene scene = new Scene(aliaSS, 300, 500);
-        aliasWindow.setScene(scene);
-        aliasWindow.show();
+    public void display(MenubarController menubarController, Stage stage,PrimaryController primaryController, OverviewController overviewController) throws IOException {
+        if (this.menubarController == null) {
+            this.menubarController = menubarController;
+            this.stage = stage;
+            this.primaryController = primaryController;
+            this.overviewController = overviewController;
+        }
     }
+
 
 }

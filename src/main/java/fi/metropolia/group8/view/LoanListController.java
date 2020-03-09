@@ -1,31 +1,33 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.Alias;
-import fi.metropolia.group8.model.Loan;
-import fi.metropolia.group8.model.LoanDataModel;
-import fi.metropolia.group8.model.Victim;
+import fi.metropolia.group8.model.*;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.ActionEvent;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
-import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 
-public class LoanListController implements Initializable {
+public class LoanListController {
 
 
     @FXML
-    private AnchorPane LoanDetailsAnchorPane;
+    private VBox LoanDetailsVbox;
     @FXML
     private TableView<Loan> LoanTableView;
     @FXML
@@ -45,54 +47,106 @@ public class LoanListController implements Initializable {
     @FXML
     private Button newLoanButton;
 
+    private NewLoanController newLoanController;
+    private PrimaryController primaryController;
+    private OverviewController overviewController;
+
     @FXML
-    void newLoan(ActionEvent event) throws IOException {
-      NewLoanController.display();
+    void newLoan() throws IOException {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+
+        FXMLLoader loan = new FXMLLoader(getClass().getResource("newLoan.fxml"));
+        Parent root = loan.load();
+        NewLoanController newLoanController = loan.getController();
+        newLoanController.TransferMemes(this, stage, primaryController, overviewController);
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
-    private LoanDataModel model;
 
-
-    public void initModel(LoanDataModel model) throws IOException {
-        if (this.model != null) {
-            throw new IllegalStateException("Model can only be initialized once");
+    public void updateView() {
+        DataModel.getInstance().loadLoanData();
+        if (DataModel.getInstance().getCurrentAlias() != null) {
+            LoanTableView.setItems(DataModel.getInstance().getLoanList());
+        } else {
+            LoanTableView.setItems(null);
         }
-        this.model = model;
-        LoanTableView.setItems(model.getLoanList());
-        ////////////////////////////////////////////
-        LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> model.setCurrentLoan(newSelection));
-        model.currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
+    }
+
+    // Updates view with loans owned by current alias
+    public void refreshLoans() {
+
+        DataModel.getInstance().loadLoanData();
+        DataModel.getInstance().loadAliasData();
+        FilteredList<Loan> filteredList = new FilteredList<>(DataModel.getInstance().getLoanList());
+
+        if (DataModel.getInstance().getCurrentAlias() != null) {
+
+            try {
+
+                ObjectProperty<Predicate<Loan>> userFilter = new SimpleObjectProperty<>();
+                ObjectProperty<Predicate<Loan>> aliasFilter = new SimpleObjectProperty<>();
+
+                userFilter.bind(Bindings.createObjectBinding(() ->
+                        i -> i.getOwner().getUser().getName().equals(DataModel.getInstance().getCurrentAlias().getUser().getName())));
+
+
+                aliasFilter.bind(Bindings.createObjectBinding(() ->
+                        i -> i.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())));
+
+                filteredList.predicateProperty().bind(Bindings.createObjectBinding(
+                        () -> userFilter.get().and(aliasFilter.get()),
+                        userFilter, aliasFilter));
+
+                if (filteredList.size() < 1) {
+                    LoanTableView.setItems(null);
+                } else {
+                    LoanTableView.setItems(filteredList);
+                }
+            }
+            catch (Exception e) {
+                System.out.println("Loan refresh failed");
+            }
+        } else {
+            LoanTableView.setItems(null);
+        }
+
+    }
+
+    public void refreshDetails() throws IOException {
+        FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
+        LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
+        LoanDetailController loanDetailController = loanDetails.getController();
+        loanDetailController.display(this, primaryController, overviewController);
+    }
+
+    public void initModel(PrimaryController primaryController, OverviewController overviewController) throws IOException {
+        if (this.primaryController == null) {
+            this.primaryController = primaryController;
+            this.overviewController = overviewController;
+
+        LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentLoan(newSelection));
+        DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
             if (newLoan == null) {
                 LoanTableView.getSelectionModel().clearSelection();
             } else {
                 LoanTableView.getSelectionModel().select(newLoan);
                 try {
-                    FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
-                    LoanDetailsAnchorPane.getChildren().setAll((Node) loanDetails.load());
-                    LoanDetailController loanDetailController = loanDetails.getController();
-                    loanDetailController.display(model);
+                    refreshDetails();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        //Lender.setCellValueFactory(lender -> new SimpleObjectProperty(lender.getValue().getOwner().getName()));
+        Id.setCellValueFactory(new PropertyValueFactory<>("id"));
         Debtor.setCellValueFactory(victim -> new SimpleObjectProperty(victim.getValue().getVictim().getName()));
         Amount.setCellValueFactory(amount -> amount.getValue().valueProperty().asObject());
-        //Interest.setCellValueFactory(interest -> interest.getValue().interestProperty().asObject());
-        //Date.setCellValueFactory(startDate -> startDate.getValue().startDateProperty());
-        //DueDate.setCellValueFactory(dueDate -> dueDate.getValue().dueDateProperty());
+        DueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
     }
-
-    //System.out.println(model.getCurrentLoan());
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
-
 }
 
 

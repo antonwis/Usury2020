@@ -1,44 +1,166 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.LoanDataModel;
+import fi.metropolia.group8.model.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
+import java.io.IOException;
 
 public class LoanDetailController {
 
     @FXML
-    private ImageView ProfileImage;
+    private VBox loanDetailVbox;
+
     @FXML
-    private Label IssueDate;
+    private Label LoanDetailHeader;
+
     @FXML
     private Label TotalDebt;
+
     @FXML
-    private Label Interest;
-    @FXML
-    private Label DueDate;
+    private Label IssueDate;
+
     @FXML
     private Label DebtRemaining;
+
     @FXML
     private Label ProjectedEarnings;
+
+    @FXML
+    private Label Interest;
+
+    @FXML
+    private Label DueDate;
+
+    @FXML
+    private ImageView ProfileImage;
+
     @FXML
     private Label VictimName;
+
     @FXML
     private Label VictimAddress;
+
     @FXML
     private Label VictimDescription;
 
+    @FXML
+    private HBox modifyHbox1;
+    @FXML
+    private Spinner interestSpinner;
+    @FXML
+    private DatePicker dueDatePicker;
 
-    public void display(LoanDataModel m) {
-        //System.out.println(m.getCurrentLoan());
-        IssueDate.setText(m.getCurrentLoan().getStartDate().toString());
-        DebtRemaining.setText(String.valueOf(m.getCurrentLoan().getValue()));
-        ProjectedEarnings.setText(String.valueOf(m.getCurrentLoan().getValue() + ((m.getCurrentLoan().getInterest()/100)*m.getCurrentLoan().getValue())));
-        TotalDebt.setText(String.valueOf(m.getCurrentLoan().getValue()));
-        Interest.setText(String.valueOf(m.getCurrentLoan().getInterest()));
-        DueDate.setText(m.getCurrentLoan().getDueDate().toString());
-        VictimName.setText(m.getCurrentLoan().getVictim().getName());
-        VictimAddress.setText(m.getCurrentLoan().getVictim().getAddress());
-        VictimDescription.setText(m.getCurrentLoan().getVictim().getDescription());
+    @FXML
+    private Button enforceP;
+
+    @FXML
+    private Button modifyL;
+
+    @FXML
+    private Button completeL;
+
+    @FXML
+    private HBox modifyHbox2;
+
+    @FXML
+    private Button applyModify;
+
+    @FXML
+    private Button cancelModify;
+
+    private LoanCalculator loanCalculator;
+    private LoanListController loanListController;
+    private PrimaryController primaryController;
+    private OverviewController overviewController;
+
+    @FXML
+    void applyModify() throws IOException {
+        interestSpinner.commitValue();
+        loanCalculator.modifyLoan(DataModel.getInstance().getCurrentLoan(), (float) (double) interestSpinner.getValue(),dueDatePicker.getValue());
+        loanListController.refreshDetails();
+
+        modifyHbox1.setVisible(!false);
+        modifyHbox2.setVisible(!true);
+        DueDate.setVisible(!false);
+        dueDatePicker.setVisible(!true);
+        interestSpinner.setVisible(!true);
+        Interest.setVisible(!false);
+        overviewController.updateOverview();
+    }
+
+    @FXML
+    void cancelModify() {
+        modifyHbox1.setVisible(!false);
+        modifyHbox2.setVisible(!true);
+        DueDate.setVisible(!false);
+        dueDatePicker.setVisible(!true);
+        interestSpinner.setVisible(!true);
+        Interest.setVisible(!false);
+    }
+
+    @FXML
+    void completeLoan() {
+        loanCalculator.completeLoan(DataModel.getInstance().getCurrentAlias(), DataModel.getInstance().getCurrentLoan());
+        DataModel.getInstance().loadAliasData();
+        primaryController.setCurrentAliasText();
+        loanListController.refreshLoans();
+        overviewController.updateOverview();
+    }
+
+    @FXML
+    void enforcePayment() {
+        loanCalculator.updateEnforcedActions(DataModel.getInstance().getCurrentAlias());
+        overviewController.updateOverview();
+    }
+
+    @FXML
+    void modifyLoan() {
+        modifyHbox1.setVisible(false);
+        modifyHbox2.setVisible(true);
+        DueDate.setVisible(false);
+        dueDatePicker.setVisible(true);
+        interestSpinner.setVisible(true);
+        Interest.setVisible(false);
+        dueDatePicker.setValue(DataModel.getInstance().getCurrentLoan().getDueDate());
+        SpinnerValueFactory spinnerValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1.0,1000.0, DataModel.getInstance().getCurrentLoan().getInterest());
+        interestSpinner.setValueFactory(spinnerValueFactory);
+    }
+
+    public void display(LoanListController loanListController, PrimaryController primaryController, OverviewController overviewController) {
+
+        this.loanListController = loanListController;
+        this.primaryController = primaryController;
+        this.overviewController = overviewController;
+
+        loanCalculator = new LoanCalculator();
+
+        // Detail header
+        LoanDetailHeader.setText(String.format("Details for loan %s", DataModel.getInstance().getCurrentLoan().getId()));
+
+        // Dates
+        IssueDate.setText(DataModel.getInstance().getCurrentLoan().getStartDate().toString());
+        DueDate.setText(DataModel.getInstance().getCurrentLoan().getDueDate().toString());
+
+        // Original loaned sum
+        TotalDebt.setText(String.valueOf(DataModel.getInstance().getCurrentLoan().getValue()));
+
+        // Total Debt remaining
+        DebtRemaining.setText(String.valueOf(loanCalculator.getLoanTotalSum(DataModel.getInstance().getCurrentLoan())));
+
+        // Interest percentage
+        Interest.setText(String.valueOf(DataModel.getInstance().getCurrentLoan().getInterest()));
+
+        // Interest profit
+        ProjectedEarnings.setText(String.valueOf(loanCalculator.getInterestProfit(DataModel.getInstance().getCurrentLoan())));
+
+        // Victim details
+        VictimName.setText(DataModel.getInstance().getCurrentLoan().getVictim().getName());
+        VictimAddress.setText(DataModel.getInstance().getCurrentLoan().getVictim().getAddress());
+        VictimDescription.setText(DataModel.getInstance().getCurrentLoan().getVictim().getDescription());
     }
 }

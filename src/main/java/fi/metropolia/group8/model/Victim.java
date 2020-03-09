@@ -48,11 +48,11 @@ public class Victim {
     public void setName(String value) { nameProperty().set(value); }
 
     @Column(name="address")
-    public final String getAddress() {
+    public String getAddress() {
         return addressProperty().get();
     }
 
-    public final void setAddress(String value) {
+    public void setAddress(String value) {
         addressProperty().set(value);
     }
 
@@ -63,11 +63,11 @@ public class Victim {
     }
 
     @Column(name="description")
-    public final String getDescription() {
+    public String getDescription() {
         return descriptionProperty().get();
     }
 
-    public final void setDescription(String value) {
+    public void setDescription(String value) {
         descriptionProperty().set(value);
     }
 
