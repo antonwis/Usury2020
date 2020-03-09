@@ -93,6 +93,7 @@ class UsuryDAOTest {
     @Test
     void readAliases() {
         User user1 = new User("nameRead1");
+        dao.createUser(user1);
         Alias alias1 = new Alias(user1, "name1", "desc1", 100);
         Alias alias2 = new Alias(user1, "name2", "desc2", 200);
         dao.createAlias(alias1);
