@@ -117,6 +117,7 @@ class UsuryDAOTest {
     @Test
     void createAlias() {
         User user1 = new User("nameRead1");
+        dao.createUser(user1);
         Alias alias1 = new Alias(user1, "nameCreateAlias1", "descCreateAlias1", 110);
         int sizeStart = dao.readAliases().size();
         dao.createAlias(alias1);
@@ -134,6 +135,7 @@ class UsuryDAOTest {
     @Test
     void updateAlias() {
         User user1 = new User("nameRead1");
+        dao.createUser(user1);
         Alias alias1 = new Alias(user1, "nameUpdateAlias1", "descUpdateAlias1", 120);
         dao.createAlias(alias1);
         long id = alias1.getId();
@@ -148,6 +150,7 @@ class UsuryDAOTest {
     @Test
     void getAliasById() {
         User user1 = new User("nameRead1");
+        dao.createUser(user1);
         Alias alias1 = new Alias(user1, "nameAliasById1", "descAliasById1", 130);
         dao.createAlias(alias1);
         long id = alias1.getId();
@@ -161,6 +164,7 @@ class UsuryDAOTest {
     @Test
     void deleteAliasById() {
         User user1 = new User("nameRead1");
+        dao.createUser(user1);
         Alias alias1 = new Alias(user1, "nameDeleteAliasById1", "descDeleteAliasById1", 140);
         dao.createAlias(alias1);
         long id = alias1.getId();
@@ -174,6 +178,7 @@ class UsuryDAOTest {
     @Test
     void deleteAlias() {
         User user1 = new User("nameRead1");
+        dao.createUser(user1);
         Alias alias1 = new Alias(user1, "nameDeleteAlias1", "descDeleteAlias1", 150);
         dao.createAlias(alias1);
         long id = alias1.getId();
@@ -279,6 +284,8 @@ class UsuryDAOTest {
     void readLoans() {
         Loan loan1 = this.getNextLoan();
         Loan loan2 = this.getNextLoan();
+        dao.createUser(loan1.getOwner().getUser());
+        dao.createUser(loan2.getOwner().getUser());
         dao.createVictim(loan1.getVictim());
         dao.createAlias(loan1.getOwner());
         dao.createLoan(loan1);
@@ -291,6 +298,7 @@ class UsuryDAOTest {
     void createLoan() {
         Loan loan1 = this.getNextLoan();
         int startSize = dao.readLoans().size();
+        dao.createUser(loan1.getOwner().getUser());
         dao.createVictim(loan1.getVictim());
         dao.createAlias(loan1.getOwner());
         dao.createLoan(loan1);
@@ -308,11 +316,13 @@ class UsuryDAOTest {
     @Test
     void updateLoan() {
         Loan loan1 = this.getNextLoan();
+        dao.createUser(loan1.getOwner().getUser());
         dao.createVictim(loan1.getVictim());
         dao.createAlias(loan1.getOwner());
         dao.createLoan(loan1);
         int startSize = dao.readLoans().size();
         User user1 = new User("nameRead1");
+        dao.createUser(user1);
         Alias alias1 = new Alias(user1, "updateLoanAliasName1", "updateLoanAliasDescription1", 122);
         dao.createAlias(alias1);
         loan1.setOwner(alias1);
@@ -326,6 +336,7 @@ class UsuryDAOTest {
     @Test
     void getLoanById() {
         Loan loan1 = this.getNextLoan();
+        dao.createUser(loan1.getOwner().getUser());
         dao.createVictim(loan1.getVictim());
         dao.createAlias(loan1.getOwner());
         dao.createLoan(loan1);
@@ -338,6 +349,7 @@ class UsuryDAOTest {
     @Test
     void deleteLoanById() {
         Loan loan1 = this.getNextLoan();
+        dao.createUser(loan1.getOwner().getUser());
         dao.createVictim(loan1.getVictim());
         dao.createAlias(loan1.getOwner());
         dao.createLoan(loan1);
@@ -350,6 +362,7 @@ class UsuryDAOTest {
     @Test
     void deleteLoan() {
         Loan loan1 = this.getNextLoan();
+        dao.createUser(loan1.getOwner().getUser());
         dao.createVictim(loan1.getVictim());
         dao.createAlias(loan1.getOwner());
         dao.createLoan(loan1);
