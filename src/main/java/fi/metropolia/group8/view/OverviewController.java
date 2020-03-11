@@ -47,7 +47,7 @@ public class OverviewController {
     private Label forecast;
 
     @FXML
-    private BarChart<?, ?> profitChart;
+    private BarChart profitChart;
 
     public void updateOverview(){
 
