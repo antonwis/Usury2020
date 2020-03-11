@@ -72,7 +72,7 @@ public class NewLoanController {
         loanCalculator = new LoanCalculator();
         loanCalculator.updateEquity(DataModel.getInstance().getCurrentAlias(), loan);
         loanListController.refreshLoans();
-        //primaryController.setCurrentAliasText();
+        primaryController.setCurrentAliasText();
         overviewController.updateOverview();
         stage.close();
     }
