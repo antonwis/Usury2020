@@ -16,10 +16,7 @@ import java.io.IOException;
 public class NewUserController {
     @FXML
     private TextField name;
-    @FXML
-    private Button createUser;
-    @FXML
-    private Button cancelButton;
+
     @FXML
     private Label userError;
 

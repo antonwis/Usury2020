@@ -28,12 +28,7 @@ import java.util.function.Predicate;
  */
 public class AliasController {
 
-    private static Stage aliasWindow;
 
-    @FXML
-    private Button AddAlias;
-    @FXML
-    private Button CancelAlias;
 
     @FXML
     private TextField nameField;

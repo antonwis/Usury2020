@@ -20,8 +20,6 @@ public class LoginController {
     */
 
     @FXML private ComboBox<User> userList;
-    @FXML private TextField user;
-    @FXML private TextField password;
     @FXML private Button loginButton;
 
     private LoginManager loginManager;

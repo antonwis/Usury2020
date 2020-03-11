@@ -14,6 +14,9 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.function.Predicate;
 
+/**
+ * controller for overview view
+ */
 public class OverviewController {
 
     @FXML
@@ -49,6 +52,9 @@ public class OverviewController {
     @FXML
     private BarChart<?, ?> profitChart;
 
+    /**
+     *
+     */
     public void updateOverview(){
 
         // Filter aliases for current user
@@ -81,21 +87,6 @@ public class OverviewController {
             // balance
             balance.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEquity()));
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 

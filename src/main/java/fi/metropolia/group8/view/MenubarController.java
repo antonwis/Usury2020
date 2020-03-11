@@ -28,8 +28,7 @@ import java.util.function.Predicate;
  */
 public class MenubarController {
 
-    @FXML
-    private MenuBar menuBar;
+
     @FXML
     private MenuItem exitMenuItem;
     @FXML
@@ -39,7 +38,6 @@ public class MenubarController {
     @FXML
     private MenuItem logoutButton;
 
-    private ObservableList<Alias> aliasList;
     private LoginManager loginManager;
     private AliasController aliasController;
     private PrimaryController primaryController;

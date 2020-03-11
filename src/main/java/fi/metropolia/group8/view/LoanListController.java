@@ -33,21 +33,14 @@ public class LoanListController {
     @FXML
     private TableColumn<Loan, Long> Id;
     @FXML
-    private TableColumn<Loan, Alias> Lender;
-    @FXML
     private TableColumn<Loan, Float> Amount;
     @FXML
     private TableColumn<Loan, Victim> Debtor;
-    @FXML
-    private TableColumn<Loan, Float> Interest;
-    @FXML
-    private TableColumn<Loan, LocalDate> Date;
+
     @FXML
     private TableColumn<Loan, LocalDate> DueDate;
-    @FXML
-    private Button newLoanButton;
 
-    private NewLoanController newLoanController;
+
     private PrimaryController primaryController;
     private OverviewController overviewController;
 
