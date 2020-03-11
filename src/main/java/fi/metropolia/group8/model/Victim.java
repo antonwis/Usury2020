@@ -1,6 +1,5 @@
 package fi.metropolia.group8.model;
 
-import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 

@@ -3,7 +3,6 @@ package fi.metropolia.group8.view;
 import fi.metropolia.group8.model.DataModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;

@@ -1,18 +1,11 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
-import java.util.Map;
-import java.util.function.Predicate;
 
 /**
  * controller for overview view

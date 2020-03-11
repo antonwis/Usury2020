@@ -4,7 +4,6 @@ package fi.metropolia.group8.model;
 import javafx.beans.property.*;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 
 /**
  * Alias model class
