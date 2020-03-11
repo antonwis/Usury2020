@@ -60,8 +60,9 @@ public class OverviewController {
         user.setText("Summary for " + DataModel.getInstance().getCurrentUser().getName());
 
         // Current alias
-        alias.setText("Selected alias: " + DataModel.getInstance().getCurrentAlias().getName());
-
+        if(DataModel.getInstance().getCurrentAlias().getName() != null) {
+            alias.setText("Selected alias: " + DataModel.getInstance().getCurrentAlias().getName());
+        }
         // balance
         balance.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEquity()));
 

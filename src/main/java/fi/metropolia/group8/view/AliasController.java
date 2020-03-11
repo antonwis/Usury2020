@@ -59,18 +59,18 @@ public class AliasController {
             Predicate<Alias> aliasFilter = i -> i.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
             aliasList.setPredicate(aliasFilter);
             for(Alias alias: aliasList){
-                System.out.println(alias.getName()+""+name);
+
                 if(alias.getName().equals(name)){
                     alreadyExists = true;
                 }
             }
-
-            if(nameField.getText().isBlank()) {
+            System.out.println(name+":tässä on nimi");
+            if(nameField.getText().isEmpty()) {
                 nameField.setPromptText("You must choose a name");
                 nameField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
 
             }
-            if(alreadyExists == true){
+            else if(alreadyExists == true){
                 nameField.setText("");
                 nameField.setPromptText("Alias already exists");
                 nameField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
