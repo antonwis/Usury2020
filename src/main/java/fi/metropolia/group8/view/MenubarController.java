@@ -132,8 +132,8 @@ public class MenubarController {
         Stage stage = new Stage();
         FXMLLoader modifyAlias = new FXMLLoader(getClass().getResource("modifyAliases.fxml"));
         Parent root = modifyAlias.load();
-        ModifyAliasesController modifyAliasesController = modifyAlias.getController();
-        modifyAliasesController.init(aliasController, stage, this, primaryController, overviewController);
+        ManageAliasesController manageAliasesController = modifyAlias.getController();
+        manageAliasesController.init(aliasController, stage, this, primaryController, overviewController);
         stage.setScene(new Scene(root));
         stage.show();
     }

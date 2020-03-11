@@ -25,7 +25,7 @@
         <Menu fx:id="aliasMenu" text="Alias">
             <items>
                 <MenuItem text="Add new alias" onAction="#addNewAlias"/>
-                <MenuItem text="Modify aliases" onAction="#modifyAliases"/>
+                <MenuItem text="Manage aliases" onAction="#modifyAliases"/>
                 <SeparatorMenuItem  />
 
             </items>
