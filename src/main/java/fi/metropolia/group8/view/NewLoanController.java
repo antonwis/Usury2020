@@ -73,6 +73,7 @@ public class NewLoanController {
         this.primaryController = primaryController;
         this.stage = stage;
         this.overviewController = overviewController;
+        dueDatepicker.setEditable(false);
 
     }
 }

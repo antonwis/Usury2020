@@ -76,9 +76,8 @@ public class LoanListController {
         FilteredList<Loan> filteredList = new FilteredList<>(DataModel.getInstance().getLoanList());
 
         if (DataModel.getInstance().getCurrentAlias() != null) {
-
+            newLoanButton.setVisible(true);
             try {
-
                 ObjectProperty<Predicate<Loan>> userFilter = new SimpleObjectProperty<>();
                 ObjectProperty<Predicate<Loan>> aliasFilter = new SimpleObjectProperty<>();
 
@@ -104,6 +103,7 @@ public class LoanListController {
             }
         } else {
             LoanTableView.setItems(null);
+            newLoanButton.setVisible(false);
         }
 
     }
@@ -119,7 +119,6 @@ public class LoanListController {
         if (this.primaryController == null) {
             this.primaryController = primaryController;
             this.overviewController = overviewController;
-
         LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentLoan(newSelection));
         DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
             if (newLoan == null) {
@@ -140,6 +139,7 @@ public class LoanListController {
             }
         });
 
+        newLoanButton.setVisible(false);
         Id.setCellValueFactory(new PropertyValueFactory<>("id"));
         Debtor.setCellValueFactory(victim -> new SimpleObjectProperty(victim.getValue().getVictim().getName()));
         Amount.setCellValueFactory(amount -> amount.getValue().valueProperty().asObject());

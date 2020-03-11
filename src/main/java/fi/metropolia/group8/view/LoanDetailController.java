@@ -1,16 +1,18 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.*;
-import javafx.event.ActionEvent;
+import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.model.LoanCalculator;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 
+/**
+ * Controller class for showing and modifying loan details.
+ */
 public class LoanDetailController {
 
     @FXML
@@ -79,11 +81,15 @@ public class LoanDetailController {
     private PrimaryController primaryController;
     private OverviewController overviewController;
 
+    /**
+     * Method for rip
+     *
+     */
     @FXML
     void applyModify() throws IOException {
         if (interestSpinner.getValue() != null && dueDatePicker.getValue() != null) {
             interestSpinner.commitValue();
-            loanCalculator.modifyLoan(DataModel.getInstance().getCurrentLoan(), (float) (double) interestSpinner.getValue(),dueDatePicker.getValue());
+            loanCalculator.modifyLoan(DataModel.getInstance().getCurrentLoan(), (float) (double) interestSpinner.getValue(), dueDatePicker.getValue());
             loanListController.refreshDetails();
         }
         modifyHbox1.setVisible(!false);
@@ -131,8 +137,10 @@ public class LoanDetailController {
         interestSpinner.setVisible(true);
         Interest.setVisible(false);
         dueDatePicker.setValue(DataModel.getInstance().getCurrentLoan().getDueDate());
-        SpinnerValueFactory spinnerValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1.0,1000.0, DataModel.getInstance().getCurrentLoan().getInterest());
+        dueDatePicker.setEditable(false);
+        SpinnerValueFactory spinnerValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1.0, 1000.0, DataModel.getInstance().getCurrentLoan().getInterest());
         interestSpinner.setValueFactory(spinnerValueFactory);
+        interestSpinner.setEditable(false);
         dueDatePicker.setValue(DataModel.getInstance().getCurrentLoan().getDueDate());
     }
 
