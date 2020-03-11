@@ -90,6 +90,7 @@ public class LoanDetailController {
         dueDatePicker.setVisible(!true);
         interestSpinner.setVisible(!true);
         Interest.setVisible(!false);
+        loanListController.refreshLoans();
         overviewController.updateOverview();
     }
 
