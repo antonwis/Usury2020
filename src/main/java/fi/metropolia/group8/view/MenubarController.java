@@ -23,11 +23,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.function.Predicate;
 
-
+/**
+ * Controller class for the menubar
+ */
 public class MenubarController {
 
-    @FXML
-    private MenuBar menuBar;
+
     @FXML
     private MenuItem exitMenuItem;
     @FXML
@@ -37,7 +38,6 @@ public class MenubarController {
     @FXML
     private MenuItem logoutButton;
 
-    private ObservableList<Alias> aliasList;
     private LoginManager loginManager;
     private AliasController aliasController;
     private PrimaryController primaryController;
@@ -45,7 +45,14 @@ public class MenubarController {
     private OverviewController overviewController;
     private Menu sub;
 
-
+    /**
+     * Method that initializes menubar and gets all the necessary controllers
+     * @param loginManager
+     * @param aliasController
+     * @param primaryController
+     * @param loanListController
+     * @param overviewController
+     */
     public void init(LoginManager loginManager, AliasController aliasController, PrimaryController primaryController, LoanListController loanListController, OverviewController overviewController){
 
         if (this.loginManager == null && this.primaryController == null) {
@@ -64,6 +71,9 @@ public class MenubarController {
         //updateView();
     }
 
+    /**
+     * updates the choose alias menu when a new alias is added or deleted and creates a handler for alias menuItems
+     */
     public void updateView() {
 
         DataModel.getInstance().loadAliasData();
@@ -83,6 +93,10 @@ public class MenubarController {
             Alias alias = filteredList.get(i);
             menuItem.setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(s), KeyCombination.CONTROL_DOWN));
             menuItem.setOnAction(new EventHandler<ActionEvent>() {
+                /**
+                 * Handler for alias menuItems that set every other checkMenuItem not selected when one is clicked and sets an active alias
+                 * @param actionEvent
+                 */
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     for(int j = 0; j<sub.getItems().size();j++){
@@ -106,15 +120,28 @@ public class MenubarController {
         }
     }
 
+    /**
+     * method for exiting closing the app when exit is clicked
+     * @param actionEvent
+     */
     public void exitApp(javafx.event.ActionEvent actionEvent) {
         System.exit(0);
     }
 
+    /**
+     * method for logging out when logout is clicked
+     * @param actionEvent
+     */
     public void logout(javafx.event.ActionEvent actionEvent) {
         DataModel.getInstance().setCurrentAlias(null);
         loginManager.logout();
     }
 
+    /**
+     * method for opening add new alias window
+     * @param actionEvent
+     * @throws IOException
+     */
     public void addNewAlias(javafx.event.ActionEvent actionEvent) throws IOException {
 
         Stage stage = new Stage();
@@ -127,13 +154,18 @@ public class MenubarController {
         stage.show();
     }
 
+    /**
+     * method for opening alias manage window
+     * @param actionEvent
+     * @throws IOException
+     */
     @FXML
     public void modifyAliases(javafx.event.ActionEvent actionEvent) throws  IOException{
         Stage stage = new Stage();
         FXMLLoader modifyAlias = new FXMLLoader(getClass().getResource("modifyAliases.fxml"));
         Parent root = modifyAlias.load();
-        ModifyAliasesController modifyAliasesController = modifyAlias.getController();
-        modifyAliasesController.init(aliasController, stage, this, primaryController, overviewController);
+        ManageAliasesController manageAliasesController = modifyAlias.getController();
+        manageAliasesController.init(aliasController, stage, this, primaryController, overviewController);
         stage.setScene(new Scene(root));
         stage.show();
     }

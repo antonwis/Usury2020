@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 
+/**
+ * controller for newLoanView
+ */
 public class NewLoanController {
 
     @FXML
@@ -42,11 +45,17 @@ public class NewLoanController {
     private PrimaryController primaryController;
     private OverviewController overviewController;
 
+    /**
+     * closes newLoan window
+     */
     @FXML
     void loanCancel() {
         stage.close();
     }
 
+    /**
+     * Takes input values from fields and creates a new victim and loan. Updates loanList view
+     */
     @FXML
     void loanConfirm() {
         Victim victim = new Victim(nameField.getText(), addressField.getText(), descriptionField.getText());
@@ -63,16 +72,24 @@ public class NewLoanController {
         loanCalculator = new LoanCalculator();
         loanCalculator.updateEquity(DataModel.getInstance().getCurrentAlias(), loan);
         loanListController.refreshLoans();
-        primaryController.setCurrentAliasText();
+        //primaryController.setCurrentAliasText();
         overviewController.updateOverview();
         stage.close();
     }
 
+    /**
+     * gets required controllers
+     * @param loanListController
+     * @param stage
+     * @param primaryController
+     * @param overviewController
+     */
     public void TransferMemes(LoanListController loanListController, Stage stage, PrimaryController primaryController, OverviewController overviewController) {
         this.loanListController = loanListController;
         this.primaryController = primaryController;
         this.stage = stage;
         this.overviewController = overviewController;
+        dueDatepicker.setEditable(false);
 
     }
 }

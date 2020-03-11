@@ -23,14 +23,12 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.function.Predicate;
 
+/**
+ * Controller class for creating new alias
+ */
 public class AliasController {
 
-    private static Stage aliasWindow;
 
-    @FXML
-    private Button AddAlias;
-    @FXML
-    private Button CancelAlias;
 
     @FXML
     private TextField nameField;
@@ -46,6 +44,11 @@ public class AliasController {
     private PrimaryController primaryController;
     private OverviewController overviewController;
 
+    /**
+     * Method for creating new alias from add new alias window when add alias button is clicked where the user input is also checked
+     * and if the alias already exists
+     * @param e
+     */
     @FXML
     void addNewAlias(ActionEvent e) {
 
@@ -94,11 +97,24 @@ public class AliasController {
 
     }
 
+    /**
+     * method for closing add new alias window when cancel is clicked
+     * @param e
+     * @throws IOException
+     */
     @FXML
     void closeAliasWindow(ActionEvent e) throws IOException {
         stage.close();
     }
 
+    /**
+     * Method that bring all needed instances of other controllers
+     * @param menubarController
+     * @param stage
+     * @param primaryController
+     * @param overviewController
+     * @throws IOException
+     */
     public void display(MenubarController menubarController, Stage stage,PrimaryController primaryController, OverviewController overviewController) throws IOException {
         if (this.menubarController == null) {
             this.menubarController = menubarController;

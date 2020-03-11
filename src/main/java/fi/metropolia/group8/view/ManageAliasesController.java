@@ -19,8 +19,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.function.Predicate;
 
-
-public class ModifyAliasesController {
+/**
+ * Controller class for alias management window
+ */
+public class ManageAliasesController {
 
     @FXML
     private VBox aliasBox;
@@ -31,6 +33,14 @@ public class ModifyAliasesController {
     private PrimaryController primaryController;
     private OverviewController overviewController;
 
+    /**
+     * Initialization method for Manage aliases window where all needed instances of controllers are initialized
+     * @param aliasController
+     * @param stage
+     * @param menubarController
+     * @param primaryController
+     * @param overviewController
+     */
     public void init(AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController, OverviewController overviewController){
         if(this.aliasController == null) {
             this.aliasController = aliasController;
@@ -41,6 +51,10 @@ public class ModifyAliasesController {
         }
         updateView();
     }
+
+    /**
+     * Method that filters aliases from alias list based on user and creates all the needed javafx elements for managing aliases also set listeners for buttons delete and modify
+     */
     public void updateView() {
 
         FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
@@ -57,7 +71,12 @@ public class ModifyAliasesController {
             label.setMinWidth(50);
             Button modify = new Button("Modify");
             modify.setMinWidth(60);
+
             modify.setOnAction(new EventHandler<ActionEvent>() {
+                /**
+                 * Handler for modify button that opens new window where you can edit alias
+                 * @param actionEvent
+                 */
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     try {
@@ -79,6 +98,10 @@ public class ModifyAliasesController {
             Button delete = new Button("Delete");
             delete.setMinWidth(60);
             delete.setOnAction(new EventHandler<ActionEvent>() {
+                /**
+                 * Handler for delete button that gets the alias and deletes it from the list and the database also if the alias is current alias it set current alias null
+                 * @param actionEvent
+                 */
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if(DataModel.getInstance().getCurrentAlias() != null) {
@@ -93,13 +116,16 @@ public class ModifyAliasesController {
                     primaryController.setCurrentAliasText();
                     overviewController.updateOverview();
                     updateView();
-
                 }
             });
             hBox1.getChildren().addAll(label,modify,delete);
             aliasBox.getChildren().add(hBox1);
         }
     }
+
+    /**
+     * Closes alias manage window
+     */
     public void closeWindow(){
         stage.close();
     }

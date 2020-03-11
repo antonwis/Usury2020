@@ -22,7 +22,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.function.Predicate;
 
-
+/**
+ * controller for loanListView
+ */
 public class LoanListController {
 
 
@@ -33,24 +35,23 @@ public class LoanListController {
     @FXML
     private TableColumn<Loan, Long> Id;
     @FXML
-    private TableColumn<Loan, Alias> Lender;
-    @FXML
     private TableColumn<Loan, Float> Amount;
     @FXML
     private TableColumn<Loan, Victim> Debtor;
-    @FXML
-    private TableColumn<Loan, Float> Interest;
-    @FXML
-    private TableColumn<Loan, LocalDate> Date;
+
     @FXML
     private TableColumn<Loan, LocalDate> DueDate;
     @FXML
     private Button newLoanButton;
 
-    private NewLoanController newLoanController;
+
     private PrimaryController primaryController;
     private OverviewController overviewController;
 
+    /**
+     * opens newLoan window
+     * @throws IOException
+     */
     @FXML
     void newLoan() throws IOException {
         Stage stage = new Stage();
@@ -65,7 +66,9 @@ public class LoanListController {
         stage.show();
     }
 
-
+    /**
+     * updates loanList based on a currently active alias (not used)
+     */
     public void updateView() {
         DataModel.getInstance().loadLoanData();
         if (DataModel.getInstance().getCurrentAlias() != null) {
@@ -75,7 +78,10 @@ public class LoanListController {
         }
     }
 
-    // Updates view with loans owned by current alias
+    /**
+     * Updates view with loans owned by current alias
+     */
+
     public void refreshLoans() {
 
         DataModel.getInstance().loadLoanData();
@@ -83,9 +89,8 @@ public class LoanListController {
         FilteredList<Loan> filteredList = new FilteredList<>(DataModel.getInstance().getLoanList());
 
         if (DataModel.getInstance().getCurrentAlias() != null) {
-
+            newLoanButton.setVisible(true);
             try {
-
                 ObjectProperty<Predicate<Loan>> userFilter = new SimpleObjectProperty<>();
                 ObjectProperty<Predicate<Loan>> aliasFilter = new SimpleObjectProperty<>();
 
@@ -111,10 +116,15 @@ public class LoanListController {
             }
         } else {
             LoanTableView.setItems(null);
+            newLoanButton.setVisible(false);
         }
 
     }
 
+    /**
+     * sets detail view based on selected loan
+     * @throws IOException
+     */
     public void refreshDetails() throws IOException {
         FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
         LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
@@ -122,15 +132,26 @@ public class LoanListController {
         loanDetailController.display(this, primaryController, overviewController);
     }
 
+    /**
+     * initializes controller
+     * @param primaryController
+     * @param overviewController
+     * @throws IOException
+     */
     public void initModel(PrimaryController primaryController, OverviewController overviewController) throws IOException {
         if (this.primaryController == null) {
             this.primaryController = primaryController;
             this.overviewController = overviewController;
-
         LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentLoan(newSelection));
         DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
             if (newLoan == null) {
                 LoanTableView.getSelectionModel().clearSelection();
+                try {
+                    FXMLLoader placeholder = new FXMLLoader(getClass().getResource("placeholder.fxml"));
+                    LoanDetailsVbox.getChildren().setAll((Node) placeholder.load());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else {
                 LoanTableView.getSelectionModel().select(newLoan);
                 try {
@@ -141,6 +162,7 @@ public class LoanListController {
             }
         });
 
+        newLoanButton.setVisible(false);
         Id.setCellValueFactory(new PropertyValueFactory<>("id"));
         Debtor.setCellValueFactory(victim -> new SimpleObjectProperty(victim.getValue().getVictim().getName()));
         Amount.setCellValueFactory(amount -> amount.getValue().valueProperty().asObject());

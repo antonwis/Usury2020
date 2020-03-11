@@ -37,6 +37,9 @@ public class LoginManager {
         showLoginScreen();
     }
 
+    /**
+     * opens loginScreen view
+     */
     public void showLoginScreen() {
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -51,6 +54,10 @@ public class LoginManager {
         }
     }
 
+    /**
+     * opens MainView
+     * @param sessionID
+     */
     private void showMainView(String sessionID) {
         try {
             FXMLLoader loader = new FXMLLoader(
