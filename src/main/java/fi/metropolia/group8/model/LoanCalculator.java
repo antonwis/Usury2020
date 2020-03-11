@@ -2,8 +2,6 @@ package fi.metropolia.group8.model;
 
 import java.time.LocalDate;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-
 /**
  * Handles updating loan-related data values, e.g. updating alias' equity after completing a loan.
  */
