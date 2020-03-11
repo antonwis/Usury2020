@@ -131,6 +131,12 @@ public class LoanListController {
         DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
             if (newLoan == null) {
                 LoanTableView.getSelectionModel().clearSelection();
+                try {
+                    FXMLLoader placeholder = new FXMLLoader(getClass().getResource("placeholder.fxml"));
+                    LoanDetailsVbox.getChildren().setAll((Node) placeholder.load());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else {
                 LoanTableView.getSelectionModel().select(newLoan);
                 try {
