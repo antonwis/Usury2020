@@ -71,7 +71,12 @@ public class ManageAliasesController {
             label.setMinWidth(50);
             Button modify = new Button("Modify");
             modify.setMinWidth(60);
+
             modify.setOnAction(new EventHandler<ActionEvent>() {
+                /**
+                 * Handler for modify button that opens new window where you can edit alias
+                 * @param actionEvent
+                 */
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     try {
@@ -93,6 +98,10 @@ public class ManageAliasesController {
             Button delete = new Button("Delete");
             delete.setMinWidth(60);
             delete.setOnAction(new EventHandler<ActionEvent>() {
+                /**
+                 * Handler for delete button that gets the alias and deletes it from the list and the database also if the alias is current alias it set current alias null
+                 * @param actionEvent
+                 */
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if(DataModel.getInstance().getCurrentAlias() != null) {
@@ -113,6 +122,10 @@ public class ManageAliasesController {
             aliasBox.getChildren().add(hBox1);
         }
     }
+
+    /**
+     * Closes alias manage window
+     */
     public void closeWindow(){
         stage.close();
     }
