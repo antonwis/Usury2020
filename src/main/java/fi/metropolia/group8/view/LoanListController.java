@@ -67,7 +67,7 @@ public class LoanListController {
     }
 
     /**
-     * updates loanList based on a currently active alias (not used)
+     * updates loanList based on a currently active alias
      */
     public void updateView() {
         DataModel.getInstance().loadLoanData();
