@@ -100,7 +100,6 @@ public class LoanDetailController {
         Interest.setVisible(!false);
         loanListController.refreshLoans();
         overviewController.updateOverview();
-        loanListController.updateView();
     }
 
     /**
