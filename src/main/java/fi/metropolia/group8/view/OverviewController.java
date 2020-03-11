@@ -53,7 +53,7 @@ public class OverviewController {
     private BarChart profitChart;
 
     /**
-     *
+     *Updates overview based on currently active alias
      */
     public void updateOverview(){
 
@@ -90,6 +90,9 @@ public class OverviewController {
 
     }
 
+    /**
+     * Initializes overview during startup
+     */
     public void initModel() {
         if (DataModel.getInstance().getCurrentAlias() != null) updateOverview();
         user.setText("Welcome " + DataModel.getInstance().getCurrentUser().getName() +"!");

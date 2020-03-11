@@ -22,7 +22,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.function.Predicate;
 
-
+/**
+ * controller for loanListView
+ */
 public class LoanListController {
 
 
@@ -39,11 +41,17 @@ public class LoanListController {
 
     @FXML
     private TableColumn<Loan, LocalDate> DueDate;
+    @FXML
+    private Button newLoanButton;
 
 
     private PrimaryController primaryController;
     private OverviewController overviewController;
 
+    /**
+     * opens newLoan window
+     * @throws IOException
+     */
     @FXML
     void newLoan() throws IOException {
         Stage stage = new Stage();
@@ -58,7 +66,9 @@ public class LoanListController {
         stage.show();
     }
 
-
+    /**
+     * updates loanList based on a currently active alias (not used)
+     */
     public void updateView() {
         DataModel.getInstance().loadLoanData();
         if (DataModel.getInstance().getCurrentAlias() != null) {
@@ -68,7 +78,10 @@ public class LoanListController {
         }
     }
 
-    // Updates view with loans owned by current alias
+    /**
+     * Updates view with loans owned by current alias
+     */
+
     public void refreshLoans() {
 
         DataModel.getInstance().loadLoanData();
@@ -108,6 +121,10 @@ public class LoanListController {
 
     }
 
+    /**
+     * sets detail view based on selected loan
+     * @throws IOException
+     */
     public void refreshDetails() throws IOException {
         FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
         LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
@@ -115,6 +132,12 @@ public class LoanListController {
         loanDetailController.display(this, primaryController, overviewController);
     }
 
+    /**
+     * initializes controller
+     * @param primaryController
+     * @param overviewController
+     * @throws IOException
+     */
     public void initModel(PrimaryController primaryController, OverviewController overviewController) throws IOException {
         if (this.primaryController == null) {
             this.primaryController = primaryController;

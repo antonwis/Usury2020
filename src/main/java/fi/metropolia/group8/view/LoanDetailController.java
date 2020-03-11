@@ -82,7 +82,7 @@ public class LoanDetailController {
     private OverviewController overviewController;
 
     /**
-     * Method for rip
+     * Updates loan based on modification done in modify loan window
      *
      */
     @FXML
@@ -103,6 +103,9 @@ public class LoanDetailController {
         loanListController.updateView();
     }
 
+    /**
+     * Changes fields back to default
+     */
     @FXML
     void cancelModify() {
         modifyHbox1.setVisible(!false);
@@ -113,6 +116,9 @@ public class LoanDetailController {
         Interest.setVisible(!false);
     }
 
+    /**
+     * Marks loan as completed and adds profits to the alias
+     */
     @FXML
     void completeLoan() {
         loanCalculator.completeLoan(DataModel.getInstance().getCurrentAlias(), DataModel.getInstance().getCurrentLoan());
@@ -122,12 +128,18 @@ public class LoanDetailController {
         overviewController.updateOverview();
     }
 
+    /**
+     *
+     */
     @FXML
     void enforcePayment() {
         loanCalculator.updateEnforcedActions(DataModel.getInstance().getCurrentAlias());
         overviewController.updateOverview();
     }
 
+    /**
+     * changes the fields on loan detail view for modifying
+     */
     @FXML
     void modifyLoan() {
         modifyHbox1.setVisible(false);
@@ -144,6 +156,12 @@ public class LoanDetailController {
         dueDatePicker.setValue(DataModel.getInstance().getCurrentLoan().getDueDate());
     }
 
+    /**
+     * initializes loanDetailController and gets all the controllers and set the fields based on currently selected loan
+     * @param loanListController
+     * @param primaryController
+     * @param overviewController
+     */
     public void display(LoanListController loanListController, PrimaryController primaryController, OverviewController overviewController) {
 
         this.loanListController = loanListController;

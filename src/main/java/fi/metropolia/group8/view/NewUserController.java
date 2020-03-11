@@ -26,6 +26,9 @@ public class NewUserController {
     public void initialize() {
     }
 
+    /**
+     * gets user name and creates new user
+     */
     @FXML
     void createNewUser() {
         if (name.getText().isEmpty()) {
@@ -39,11 +42,21 @@ public class NewUserController {
         }
     }
 
+    /**
+     * closes new user view
+     * @param e
+     * @throws IOException
+     */
     @FXML
     void returnToLogin(ActionEvent e) throws IOException {
         stage.close();
     }
 
+    /**
+     * gets login controller and instance of stage
+     * @param stage
+     * @param loginController
+     */
     public void TransferMemes(Stage stage, LoginController loginController) {
         this.stage = stage;
         this.loginController = loginController;
