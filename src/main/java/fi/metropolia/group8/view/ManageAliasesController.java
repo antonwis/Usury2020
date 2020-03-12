@@ -109,11 +109,7 @@ public class ManageAliasesController {
                  */
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if(DataModel.getInstance().getCurrentAlias() != null) {
-                        if (DataModel.getInstance().getCurrentAlias().getName().equals(alias.getName())) {
-                            DataModel.getInstance().setCurrentAlias(null);
-                        }
-                    }
+
                     DataModel.getInstance().loadLoanData();
                     DataModel.getInstance().loadAliasData();
                     FilteredList<Loan> filteredList = new FilteredList<>(DataModel.getInstance().getLoanList());
@@ -136,6 +132,7 @@ public class ManageAliasesController {
                     }
 
                     DataModel.getInstance().deleteAlias(alias);
+                    System.out.println(DataModel.getInstance().getCurrentAlias());
                     DataModel.getInstance().loadAliasData();
                     menubarController.updateView();
                     primaryController.setCurrentAliasText();
