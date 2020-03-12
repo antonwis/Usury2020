@@ -2,6 +2,10 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.model.Loan;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,6 +35,7 @@ public class ManageAliasesController {
     private MenubarController menubarController;
     private PrimaryController primaryController;
     private OverviewController overviewController;
+    private LoanListController loanListController;
 
     /**
      * Initialization method for Manage aliases window where all needed instances of controllers are initialized
@@ -40,13 +45,14 @@ public class ManageAliasesController {
      * @param primaryController
      * @param overviewController
      */
-    public void init(AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController, OverviewController overviewController){
+    public void init(LoanListController loanListController, AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController, OverviewController overviewController){
         if(this.aliasController == null) {
             this.aliasController = aliasController;
             this.stage = stage;
             this.menubarController = menubarController;
             this.primaryController = primaryController;
             this.overviewController = overviewController;
+            this.loanListController = loanListController;
         }
         updateView();
     }
@@ -85,7 +91,7 @@ public class ManageAliasesController {
                         FXMLLoader modifyAlias = new FXMLLoader(getClass().getResource("modifyAlias.fxml"));
                         Parent root = modifyAlias.load();
                         ModifyAliasController modifyAliasController = modifyAlias.getController();
-                        modifyAliasController.init(aliasController, stage,menubarController, primaryController, overviewController, alias);
+                        modifyAliasController.init(loanListController, aliasController, stage,menubarController, primaryController, overviewController, alias);
                         stage.setScene(new Scene(root));
                         stage.show();
                     }catch (IOException e){
@@ -108,12 +114,33 @@ public class ManageAliasesController {
                             DataModel.getInstance().setCurrentAlias(null);
                         }
                     }
+                    DataModel.getInstance().loadLoanData();
+                    DataModel.getInstance().loadAliasData();
+                    FilteredList<Loan> filteredList = new FilteredList<>(DataModel.getInstance().getLoanList());
+
+                    ObjectProperty<Predicate<Loan>> userFilter = new SimpleObjectProperty<>();
+                    ObjectProperty<Predicate<Loan>> aliasFilter = new SimpleObjectProperty<>();
+
+                    userFilter.bind(Bindings.createObjectBinding(() ->
+                            i -> i.getOwner().getUser().getName().equals(alias.getUser().getName())));
+
+
+                    aliasFilter.bind(Bindings.createObjectBinding(() ->
+                            i -> i.getOwner().getName().equals(alias.getName())));
+
+                    filteredList.predicateProperty().bind(Bindings.createObjectBinding(
+                            () -> userFilter.get().and(aliasFilter.get()),
+                            userFilter, aliasFilter));
+                    for(Loan loan : filteredList){
+                        DataModel.getInstance().deleteLoan(loan);
+                    }
 
                     DataModel.getInstance().deleteAlias(alias);
                     DataModel.getInstance().loadAliasData();
                     menubarController.updateView();
                     primaryController.setCurrentAliasText();
                     overviewController.updateOverview();
+                    loanListController.refreshLoans();
                     updateView();
                 }
             });

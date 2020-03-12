@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.6" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.LoanListController">
+<SplitPane dividerPositions="0.7" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.LoanListController">
     <items>
         <AnchorPane prefHeight="160.0" prefWidth="545.0">
             <children>
@@ -39,7 +39,7 @@
         </AnchorPane>
       <VBox fx:id="LoanDetailsVbox" alignment="TOP_CENTER">
          <children>
-                <Label alignment="CENTER" prefHeight="598.0" prefWidth="439.0" text="Click on entry to view details" textAlignment="CENTER" wrapText="true">
+                <Label alignment="CENTER" prefHeight="1000.0" prefWidth="1000.0" text="Click on entry to view details" textAlignment="CENTER" wrapText="true">
                     <font>
                         <Font size="26.0" />
                     </font>

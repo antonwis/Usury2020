@@ -147,7 +147,7 @@ public class MenubarController {
         FXMLLoader alias = new FXMLLoader(getClass().getResource("newAlias.fxml"));
         Parent root = alias.load();
         aliasController = alias.getController();
-        aliasController.display(this, stage,primaryController, overviewController);
+        aliasController.display(loanListController,this, stage,primaryController, overviewController);
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -163,7 +163,7 @@ public class MenubarController {
         FXMLLoader modifyAlias = new FXMLLoader(getClass().getResource("modifyAliases.fxml"));
         Parent root = modifyAlias.load();
         ManageAliasesController manageAliasesController = modifyAlias.getController();
-        manageAliasesController.init(aliasController, stage, this, primaryController, overviewController);
+        manageAliasesController.init(loanListController,aliasController, stage, this, primaryController, overviewController);
         stage.setScene(new Scene(root));
         stage.show();
     }

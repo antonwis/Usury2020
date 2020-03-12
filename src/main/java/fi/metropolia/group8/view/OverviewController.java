@@ -57,9 +57,18 @@ public class OverviewController {
 
         /// Current User
         user.setText("Summary for " + DataModel.getInstance().getCurrentUser().getName());
-
+        if(DataModel.getInstance().getCurrentAlias() == null){
+            alias.setText("No alias selected");
+            loansActive.setText("");
+            loansComplete.setText("");
+            loansDue.setText("");
+            loans.setText("");
+            profits.setText("");
+            enforcerActions.setText("");
+            balance.setText("");
+        }
         // Current alias
-        if(DataModel.getInstance().getCurrentAlias() != null) {
+        else {
             alias.setText("Selected alias: " + DataModel.getInstance().getCurrentAlias().getName());
             // loans active
             loansActive.setText(String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).size()));

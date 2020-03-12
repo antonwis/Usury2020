@@ -116,6 +116,7 @@ public class DataModel {
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createAlias(alias);
         aliasList.addAll(alias);
+        setCurrentAlias(alias);
     }
 
     /**
