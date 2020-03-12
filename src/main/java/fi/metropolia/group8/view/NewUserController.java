@@ -3,7 +3,6 @@ package fi.metropolia.group8.view;
 import fi.metropolia.group8.model.DataModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -16,10 +15,7 @@ import java.io.IOException;
 public class NewUserController {
     @FXML
     private TextField name;
-    @FXML
-    private Button createUser;
-    @FXML
-    private Button cancelButton;
+
     @FXML
     private Label userError;
 
@@ -29,6 +25,9 @@ public class NewUserController {
     public void initialize() {
     }
 
+    /**
+     * gets user name and creates new user
+     */
     @FXML
     void createNewUser() {
         if (name.getText().isEmpty()) {
@@ -42,11 +41,21 @@ public class NewUserController {
         }
     }
 
+    /**
+     * closes new user view
+     * @param e
+     * @throws IOException
+     */
     @FXML
     void returnToLogin(ActionEvent e) throws IOException {
         stage.close();
     }
 
+    /**
+     * gets login controller and instance of stage
+     * @param stage
+     * @param loginController
+     */
     public void TransferMemes(Stage stage, LoginController loginController) {
         this.stage = stage;
         this.loginController = loginController;

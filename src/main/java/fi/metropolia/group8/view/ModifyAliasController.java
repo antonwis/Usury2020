@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.function.Predicate;
 
+/**
+ * Controller for alias manage window
+ */
 public class ModifyAliasController {
     @FXML
     private TextField nameField;
@@ -33,8 +36,18 @@ public class ModifyAliasController {
     private PrimaryController primaryController;
     private OverviewController overviewController;
     private Alias alias;
+    private LoanListController loanListController;
 
-    public void init(AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController, OverviewController overviewController, Alias alias) {
+    /**
+     * init method for alias modifying window sets needed controllers and sets aliases information to the fields
+     * @param aliasController
+     * @param stage
+     * @param menubarController
+     * @param primaryController
+     * @param overviewController
+     * @param alias
+     */
+    public void init(LoanListController loanListController, AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController, OverviewController overviewController, Alias alias) {
         if (this.aliasController == null) {
             this.aliasController = aliasController;
             this.stage = stage;
@@ -42,6 +55,7 @@ public class ModifyAliasController {
             this.primaryController = primaryController;
             this.overviewController = overviewController;
             this.alias = alias;
+            this.loanListController = loanListController;
         }
 
             nameField.setText(alias.getName());
@@ -49,17 +63,26 @@ public class ModifyAliasController {
             descriptionArea.setText(alias.getDescription());
     }
 
+    /**
+     * closes the alias modifying window and opens alias management window
+     * @param actionEvent
+     * @throws IOException
+     */
     public void closeAliasWindow(ActionEvent actionEvent) throws IOException {
         stage.close();
         Stage stage = new Stage();
         FXMLLoader modifyAlias = new FXMLLoader(getClass().getResource("modifyAliases.fxml"));
         Parent root = modifyAlias.load();
-        ModifyAliasesController modifyAliasesController = modifyAlias.getController();
-        modifyAliasesController.init(aliasController, stage, menubarController, primaryController, overviewController);
+        ManageAliasesController manageAliasesController = modifyAlias.getController();
+        manageAliasesController.init(loanListController, aliasController, stage, menubarController, primaryController, overviewController);
         stage.setScene(new Scene(root));
         stage.show();
     }
 
+    /**
+     * Filters the alias list based on user and checks if the alias name already exists and checks all the other users inputs too then changes the details of alias and saves it to database
+     * @param actionEvent
+     */
     public void modifyAlias(ActionEvent actionEvent) {
         try {
             String name = nameField.getText();

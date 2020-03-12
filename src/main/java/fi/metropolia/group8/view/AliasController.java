@@ -1,36 +1,26 @@
 package fi.metropolia.group8.view;
 
-import antlr.PreservingFileWriter;
-import fi.metropolia.group8.model.*;
-import javafx.beans.property.IntegerProperty;
+import fi.metropolia.group8.model.Alias;
+import fi.metropolia.group8.model.DataModel;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-
-
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.function.Predicate;
 
+/**
+ * Controller class for creating new alias
+ */
 public class AliasController {
 
-    private static Stage aliasWindow;
 
-    @FXML
-    private Button AddAlias;
-    @FXML
-    private Button CancelAlias;
 
     @FXML
     private TextField nameField;
@@ -45,7 +35,13 @@ public class AliasController {
     private Stage stage;
     private PrimaryController primaryController;
     private OverviewController overviewController;
+    private LoanListController loanListController;
 
+    /**
+     * Method for creating new alias from add new alias window when add alias button is clicked where the user input is also checked
+     * and if the alias already exists
+     * @param e
+     */
     @FXML
     void addNewAlias(ActionEvent e) {
 
@@ -79,10 +75,10 @@ public class AliasController {
                 DataModel.getInstance().addNewAlias(DataModel.getInstance().getCurrentUser(), name, description, equity);
                 DataModel.getInstance().loadAliasData();
                 ObservableList<Alias> list = DataModel.getInstance().getAliasList();
-                DataModel.getInstance().setCurrentAlias(list.get(list.size()-1));
                 primaryController.setCurrentAliasText();
                 menubarController.updateView();
                 overviewController.updateOverview();
+                loanListController.refreshLoans();
                 stage.close();
             }
 
@@ -94,17 +90,31 @@ public class AliasController {
 
     }
 
+    /**
+     * method for closing add new alias window when cancel is clicked
+     * @param e
+     * @throws IOException
+     */
     @FXML
     void closeAliasWindow(ActionEvent e) throws IOException {
         stage.close();
     }
 
-    public void display(MenubarController menubarController, Stage stage,PrimaryController primaryController, OverviewController overviewController) throws IOException {
+    /**
+     * Method that bring all needed instances of other controllers
+     * @param menubarController
+     * @param stage
+     * @param primaryController
+     * @param overviewController
+     * @throws IOException
+     */
+    public void display(LoanListController loanListController, MenubarController menubarController, Stage stage,PrimaryController primaryController, OverviewController overviewController) throws IOException {
         if (this.menubarController == null) {
             this.menubarController = menubarController;
             this.stage = stage;
             this.primaryController = primaryController;
             this.overviewController = overviewController;
+            this.loanListController = loanListController;
         }
     }
 

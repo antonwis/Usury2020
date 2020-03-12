@@ -20,14 +20,16 @@ public class LoginController {
     */
 
     @FXML private ComboBox<User> userList;
-    @FXML private TextField user;
-    @FXML private TextField password;
     @FXML private Button loginButton;
 
     private LoginManager loginManager;
 
     public void initialize() {}
 
+    /**
+     * initializes loginManager
+     * @param loginManager
+     */
     public void initManager(LoginManager loginManager) {
         if(this.loginManager == null) {
             this.loginManager = loginManager;
@@ -54,6 +56,9 @@ public class LoginController {
 
     }
 
+    /**
+     * updates userList
+     */
     public void updateView() {
         DataModel.getInstance().loadUserData();
         userList.setItems(DataModel.getInstance().getUserList());
@@ -77,7 +82,10 @@ public class LoginController {
         return "session id: " + sessionID;
     }
 
-
+    /**
+     * opens create new user view
+     * @throws IOException
+     */
     @FXML
     void createNewUser() throws IOException {
         Stage stage = new Stage();

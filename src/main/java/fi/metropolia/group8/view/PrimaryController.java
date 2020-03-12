@@ -10,15 +10,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
-import javafx.scene.input.InputEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
+/**
+ * Main controller
+ */
 public class PrimaryController {
 
 
@@ -43,7 +43,11 @@ public class PrimaryController {
 
     private Scene scene;
 
-
+    /**
+     * initializes all controllers for software
+     * @param loginManager
+     * @param sessionID
+     */
     public void init(LoginManager loginManager, String sessionID) {
         try {
             FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
@@ -86,6 +90,9 @@ public class PrimaryController {
 
     }
 
+    /**
+     * method for setting text for currently selected alias
+     */
     public void setCurrentAliasText() {
 
         // Check if current alias exists
@@ -99,16 +106,6 @@ public class PrimaryController {
         } else {
             primaryCurrentAlias.setText("None");
             primaryCurrentEquity.setText("");
-        }
-    }
-
-    @FXML
-    private void handleKeyInput(final InputEvent event) {
-        if (event instanceof KeyEvent) {
-            final KeyEvent keyEvent = (KeyEvent) event;
-            if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.Q) {
-                exitFunction();
-            }
         }
     }
 

@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,11 +19,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.function.Predicate;
 
-
+/**
+ * controller for loanListView
+ */
 public class LoanListController {
 
 
@@ -33,39 +37,46 @@ public class LoanListController {
     @FXML
     private TableColumn<Loan, Long> Id;
     @FXML
-    private TableColumn<Loan, Alias> Lender;
-    @FXML
     private TableColumn<Loan, Float> Amount;
     @FXML
     private TableColumn<Loan, Victim> Debtor;
-    @FXML
-    private TableColumn<Loan, Float> Interest;
-    @FXML
-    private TableColumn<Loan, LocalDate> Date;
+
     @FXML
     private TableColumn<Loan, LocalDate> DueDate;
     @FXML
     private Button newLoanButton;
 
-    private NewLoanController newLoanController;
+
     private PrimaryController primaryController;
     private OverviewController overviewController;
 
+    /**
+     * opens newLoan window
+     * @throws IOException
+     */
     @FXML
     void newLoan() throws IOException {
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setResizable(false);
+        if(DataModel.getInstance().getCurrentAlias() == null){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Please Select an Alias first");
+            alert.show();
+        }else {
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
 
-        FXMLLoader loan = new FXMLLoader(getClass().getResource("newLoan.fxml"));
-        Parent root = loan.load();
-        NewLoanController newLoanController = loan.getController();
-        newLoanController.TransferMemes(this, stage, primaryController, overviewController);
-        stage.setScene(new Scene(root));
-        stage.show();
+            FXMLLoader loan = new FXMLLoader(getClass().getResource("newLoan.fxml"));
+            Parent root = loan.load();
+            NewLoanController newLoanController = loan.getController();
+            newLoanController.TransferMemes(this, stage, primaryController, overviewController);
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
     }
 
-
+    /**
+     * updates loanList based on a currently active alias
+     */
     public void updateView() {
         DataModel.getInstance().loadLoanData();
         if (DataModel.getInstance().getCurrentAlias() != null) {
@@ -75,7 +86,10 @@ public class LoanListController {
         }
     }
 
-    // Updates view with loans owned by current alias
+    /**
+     * Updates view with loans owned by current alias
+     */
+
     public void refreshLoans() {
 
         DataModel.getInstance().loadLoanData();
@@ -83,9 +97,7 @@ public class LoanListController {
         FilteredList<Loan> filteredList = new FilteredList<>(DataModel.getInstance().getLoanList());
 
         if (DataModel.getInstance().getCurrentAlias() != null) {
-
             try {
-
                 ObjectProperty<Predicate<Loan>> userFilter = new SimpleObjectProperty<>();
                 ObjectProperty<Predicate<Loan>> aliasFilter = new SimpleObjectProperty<>();
 
@@ -115,6 +127,10 @@ public class LoanListController {
 
     }
 
+    /**
+     * sets detail view based on selected loan
+     * @throws IOException
+     */
     public void refreshDetails() throws IOException {
         FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
         LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
@@ -122,15 +138,26 @@ public class LoanListController {
         loanDetailController.display(this, primaryController, overviewController);
     }
 
+    /**
+     * initializes controller
+     * @param primaryController
+     * @param overviewController
+     * @throws IOException
+     */
     public void initModel(PrimaryController primaryController, OverviewController overviewController) throws IOException {
         if (this.primaryController == null) {
             this.primaryController = primaryController;
             this.overviewController = overviewController;
-
         LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentLoan(newSelection));
         DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
             if (newLoan == null) {
                 LoanTableView.getSelectionModel().clearSelection();
+                try {
+                    FXMLLoader placeholder = new FXMLLoader(getClass().getResource("placeholder.fxml"));
+                    LoanDetailsVbox.getChildren().setAll((Node) placeholder.load());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else {
                 LoanTableView.getSelectionModel().select(newLoan);
                 try {
