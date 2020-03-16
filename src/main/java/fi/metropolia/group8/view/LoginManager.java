@@ -6,6 +6,9 @@ import java.util.logging.*;
 import fi.metropolia.group8.model.DataModel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import org.hibernate.service.spi.ServiceException;
 
 /** Manages control flow for logins */
 public class LoginManager {
@@ -51,6 +54,9 @@ public class LoginManager {
             controller.initManager(this);
         } catch (IOException ex) {
             Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ServiceException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Database login error. " + ex.getMessage(), ButtonType.CLOSE);
+            alert.showAndWait();
         }
     }
 

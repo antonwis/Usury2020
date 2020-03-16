@@ -27,6 +27,7 @@ public class UsuryDAO {
                 e.printStackTrace();
                 StandardServiceRegistryBuilder.destroy(registry);
                 //System.exit(-1);
+                throw e;
             }
         }
     }
