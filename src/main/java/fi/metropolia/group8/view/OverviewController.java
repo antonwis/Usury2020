@@ -1,6 +1,11 @@
 package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.model.Loan;
+import fi.metropolia.group8.model.LoanCalculator;
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -10,6 +15,7 @@ import javafx.scene.control.Label;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -104,9 +110,21 @@ public class OverviewController {
 
     public void updateChart() {
         profitChart.getData().clear();
+        FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(a -> a.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && a.isCompleted() == true);
         XYChart.Series set = new XYChart.Series();
         for (Month m : Month.values())
-            set.getData().add(new XYChart.Data<>(m.toString(), ThreadLocalRandom.current().nextInt(10, 1000)));
+            set.getData().add(new XYChart.Data<>(m.toString(), calculateProfit(aliasLoans,m)));
         profitChart.getData().addAll(set);
+    }
+
+    public Float calculateProfit(FilteredList aliasLoans, Month m){
+        float sum = 0;
+        LoanCalculator loan = new LoanCalculator();
+        for(Object l: aliasLoans){
+            if (((Loan) l).getCompleteDate().getMonth() == m){
+                sum += loan.getInterestProfit((Loan) l);
+            }
+        }
+        return sum;
     }
 }
