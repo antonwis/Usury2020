@@ -102,11 +102,11 @@ public class LoanListController {
                 ObjectProperty<Predicate<Loan>> aliasFilter = new SimpleObjectProperty<>();
 
                 userFilter.bind(Bindings.createObjectBinding(() ->
-                        i -> i.getOwner().getUser().getName().equals(DataModel.getInstance().getCurrentAlias().getUser().getName())));
+                        i -> i.getOwner().getUser().getName().equals(DataModel.getInstance().getCurrentAlias().getUser().getName()) && i.isCompleted() == false));
 
-
+                // filtteröi lainalistan tarkistamalla kuuluuko laina tämän hetkiselle aliakselle ja onko laina completed
                 aliasFilter.bind(Bindings.createObjectBinding(() ->
-                        i -> i.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())));
+                        i -> i.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && i.isCompleted() == false));
 
                 filteredList.predicateProperty().bind(Bindings.createObjectBinding(
                         () -> userFilter.get().and(aliasFilter.get()),

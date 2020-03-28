@@ -60,7 +60,7 @@ public class LoanCalculator {
         loan.setCompleted(true);
         loan.setCompleteDate(LocalDate.now());
         DataModel.getInstance().saveAliasData(alias);
-        //DataModel.getInstance().deleteLoan(loan);
+        DataModel.getInstance().saveLoanData(loan);
     }
 
     /**
