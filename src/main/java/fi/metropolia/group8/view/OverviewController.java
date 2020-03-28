@@ -79,7 +79,7 @@ public class OverviewController {
         if (DataModel.getInstance().getCurrentAlias() != null) {
             alias.setText("Selected alias: " + DataModel.getInstance().getCurrentAlias().getName());
             // loans active
-            loansActive.setText(String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).size()));
+            loansActive.setText(String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && loan.isCompleted() == false).size()));
             // Loans Completed
             loansComplete.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getCompletedLoans()));
             // Total Loans
