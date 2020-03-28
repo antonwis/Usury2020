@@ -43,7 +43,7 @@ public class LoanCalculator {
     }
 
     /**
-     * Update alias with loan values and delete completed loan from database
+     * Update alias with loan values and update loan status in database
      * @param alias
      * @param loan
      */
@@ -58,9 +58,12 @@ public class LoanCalculator {
         alias.setTotalProfits(newProfitTotal);
         alias.setCompletedLoans(newCompletedLoans);
         loan.setCompleted(true);
-        loan.setCompleteDate(LocalDate.now());
+
+        // Completion date is the user-specific current working date -- NOT the current actual system date
+        loan.setCompleteDate(DataModel.getInstance().getCurrentUser().getCurrentDate());
         DataModel.getInstance().saveAliasData(alias);
         //DataModel.getInstance().deleteLoan(loan);
+        DataModel.getInstance().saveLoanData(loan);
     }
 
     /**
