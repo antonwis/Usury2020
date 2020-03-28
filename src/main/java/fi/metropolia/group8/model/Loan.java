@@ -22,6 +22,8 @@ public class Loan {
     private LocalDate startDate;
     private LocalDate dueDate;
     private FloatProperty interest;
+    private boolean completed;
+    private LocalDate completeDate;
 
 
     public Loan() {
@@ -30,6 +32,7 @@ public class Loan {
 
     /**
      * constructor
+     *
      * @param owner
      * @param value
      * @param victim
@@ -48,7 +51,6 @@ public class Loan {
     }
 
     /**
-     *
      * @return
      */
     @Id
@@ -59,7 +61,6 @@ public class Loan {
     }
 
     /**
-     *
      * @param id
      */
     public void setId(long id) {
@@ -67,7 +68,6 @@ public class Loan {
     }
 
     /**
-     *
      * @return
      */
     @ManyToOne
@@ -77,7 +77,6 @@ public class Loan {
     }
 
     /**
-     *
      * @param owner
      */
     public void setOwner(Alias owner) {
@@ -85,17 +84,15 @@ public class Loan {
     }
 
     /**
-     *
      * @return
      */
     //Value property stuff
     public FloatProperty valueProperty() {
-        if (value == null) value = new SimpleFloatProperty(this,"value");
+        if (value == null) value = new SimpleFloatProperty(this, "value");
         return value;
     }
 
     /**
-     *
      * @return
      */
     @Column(name = "value")
@@ -104,7 +101,6 @@ public class Loan {
     }
 
     /**
-     *
      * @param value
      */
     public void setValue(float value) {
@@ -112,17 +108,15 @@ public class Loan {
     }
 
     /**
-     *
      * @return
      */
     //Interest property stuff
     public FloatProperty interestProperty() {
-        if (interest == null) interest = new SimpleFloatProperty(this,"interest");
+        if (interest == null) interest = new SimpleFloatProperty(this, "interest");
         return interest;
     }
 
     /**
-     *
      * @return
      */
     @Column(name = "interest_percentage")
@@ -131,7 +125,6 @@ public class Loan {
     }
 
     /**
-     *
      * @param value
      */
     public void setInterest(float value) {
@@ -139,7 +132,6 @@ public class Loan {
     }
 
     /**
-     *
      * @return
      */
     @ManyToOne
@@ -149,7 +141,6 @@ public class Loan {
     }
 
     /**
-     *
      * @param victim
      */
     // Probably not needed
@@ -158,7 +149,6 @@ public class Loan {
     }
 
     /**
-     *
      * @return
      */
     @Column(name = "startDate")
@@ -167,7 +157,6 @@ public class Loan {
     }
 
     /**
-     *
      * @param startDate
      */
     // Probably not needed
@@ -176,7 +165,6 @@ public class Loan {
     }
 
     /**
-     *
      * @return
      */
     @Column(name = "dueDate")
@@ -185,7 +173,6 @@ public class Loan {
     }
 
     /**
-     *
      * @param dueDate
      */
     public void setDueDate(LocalDate dueDate) {
@@ -193,7 +180,38 @@ public class Loan {
     }
 
     /**
+     * @return
+     */
+    @Column(name = "completed")
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    /**
+     * @param completed
+     */
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    /**
+     * @return
+     */
+    @Column(name = "completeDate")
+    public LocalDate getCompleteDate() {
+        return completeDate;
+    }
+
+    /**
+     * @param completeDate
+     */
+    public void setCompleteDate(LocalDate completeDate) {
+        this.completeDate = completeDate;
+    }
+
+    /**
      * to string method for loan
+     *
      * @return
      */
     @Override

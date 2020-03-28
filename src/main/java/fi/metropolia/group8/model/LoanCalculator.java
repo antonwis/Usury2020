@@ -57,8 +57,10 @@ public class LoanCalculator {
         alias.setEquity(newEquity);
         alias.setTotalProfits(newProfitTotal);
         alias.setCompletedLoans(newCompletedLoans);
+        loan.setCompleted(true);
+        loan.setCompleteDate(LocalDate.now());
         DataModel.getInstance().saveAliasData(alias);
-        DataModel.getInstance().deleteLoan(loan);
+        //DataModel.getInstance().deleteLoan(loan);
     }
 
     /**
