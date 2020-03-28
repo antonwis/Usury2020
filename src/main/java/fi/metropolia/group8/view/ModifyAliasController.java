@@ -36,6 +36,7 @@ public class ModifyAliasController {
     private PrimaryController primaryController;
     private OverviewController overviewController;
     private Alias alias;
+    private LoanListController loanListController;
 
     /**
      * init method for alias modifying window sets needed controllers and sets aliases information to the fields
@@ -46,7 +47,7 @@ public class ModifyAliasController {
      * @param overviewController
      * @param alias
      */
-    public void init(AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController, OverviewController overviewController, Alias alias) {
+    public void init(LoanListController loanListController, AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController, OverviewController overviewController, Alias alias) {
         if (this.aliasController == null) {
             this.aliasController = aliasController;
             this.stage = stage;
@@ -54,6 +55,7 @@ public class ModifyAliasController {
             this.primaryController = primaryController;
             this.overviewController = overviewController;
             this.alias = alias;
+            this.loanListController = loanListController;
         }
 
             nameField.setText(alias.getName());
@@ -72,7 +74,7 @@ public class ModifyAliasController {
         FXMLLoader modifyAlias = new FXMLLoader(getClass().getResource("modifyAliases.fxml"));
         Parent root = modifyAlias.load();
         ManageAliasesController manageAliasesController = modifyAlias.getController();
-        manageAliasesController.init(aliasController, stage, menubarController, primaryController, overviewController);
+        manageAliasesController.init(loanListController, aliasController, stage, menubarController, primaryController, overviewController);
         stage.setScene(new Scene(root));
         stage.show();
     }

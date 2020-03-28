@@ -116,6 +116,7 @@ public class DataModel {
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createAlias(alias);
         aliasList.addAll(alias);
+        setCurrentAlias(alias);
     }
 
     /**
@@ -124,6 +125,9 @@ public class DataModel {
      */
     public void deleteAlias(Alias alias){
         UsuryDAO usuryDAO = new UsuryDAO();
+        if(getCurrentAlias() != null && alias.getName().equals(getCurrentAlias().getName())){
+            setCurrentAlias(null);
+        }
         usuryDAO.deleteAlias(alias);
     }
 

@@ -35,6 +35,7 @@ public class AliasController {
     private Stage stage;
     private PrimaryController primaryController;
     private OverviewController overviewController;
+    private LoanListController loanListController;
 
     /**
      * Method for creating new alias from add new alias window when add alias button is clicked where the user input is also checked
@@ -74,10 +75,10 @@ public class AliasController {
                 DataModel.getInstance().addNewAlias(DataModel.getInstance().getCurrentUser(), name, description, equity);
                 DataModel.getInstance().loadAliasData();
                 ObservableList<Alias> list = DataModel.getInstance().getAliasList();
-                DataModel.getInstance().setCurrentAlias(list.get(list.size()-1));
                 primaryController.setCurrentAliasText();
                 menubarController.updateView();
                 overviewController.updateOverview();
+                loanListController.refreshLoans();
                 stage.close();
             }
 
@@ -107,12 +108,13 @@ public class AliasController {
      * @param overviewController
      * @throws IOException
      */
-    public void display(MenubarController menubarController, Stage stage,PrimaryController primaryController, OverviewController overviewController) throws IOException {
+    public void display(LoanListController loanListController, MenubarController menubarController, Stage stage,PrimaryController primaryController, OverviewController overviewController) throws IOException {
         if (this.menubarController == null) {
             this.menubarController = menubarController;
             this.stage = stage;
             this.primaryController = primaryController;
             this.overviewController = overviewController;
+            this.loanListController = loanListController;
         }
     }
 

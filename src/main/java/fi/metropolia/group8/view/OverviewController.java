@@ -2,15 +2,10 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.DataModel;
 import javafx.fxml.FXML;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.BarChart;
 import javafx.scene.control.Label;
 
 import java.time.LocalDate;
-import java.time.Month;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * controller for overview view
@@ -48,18 +43,12 @@ public class OverviewController {
     private Label forecast;
 
     @FXML
-    private LineChart profitChart;
-
-    @FXML
-    private CategoryAxis chartX;
-
-    @FXML
-    private NumberAxis chartY;
+    private BarChart profitChart;
 
     /**
-     * Updates overview based on currently active alias
+     *Updates overview based on currently active alias
      */
-    public void updateOverview() {
+    public void updateOverview(){
 
         // Filter aliases for current user
         //FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
@@ -68,25 +57,37 @@ public class OverviewController {
 
         /// Current User
         user.setText("Summary for " + DataModel.getInstance().getCurrentUser().getName());
-
+        if(DataModel.getInstance().getCurrentAlias() == null){
+            alias.setText("No alias selected");
+            loansActive.setText("");
+            loansComplete.setText("");
+            loansDue.setText("");
+            loans.setText("");
+            profits.setText("");
+            enforcerActions.setText("");
+            balance.setText("");
+        }
         // Current alias
-        if (DataModel.getInstance().getCurrentAlias() != null) {
+        else {
             alias.setText("Selected alias: " + DataModel.getInstance().getCurrentAlias().getName());
             // loans active
             loansActive.setText(String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).size()));
             // Loans Completed
             loansComplete.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getCompletedLoans()));
             // Total Loans
-            loansDue.setText((String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).filtered(loan -> loan.getDueDate().isBefore(LocalDate.now())).size())));
+            loansDue.setText((String.valueOf(DataModel.getInstance().getLoanList().filtered(
+                    loan -> loan.getOwner().getName().equals(
+                            DataModel.getInstance().getCurrentAlias().getName())).filtered(
+                    loan -> loan.getDueDate().isBefore(LocalDate.now())).size()
+            )));
             // Active loans past due date
-            loans.setText(String.valueOf(Integer.sum(DataModel.getInstance().getCurrentAlias().getCompletedLoans(), DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).size())));
+            loans.setText(String.valueOf(Integer.sum(DataModel.getInstance().getCurrentAlias().getCompletedLoans(),DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).size())));
             // Profits
             profits.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getTotalProfits()));
             // Enforcer actions
             enforcerActions.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEnforcerActions()));
             // balance
             balance.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEquity()));
-            updateChart();
         }
 
     }
@@ -96,17 +97,10 @@ public class OverviewController {
      */
     public void initModel() {
         if (DataModel.getInstance().getCurrentAlias() != null) updateOverview();
-        user.setText("Welcome " + DataModel.getInstance().getCurrentUser().getName() + "!");
-        profitChart.setAnimated(false);
+        user.setText("Welcome " + DataModel.getInstance().getCurrentUser().getName() +"!");
         //WIP
-        //forecast.setText(String.valueOf(DataModel.getInstance().getLoanList().size()));
-    }
+/*
 
-    public void updateChart() {
-        profitChart.getData().clear();
-        XYChart.Series set = new XYChart.Series();
-        for (Month m : Month.values())
-            set.getData().add(new XYChart.Data<>(m.toString(), ThreadLocalRandom.current().nextInt(10, 1000)));
-        profitChart.getData().addAll(set);
+        forecast.setText(String.valueOf(DataModel.getInstance().getLoanList().size()));*/
     }
 }
