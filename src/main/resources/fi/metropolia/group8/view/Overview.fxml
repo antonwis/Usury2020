@@ -3,10 +3,12 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
@@ -22,11 +24,16 @@
                 <Font size="22.0" />
             </font>
         </Label>
-        <Label fx:id="alias" layoutX="15.0" layoutY="75.0" text="Select an alias to view statistics" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="75.0">
-            <font>
-                <Font size="15.0" />
-            </font>
-        </Label>
+      <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="67.0" prefHeight="37.0" prefWidth="381.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="75.0">
+         <children>
+              <Label fx:id="alias" text="Select an alias to view statistics">
+                  <font>
+                      <Font size="15.0" />
+                  </font>
+              </Label>
+            <ComboBox fx:id="overviewCombo" onAction="#changedCombo" prefWidth="150.0" visible="false" />
+         </children>
+      </HBox>
         <GridPane gridLinesVisible="true" layoutX="409.0" layoutY="175.0" prefHeight="554.0" prefWidth="480.0" AnchorPane.bottomAnchor="71.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="175.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" prefWidth="100.0" />

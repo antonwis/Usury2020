@@ -9,8 +9,8 @@ import javax.persistence.*;
  * Alias model class
  */
 @Entity
-@Table(name="Alias")
-@Access(value= AccessType.PROPERTY)
+@Table(name = "Alias")
+@Access(value = AccessType.PROPERTY)
 public class Alias {
 
     private long id;
@@ -29,6 +29,7 @@ public class Alias {
 
     /**
      * Constructor for Alias
+     *
      * @param user
      * @param name
      * @param description
@@ -45,16 +46,16 @@ public class Alias {
     }
 
     /**
-     *
      * @return id
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
-    public long getId() { return id; }
+    @Column(name = "id")
+    public long getId() {
+        return id;
+    }
 
     /**
-     *
      * @param id
      */
     public void setId(long id) {
@@ -62,7 +63,6 @@ public class Alias {
     }
 
     /**
-     *
      * @return user
      */
     @ManyToOne
@@ -72,132 +72,158 @@ public class Alias {
     }
 
     /**
-     *
      * @param user
      */
     public void setUser(User user) {
         this.user = user;
     }
 
-    public void setName(String value) { nameProperty().set(value); }
+    public void setName(String value) {
+        nameProperty().set(value);
+    }
 
-    @Column(name="name")
-    public String getName() { return nameProperty().get(); }
+    @Column(name = "name")
+    public String getName() {
+        return nameProperty().get();
+    }
 
     /**
      * Name property for Alias
+     *
      * @return name
      */
     public StringProperty nameProperty() {
-        if (name == null) name = new SimpleStringProperty(this,"name") ;
+        if (name == null) name = new SimpleStringProperty(this, "name");
         return name;
     }
 
     /**
-     *
      * @param value
      */
-    public void setDescription(String value) { descriptionProperty().set(value); }
+    public void setDescription(String value) {
+        descriptionProperty().set(value);
+    }
 
     /**
-     *
      * @return
      */
-    @Column(name="description")
-    public String getDescription() { return descriptionProperty().get(); }
+    @Column(name = "description")
+    public String getDescription() {
+        return descriptionProperty().get();
+    }
 
     /**
      * Description property for Alias
+     *
      * @return description
      */
     public StringProperty descriptionProperty() {
-        if (description == null) description = new SimpleStringProperty(this,"description") ;
+        if (description == null) description = new SimpleStringProperty(this, "description");
         return description;
     }
 
     /**
-     *
      * @param value
      */
-    public void setEquity(float value) { equityProperty().set(value); }
+    public void setEquity(float value) {
+        equityProperty().set(value);
+    }
 
     /**
-     *
      * @return equity
      */
-    @Column(name="equity")
-    public float getEquity() { return equityProperty().get(); }
+    @Column(name = "equity")
+    public float getEquity() {
+        return equityProperty().get();
+    }
 
     /**
      * Equity property for Alias
+     *
      * @return equity
      */
     public FloatProperty equityProperty() {
-        if(equity == null) equity = new SimpleFloatProperty(this, "equity");
+        if (equity == null) equity = new SimpleFloatProperty(this, "equity");
         return equity;
     }
 
     /**
-     *
      * @param value
      */
-    public void setCompletedLoans(int value) { completedLoansProperty().set(value); }
+    public void setCompletedLoans(int value) {
+        completedLoansProperty().set(value);
+    }
 
     /**
-     *
      * @return completedLoans
      */
-    @Column(name="completed_loans")
-    public int getCompletedLoans() { return completedLoansProperty().get(); }
+    @Column(name = "completed_loans")
+    public int getCompletedLoans() {
+        return completedLoansProperty().get();
+    }
 
     /**
      * Completed loans property for Alias
+     *
      * @return completedLoans
      */
     public IntegerProperty completedLoansProperty() {
-        if(completedLoans == null) completedLoans = new SimpleIntegerProperty(this, "completedLoans");
+        if (completedLoans == null) completedLoans = new SimpleIntegerProperty(this, "completedLoans");
         return completedLoans;
     }
 
     /**
-     *
      * @param value
      */
-    public void setTotalProfits(float value) { totalProfitsProperty().set(value); }
+    public void setTotalProfits(float value) {
+        totalProfitsProperty().set(value);
+    }
 
-    @Column(name="total_profits")
-    public float getTotalProfits() { return totalProfitsProperty().get(); }
+    @Column(name = "total_profits")
+    public float getTotalProfits() {
+        return totalProfitsProperty().get();
+    }
 
     /**
      * Total profits property for Alias
+     *
      * @return totalProfits
      */
     public FloatProperty totalProfitsProperty() {
-        if(totalProfits == null) totalProfits = new SimpleFloatProperty(this, "totalProfits");
+        if (totalProfits == null) totalProfits = new SimpleFloatProperty(this, "totalProfits");
         return totalProfits;
     }
 
     /**
-     *
      * @param value
      */
-    public void setEnforcerActions(int value) { enforcerActionsProperty().set(value); }
+    public void setEnforcerActions(int value) {
+        enforcerActionsProperty().set(value);
+    }
 
     /**
-     *
      * @return enforcedActions
      */
-    @Column(name="enforcer_actions")
-    public int getEnforcerActions() { return enforcerActionsProperty().get(); }
+    @Column(name = "enforcer_actions")
+    public int getEnforcerActions() {
+        return enforcerActionsProperty().get();
+    }
 
     /**
      * enforcedActions property for Alias
+     *
      * @return enforcedActions
      */
     public IntegerProperty enforcerActionsProperty() {
-        if(enforcerActions == null) enforcerActions = new SimpleIntegerProperty(this, "enforcerActions");
+        if (enforcerActions == null) enforcerActions = new SimpleIntegerProperty(this, "enforcerActions");
         return enforcerActions;
     }
 
-
+    /**
+     * @return
+     */
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

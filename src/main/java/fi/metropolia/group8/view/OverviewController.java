@@ -1,22 +1,21 @@
 package fi.metropolia.group8.view;
 
+import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.model.LoanCalculator;
-import javafx.beans.Observable;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * controller for overview view
@@ -57,10 +56,26 @@ public class OverviewController {
     private LineChart profitChart;
 
     @FXML
+    private ComboBox overviewCombo;
+
+    @FXML
     private CategoryAxis chartX;
 
     @FXML
     private NumberAxis chartY;
+
+    @FXML
+    void changedCombo(ActionEvent event) {
+        System.out.println("selected:");
+        if (overviewCombo.getSelectionModel().getSelectedItem().equals("All")) {
+            showAllAliases();
+        } else {
+            overviewCombo.getSelectionModel().getSelectedItem();
+            FilteredList<Alias> alias = DataModel.getInstance().getAliasList().filtered(a -> a.getName().equals(overviewCombo.getSelectionModel().getSelectedItem().toString()) && DataModel.getInstance().getCurrentUser().getName().equals(a.getUser().getName()));
+            currentAlias(alias.get(0));
+        }
+    }
+
 
     /**
      * Updates overview based on currently active alias
@@ -77,7 +92,8 @@ public class OverviewController {
 
         // Current alias
         if (DataModel.getInstance().getCurrentAlias() != null) {
-            alias.setText("Selected alias: " + DataModel.getInstance().getCurrentAlias().getName());
+            overviewCombo.setVisible(true);
+            alias.setText("Selected: ");
             // loans active
             loansActive.setText(String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && loan.isCompleted() == false).size()));
             // Loans Completed
@@ -92,7 +108,8 @@ public class OverviewController {
             enforcerActions.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEnforcerActions()));
             // balance
             balance.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEquity()));
-            updateChart();
+            initCombo();
+            overviewCombo.getSelectionModel().clearSelection();
         }
 
     }
@@ -103,25 +120,48 @@ public class OverviewController {
     public void initModel() {
         if (DataModel.getInstance().getCurrentAlias() != null) updateOverview();
         user.setText("Welcome " + DataModel.getInstance().getCurrentUser().getName() + "!");
+        initCombo();
         profitChart.setAnimated(false);
         //WIP
         //forecast.setText(String.valueOf(DataModel.getInstance().getLoanList().size()));
     }
 
-    public void updateChart() {
+    public void initCombo() {
+        overviewCombo.getItems().clear();
+        overviewCombo.getItems().add("All");
+        for (Alias a : DataModel.getInstance().getAliasList().filtered(a -> a.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()))) {
+            overviewCombo.getItems().add(a.getName());
+        }
+    }
+
+    public void showAllAliases() {
         profitChart.getData().clear();
-        FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(a -> a.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && a.isCompleted() == true);
+        FilteredList<Alias> meme = DataModel.getInstance().getAliasList().filtered(a -> a.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()));
+        for (Alias a : meme) {
+            FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(b -> b.isCompleted() == true && b.getOwner().getName().equals(a.getName()));
+            XYChart.Series set = new XYChart.Series();
+            set.setName(a.getName());
+            for (Month m : Month.values())
+                set.getData().add(new XYChart.Data<>(m.toString(), calculateProfit(aliasLoans, m)));
+            profitChart.getData().addAll(set);
+        }
+    }
+
+    public void currentAlias(Alias alias) {
+        profitChart.getData().clear();
+        FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(a -> a.getOwner().getName().equals(alias.getName()) && a.isCompleted() == true);
         XYChart.Series set = new XYChart.Series();
+        set.setName(alias.getName());
         for (Month m : Month.values())
-            set.getData().add(new XYChart.Data<>(m.toString(), calculateProfit(aliasLoans,m)));
+            set.getData().add(new XYChart.Data<>(m.toString(), calculateProfit(aliasLoans, m)));
         profitChart.getData().addAll(set);
     }
 
-    public Float calculateProfit(FilteredList aliasLoans, Month m){
+    public Float calculateProfit(FilteredList aliasLoans, Month m) {
         float sum = 0;
         LoanCalculator loan = new LoanCalculator();
-        for(Object l: aliasLoans){
-            if (((Loan) l).getCompleteDate().getMonth() == m){
+        for (Object l : aliasLoans) {
+            if (((Loan) l).getCompleteDate().getMonth() == m) {
                 sum += loan.getInterestProfit((Loan) l);
             }
         }
