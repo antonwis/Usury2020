@@ -1,9 +1,11 @@
 package fi.metropolia.group8.model;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 /**
  * model for user
@@ -15,12 +17,14 @@ public class User {
 
     private long id;
     private StringProperty name;
+    private LocalDate currentDate;
 
     public User(){
         // Empty Constructor for hibernate
     }
     public User(String name){
         setName(name);
+        this.currentDate = LocalDate.now();
     }
 
     /**
@@ -63,6 +67,19 @@ public class User {
         if (name == null) name = new SimpleStringProperty(this,"name") ;
         return name;
     }
+
+    /**
+     * Returns the current working date object
+     * @return
+     */
+    @Column(name = "currentDate")
+    public LocalDate getCurrentDate() { return currentDate; }
+
+    /**
+     *
+     * @param date LocalDate object to replace current working date
+     */
+    public void setCurrentDate(LocalDate date) { this.currentDate = date; }
 
     /**
      *
