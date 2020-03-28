@@ -79,6 +79,39 @@ public class LoanCalculator {
     }
 
     /**
+     * Sets the loan value to zero. Forfeits the loan and all its profits.
+     * Used when victim is no longer alive.
+     * @param alias
+     * @param loan
+     */
+    public void forfeitLoan(Alias alias, Loan loan) {
+        loan.setValue(0f);
+        int newCompletedLoans = alias.getCompletedLoans() + 1;
+        alias.setCompletedLoans(newCompletedLoans);
+        loan.setCompleted(true);
+        loan.setCompleteDate(DataModel.getInstance().getCurrentUser().getCurrentDate());
+        DataModel.getInstance().saveAliasData(alias);
+        DataModel.getInstance().saveLoanData(loan);
+    }
+
+    /**
+     * Forfeits all profits. Returns the loan value to the alias.
+     * Used while repossessing loans.
+     * @param alias
+     * @param loan
+     */
+    public void repoLoan(Alias alias, Loan loan) {
+        float newEquity = alias.getEquity() + loan.getValue();
+        int newCompletedLoans = alias.getCompletedLoans() + 1;
+        alias.setEquity(newEquity);
+        alias.setCompletedLoans(newCompletedLoans);
+        loan.setCompleted(true);
+        loan.setCompleteDate(DataModel.getInstance().getCurrentUser().getCurrentDate());
+        DataModel.getInstance().saveAliasData(alias);
+        DataModel.getInstance().saveLoanData(loan);
+    }
+
+    /**
      * updates number of enforce actions
      * @param alias
      */

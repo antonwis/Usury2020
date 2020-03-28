@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import javax.persistence.*;
+import java.util.Random;
 
 /**
  * model for victim
@@ -17,6 +18,8 @@ public class Victim {
     private StringProperty name;
     private StringProperty address;
     private StringProperty description;
+    private StringProperty trait;
+    private boolean alive;
 
     // Empty Constructor for hibernate
     public Victim() {
@@ -33,6 +36,9 @@ public class Victim {
         this.name = new SimpleStringProperty(name);
         this.address = new SimpleStringProperty(address);
         this.description = new SimpleStringProperty(description);
+        this.alive = true;
+        // Pulls a random trait from an enum list
+        this.trait = new SimpleStringProperty(VictimTraits.values()[new Random().nextInt(VictimTraits.values().length)].name());
     }
 
     /**
@@ -121,6 +127,47 @@ public class Victim {
     public StringProperty descriptionProperty() {
         if (description == null) description = new SimpleStringProperty(this,"description") ;
         return description;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Column(name="trait")
+    public String getTrait() {
+        return traitProperty().get();
+    }
+
+    /**
+     *
+     * @param value
+     */
+    public void setTrait(String value) {
+        traitProperty().set(value);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public StringProperty traitProperty() {
+        if (trait == null) trait = new SimpleStringProperty(this,"trait") ;
+        return trait;
+    }
+
+    /**
+     * @return
+     */
+    @Column(name = "alive")
+    public boolean isAlive() {
+        return alive;
+    }
+
+    /**
+     * @param alive
+     */
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 
     /**
