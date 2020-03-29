@@ -103,10 +103,10 @@ public class OverviewController {
             loansActive.setText(String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && loan.isCompleted() == false).size()));
             // Loans Completed
             loansComplete.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getCompletedLoans()));
-            // Total Loans
-            loansDue.setText((String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).filtered(loan -> loan.getDueDate().isBefore(LocalDate.now())).size())));
             // Active loans past due date
-            loans.setText(String.valueOf(Integer.sum(DataModel.getInstance().getCurrentAlias().getCompletedLoans(), DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).size())));
+            loansDue.setText(String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).filtered(loan -> loan.getDueDate().isBefore(LocalDate.now()) && loan.isCompleted() == false).size()));
+            // Total Loans
+            loans.setText(String.valueOf(Integer.sum(DataModel.getInstance().getCurrentAlias().getCompletedLoans(), DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && loan.isCompleted() == false).size())));
             // Profits
             profits.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getTotalProfits()));
             // Enforcer actions
