@@ -2,13 +2,23 @@ package fi.metropolia.group8.model;
 
 public class EnforceManager {
 
-    LoanCalculator loanCalculator;
+    private static EnforceManager instance;
+
+    /**
+     * Retrieves the global instance
+     * @return returns the singleton instance
+     */
+    public static EnforceManager getInstance() {
+        if(instance == null) {
+            instance = new EnforceManager();
+        }
+        return instance;
+    }
+
 
     // TODO replace flavor text prints with event log method calls.
 
-    public EnforceManager() {
-        loanCalculator = new LoanCalculator();
-    }
+    public EnforceManager() {}
 
 
     public void Threaten(Loan loan) {
@@ -48,14 +58,14 @@ public class EnforceManager {
         switch (trait){
             case SCARED:
                 System.out.println("Victim was so scared they paid you back right on the spot.");
-                loanCalculator.completeLoan(DataModel.getInstance().getCurrentAlias(), loan);
+                LoanCalculator.getInstance().completeLoan(DataModel.getInstance().getCurrentAlias(), loan);
                 break;
             default:
                 System.out.println("After blackmailing the debtor they instantly pay you back half the remaining loan.");
                 float newValue = (loan.getValue() / 2);
                 loan.setValue(newValue);
                 Alias alias = loan.getOwner();
-                float newSum = alias.getEquity() + loanCalculator.getLoanTotalSum(loan);
+                float newSum = alias.getEquity() + LoanCalculator.getInstance().getLoanTotalSum(loan);
                 alias.setEquity(newSum);
                 DataModel.getInstance().saveLoanData(loan);
                 DataModel.getInstance().saveAliasData(alias);
@@ -71,7 +81,7 @@ public class EnforceManager {
         switch (trait){
             case SCARED:
                 System.out.println("Victim didn't survive. You manage to retrieve your initial investment.");
-                loanCalculator.repoLoan(DataModel.getInstance().getCurrentAlias(), loan);
+                LoanCalculator.getInstance().repoLoan(DataModel.getInstance().getCurrentAlias(), loan);
                 victim.setAlive(false);
                 break;
             default:
@@ -91,21 +101,31 @@ public class EnforceManager {
         switch (trait) {
             case SNEAKY:
                 System.out.println("Victim was too sneaky. He got away. Your money was lost.");
-                loanCalculator.forfeitLoan(DataModel.getInstance().getCurrentAlias(), loan);
+                LoanCalculator.getInstance().forfeitLoan(DataModel.getInstance().getCurrentAlias(), loan);
                 break;
             case VIOLENT:
                 System.out.println("Victim fought back. Your money was lost.");
-                loanCalculator.forfeitLoan(DataModel.getInstance().getCurrentAlias(), loan);
+                LoanCalculator.getInstance().forfeitLoan(DataModel.getInstance().getCurrentAlias(), loan);
                 victim.setAlive(false);
                 DataModel.getInstance().saveVictimData(victim);
                 break;
             default:
                 System.out.println("Victim was murdered. Your money was retrieved.");
-                loanCalculator.repoLoan(DataModel.getInstance().getCurrentAlias(), loan);
+                LoanCalculator.getInstance().repoLoan(DataModel.getInstance().getCurrentAlias(), loan);
                 victim.setAlive(false);
                 DataModel.getInstance().saveVictimData(victim);
                 break;
         }
 
+    }
+
+    /**
+     * updates number of enforce actions on current user
+     */
+    public void updateEnforcedActions() {
+        Alias alias = DataModel.getInstance().getCurrentAlias();
+        int newEnforcerTotal = alias.getEnforcerActions() + 1;
+        alias.setEnforcerActions(newEnforcerTotal);
+        DataModel.getInstance().saveAliasData(alias);
     }
 }

@@ -7,7 +7,20 @@ import java.time.LocalDate;
  */
 public class LoanCalculator {
 
+    private static LoanCalculator instance;
+
     public LoanCalculator() {
+    }
+
+    /**
+     * Retrieves the global instance
+     * @return returns the singleton instance
+     */
+    public static LoanCalculator getInstance() {
+        if(instance == null) {
+            instance = new LoanCalculator();
+        }
+        return instance;
     }
 
     /**
@@ -111,16 +124,6 @@ public class LoanCalculator {
         loan.setCompleteDate(DataModel.getInstance().getCurrentUser().getCurrentDate());
         DataModel.getInstance().saveAliasData(alias);
         DataModel.getInstance().saveLoanData(loan);
-    }
-
-    /**
-     * updates number of enforce actions
-     * @param alias
-     */
-    public void updateEnforcedActions(Alias alias) {
-        int newEnforcerTotal = alias.getEnforcerActions() + 1;
-        alias.setEnforcerActions(newEnforcerTotal);
-        DataModel.getInstance().saveAliasData(alias);
     }
 
 }
