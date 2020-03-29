@@ -1,6 +1,7 @@
 package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.model.EnforceManager;
 import fi.metropolia.group8.model.LoanCalculator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -81,7 +82,6 @@ public class LoanDetailController {
     @FXML
     private Button cancelModify;
 
-    private LoanCalculator loanCalculator;
     private LoanListController loanListController;
     private PrimaryController primaryController;
     private OverviewController overviewController;
@@ -93,7 +93,7 @@ public class LoanDetailController {
     void applyModify() throws IOException {
         if (interestSpinner.getValue() != null && dueDatePicker.getValue() != null) {
             interestSpinner.commitValue();
-            loanCalculator.modifyLoan(DataModel.getInstance().getCurrentLoan(), (float) (double) interestSpinner.getValue(), dueDatePicker.getValue());
+            LoanCalculator.getInstance().modifyLoan(DataModel.getInstance().getCurrentLoan(), (float) (double) interestSpinner.getValue(), dueDatePicker.getValue());
             loanListController.refreshDetails();
         }
         modifyHbox1.setVisible(!false);
@@ -124,7 +124,7 @@ public class LoanDetailController {
      */
     @FXML
     void completeLoan() {
-        loanCalculator.completeLoan(DataModel.getInstance().getCurrentAlias(), DataModel.getInstance().getCurrentLoan());
+        LoanCalculator.getInstance().completeLoan(DataModel.getInstance().getCurrentAlias(), DataModel.getInstance().getCurrentLoan());
         primaryController.setCurrentAliasText();
         loanListController.refreshLoans();
         overviewController.updateOverview();
@@ -134,6 +134,7 @@ public class LoanDetailController {
      *
      */
     @FXML
+
     void enforcePayment() throws IOException {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -180,8 +181,6 @@ public class LoanDetailController {
         this.primaryController = primaryController;
         this.overviewController = overviewController;
 
-        loanCalculator = new LoanCalculator();
-
         // Detail header
         LoanDetailHeader.setText(String.format("Details for loan %s", DataModel.getInstance().getCurrentLoan().getId()));
 
@@ -193,13 +192,13 @@ public class LoanDetailController {
         TotalDebt.setText(String.valueOf(DataModel.getInstance().getCurrentLoan().getValue()));
 
         // Total Debt remaining
-        DebtRemaining.setText(String.valueOf(loanCalculator.getLoanTotalSum(DataModel.getInstance().getCurrentLoan())));
+        DebtRemaining.setText(String.valueOf(LoanCalculator.getInstance().getLoanTotalSum(DataModel.getInstance().getCurrentLoan())));
 
         // Interest percentage
         Interest.setText(String.valueOf(DataModel.getInstance().getCurrentLoan().getInterest()));
 
         // Interest profit
-        ProjectedEarnings.setText(String.valueOf(loanCalculator.getInterestProfit(DataModel.getInstance().getCurrentLoan())));
+        ProjectedEarnings.setText(String.valueOf(LoanCalculator.getInstance().getInterestProfit(DataModel.getInstance().getCurrentLoan())));
 
         // Victim details
         VictimName.setText(DataModel.getInstance().getCurrentLoan().getVictim().getName());

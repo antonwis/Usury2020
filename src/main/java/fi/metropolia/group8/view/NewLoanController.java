@@ -44,7 +44,6 @@ public class NewLoanController {
 
     private Stage stage;
     private LoanListController loanListController;
-    private LoanCalculator loanCalculator;
     private PrimaryController primaryController;
     private OverviewController overviewController;
 
@@ -95,8 +94,7 @@ public class NewLoanController {
                         LocalDate.from(dueDatepicker.getValue()),
                         Float.parseFloat(interestField.getText())
                 );
-                loanCalculator = new LoanCalculator();
-                loanCalculator.updateEquity(loan);
+                LoanCalculator.getInstance().updateEquity(loan);
                 loanListController.refreshLoans();
                 primaryController.setCurrentAliasText();
                 overviewController.updateOverview();

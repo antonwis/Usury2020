@@ -35,39 +35,37 @@ public class EnforceViewController implements Initializable {
     private Button enforceAssassinate;
 
     private Stage stage;
-    private LoanCalculator loanCalculator;
     private OverviewController overviewController;
-    private EnforceManager enforceManager;
     private Loan loan;
 
     @FXML
     void assassinate() {
-        enforceManager.Assassinate(loan);
-        loanCalculator.updateEnforcedActions(DataModel.getInstance().getCurrentAlias());
+        EnforceManager.getInstance().Assassinate(loan);
+        EnforceManager.getInstance().updateEnforcedActions();
         overviewController.updateOverview();
         stage.close();
     }
 
     @FXML
     void extort() {
-        enforceManager.Extort(loan);
-        loanCalculator.updateEnforcedActions(DataModel.getInstance().getCurrentAlias());
+        EnforceManager.getInstance().Extort(loan);
+        EnforceManager.getInstance().updateEnforcedActions();
         overviewController.updateOverview();
         stage.close();
     }
 
     @FXML
     void threaten() {
-        enforceManager.Threaten(loan);
-        loanCalculator.updateEnforcedActions(DataModel.getInstance().getCurrentAlias());
+        EnforceManager.getInstance().Threaten(loan);
+        EnforceManager.getInstance().updateEnforcedActions();
         overviewController.updateOverview();
         stage.close();
     }
 
     @FXML
     void torture() {
-        enforceManager.Torture(loan);
-        loanCalculator.updateEnforcedActions(DataModel.getInstance().getCurrentAlias());
+        EnforceManager.getInstance().Torture(loan);
+        EnforceManager.getInstance().updateEnforcedActions();
         overviewController.updateOverview();
         stage.close();
     }
@@ -81,7 +79,5 @@ public class EnforceViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loan = DataModel.getInstance().getCurrentLoan();
-        enforceManager = new EnforceManager();
-        loanCalculator = new LoanCalculator();
     }
 }
