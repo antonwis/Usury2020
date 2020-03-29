@@ -1,12 +1,18 @@
 package fi.metropolia.group8.view;
 
+import com.sun.javafx.stage.EmbeddedWindow;
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.LoanCalculator;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -131,9 +137,18 @@ public class LoanDetailController {
      *
      */
     @FXML
-    void enforcePayment() {
-        loanCalculator.updateEnforcedActions(DataModel.getInstance().getCurrentAlias());
-        overviewController.updateOverview();
+    void enforcePayment() throws IOException {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+
+        FXMLLoader enforce = new FXMLLoader(getClass().getResource("EnforceView.fxml"));
+        Parent root = enforce.load();
+        EnforceViewController enforceViewController = enforce.getController();
+        enforceViewController.TransferMemes(this, stage, loanCalculator, overviewController);
+        stage.setScene(new Scene(root));
+        stage.show();
+
     }
 
     /**
