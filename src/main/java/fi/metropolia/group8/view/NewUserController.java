@@ -34,7 +34,7 @@ public class NewUserController {
             userError.setText("pepega clap");
         }
         else {
-            DataModel.getInstance().addNewUser(name.getText());
+            DataModel.getInstance().createUser(name.getText());
             System.out.println("New User: " + name.getText());
             //loginController.updateTextField(name.getText());
             stage.close();

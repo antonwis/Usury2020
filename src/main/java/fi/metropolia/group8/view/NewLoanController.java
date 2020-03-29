@@ -84,22 +84,19 @@ public class NewLoanController {
         }
         if (!name && !address && !description && !amount && !interest && !duedate) {
             try {
-                Victim victim = new Victim(nameField.getText(), addressField.getText(), descriptionField.getText());
                 if (Float.parseFloat(interestField.getText()) > 1000) {
                     interestField.setText("1000");
                 }
-                Loan loan = new Loan(
+                Loan loan = DataModel.getInstance().createLoan(
                         DataModel.getInstance().getCurrentAlias(),
                         Float.parseFloat(amountField.getText()),
-                        victim,
+                        DataModel.getInstance().createVictim(nameField.getText(), addressField.getText(), descriptionField.getText()),
                         LocalDate.now(),
                         LocalDate.from(dueDatepicker.getValue()),
                         Float.parseFloat(interestField.getText())
                 );
-                DataModel.getInstance().saveLoanData(loan, victim, DataModel.getInstance().getCurrentAlias());
-                DataModel.getInstance().loadAliasData();
                 loanCalculator = new LoanCalculator();
-                loanCalculator.updateEquity(DataModel.getInstance().getCurrentAlias(), loan);
+                loanCalculator.updateEquity(loan);
                 loanListController.refreshLoans();
                 primaryController.setCurrentAliasText();
                 overviewController.updateOverview();
