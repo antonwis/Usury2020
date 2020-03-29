@@ -57,11 +57,10 @@ public class LoanCalculator {
 
     /**
      * Update alias with loan values and update loan status in database
-     * @param alias
      * @param loan
      */
-
-    public void completeLoan(Alias alias, Loan loan) {
+    public void completeLoan(Loan loan) {
+        Alias alias = loan.getOwner();
         float totalSum = getLoanTotalSum(loan);
         float totalProfit = getInterestProfit(loan);
         float newProfitTotal = alias.getTotalProfits() + totalProfit;
@@ -74,11 +73,13 @@ public class LoanCalculator {
 
         // Completion date is the user-specific current working date -- NOT the current actual system date
         loan.setCompleteDate(DataModel.getInstance().getCurrentUser().getCurrentDate());
+
         DataModel.getInstance().saveAliasData(alias);
-        //DataModel.getInstance().deleteLoan(loan);
         DataModel.getInstance().saveLoanData(loan);
         DataModel.getInstance().loadAliasData();
         DataModel.getInstance().loadLoanData();
+        // Call event logger
+        EventManager.getInstance().loanCompleted(loan);
     }
 
     /**
@@ -123,6 +124,22 @@ public class LoanCalculator {
         loan.setCompleted(true);
         loan.setCompleteDate(DataModel.getInstance().getCurrentUser().getCurrentDate());
         DataModel.getInstance().saveAliasData(alias);
+        DataModel.getInstance().saveLoanData(loan);
+    }
+
+    public void payHalfLoan(Loan loan) {
+        float newValue = (loan.getValue() / 2);
+        loan.setValue(newValue);
+        Alias alias = loan.getOwner();
+        float newSum = alias.getEquity() + LoanCalculator.getInstance().getLoanTotalSum(loan);
+        alias.setEquity(newSum);
+        DataModel.getInstance().saveLoanData(loan);
+        DataModel.getInstance().saveAliasData(alias);
+    }
+
+    public void modifyLoanValue(Loan loan, float modifier) {
+        float newValue = (loan.getValue() * (1 +(modifier / 100)));
+        loan.setValue(newValue);
         DataModel.getInstance().saveLoanData(loan);
     }
 
