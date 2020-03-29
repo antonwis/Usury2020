@@ -5,7 +5,6 @@ import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.model.LoanCalculator;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -56,7 +55,7 @@ public class OverviewController {
     private LineChart profitChart;
 
     @FXML
-    private ComboBox overviewCombo;
+    private ComboBox<String> overviewCombo;
 
     @FXML
     private CategoryAxis chartX;
@@ -64,15 +63,18 @@ public class OverviewController {
     @FXML
     private NumberAxis chartY;
 
+    /**
+     * Changes the view to reflect the selected item in combobox
+     */
     @FXML
-    void changedCombo(ActionEvent event) {
-        System.out.println("selected:");
-        if (overviewCombo.getSelectionModel().getSelectedItem().equals("All")) {
-            showAllAliases();
-        } else {
-            overviewCombo.getSelectionModel().getSelectedItem();
-            FilteredList<Alias> alias = DataModel.getInstance().getAliasList().filtered(a -> a.getName().equals(overviewCombo.getSelectionModel().getSelectedItem().toString()) && DataModel.getInstance().getCurrentUser().getName().equals(a.getUser().getName()));
-            currentAlias(alias.get(0));
+    void changedCombo() {
+        if (!overviewCombo.getSelectionModel().isEmpty()){
+            if (overviewCombo.getValue().equals("All")) {
+                showAllAliases();
+            } else {
+                FilteredList<Alias> alias = DataModel.getInstance().getAliasList().filtered(a -> a.getName().equals(overviewCombo.getValue()) && DataModel.getInstance().getCurrentUser().getName().equals(a.getUser().getName()));
+                currentAlias(alias.get(0));
+            }
         }
     }
 
@@ -86,6 +88,9 @@ public class OverviewController {
         //FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
         //Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
         //filteredList.setPredicate(aliasFilter);
+
+        // Update ComboBox
+        updateCombo();
 
         /// Current User
         user.setText("Summary for " + DataModel.getInstance().getCurrentUser().getName());
@@ -108,10 +113,7 @@ public class OverviewController {
             enforcerActions.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEnforcerActions()));
             // balance
             balance.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEquity()));
-            initCombo();
-            overviewCombo.getSelectionModel().clearSelection();
         }
-
     }
 
     /**
@@ -120,25 +122,31 @@ public class OverviewController {
     public void initModel() {
         if (DataModel.getInstance().getCurrentAlias() != null) updateOverview();
         user.setText("Welcome " + DataModel.getInstance().getCurrentUser().getName() + "!");
-        initCombo();
+        updateCombo();
         profitChart.setAnimated(false);
         //WIP
         //forecast.setText(String.valueOf(DataModel.getInstance().getLoanList().size()));
     }
 
-    public void initCombo() {
-        overviewCombo.getItems().clear();
+    /**
+     * Updates the combobox when new alias or loan is added.
+     */
+    public void updateCombo() {
+        overviewCombo.getItems().clear(); // aiheuttaa nullpointereita, pitää fix jossain vaiheessa
         overviewCombo.getItems().add("All");
         for (Alias a : DataModel.getInstance().getAliasList().filtered(a -> a.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()))) {
             overviewCombo.getItems().add(a.getName());
         }
     }
 
+    /**
+     *  Shows the profits of all aliases in the linechart
+     */
     public void showAllAliases() {
         profitChart.getData().clear();
         FilteredList<Alias> meme = DataModel.getInstance().getAliasList().filtered(a -> a.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()));
         for (Alias a : meme) {
-            FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(b -> b.isCompleted() == true && b.getOwner().getName().equals(a.getName()));
+            FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(b -> b.isCompleted() && b.getOwner().getName().equals(a.getName()));
             XYChart.Series set = new XYChart.Series();
             set.setName(a.getName());
             for (Month m : Month.values())
@@ -147,9 +155,13 @@ public class OverviewController {
         }
     }
 
+    /**
+     * Shows the profits of current alias in the linechart
+     * @param alias
+     */
     public void currentAlias(Alias alias) {
         profitChart.getData().clear();
-        FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(a -> a.getOwner().getName().equals(alias.getName()) && a.isCompleted() == true);
+        FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(a -> a.getOwner().getName().equals(alias.getName()) && a.isCompleted());
         XYChart.Series set = new XYChart.Series();
         set.setName(alias.getName());
         for (Month m : Month.values())
@@ -157,12 +169,18 @@ public class OverviewController {
         profitChart.getData().addAll(set);
     }
 
-    public Float calculateProfit(FilteredList aliasLoans, Month m) {
+    /**
+     * Calculates the total profit of the month
+     * @param aliasLoans
+     * @param m
+     * @return
+     */
+    public Float calculateProfit(FilteredList<Loan> aliasLoans, Month m) {
         float sum = 0;
         LoanCalculator loan = new LoanCalculator();
-        for (Object l : aliasLoans) {
-            if (((Loan) l).getCompleteDate().getMonth() == m) {
-                sum += loan.getInterestProfit((Loan) l);
+        for (Loan l : aliasLoans) {
+            if ((l).getCompleteDate().getMonth() == m) {
+                sum += loan.getInterestProfit(l);
             }
         }
         return sum;
