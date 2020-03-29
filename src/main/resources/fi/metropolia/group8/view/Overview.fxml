@@ -96,7 +96,7 @@
                 <Label fx:id="forecast" alignment="CENTER" prefHeight="171.0" prefWidth="299.0" text="Forecast" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             </children>
         </GridPane>
-        <LineChart fx:id="profitChart" layoutX="50.0" layoutY="163.0" legendSide="TOP" prefHeight="577.0" prefWidth="694.0" title="Monthly profit average over all loans" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="530.0" AnchorPane.topAnchor="140.0">
+        <LineChart fx:id="profitChart" animated="false" layoutX="50.0" layoutY="163.0" legendSide="TOP" prefHeight="577.0" prefWidth="694.0" title="Monthly profit average over all loans" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="530.0" AnchorPane.topAnchor="140.0">
             <xAxis>
                 <CategoryAxis fx:id="chartX" label="Month" side="BOTTOM" />
             </xAxis>

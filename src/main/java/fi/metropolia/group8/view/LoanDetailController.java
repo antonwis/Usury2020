@@ -4,10 +4,15 @@ import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.EnforceManager;
 import fi.metropolia.group8.model.LoanCalculator;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -77,14 +82,12 @@ public class LoanDetailController {
     @FXML
     private Button cancelModify;
 
-    //private LoanCalculator loanCalculator;
     private LoanListController loanListController;
     private PrimaryController primaryController;
     private OverviewController overviewController;
 
     /**
      * Updates loan based on modification done in modify loan window
-     *
      */
     @FXML
     void applyModify() throws IOException {
@@ -131,9 +134,19 @@ public class LoanDetailController {
      *
      */
     @FXML
-    void enforcePayment() {
-        EnforceManager.getInstance().updateEnforcedActions();
-        overviewController.updateOverview();
+
+    void enforcePayment() throws IOException {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+
+        FXMLLoader enforce = new FXMLLoader(getClass().getResource("EnforceView.fxml"));
+        Parent root = enforce.load();
+        EnforceViewController enforceViewController = enforce.getController();
+        enforceViewController.TransferMemes(stage, overviewController);
+        stage.setScene(new Scene(root));
+        stage.show();
+
     }
 
     /**
@@ -157,6 +170,7 @@ public class LoanDetailController {
 
     /**
      * initializes loanDetailController and gets all the controllers and set the fields based on currently selected loan
+     *
      * @param loanListController
      * @param primaryController
      * @param overviewController
