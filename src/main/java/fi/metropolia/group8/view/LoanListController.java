@@ -1,6 +1,8 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.*;
+import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.model.Loan;
+import fi.metropolia.group8.model.Victim;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -19,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.function.Predicate;
@@ -52,15 +53,16 @@ public class LoanListController {
 
     /**
      * opens newLoan window
+     *
      * @throws IOException
      */
     @FXML
     void newLoan() throws IOException {
-        if(DataModel.getInstance().getCurrentAlias() == null){
+        if (DataModel.getInstance().getCurrentAlias() == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Please Select an Alias first");
             alert.show();
-        }else {
+        } else {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
@@ -105,8 +107,7 @@ public class LoanListController {
                 } else {
                     LoanTableView.setItems(filteredList);
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("Loan refresh failed");
             }
         } else {
@@ -117,17 +118,21 @@ public class LoanListController {
 
     /**
      * sets detail view based on selected loan
+     *
      * @throws IOException
      */
     public void refreshDetails() throws IOException {
-        FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
-        LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
-        LoanDetailController loanDetailController = loanDetails.getController();
-        loanDetailController.display(this, primaryController, overviewController);
+        if (DataModel.getInstance().getCurrentLoan() != null) {
+            FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
+            LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
+            LoanDetailController loanDetailController = loanDetails.getController();
+            loanDetailController.display(this, primaryController, overviewController);
+        }
     }
 
     /**
      * initializes controller
+     *
      * @param primaryController
      * @param overviewController
      * @throws IOException
@@ -136,31 +141,31 @@ public class LoanListController {
         if (this.primaryController == null) {
             this.primaryController = primaryController;
             this.overviewController = overviewController;
-        LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentLoan(newSelection));
-        DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
-            if (newLoan == null) {
-                LoanTableView.getSelectionModel().clearSelection();
-                try {
-                    FXMLLoader placeholder = new FXMLLoader(getClass().getResource("placeholder.fxml"));
-                    LoanDetailsVbox.getChildren().setAll((Node) placeholder.load());
-                } catch (IOException e) {
-                    e.printStackTrace();
+            LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentLoan(newSelection));
+            DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
+                if (newLoan == null) {
+                    LoanTableView.getSelectionModel().clearSelection();
+                    try {
+                        FXMLLoader placeholder = new FXMLLoader(getClass().getResource("placeholder.fxml"));
+                        LoanDetailsVbox.getChildren().setAll((Node) placeholder.load());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    LoanTableView.getSelectionModel().select(newLoan);
+                    try {
+                        refreshDetails();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            } else {
-                LoanTableView.getSelectionModel().select(newLoan);
-                try {
-                    refreshDetails();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+            });
 
-        Id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        Debtor.setCellValueFactory(victim -> new SimpleObjectProperty(victim.getValue().getVictim().getName()));
-        Amount.setCellValueFactory(amount -> amount.getValue().valueProperty().asObject());
-        DueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
-    }
+            Id.setCellValueFactory(new PropertyValueFactory<>("id"));
+            Debtor.setCellValueFactory(victim -> new SimpleObjectProperty(victim.getValue().getVictim().getName()));
+            Amount.setCellValueFactory(amount -> amount.getValue().valueProperty().asObject());
+            DueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+        }
     }
 }
 
