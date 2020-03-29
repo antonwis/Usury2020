@@ -116,7 +116,13 @@ public class OverviewController {
         if (DataModel.getInstance().getCurrentAlias() != null) updateOverview();
         user.setText("Welcome " + DataModel.getInstance().getCurrentUser().getName() + "!");
         updateCombo();
-        profitChart.setAnimated(false);
+
+        //chartX.setAutoRanging(false);
+
+        chartY.setAutoRanging(false);
+        chartY.setLowerBound(0);
+        chartY.setUpperBound(10000);
+        chartY.setTickUnit(1000);
     }
 
     public void loansActive() {
