@@ -27,24 +27,22 @@ public class EnforceManager {
 
         switch (trait) {
             case NORMIE:
-                System.out.println("Threatening proved successful. Victim agreed to pay back 15% more");
                 float newInterest = loan.getInterest() + 15;
                 loan.setInterest(newInterest);
                 DataModel.getInstance().saveLoanData(loan);
+                EventManager.getInstance().threatEvent(trait);
                 break;
             case SCARED:
-                System.out.println("Scared victim agreed to pay you back tomorrow.");
                 loan.setDueDate(DataModel.getInstance().getCurrentUser().getCurrentDate().plusDays(1));
                 DataModel.getInstance().saveLoanData(loan);
+                EventManager.getInstance().threatEvent(trait);
                 break;
             case JUNKIE:
-                System.out.println("Victim was too high to even notice you.");
-                break;
             case VIOLENT:
-                System.out.println("Victim violently drove you away.");
+                EventManager.getInstance().threatEvent(trait);
                 break;
             default:
-                System.out.println("You threaten the debtor with violence. They agree to pay you back sooner.");
+                EventManager.getInstance().threatEvent(trait);
                 loan.setDueDate(loan.getDueDate().minusDays(1));
                 DataModel.getInstance().saveLoanData(loan);
                 break;
@@ -57,18 +55,13 @@ public class EnforceManager {
 
         switch (trait){
             case SCARED:
-                System.out.println("Victim was so scared they paid you back right on the spot.");
-                LoanCalculator.getInstance().completeLoan(DataModel.getInstance().getCurrentAlias(), loan);
+                LoanCalculator.getInstance().completeLoan(loan);
+                EventManager.getInstance().extortionEvent(trait);
                 break;
             default:
-                System.out.println("After blackmailing the debtor they instantly pay you back half the remaining loan.");
-                float newValue = (loan.getValue() / 2);
-                loan.setValue(newValue);
-                Alias alias = loan.getOwner();
-                float newSum = alias.getEquity() + LoanCalculator.getInstance().getLoanTotalSum(loan);
-                alias.setEquity(newSum);
-                DataModel.getInstance().saveLoanData(loan);
-                DataModel.getInstance().saveAliasData(alias);
+                // Default behavior is to pay back half now
+                LoanCalculator.getInstance().payHalfLoan(loan);
+                EventManager.getInstance().extortionEvent(trait);
                 break;
         }
 
@@ -77,18 +70,19 @@ public class EnforceManager {
     public void Torture(Loan loan) {
         Victim victim = loan.getVictim();
         VictimTraits trait = VictimTraits.valueOf(victim.getTrait());
+        float modifier = 20f;
 
         switch (trait){
             case SCARED:
                 System.out.println("Victim didn't survive. You manage to retrieve your initial investment.");
                 LoanCalculator.getInstance().repoLoan(DataModel.getInstance().getCurrentAlias(), loan);
                 victim.setAlive(false);
+                EventManager.getInstance().tortureEvent(trait, modifier);
                 break;
             default:
-                System.out.println("You torture the poor debtor. They agree to pay an extra 20% over the original sum.");
-                float newValue = (loan.getValue() * 1.2f);
-                loan.setValue(newValue);
-                DataModel.getInstance().saveLoanData(loan);
+                // Default behavior: Modify the loan's original value through a percentage modifier.
+                LoanCalculator.getInstance().modifyLoanValue(loan, modifier);
+                EventManager.getInstance().tortureEvent(trait, modifier);
                 break;
         }
 
@@ -100,20 +94,20 @@ public class EnforceManager {
 
         switch (trait) {
             case SNEAKY:
-                System.out.println("Victim was too sneaky. He got away. Your money was lost.");
                 LoanCalculator.getInstance().forfeitLoan(DataModel.getInstance().getCurrentAlias(), loan);
+                EventManager.getInstance().assassinationEvent(trait);
                 break;
             case VIOLENT:
-                System.out.println("Victim fought back. Your money was lost.");
                 LoanCalculator.getInstance().forfeitLoan(DataModel.getInstance().getCurrentAlias(), loan);
                 victim.setAlive(false);
                 DataModel.getInstance().saveVictimData(victim);
+                EventManager.getInstance().assassinationEvent(trait);
                 break;
             default:
-                System.out.println("Victim was murdered. Your money was retrieved.");
                 LoanCalculator.getInstance().repoLoan(DataModel.getInstance().getCurrentAlias(), loan);
                 victim.setAlive(false);
                 DataModel.getInstance().saveVictimData(victim);
+                EventManager.getInstance().assassinationEvent(trait);
                 break;
         }
 

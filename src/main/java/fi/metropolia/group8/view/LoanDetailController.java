@@ -124,7 +124,7 @@ public class LoanDetailController {
      */
     @FXML
     void completeLoan() {
-        LoanCalculator.getInstance().completeLoan(DataModel.getInstance().getCurrentAlias(), DataModel.getInstance().getCurrentLoan());
+        LoanCalculator.getInstance().completeLoan(DataModel.getInstance().getCurrentLoan());
         primaryController.setCurrentAliasText();
         loanListController.refreshLoans();
         overviewController.updateOverview();

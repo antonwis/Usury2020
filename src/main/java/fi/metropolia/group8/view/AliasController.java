@@ -72,7 +72,7 @@ public class AliasController {
                 nameField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
             }
             else{
-                DataModel.getInstance().addNewAlias(DataModel.getInstance().getCurrentUser(), name, description, equity);
+                DataModel.getInstance().createAlias(name, description, equity);
                 DataModel.getInstance().loadAliasData();
                 ObservableList<Alias> list = DataModel.getInstance().getAliasList();
                 primaryController.setCurrentAliasText();

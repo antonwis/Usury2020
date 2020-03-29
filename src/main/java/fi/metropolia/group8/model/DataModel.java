@@ -126,15 +126,16 @@ public class DataModel {
 
     /**
      * Sends a new alias object to the data access object to be added to database
-     * @param user user object for which the new alias belongs to
      * @param name name of the alias
      * @param description description for the alias
      * @param equity amount of money the new alias has
      */
-    public void addNewAlias(User user, String name, String description, int equity){
+    public void createAlias(String name, String description, int equity){
+        User user = getCurrentUser();
         Alias alias = new Alias(user, name, description, equity);
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createAlias(alias);
+        EventManager.getInstance().aliasCreated(alias);
         loadAliasData();
         setCurrentAlias(alias);
     }

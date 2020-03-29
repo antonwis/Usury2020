@@ -4,6 +4,7 @@ import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.model.LoanCalculator;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
