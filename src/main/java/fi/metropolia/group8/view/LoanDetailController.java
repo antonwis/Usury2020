@@ -1,6 +1,5 @@
 package fi.metropolia.group8.view;
 
-import com.sun.javafx.stage.EmbeddedWindow;
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.LoanCalculator;
 import javafx.fxml.FXML;
@@ -89,7 +88,6 @@ public class LoanDetailController {
 
     /**
      * Updates loan based on modification done in modify loan window
-     *
      */
     @FXML
     void applyModify() throws IOException {
@@ -145,7 +143,7 @@ public class LoanDetailController {
         FXMLLoader enforce = new FXMLLoader(getClass().getResource("EnforceView.fxml"));
         Parent root = enforce.load();
         EnforceViewController enforceViewController = enforce.getController();
-        enforceViewController.TransferMemes(this, stage, loanCalculator, overviewController);
+        enforceViewController.TransferMemes(stage, overviewController);
         stage.setScene(new Scene(root));
         stage.show();
 
@@ -172,6 +170,7 @@ public class LoanDetailController {
 
     /**
      * initializes loanDetailController and gets all the controllers and set the fields based on currently selected loan
+     *
      * @param loanListController
      * @param primaryController
      * @param overviewController

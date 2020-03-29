@@ -75,18 +75,6 @@ public class LoanListController {
     }
 
     /**
-     * updates loanList based on a currently active alias
-     */
-    public void updateView() {
-        DataModel.getInstance().loadLoanData();
-        if (DataModel.getInstance().getCurrentAlias() != null) {
-            LoanTableView.setItems(DataModel.getInstance().getLoanList());
-        } else {
-            LoanTableView.setItems(null);
-        }
-    }
-
-    /**
      * Updates view with loans owned by current alias
      */
 
