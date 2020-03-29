@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Random;
+
 /**
  * Builds lists of data from database for other components to use. Used as a global singleton instance.
  */
@@ -71,6 +73,22 @@ public class DataModel {
     }
     public ObservableList<Loan> getLoanList() {
         return loanList;
+    }
+
+    // Victim data group
+    private final ObservableList<Victim> victimList = FXCollections.observableArrayList();
+    private final ObjectProperty<Victim> currentVictim = new SimpleObjectProperty<>(null);
+    public ObjectProperty<Victim> currentVictimProperty() {
+        return currentVictim;
+    }
+    public final Victim getCurrentVictim() {
+        return currentVictimProperty().get();
+    }
+    public final void setCurrentVictim(Victim victim) {
+        currentVictimProperty().set(victim);
+    }
+    public ObservableList<Victim> getVictimList() {
+        return victimList;
     }
 
     /*
@@ -196,6 +214,36 @@ public class DataModel {
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createUser(user);
         userList.addAll(user);
+    }
+
+    /**
+     * Refreshes victim list from database
+     */
+    public void loadVictimData() {
+        UsuryDAO usuryDAO = new UsuryDAO();
+        victimList.setAll(usuryDAO.readVictims());
+    }
+
+    /**
+     * Sends modified victim object to the DAO
+     * @param victim victim to be updated in database
+     */
+    public void saveVictimData(Victim victim) {
+        UsuryDAO usuryDAO = new UsuryDAO();
+        usuryDAO.updateVictim(victim);
+    }
+
+    /**
+     * Sends a new victim object to the DAO
+     * @param name victim's name
+     * @param address victim's address
+     * @param description description for the victim
+     */
+    public void addNewVictim(String name, String address, String description){
+        Victim victim = new Victim(name, address, description);
+        UsuryDAO usuryDAO = new UsuryDAO();
+        usuryDAO.createVictim(victim);
+        victimList.addAll(victim);
     }
 
 

@@ -40,6 +40,8 @@ public class PrimaryController {
     private Label primaryCurrentAlias;
     @FXML
     private Label primaryCurrentEquity;
+    @FXML
+    private Label primaryCurrentDate;
 
     private Scene scene;
 
@@ -100,6 +102,7 @@ public class PrimaryController {
             try {
                 primaryCurrentAlias.setText(DataModel.getInstance().getCurrentAlias().getName());
                 primaryCurrentEquity.setText(Float.toString(DataModel.getInstance().getCurrentAlias().getEquity()));
+                primaryCurrentDate.setText(DataModel.getInstance().getCurrentUser().getCurrentDate().toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }

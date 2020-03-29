@@ -36,6 +36,11 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </Label>
+             <Label fx:id="primaryCurrentDate" prefHeight="57.0" prefWidth="94.0" text="CurrentDate" GridPane.columnIndex="5" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
+                 <GridPane.margin>
+                     <Insets left="5.0" />
+                 </GridPane.margin>
+             </Label>
          </children>
       </GridPane>
         <TabPane layoutY="80.0" prefHeight="820.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
