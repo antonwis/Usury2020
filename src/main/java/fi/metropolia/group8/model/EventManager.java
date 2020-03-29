@@ -1,5 +1,10 @@
 package fi.metropolia.group8.model;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 /**
  * Provides content for the event log window. Generates status messages for changes in the application state.
  */
@@ -20,17 +25,32 @@ public class EventManager {
         return instance;
     }
 
+    private final ObservableList<String> eventList = FXCollections.observableArrayList();
+    private final ObjectProperty<String> currentEvent = new SimpleObjectProperty<>(null);
+    public ObjectProperty<String> currentEventProperty() {
+        return currentEvent;
+    }
+    public final String getCurrentEvent() {
+        return currentEventProperty().get();
+    }
+    public final void setCurrentEvent(String string) {
+        currentEventProperty().set(string);
+    }
+    public ObservableList<String> getEventList() {
+        return eventList;
+    }
+
     // ** General events ** //
 
     //MOTD - Welcome text
-    public String printWelcome() {
-        return "Welcome " + DataModel.getInstance().getCurrentUser().getName() + "!\n" +
-                "Start by choosing or creating a new alias.";
+    public void printWelcome() {
+        eventList.setAll("Welcome " + DataModel.getInstance().getCurrentUser().getName() + "!\n" +
+                "Start by choosing or creating a new alias.");
     }
 
     //Alias created
-    public String aliasCreated(Alias alias) {
-        return "New alias created: " + alias.getName() + ", Starting equity: " + alias.getEquity();
+    public void aliasCreated(Alias alias) {
+        eventList.add("New alias created: " + alias.getName() + ", Starting equity: " + alias.getEquity());
     }
 
     //Alias modified
@@ -55,6 +75,16 @@ public class EventManager {
 
     //Loan modified
     public String loanModified(Loan loan) {
+        return "";
+    }
+
+    //Loan forfeited
+    public String loanForfeited(Loan loan) {
+        return "";
+    }
+
+    //Loan repossessed
+    public String loanRepossessed(Loan loan) {
         return "";
     }
 
