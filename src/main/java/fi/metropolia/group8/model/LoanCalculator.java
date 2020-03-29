@@ -32,11 +32,11 @@ public class LoanCalculator {
 
     /**
      * sets new equity for alias after giving out a loan
-     * @param alias
      * @param loan
      */
     // Update alias data in database
-    public void updateEquity(Alias alias, Loan loan) {
+    public void updateEquity(Loan loan) {
+        Alias alias = DataModel.getInstance().getCurrentAlias();
         float newEquity = alias.getEquity() - loan.getValue();
         alias.setEquity(newEquity);
         DataModel.getInstance().saveAliasData(alias);
@@ -64,6 +64,8 @@ public class LoanCalculator {
         DataModel.getInstance().saveAliasData(alias);
         //DataModel.getInstance().deleteLoan(loan);
         DataModel.getInstance().saveLoanData(loan);
+        DataModel.getInstance().loadAliasData();
+        DataModel.getInstance().loadLoanData();
     }
 
     /**

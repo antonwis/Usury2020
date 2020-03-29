@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDate;
 import java.util.Random;
 
 /**
@@ -120,6 +121,7 @@ public class DataModel {
     public void saveAliasData(Alias alias) {
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.updateAlias(alias);
+        loadAliasData();
     }
 
     /**
@@ -133,7 +135,7 @@ public class DataModel {
         Alias alias = new Alias(user, name, description, equity);
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createAlias(alias);
-        aliasList.addAll(alias);
+        loadAliasData();
         setCurrentAlias(alias);
     }
 
@@ -147,6 +149,7 @@ public class DataModel {
             setCurrentAlias(null);
         }
         usuryDAO.deleteAlias(alias);
+        loadAliasData();
     }
 
     /**
@@ -158,16 +161,21 @@ public class DataModel {
     }
 
     /**
-     * Sends a new loan object with a new victim and the current alias object to data access object to be updated
-     * @param loan loan to be updated in database
-     * @param alias alias to be updated in database
-     * @param victim victim object to be added to database
+     * Creates a new loan
+     * @param alias
+     * @param value
+     * @param victim
+     * @param startDate
+     * @param dueDate
+     * @param interest
+     * @return Returns the new loan object
      */
-    public void saveLoanData(Loan loan, Victim victim, Alias alias) {
+    public Loan createLoan(Alias alias, float value, Victim victim, LocalDate startDate, LocalDate dueDate, float interest) {
+        Loan loan = new Loan(alias, value, victim, startDate, dueDate, interest);
         UsuryDAO usuryDAO = new UsuryDAO();
-        usuryDAO.updateAlias(alias);
-        usuryDAO.updateVictim(victim);
-        usuryDAO.updateLoan(loan);
+        usuryDAO.createLoan(loan);
+        loadLoanData();
+        return loan;
     }
 
     /**
@@ -177,6 +185,7 @@ public class DataModel {
     public void saveLoanData(Loan loan) {
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.updateLoan(loan);
+        loadLoanData();
     }
 
     /**
@@ -186,6 +195,7 @@ public class DataModel {
     public void deleteLoan(Loan loan) {
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.deleteLoan(loan);
+        loadLoanData();
     }
 
     /**
@@ -203,17 +213,29 @@ public class DataModel {
     public void saveUserData(User user) {
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.updateUser(user);
+        loadUserData();
     }
 
     /**
      * Creates a new user object and sends it to the data access object to be added to database
      * @param name name of the user
      */
-    public void addNewUser(String name){
+    public User createUser(String name){
         User user = new User(name);
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createUser(user);
-        userList.addAll(user);
+        loadUserData();
+        return user;
+    }
+
+    /**
+     * Deletes the user object from database
+     * @param user
+     */
+    public void deleteUser(User user) {
+        UsuryDAO usuryDAO = new UsuryDAO();
+        usuryDAO.deleteUser(user);
+        loadUserData();
     }
 
     /**
@@ -231,6 +253,7 @@ public class DataModel {
     public void saveVictimData(Victim victim) {
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.updateVictim(victim);
+        loadVictimData();
     }
 
     /**
@@ -239,11 +262,22 @@ public class DataModel {
      * @param address victim's address
      * @param description description for the victim
      */
-    public void addNewVictim(String name, String address, String description){
+    public Victim createVictim(String name, String address, String description){
         Victim victim = new Victim(name, address, description);
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createVictim(victim);
-        victimList.addAll(victim);
+        loadVictimData();
+        return victim;
+    }
+
+    /**
+     * Deletes a victim from database
+     * @param victim
+     */
+    public void deleteVictim(Victim victim) {
+        UsuryDAO usuryDAO = new UsuryDAO();
+        usuryDAO.deleteVictim(victim);
+        loadVictimData();
     }
 
 
