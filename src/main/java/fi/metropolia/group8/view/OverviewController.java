@@ -68,7 +68,7 @@ public class OverviewController {
      */
     @FXML
     void changedCombo() {
-        if (!overviewCombo.getSelectionModel().isEmpty()){
+        if (!overviewCombo.getSelectionModel().isEmpty()) {
             if (overviewCombo.getValue().equals("All")) {
                 showAllAliases();
             } else {
@@ -99,20 +99,13 @@ public class OverviewController {
         if (DataModel.getInstance().getCurrentAlias() != null) {
             overviewCombo.setVisible(true);
             alias.setText("Selected: ");
-            // loans active
-            loansActive.setText(String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && loan.isCompleted() == false).size()));
-            // Loans Completed
-            loansComplete.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getCompletedLoans()));
-            // Active loans past due date
-            loansDue.setText(String.valueOf(DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).filtered(loan -> loan.getDueDate().isBefore(LocalDate.now()) && loan.isCompleted() == false).size()));
-            // Total Loans
-            loans.setText(String.valueOf(Integer.sum(DataModel.getInstance().getCurrentAlias().getCompletedLoans(), DataModel.getInstance().getLoanList().filtered(loan -> loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && loan.isCompleted() == false).size())));
-            // Profits
-            profits.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getTotalProfits()));
-            // Enforcer actions
-            enforcerActions.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEnforcerActions()));
-            // balance
-            balance.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEquity()));
+            loansActive();
+            loansCompleted();
+            loansDue();
+            totalLoans();
+            setProfits();
+            setEnforcerActions();
+            setBalance();
         }
     }
 
@@ -124,8 +117,44 @@ public class OverviewController {
         user.setText("Welcome " + DataModel.getInstance().getCurrentUser().getName() + "!");
         updateCombo();
         profitChart.setAnimated(false);
-        //WIP
-        //forecast.setText(String.valueOf(DataModel.getInstance().getLoanList().size()));
+    }
+
+    public void loansActive() {
+        int active = DataModel.getInstance().getLoanList().filtered(loan ->
+                loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && loan.isCompleted() == false).size();
+        System.out.println(active);
+        loansActive.setText(String.valueOf(active));
+    }
+
+    public void loansCompleted() {
+        loansComplete.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getCompletedLoans()));
+    }
+
+    public void loansDue() {
+        int loans = DataModel.getInstance().getLoanList().filtered(loan ->
+                loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).filtered(loan ->
+                loan.getDueDate().isBefore(LocalDate.now()) && loan.isCompleted() == false).size();
+        System.out.println(loans);
+        loansDue.setText(String.valueOf(loans));
+    }
+
+    public void totalLoans() {
+        int y = DataModel.getInstance().getCurrentAlias().getCompletedLoans();
+        int x = DataModel.getInstance().getLoanList().filtered(loan ->
+                loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && loan.isCompleted() == false).size();
+        loans.setText(String.valueOf(Integer.sum(y, x)));
+    }
+
+    public void setProfits() {
+        profits.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getTotalProfits()));
+    }
+
+    public void setEnforcerActions() {
+        enforcerActions.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEnforcerActions()));
+    }
+
+    public void setBalance() {
+        balance.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEquity()));
     }
 
     /**
@@ -140,7 +169,7 @@ public class OverviewController {
     }
 
     /**
-     *  Shows the profits of all aliases in the linechart
+     * Shows the profits of all aliases in the linechart
      */
     public void showAllAliases() {
         profitChart.getData().clear();
@@ -157,6 +186,7 @@ public class OverviewController {
 
     /**
      * Shows the profits of current alias in the linechart
+     *
      * @param alias
      */
     public void currentAlias(Alias alias) {
@@ -171,6 +201,7 @@ public class OverviewController {
 
     /**
      * Calculates the total profit of the month
+     *
      * @param aliasLoans
      * @param m
      * @return
