@@ -127,6 +127,10 @@ public class LoanCalculator {
         DataModel.getInstance().saveLoanData(loan);
     }
 
+    /**
+     * Pays back half of the loan value with interest to the Alias
+     * @param loan
+     */
     public void payHalfLoan(Loan loan) {
         float newValue = (loan.getValue() / 2);
         loan.setValue(newValue);
@@ -137,6 +141,11 @@ public class LoanCalculator {
         DataModel.getInstance().saveAliasData(alias);
     }
 
+    /**
+     * Modifies the loan's value by a given modifier
+     * @param loan
+     * @param modifier percentage modifier ie. 20
+     */
     public void modifyLoanValue(Loan loan, float modifier) {
         float newValue = (loan.getValue() * (1 +(modifier / 100)));
         loan.setValue(newValue);

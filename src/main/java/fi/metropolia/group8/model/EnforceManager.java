@@ -1,5 +1,8 @@
 package fi.metropolia.group8.model;
 
+/**
+ * Handles all enforcement actions
+ */
 public class EnforceManager {
 
     private static EnforceManager instance;
@@ -18,6 +21,10 @@ public class EnforceManager {
     public EnforceManager() {}
 
 
+    /**
+     * Attempts to threaten the victim
+     * @param loan loan object which contains reference to victim
+     */
     public void Threaten(Loan loan) {
         Victim victim = loan.getVictim();
         VictimTraits trait = VictimTraits.valueOf(victim.getTrait());
@@ -46,6 +53,10 @@ public class EnforceManager {
         }
     }
 
+    /**
+     * Attempts to blackmail the victim
+     * @param loan loan object which contains reference to victim
+     */
     public void Extort(Loan loan) {
         Victim victim = loan.getVictim();
         VictimTraits trait = VictimTraits.valueOf(victim.getTrait());
@@ -64,6 +75,10 @@ public class EnforceManager {
 
     }
 
+    /**
+     * Attempts to torture the victim
+     * @param loan loan object which contains reference to victim
+     */
     public void Torture(Loan loan) {
         Victim victim = loan.getVictim();
         VictimTraits trait = VictimTraits.valueOf(victim.getTrait());
@@ -84,6 +99,10 @@ public class EnforceManager {
 
     }
 
+    /**
+     * Attempts to assassinate the victim
+     * @param loan loan object which contains reference to victim
+     */
     public void Assassinate(Loan loan) {
         Victim victim = loan.getVictim();
         VictimTraits trait = VictimTraits.valueOf(victim.getTrait());
