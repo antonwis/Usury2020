@@ -6,6 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * Controls everything related to Eventlog on the view level.
+ */
 public class EventLogController {
 
     @FXML
@@ -16,6 +19,9 @@ public class EventLogController {
     @FXML
     private LoanListController loanListController;
 
+    /**
+     * Updates the Eventlog with new messages
+     */
     public void update() {
         ObservableList<String> meme = EventManager.getInstance().getEventList();
         for (String s : meme) {
@@ -23,6 +29,10 @@ public class EventLogController {
         }
     }
 
+    /**
+     * Work in progress
+     * @param loanListController
+     */
     // pohja
     public void TransferMemes(LoanListController loanListController) {
         this.loanListController = loanListController;
