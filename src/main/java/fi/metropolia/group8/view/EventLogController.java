@@ -1,32 +1,31 @@
 package fi.metropolia.group8.view;
 
+import fi.metropolia.group8.model.EventManager;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
-public class EventLogController implements Initializable {
+public class EventLogController {
 
     @FXML
-    private AnchorPane eventLogPane;
+    private AnchorPane eventlogView;
 
     @FXML
-    private TextArea eventLogWindow;
+    private TextArea textAreaEventlog;
+    @FXML
+    private LoanListController loanListController;
 
-    private ArrayList<String> logs;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        logs = new ArrayList<>();
-        for(int i = 0; i<10; i++){
-            logs.add("AAAA");
-        }
-        for(String s: logs){
-            eventLogWindow.appendText(s+"\n");
+    public void update() {
+        ObservableList<String> meme = EventManager.getInstance().getEventList();
+        for (String s : meme) {
+            textAreaEventlog.appendText(s);
         }
     }
+
+    // pohja
+    public void TransferMemes(LoanListController loanListController) {
+        this.loanListController = loanListController;
+    }
 }
+

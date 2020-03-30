@@ -1,7 +1,6 @@
 package fi.metropolia.group8.model;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -26,8 +25,8 @@ public class EventManager {
     }
 
     private final ObservableList<String> eventList = FXCollections.observableArrayList();
-    private final ObjectProperty<String> currentEvent = new SimpleObjectProperty<>(null);
-    public ObjectProperty<String> currentEventProperty() {
+    private final SimpleStringProperty currentEvent = new SimpleStringProperty();
+    public SimpleStringProperty currentEventProperty() {
         return currentEvent;
     }
     public final String getCurrentEvent() {
@@ -43,7 +42,7 @@ public class EventManager {
     // ** General events ** //
 
     //MOTD - Welcome text
-    public void printWelcome() {
+    public void printWelcome(User user) {
         eventList.setAll("Welcome " + DataModel.getInstance().getCurrentUser().getName() + "!\n" +
                 "Start by choosing or creating a new alias.");
     }

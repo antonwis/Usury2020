@@ -1,10 +1,13 @@
 package fi.metropolia.group8.view;
 
+import com.sun.javafx.fxml.FXMLLoaderHelper;
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.model.EventManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -47,6 +50,7 @@ public class PrimaryController {
 
     /**
      * initializes all controllers for software
+     *
      * @param loginManager
      * @param sessionID
      */
@@ -55,7 +59,6 @@ public class PrimaryController {
             FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
-
             DataModel.getInstance().loadAliasData();
 
             /// ei välttämät tarvii tehä mut nii...
@@ -64,9 +67,10 @@ public class PrimaryController {
             OverviewController overviewController = overview.getController();
             overviewController.initModel();
 
+            // aloitusviesti (näyttää event log:ssa vasta loanlistControllerissä koska pepega tier structure projektilla)
+            EventManager.getInstance().printWelcome(DataModel.getInstance().getCurrentUser());
+
             loanListController.initModel(this, overviewController);
-
-
             AliasController aliasController = new AliasController();
 
             FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));

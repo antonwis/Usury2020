@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -30,7 +31,8 @@ import java.util.function.Predicate;
  */
 public class LoanListController {
 
-
+    @FXML
+    private AnchorPane eventlogView;
     @FXML
     private VBox LoanDetailsVbox;
     @FXML
@@ -50,6 +52,9 @@ public class LoanListController {
 
     private PrimaryController primaryController;
     private OverviewController overviewController;
+
+    // FXML annotaatio nii ei tarvii edes luoda new (dependency injection memes)
+    @FXML private EventLogController eventLogController;
 
     /**
      * opens newLoan window
@@ -130,17 +135,24 @@ public class LoanListController {
         }
     }
 
+    // print viestit eventlogiin (kutsutaan initModel)
+    public void killme(){
+        eventLogController.update();
+    }
+
     /**
      * initializes controller
      *
      * @param primaryController
      * @param overviewController
-     * @throws IOException
      */
-    public void initModel(PrimaryController primaryController, OverviewController overviewController) throws IOException {
+    public void initModel(PrimaryController primaryController, OverviewController overviewController) {
         if (this.primaryController == null) {
             this.primaryController = primaryController;
             this.overviewController = overviewController;
+            ///////////////
+            killme();
+            ///////////////
             LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentLoan(newSelection));
             DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
                 if (newLoan == null) {
