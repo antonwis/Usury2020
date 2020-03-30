@@ -15,9 +15,6 @@ public class EnforceManager {
         return instance;
     }
 
-
-    // TODO replace flavor text prints with event log method calls.
-
     public EnforceManager() {}
 
 
@@ -74,7 +71,6 @@ public class EnforceManager {
 
         switch (trait){
             case SCARED:
-                System.out.println("Victim didn't survive. You manage to retrieve your initial investment.");
                 LoanCalculator.getInstance().repoLoan(DataModel.getInstance().getCurrentAlias(), loan);
                 victim.setAlive(false);
                 EventManager.getInstance().tortureEvent(trait, modifier);

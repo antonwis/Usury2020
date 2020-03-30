@@ -1,5 +1,7 @@
 package fi.metropolia.group8.model;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,7 +45,7 @@ public class EventManager {
 
     //MOTD - Welcome text
     public void printWelcome(User user) {
-        eventList.setAll("Welcome " + DataModel.getInstance().getCurrentUser().getName() + "!\n" +
+        eventList.setAll("Welcome " + user.getName() + "!\n" +
                 "Start by choosing or creating a new alias.");
     }
 
@@ -53,92 +55,92 @@ public class EventManager {
     }
 
     //Alias modified
-    public String aliasModified() {
-        return "";
+    public void aliasModified(Alias alias) {
+        eventList.add("Alias modified: " + alias.getName());
     }
 
     //Alias selected
-    public String aliasSelected() {
-        return "";
+    public void aliasSelected(Alias alias) {
+        eventList.add("Selected alias: " + alias.getName());
     }
 
     //Loan created
-    public String loanCreated(Loan loan) {
-        return "";
+    public void loanCreated(Loan loan) {
+        eventList.add("New loan. Value: " + loan.getValue() + ", Debtor: " + loan.getVictim().getName());
     }
 
     //Loan complete
-    public String loanCompleted(Loan loan) {
-        return "";
+    public void loanCompleted(Loan loan) {
+        eventList.add("Loan #" + loan.getId() + " completed. Total amount earned: " + LoanCalculator.getInstance().getLoanTotalSum(loan));
     }
 
     //Loan modified
-    public String loanModified(Loan loan) {
-        return "";
+    public void loanModified(Loan loan) {
+        eventList.add("Loan modified.");
     }
 
     //Loan forfeited
-    public String loanForfeited(Loan loan) {
-        return "";
+    public void loanForfeited(Loan loan) {
+        eventList.add("Loan lost.");
     }
 
     //Loan repossessed
-    public String loanRepossessed(Loan loan) {
-        return "";
+    public void loanRepossessed(Loan loan) {
+        eventList.add("Recovered amount: " + loan.getValue());
     }
 
     //Victim created
-    public String victimCreated(Victim victim) {
-        return "";
+    public void victimCreated(Victim victim) {
+        eventList.add("New victim: " + victim.getName());
     }
 
     // ** Enforcement actions ** //
 
     // Threatening event
-    public String threatEvent(VictimTraits trait) {
+    public void threatEvent(VictimTraits trait) {
         switch (trait){
             case NORMIE:
-                return "Threatening proved successful. Victim agreed to pay back 15% more";
+                eventList.add("Threatening proved successful. Victim agreed to pay back 15% more");
             case SCARED:
-                return "Scared victim agreed to pay you back tomorrow.";
+                eventList.add("Scared victim agreed to pay you back tomorrow.");
             case JUNKIE:
-                return "Victim was too high to even notice you.";
+                eventList.add("Victim was too high to even notice you.");
             case VIOLENT:
-                return "Victim violently drove you away.";
+                eventList.add("Victim violently drove you away.");
             default:
-                return "You threaten the debtor with violence. They agree to pay you back sooner.";
+                eventList.add("You threaten the debtor with violence. They agree to pay you back sooner.");
         }
     }
 
     // Extortion event
-    public String extortionEvent(VictimTraits trait) {
+    public void extortionEvent(VictimTraits trait) {
         switch (trait){
             case SCARED:
-                return "Victim was so scared they paid you back right on the spot.";
+                eventList.add("Victim was so scared they paid you back right on the spot.");
             default:
-                return "After blackmailing the debtor they instantly pay you back half the remaining loan.";
+                eventList.add("After blackmailing the debtor they instantly pay you back half the remaining loan.");
         }
     }
 
     // Torture event
-    public String tortureEvent(VictimTraits trait, float modifier) {
+    public void tortureEvent(VictimTraits trait, float modifier) {
         switch (trait){
             case SCARED:
-                return "Victim didn't survive. You manage to retrieve your initial investment.";
+                eventList.add("Victim didn't survive. You manage to retrieve your initial investment.");
             default:
-                return "You torture the poor debtor. They agree to pay an extra "+ modifier +"% over the original sum.";
+                eventList.add("You torture the poor debtor. They agree to pay an extra "+ modifier +"% over the original sum.");
         }
     }
 
     // Assassination event
-    public String assassinationEvent(VictimTraits trait) {
+    public void assassinationEvent(VictimTraits trait) {
         switch (trait){
             case SNEAKY:
-                return "Victim was too sneaky. He got away. Your money was lost.";
+                eventList.add("Victim was too sneaky. He got away. Your money was lost.");
             case VIOLENT:
-                return "Victim fought back. Your money was lost.";
+                eventList.add("Victim fought back. Your money was lost.");
             default:
-                return "Victim was murdered. Your money was retrieved.";
+                eventList.add("Victim was murdered. Your money was retrieved.");
         }
     }
 
