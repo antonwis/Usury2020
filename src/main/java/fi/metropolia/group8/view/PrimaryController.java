@@ -68,7 +68,7 @@ public class PrimaryController {
             overviewController.initModel();
 
             // aloitusviesti (näyttää event log:ssa vasta loanlistControllerissä koska pepega tier structure projektilla)
-            EventManager.getInstance().printWelcome(DataModel.getInstance().getCurrentUser());
+            //EventManager.getInstance().printWelcome(DataModel.getInstance().getCurrentUser());
 
             loanListController.initModel(this, overviewController);
             AliasController aliasController = new AliasController();

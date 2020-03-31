@@ -4,7 +4,10 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+
+import java.beans.PropertyChangeListener;
 
 /**
  * Provides content for the event log window. Generates status messages for changes in the application state.
@@ -40,6 +43,13 @@ public class EventManager {
     public ObservableList<String> getEventList() {
         return eventList;
     }
+
+
+    // Method to setup listener
+    public void addChangeListener(ListChangeListener<String> newListener) {
+        eventList.addListener(newListener);
+    }
+
 
     // ** General events ** //
 

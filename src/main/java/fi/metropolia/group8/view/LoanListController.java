@@ -137,7 +137,7 @@ public class LoanListController {
 
     // print viestit eventlogiin (kutsutaan initModel)
     public void killme(){
-        eventLogController.update();
+        eventLogController.init();
     }
 
     /**

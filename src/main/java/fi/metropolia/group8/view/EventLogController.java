@@ -1,6 +1,7 @@
 package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.EventManager;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -19,15 +20,27 @@ public class EventLogController {
     @FXML
     private LoanListController loanListController;
 
+    ListChangeListener<String> changeListener;
+    public void init() {
+        changeListener = change -> {
+            if(change.next()) {
+                update();
+            }
+
+        };
+        EventManager.getInstance().addChangeListener(changeListener);
+
+    }
     /**
      * Updates the Eventlog with new messages
      */
     public void update() {
-        ObservableList<String> meme = EventManager.getInstance().getEventList();
-        for (String s : meme) {
-            textAreaEventlog.appendText(s);
-        }
+        textAreaEventlog.appendText(
+                EventManager.getInstance().getEventList().get(
+                        EventManager.getInstance().getEventList().size()-1)
+        );
     }
+
 
     /**
      * Work in progress
