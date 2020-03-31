@@ -135,8 +135,8 @@ public class LoanListController {
         }
     }
 
-    // print viestit eventlogiin (kutsutaan initModel)
-    public void killme(){
+    // call event log init TODO - kys yourselffaa ittes ja muuta sen jälkeen tää
+    public void initEventLog(){
         eventLogController.init();
     }
 
@@ -151,7 +151,7 @@ public class LoanListController {
             this.primaryController = primaryController;
             this.overviewController = overviewController;
             ///////////////
-            killme();
+            initEventLog();
             ///////////////
             LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentLoan(newSelection));
             DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {

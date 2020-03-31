@@ -37,7 +37,7 @@ public class EventLogController {
     public void update() {
         textAreaEventlog.appendText(
                 EventManager.getInstance().getEventList().get(
-                        EventManager.getInstance().getEventList().size()-1)
+                        EventManager.getInstance().getEventList().size()-1) + "\n"
         );
     }
 

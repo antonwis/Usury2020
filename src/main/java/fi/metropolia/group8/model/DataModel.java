@@ -53,8 +53,10 @@ public class DataModel {
     public final Alias getCurrentAlias() {
         return currentAliasProperty().get();
     }
+
     public final void setCurrentAlias(Alias alias) {
         currentAliasProperty().set(alias);
+        EventManager.getInstance().aliasSelected(alias);
     }
     public ObservableList<Alias> getAliasList() {
         return aliasList;
@@ -115,17 +117,18 @@ public class DataModel {
     }
 
     /**
-     * Sends modified alias to data access object to be updated
+     * Sends modified alias to the DAO for saving. Calls event log manager.
      * @param alias alias to be updated in database
      */
     public void saveAliasData(Alias alias) {
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.updateAlias(alias);
+        //EventManager.getInstance().aliasModified(alias);
         loadAliasData();
     }
 
     /**
-     * Sends a new alias object to the data access object to be added to database
+     * Creates a new alias object and sends it to the DAO. Also calls event log manager.
      * @param name name of the alias
      * @param description description for the alias
      * @param equity amount of money the new alias has
@@ -141,7 +144,7 @@ public class DataModel {
     }
 
     /**
-     * Sends a alias object to the data access object to be deleted from database
+     * Sends an alias object to the DAO for deletion. Also calls event log manager.
      * @param alias alias to be deleted
      */
     public void deleteAlias(Alias alias){
@@ -151,6 +154,7 @@ public class DataModel {
         }
         usuryDAO.deleteAlias(alias);
         loadAliasData();
+        EventManager.getInstance().aliasDeleted(alias);
     }
 
     /**
@@ -162,7 +166,7 @@ public class DataModel {
     }
 
     /**
-     * Creates a new loan
+     * Creates a new loan and sends it to the DAO. Notifies event log manager.
      * @param alias
      * @param value
      * @param victim
@@ -175,27 +179,30 @@ public class DataModel {
         Loan loan = new Loan(alias, value, victim, startDate, dueDate, interest);
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createLoan(loan);
+        EventManager.getInstance().loanCreated(loan);
         loadLoanData();
         return loan;
     }
 
     /**
-     * Sends modified loan to data access object to be updated
+     * Sends modified loan the DAO to be updated. Notifies event log manager.
      * @param loan loan to be updated in database
      */
     public void saveLoanData(Loan loan) {
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.updateLoan(loan);
+        //EventManager.getInstance().loanModified(loan);
         loadLoanData();
     }
 
     /**
-     * Sends a loan object to the data access object to be deleted from database
+     * Sends a loan object the DAO for deletion. Notifies event log manager.
      * @param loan alias to be deleted
      */
     public void deleteLoan(Loan loan) {
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.deleteLoan(loan);
+        EventManager.getInstance().loanDeleted(loan);
         loadLoanData();
     }
 
@@ -258,7 +265,7 @@ public class DataModel {
     }
 
     /**
-     * Sends a new victim object to the DAO
+     * Sends a new victim object to the DAO. Notifies event log manager.
      * @param name victim's name
      * @param address victim's address
      * @param description description for the victim
@@ -267,17 +274,19 @@ public class DataModel {
         Victim victim = new Victim(name, address, description);
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createVictim(victim);
+        EventManager.getInstance().victimCreated(victim);
         loadVictimData();
         return victim;
     }
 
     /**
-     * Deletes a victim from database
+     * Deletes a victim from database. Notifies event log manager.
      * @param victim
      */
     public void deleteVictim(Victim victim) {
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.deleteVictim(victim);
+        EventManager.getInstance().victimDeleted(victim);
         loadVictimData();
     }
 

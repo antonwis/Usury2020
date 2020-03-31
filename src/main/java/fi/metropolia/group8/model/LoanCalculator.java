@@ -56,7 +56,7 @@ public class LoanCalculator {
     }
 
     /**
-     * Update alias with loan values and update loan status in database
+     * Update alias with loan values and update loan status in database. Notifies event log manager.
      * @param loan
      */
     public void completeLoan(Loan loan) {
@@ -95,7 +95,7 @@ public class LoanCalculator {
     }
 
     /**
-     * Sets the loan value to zero. Forfeits the loan and all its profits.
+     * Sets the loan value to zero. Forfeits the loan and all its profits. Notifies event log manager.
      * Used when victim is no longer alive.
      * @param alias
      * @param loan
@@ -106,12 +106,13 @@ public class LoanCalculator {
         alias.setCompletedLoans(newCompletedLoans);
         loan.setCompleted(true);
         loan.setCompleteDate(DataModel.getInstance().getCurrentUser().getCurrentDate());
+        EventManager.getInstance().loanForfeited(loan);
         DataModel.getInstance().saveAliasData(alias);
         DataModel.getInstance().saveLoanData(loan);
     }
 
     /**
-     * Forfeits all profits. Returns the loan value to the alias.
+     * Forfeits all profits. Returns the loan value to the alias. Notifies event log manager.
      * Used while repossessing loans.
      * @param alias
      * @param loan
@@ -123,6 +124,7 @@ public class LoanCalculator {
         alias.setCompletedLoans(newCompletedLoans);
         loan.setCompleted(true);
         loan.setCompleteDate(DataModel.getInstance().getCurrentUser().getCurrentDate());
+        EventManager.getInstance().loanRepossessed(loan);
         DataModel.getInstance().saveAliasData(alias);
         DataModel.getInstance().saveLoanData(loan);
     }
