@@ -21,6 +21,7 @@ public class EventLogController {
     private LoanListController loanListController;
 
     ListChangeListener<String> changeListener;
+
     public void init() {
         changeListener = change -> {
             if(change.next()) {
@@ -31,6 +32,7 @@ public class EventLogController {
         EventManager.getInstance().addChangeListener(changeListener);
 
     }
+
     /**
      * Updates the Eventlog with new messages
      */
@@ -41,6 +43,10 @@ public class EventLogController {
         );
     }
 
+    public void viewEventHistory() {
+        ObservableList<String> eventHistory = EventManager.getInstance().getEventList();
+        // TODO open or expand a view and fill it with the session event history
+    }
 
     /**
      * Work in progress
