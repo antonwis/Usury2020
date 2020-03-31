@@ -61,80 +61,124 @@ public class EventManager {
         eventList.removeListener(listener);
     }
 
+    // ** EVENT LOG MESSAGE GENERATION METHODS ** \\
 
-    // ** General events ** //
+    // ** GENERAL EVENTS ** \\
 
-    //MOTD - Welcome text
+    /**
+     * Overwrites the event log list with a welcome text.
+     * @param user user object to be greeted
+     */
     public void printWelcome(User user) {
         eventList.setAll("Welcome " + user.getName() + "!\n" +
                 "Start by choosing or creating a new alias.");
     }
 
-    //Alias created
+    /**
+     * Appends the event log list with an alias creation message.
+     * @param alias being created
+     */
     public void aliasCreated(Alias alias) {
         eventList.add("New alias created: " + alias.getName() + ", Starting equity: " + alias.getEquity());
     }
 
-    //Alias modified
+    /**
+     * Appends the event log list with a message of an alias being modified.
+     * @param alias being modified
+     */
     public void aliasModified(Alias alias) {
         eventList.add("Alias modified: " + alias.getName());
     }
 
-    //Alias selected
+    /**
+     * Appends the event log list with a message of an alias being selected.
+     * @param alias being selected
+     */
     public void aliasSelected(Alias alias) {
         eventList.add("Selected alias: " + alias.getName());
     }
 
-    //Alias deleted
+    /**
+     * Appends the event log list with a message of an alias getting deleted.
+     * @param alias being deleted
+     */
     public void aliasDeleted(Alias alias) {
         eventList.add("Alias deleted: " + alias.getName());
     }
 
-    //Loan created
+    /**
+     * Appends the event log list with a message of a loan being created
+     * @param loan being created
+     */
     public void loanCreated(Loan loan) {
         eventList.add("New loan. Value: " + loan.getValue() + ", Debtor: " + loan.getVictim().getName());
     }
 
-    //Loan complete
+    /**
+     * Appends the event log list with a message of a loan being marked as completed
+     * @param loan getting completed
+     */
     public void loanCompleted(Loan loan) {
         eventList.add(loan.getVictim().getName() + " paid back his loan. A total of " + LoanCalculator.getInstance().getLoanTotalSum(loan) + " Shekels were added to your account.");
     }
 
-    //Loan modified
+    /**
+     * Appends the event log list with a message of a loan being modified
+     * @param loan being modified
+     */
     public void loanModified(Loan loan) {
         eventList.add("Loan #" + loan.getId() + " was updated: Value: " + loan.getValue() + " Interest%: " + loan.getInterest() +
                 " Debtor: " + loan.getVictim().getName() + " Due: " + loan.getDueDate());
     }
 
-    //Loan forfeited
+    /**
+     * Appends the event log list with a message of a loan being forfeited and thus lost.
+     * @param loan being forfeitted
+     */
     public void loanForfeited(Loan loan) {
         eventList.add("Loan lost.");
     }
 
-    //Loan deleted
+    /**
+     * Appends the event log list with a message of a loan getting deleted
+     * @param loan being deleted
+     */
     public void loanDeleted(Loan loan) {
         eventList.add("Loan id:" + loan.getId() + " was deleted.");
     }
 
-    //Loan repossessed
+    /**
+     * Appends the event log list with a message of a loan being repossessed by the Alias.
+     * @param loan being repossessed
+     */
     public void loanRepossessed(Loan loan) {
         eventList.add("Recovered amount: " + loan.getValue());
     }
 
-    //Victim created
+    /**
+     * Appends the event log list with a message of a victim being created
+     * @param victim being created
+     */
     public void victimCreated(Victim victim) {
         eventList.add("New victim " + victim.getName() + " was added to the record.");
     }
 
-    //Victim deleted
+    /**
+     * Appends the event log list with a message of a victim getting deleted
+     * @param victim being deleted
+     */
     public void victimDeleted(Victim victim) {
         eventList.add(victim.getName() + " was erased from the records.");
     }
 
-    // ** Enforcement actions ** //
+    // ** ENFORCEMENT ACTIONS ** \\
 
-    // Threatening event
-    public void threatEvent(VictimTraits trait) {
+    /**
+     * Appends the event log list with status messages related to the threatening enforcement action.
+     * @param victim victim to be threatened
+     */
+    public void threatEvent(Victim victim) {
+        VictimTraits trait = VictimTraits.valueOf(victim.getTrait());
         switch (trait){
             case NORMIE:
                 eventList.add("Threatening proved successful. Victim agreed to pay back 15% more");
@@ -154,8 +198,12 @@ public class EventManager {
         }
     }
 
-    // Extortion event
-    public void extortionEvent(VictimTraits trait) {
+    /**
+     * Appends the event log list with status messages related to the torture enforcement action.
+     * @param victim victim to be blackmailed
+     */
+    public void extortionEvent(Victim victim) {
+        VictimTraits trait = VictimTraits.valueOf(victim.getTrait());
         switch (trait){
             case SCARED:
                 eventList.add("Victim was so scared they paid you back right on the spot.");
@@ -166,8 +214,13 @@ public class EventManager {
         }
     }
 
-    // Torture event
-    public void tortureEvent(VictimTraits trait, float modifier) {
+    /**
+     * Appends the event log list with status messages related to the torture enforcement action.
+     * @param victim victim to be tortured
+     * @param modifier modifier of the extra money promised through torture
+     */
+    public void tortureEvent(Victim victim, float modifier) {
+        VictimTraits trait = VictimTraits.valueOf(victim.getTrait());
         switch (trait){
             case SCARED:
                 eventList.add("Victim didn't survive. You manage to retrieve your initial investment.");
@@ -178,11 +231,15 @@ public class EventManager {
         }
     }
 
-    // Assassination event
-    public void assassinationEvent(VictimTraits trait) {
+    /**
+     * Appends the event log list with status messages related to the assassination enforcement action.
+     * @param victim victim to be assassinated
+     */
+    public void assassinationEvent(Victim victim) {
+        VictimTraits trait = VictimTraits.valueOf(victim.getTrait());
         switch (trait){
             case SNEAKY:
-                eventList.add("Victim was too sneaky. He got away. Your money was lost.");
+                eventList.add("Turns out " + victim.getName() + " was a sneaky little character. He got away with all of your money.");
                 break;
             case VIOLENT:
                 eventList.add("Victim fought back. Your money was lost.");

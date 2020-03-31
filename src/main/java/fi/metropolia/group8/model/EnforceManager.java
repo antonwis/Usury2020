@@ -22,7 +22,7 @@ public class EnforceManager {
 
 
     /**
-     * Attempts to threaten the victim
+     * Attempts to threaten the debtor as one of the enforcement action options
      * @param loan loan object which contains reference to victim
      */
     public void Threaten(Loan loan) {
@@ -34,19 +34,19 @@ public class EnforceManager {
                 float newInterest = loan.getInterest() + 15;
                 loan.setInterest(newInterest);
                 DataModel.getInstance().saveLoanData(loan);
-                EventManager.getInstance().threatEvent(trait);
+                EventManager.getInstance().threatEvent(victim);
                 break;
             case SCARED:
                 loan.setDueDate(DataModel.getInstance().getCurrentUser().getCurrentDate().plusDays(1));
                 DataModel.getInstance().saveLoanData(loan);
-                EventManager.getInstance().threatEvent(trait);
+                EventManager.getInstance().threatEvent(victim);
                 break;
             case JUNKIE:
             case VIOLENT:
-                EventManager.getInstance().threatEvent(trait);
+                EventManager.getInstance().threatEvent(victim);
                 break;
             default:
-                EventManager.getInstance().threatEvent(trait);
+                EventManager.getInstance().threatEvent(victim);
                 loan.setDueDate(loan.getDueDate().minusDays(1));
                 DataModel.getInstance().saveLoanData(loan);
                 break;
@@ -54,7 +54,7 @@ public class EnforceManager {
     }
 
     /**
-     * Attempts to blackmail the victim
+     * Attempts to blackmail the debtor as one of the enforcement action options
      * @param loan loan object which contains reference to victim
      */
     public void Extort(Loan loan) {
@@ -64,19 +64,19 @@ public class EnforceManager {
         switch (trait){
             case SCARED:
                 LoanCalculator.getInstance().completeLoan(loan);
-                EventManager.getInstance().extortionEvent(trait);
+                EventManager.getInstance().extortionEvent(victim);
                 break;
             default:
                 // Default behavior is to pay back half now
                 LoanCalculator.getInstance().payHalfLoan(loan);
-                EventManager.getInstance().extortionEvent(trait);
+                EventManager.getInstance().extortionEvent(victim);
                 break;
         }
 
     }
 
     /**
-     * Attempts to torture the victim
+     * Attempts to torture the debtor as one of the enforcement action options
      * @param loan loan object which contains reference to victim
      */
     public void Torture(Loan loan) {
@@ -86,21 +86,22 @@ public class EnforceManager {
 
         switch (trait){
             case SCARED:
+                // SCARED victims die to a heart attack.
                 LoanCalculator.getInstance().repoLoan(DataModel.getInstance().getCurrentAlias(), loan);
                 victim.setAlive(false);
-                EventManager.getInstance().tortureEvent(trait, modifier);
+                EventManager.getInstance().tortureEvent(victim, modifier);
                 break;
             default:
                 // Default behavior: Modify the loan's original value through a percentage modifier.
                 LoanCalculator.getInstance().modifyLoanValue(loan, modifier);
-                EventManager.getInstance().tortureEvent(trait, modifier);
+                EventManager.getInstance().tortureEvent(victim, modifier);
                 break;
         }
 
     }
 
     /**
-     * Attempts to assassinate the victim
+     * Attempts to assassinate the debtor as one of the enforcement action options
      * @param loan loan object which contains reference to victim
      */
     public void Assassinate(Loan loan) {
@@ -110,19 +111,19 @@ public class EnforceManager {
         switch (trait) {
             case SNEAKY:
                 LoanCalculator.getInstance().forfeitLoan(DataModel.getInstance().getCurrentAlias(), loan);
-                EventManager.getInstance().assassinationEvent(trait);
+                EventManager.getInstance().assassinationEvent(victim);
                 break;
             case VIOLENT:
                 LoanCalculator.getInstance().forfeitLoan(DataModel.getInstance().getCurrentAlias(), loan);
                 victim.setAlive(false);
                 DataModel.getInstance().saveVictimData(victim);
-                EventManager.getInstance().assassinationEvent(trait);
+                EventManager.getInstance().assassinationEvent(victim);
                 break;
             default:
                 LoanCalculator.getInstance().repoLoan(DataModel.getInstance().getCurrentAlias(), loan);
                 victim.setAlive(false);
                 DataModel.getInstance().saveVictimData(victim);
-                EventManager.getInstance().assassinationEvent(trait);
+                EventManager.getInstance().assassinationEvent(victim);
                 break;
         }
 
