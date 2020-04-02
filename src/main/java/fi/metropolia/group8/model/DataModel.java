@@ -1,10 +1,13 @@
 package fi.metropolia.group8.model;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
+import javax.swing.event.ChangeListener;
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -93,6 +96,67 @@ public class DataModel {
     public ObservableList<Victim> getVictimList() {
         return victimList;
     }
+
+    /*
+        Observer & listener methods
+    */
+
+    /**
+     * Method to add a new listener to userList
+     * @param newListener
+     */
+    public void addUserListChangeListener(ListChangeListener<User> newListener) {
+        userList.addListener(newListener);
+    }
+
+    /**
+     * Remove an existing listener from userList
+     * @param listener
+     */
+    public void removeUserChangeListener(ListChangeListener<User> listener) { userList.removeListener(listener);
+    }
+
+    /**
+     * Method to add a new listener to aliasList
+     * @param newListener
+     */
+    public void addAliasListChangeListener(ListChangeListener<Alias> newListener) { aliasList.addListener(newListener);
+    }
+
+    /**
+     * Remove an existing listener from aliasList
+     * @param listener
+     */
+    public void removeAliasChangeListener(ListChangeListener<Alias> listener) { aliasList.removeListener(listener);
+    }
+
+    /**
+     * Method to add a new listener to loanList
+     * @param newListener
+     */
+    public void addLoanListChangeListener(ListChangeListener<Loan> newListener) {
+        loanList.addListener(newListener);
+    }
+
+    /**
+     * Remove an existing listener from loanList
+     * @param listener
+     */
+    public void removeLoanChangeListener(ListChangeListener<Loan> listener) { loanList.removeListener(listener); }
+
+    /**
+     * Method to add a new listener to victimList
+     * @param newListener
+     */
+    public void addVictimListChangeListener(ListChangeListener<Victim> newListener) { victimList.addListener(newListener); }
+
+    /**
+     * Remove an existing listener from victimList
+     * @param listener
+     */
+    public void removeVictimChangeListener(ListChangeListener<Victim> listener) { victimList.removeListener(listener);
+    }
+
 
     /*
         Database interaction methods
