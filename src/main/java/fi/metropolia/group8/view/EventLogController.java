@@ -2,10 +2,16 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.EventManager;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * Controls everything related to Eventlog on the view level.
@@ -43,9 +49,17 @@ public class EventLogController {
         );
     }
 
-    public void viewEventHistory() {
-        ObservableList<String> eventHistory = EventManager.getInstance().getEventList();
+    public void viewEventHistory() throws IOException {
         // TODO open or expand a view and fill it with the session event history
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+
+        FXMLLoader event = new FXMLLoader(getClass().getResource("EventHistory.fxml"));
+        Parent root = event.load();
+        EventHistoryController e = event.getController();
+        e.init(stage);
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     /**
