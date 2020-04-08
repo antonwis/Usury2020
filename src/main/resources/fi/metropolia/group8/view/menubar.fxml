@@ -1,40 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.VBox?>
 <VBox fx:id="vbox" xmlns:fx="http://javafx.com/fxml"
-       fx:controller="fi.metropolia.group8.view.MenubarController"  prefHeight="10.0" prefWidth="3000.0">
+      fx:controller="fi.metropolia.group8.view.MenubarController" prefHeight="10.0" prefWidth="3000.0">
 
 
-<MenuBar  fx:id="menuBar" focusTraversable="true" >
-    <menus>
+    <MenuBar fx:id="menuBar" focusTraversable="true">
         <Menu text="System" fx:id="systemMenu">
-            <items>
-                <MenuItem text="Settings"/>
-                <MenuItem text="Save" fx:id="saveMenuItem"/>
-                <MenuItem text="Load"/>
-                <MenuItem fx:id="logoutButton" onAction="#logout" text="Logout"/>
-                <MenuItem fx:id="exitMenuItem" onAction="#exitApp" text="Exit"/>
-
-            </items>
+            <MenuItem text="Settings"/>
+            <MenuItem text="Save" fx:id="saveMenuItem"/>
+            <MenuItem text="Load"/>
+            <MenuItem fx:id="logoutButton" onAction="#logout" text="Logout"/>
+            <MenuItem fx:id="exitMenuItem" onAction="#exitApp" text="Exit"/>
         </Menu>
         <Menu fx:id="aliasMenu" text="Alias">
-            <items>
-                <MenuItem text="Add new alias" onAction="#addNewAlias"/>
-                <MenuItem text="Manage aliases" onAction="#modifyAliases"/>
-                <SeparatorMenuItem  />
+            <MenuItem text="Add new alias" onAction="#addNewAlias"/>
+            <MenuItem text="Manage aliases" onAction="#modifyAliases"/>
+            <SeparatorMenuItem/>
 
-            </items>
+        </Menu>
+        <Menu text="View">
+            <MenuItem text="Overview"/>
+            <MenuItem text="Loans"/>
+            <SeparatorMenuItem/>
+            <MenuItem text="Book of Debtors" onAction="#debtorBook"/>
         </Menu>
         <Menu text="Help">
-            <items>
-                <MenuItem text="About" />
-            </items>
+            <MenuItem text="About"/>
         </Menu>
-    </menus>
-</MenuBar>
+    </MenuBar>
 </VBox>
