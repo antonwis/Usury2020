@@ -226,6 +226,9 @@ public class LoanListController {
         }
     }
 
+    public void refreshVictimList(){
+        victimTableView.setItems(VictimGenerator.getInstance().getGeneratedVictimList());
+    }
     public void viewLoans() {
         if (DataModel.getInstance().getCurrentAlias() == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

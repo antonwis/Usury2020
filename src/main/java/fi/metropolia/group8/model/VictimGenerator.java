@@ -63,6 +63,9 @@ public class VictimGenerator {
         return generatedVictimList;
     }
 
+    // temporary delete
+    public void deleteVictim(GeneratedVictim victim){ generatedVictimList.remove(victim); }
+
     /**
      * Builds lists of data from .txt files. Used for generating randomized victim objects.
      */

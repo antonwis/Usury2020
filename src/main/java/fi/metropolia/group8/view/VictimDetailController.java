@@ -3,13 +3,15 @@ package fi.metropolia.group8.view;
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.LoanCalculator;
 import fi.metropolia.group8.model.VictimGenerator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import java.io.IOException;
+import java.time.LocalDate;
 
 public class VictimDetailController {
 
@@ -54,13 +56,27 @@ public class VictimDetailController {
     private OverviewController overviewController;
 
     @FXML
-    void acceptLoan(ActionEvent event) {
+    void acceptLoan() throws IOException {
+        DataModel.getInstance().createLoan(
+                DataModel.getInstance().getCurrentAlias(),
+                Float.parseFloat(loanValue.getText()),
+                DataModel.getInstance().createGeneratedVictim(VictimGenerator.getInstance().getCurrentVictim()),
+                LocalDate.now(),
+                LocalDate.from(VictimGenerator.getInstance().getCurrentVictim().getDueDate()),
+                Float.parseFloat(Interest.getText())
+        );
+        VictimGenerator.getInstance().deleteVictim(VictimGenerator.getInstance().getCurrentVictim());
+        loanListController.refreshVictimDetails();
+        loanListController.refreshVictimList();
+        loanListController.refreshLoans();
+        primaryController.setCurrentAliasText();
+        overviewController.updateOverview();
 
     }
 
     @FXML
-    void declineLoan(ActionEvent event) {
-
+    void declineLoan() {
+        VictimGenerator.getInstance().deleteVictim(VictimGenerator.getInstance().getCurrentVictim());
     }
 
     public void display(LoanListController loanListController, PrimaryController primaryController, OverviewController overviewController) {

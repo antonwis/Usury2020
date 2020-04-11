@@ -97,12 +97,12 @@ public class LoanDetailController {
             LoanCalculator.getInstance().modifyLoan(DataModel.getInstance().getCurrentLoan(), (float) (double) interestSpinner.getValue(), dueDatePicker.getValue());
             loanListController.refreshLoanDetails();
         }
-        modifyHbox1.setVisible(!false);
-        modifyHbox2.setVisible(!true);
-        DueDate.setVisible(!false);
-        dueDatePicker.setVisible(!true);
-        interestSpinner.setVisible(!true);
-        Interest.setVisible(!false);
+        modifyHbox1.setVisible(true);
+        modifyHbox2.setVisible(false);
+        DueDate.setVisible(true);
+        dueDatePicker.setVisible(false);
+        interestSpinner.setVisible(false);
+        Interest.setVisible(true);
         loanListController.refreshLoans();
         overviewController.updateOverview();
     }
@@ -112,12 +112,12 @@ public class LoanDetailController {
      */
     @FXML
     void cancelModify() {
-        modifyHbox1.setVisible(!false);
-        modifyHbox2.setVisible(!true);
-        DueDate.setVisible(!false);
-        dueDatePicker.setVisible(!true);
-        interestSpinner.setVisible(!true);
-        Interest.setVisible(!false);
+        modifyHbox1.setVisible(true);
+        modifyHbox2.setVisible(false);
+        DueDate.setVisible(true);
+        dueDatePicker.setVisible(false);
+        interestSpinner.setVisible(false);
+        Interest.setVisible(true);
     }
 
     /**
