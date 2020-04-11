@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.function.Predicate;
 
@@ -42,6 +43,8 @@ public class MenubarController {
     private MenuItem saveMenuItem;
     @FXML
     private MenuItem logoutButton;
+    @FXML
+    private MenuItem settings;
 
     private LoginManager loginManager;
     private AliasController aliasController;
@@ -167,6 +170,15 @@ public class MenubarController {
         Parent root = modifyAlias.load();
         ManageAliasesController manageAliasesController = modifyAlias.getController();
         manageAliasesController.init(loanListController,aliasController, stage, this, primaryController, overviewController);
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+    public void openSettings() throws IOException{
+        Stage stage = new Stage();
+        FXMLLoader settings = new FXMLLoader(getClass().getResource("Settings.fxml"));
+        Parent root = settings.load();
+        SettingsController settingsController = settings.getController();
+        settingsController.init();
         stage.setScene(new Scene(root));
         stage.show();
     }
