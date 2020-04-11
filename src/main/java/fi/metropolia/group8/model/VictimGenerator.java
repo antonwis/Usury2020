@@ -1,5 +1,7 @@
 package fi.metropolia.group8.model;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -25,6 +27,16 @@ public class VictimGenerator {
     private List<Integer> interestValues = Arrays.asList(10, 15, 20, 25, 30, 35, 40);
 
     private final ObservableList<GeneratedVictim> generatedVictimList = FXCollections.observableArrayList();
+    private final ObjectProperty<GeneratedVictim> currentGeneratedVictim = new SimpleObjectProperty<>(null);
+    public ObjectProperty<GeneratedVictim> currentVictimProperty() {
+        return currentGeneratedVictim;
+    }
+    public final GeneratedVictim getCurrentVictim() {
+        return currentVictimProperty().get();
+    }
+    public final void setCurrentVictim(GeneratedVictim generatedVictim) {
+        currentVictimProperty().set(generatedVictim);
+    }
 
     private static VictimGenerator instance;
 
