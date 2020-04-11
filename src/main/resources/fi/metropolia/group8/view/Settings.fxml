@@ -7,6 +7,6 @@
    <children>
       <Label layoutX="53.0" layoutY="48.0" text="Language" />
       <Label layoutX="53.0" layoutY="118.0" text="Label" />
-      <ChoiceBox fx:id="languageSelector" layoutX="181.0" layoutY="44.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="languageSelector" layoutX="181.0" layoutY="44.0" prefWidth="150.0" onAction="#setCurrentLanguage"/>
    </children>
 </AnchorPane>
