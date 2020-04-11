@@ -34,12 +34,32 @@ public class LoanCalculator {
     }
 
     /**
+     * calculates total sum after interest for the generated loan proposal
+     * @param generatedVictim
+     * @return
+     */
+    public float getLoanOfferTotalSum(GeneratedVictim generatedVictim) {
+        float interest = (generatedVictim.getInterest() / 100) * generatedVictim.getValue();
+        return generatedVictim.getValue() + interest;
+    }
+
+    /**
      * calculates profit made from the loan
      * @param loan
      * @return
      */
     public float getInterestProfit(Loan loan) {
         float interest = (loan.getInterest() / 100) * loan.getValue();
+        return interest;
+    }
+
+    /**
+     * calculates profit made from the loan proposal
+     * @param generatedVictim
+     * @return
+     */
+    public float getOfferInterestProfit(GeneratedVictim generatedVictim) {
+        float interest = (generatedVictim.getInterest() / 100) * generatedVictim.getValue();
         return interest;
     }
 

@@ -18,7 +18,6 @@ public class GeneratedVictim {
     // Template data for Victim object creation
     private StringProperty name;
     private StringProperty address;
-    private StringProperty description;
 
     // Template data for Loan object creation
     private FloatProperty value;
@@ -31,16 +30,14 @@ public class GeneratedVictim {
      * an id, and are not added to the database.
      * @param name name of the victim
      * @param address victim's address
-     * @param description string describing the victim
      * @param value generated loan value
      * @param interest generated loan interest value
      * @param startDate generated issue date. This is typically the current user's current working date
      * @param dueDate generated default due date. Typically 14 days after issue date.
      */
-    public GeneratedVictim(String name, String address, String description, float value, float interest, LocalDate startDate, LocalDate dueDate) {
+    public GeneratedVictim(String name, String address, float value, float interest, LocalDate startDate, LocalDate dueDate) {
         this.name = new SimpleStringProperty(name);
         this.address = new SimpleStringProperty(address);
-        this.description = new SimpleStringProperty(description);
         this.value = new SimpleFloatProperty(value);
         this.interest = new SimpleFloatProperty(interest);
         this.startDate = startDate;
@@ -89,29 +86,6 @@ public class GeneratedVictim {
     public StringProperty addressProperty() {
         if (address == null) address = new SimpleStringProperty(this, "address");
         return address;
-    }
-
-    /**
-     * @return returns the description of the temporary victim object
-     */
-    public String getDescription() {
-        return descriptionProperty().get();
-    }
-
-    /**
-     * Set a new description
-     * @param value new value for the description
-     */
-    public void setDescription(String value) {
-        descriptionProperty().set(value);
-    }
-
-    /**
-     * @return returns the description property value
-     */
-    public StringProperty descriptionProperty() {
-        if (description == null) description = new SimpleStringProperty(this, "description");
-        return description;
     }
 
     /**
@@ -193,7 +167,7 @@ public class GeneratedVictim {
      */
     @Override
     public String toString() {
-        return getName() + ", " + getAddress() + ", " + getDescription();
+        return getName() + ", " + getAddress();
     }
 
 

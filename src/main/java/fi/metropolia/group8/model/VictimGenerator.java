@@ -118,7 +118,6 @@ public class VictimGenerator {
             GeneratedVictim generatedVictim = new GeneratedVictim(
                     rngName,
                     rngAddress,
-                    "No additional information available.",
                     rngValue,
                     rngInterest,
                     DataModel.getInstance().getCurrentUser().getCurrentDate(),
