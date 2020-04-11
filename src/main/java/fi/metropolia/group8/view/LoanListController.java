@@ -1,12 +1,11 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.DataModel;
-import fi.metropolia.group8.model.Loan;
-import fi.metropolia.group8.model.Victim;
+import fi.metropolia.group8.model.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -32,22 +31,36 @@ import java.util.function.Predicate;
 public class LoanListController {
 
     @FXML
+    public TableColumn<GeneratedVictim, String> victimName;
+    @FXML
+    public TableColumn<GeneratedVictim, Integer> loanOfferAmount;
+    @FXML
+    public TableColumn<GeneratedVictim,LocalDate> victimDueDate;
+    @FXML
+    public TableView<GeneratedVictim> victimTableView;
+
+    //////////////////////////////////////////////////////////////////////
+    @FXML
     private AnchorPane eventlogView;
-    @FXML
-    private VBox LoanDetailsVbox;
-    @FXML
-    private TableView<Loan> LoanTableView;
     @FXML
     private TableColumn<Loan, Long> Id;
     @FXML
     private TableColumn<Loan, Float> Amount;
     @FXML
     private TableColumn<Loan, Victim> Debtor;
-
     @FXML
     private TableColumn<Loan, LocalDate> DueDate;
     @FXML
+    private VBox LoanDetailsVbox;
+    @FXML
+    private TableView<Loan> LoanTableView;
+    //////////////////////////////////////////////////////////////////////
+    @FXML
     private Button newLoanButton;
+    @FXML
+    public Button viewLoansButton;
+    @FXML
+    public Button backButton;
 
 
     private PrimaryController primaryController;
@@ -97,11 +110,11 @@ public class LoanListController {
                 ObjectProperty<Predicate<Loan>> aliasFilter = new SimpleObjectProperty<>();
 
                 userFilter.bind(Bindings.createObjectBinding(() ->
-                        i -> i.getOwner().getUser().getName().equals(DataModel.getInstance().getCurrentAlias().getUser().getName()) && i.isCompleted() == false));
+                        i -> i.getOwner().getUser().getName().equals(DataModel.getInstance().getCurrentAlias().getUser().getName()) && !i.isCompleted()));
 
                 // filtteröi lainalistan tarkistamalla kuuluuko laina tämän hetkiselle aliakselle ja onko laina completed
                 aliasFilter.bind(Bindings.createObjectBinding(() ->
-                        i -> i.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && i.isCompleted() == false));
+                        i -> i.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && !i.isCompleted()));
 
                 filteredList.predicateProperty().bind(Bindings.createObjectBinding(
                         () -> userFilter.get().and(aliasFilter.get()),
@@ -124,7 +137,7 @@ public class LoanListController {
     /**
      * sets detail view based on selected loan
      *
-     * @throws IOException
+     * @throws IOException exception
      */
     public void refreshDetails() throws IOException {
         if (DataModel.getInstance().getCurrentLoan() != null) {
@@ -136,15 +149,13 @@ public class LoanListController {
     }
 
     // call event log init TODO - kys yourselffaa ittes ja muuta sen jälkeen tää
-    public void initEventLog(){
-        eventLogController.init();
-    }
+    public void initEventLog() { eventLogController.init(); }
 
     /**
      * initializes controller
      *
-     * @param primaryController
-     * @param overviewController
+     * @param primaryController  Primary Controller
+     * @param overviewController Overview Controller
      */
     public void initModel(PrimaryController primaryController, OverviewController overviewController) {
         if (this.primaryController == null) {
@@ -177,7 +188,30 @@ public class LoanListController {
             Debtor.setCellValueFactory(victim -> new SimpleObjectProperty(victim.getValue().getVictim().getName()));
             Amount.setCellValueFactory(amount -> amount.getValue().valueProperty().asObject());
             DueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+
+            victimName.setCellValueFactory(new PropertyValueFactory<>("name"));
+            loanOfferAmount.setCellValueFactory(new PropertyValueFactory<>("value"));
+            victimDueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+            /// väliaikanen testi
+            VictimGenerator.getInstance().generateVictimList(10);
+            victimTableView.setItems(VictimGenerator.getInstance().getGeneratedVictimList());
         }
+    }
+
+    public void viewLoans() {
+        victimTableView.setVisible(true);
+        LoanTableView.setVisible(false);
+        viewLoansButton.setVisible(false);
+        backButton.setVisible(true);
+        newLoanButton.setVisible(false);
+    }
+
+    public void back() {
+        victimTableView.setVisible(false);
+        LoanTableView.setVisible(true);
+        backButton.setVisible(false);
+        viewLoansButton.setVisible(true);
+        newLoanButton.setVisible(true);
     }
 }
 

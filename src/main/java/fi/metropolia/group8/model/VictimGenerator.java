@@ -3,12 +3,10 @@ package fi.metropolia.group8.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 /**
  * Class for generating randomized victim objects. Creates a list of GeneratedVictim objects which are displayed
@@ -30,14 +28,16 @@ public class VictimGenerator {
 
     private static VictimGenerator instance;
 
-    public VictimGenerator() { }
+    public VictimGenerator() {
+    }
 
     /**
      * Retrieves the global instance
+     *
      * @return returns the singleton instance
      */
     public static VictimGenerator getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new VictimGenerator();
         }
         return instance;
@@ -46,6 +46,7 @@ public class VictimGenerator {
 
     /**
      * Returns the current randomly generated list of victim objects.
+     *
      * @return returns a list of Victim objects
      */
     public ObservableList<GeneratedVictim> getGeneratedVictimList() {
@@ -56,57 +57,52 @@ public class VictimGenerator {
      * Builds lists of data from .txt files. Used for generating randomized victim objects.
      */
     public void readFiles() {
-       try {
-           Scanner scanner = new Scanner(new File("/fi/metropolia/group8/data/firstnames.txt"));
-           while(scanner.hasNextLine()) {
-               firstNames.add(scanner.nextLine());
-           }
-       } catch (FileNotFoundException ex) {
-           System.out.println("File not found.");
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-
-       try {
-           Scanner scanner = new Scanner(new File("/fi/metropolia/group8/data/lastnames.txt"));
-           while(scanner.hasNextLine()) {
-               lastNames.add(scanner.nextLine());
-           }
-       } catch (FileNotFoundException ex) {
-           System.out.println("File not found.");
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-
-       try {
-            Scanner scanner = new Scanner(new File("/fi/metropolia/group8/data/address.txt"));
-            while(scanner.hasNextLine()) {
-                addresses.add(scanner.nextLine());
+        try (Scanner sc = new Scanner(new FileInputStream("src/main/resources/fi/metropolia/group8/data/firstnames.txt"), StandardCharsets.UTF_8)) {
+            firstNames = new ArrayList<>();
+            while (sc.hasNextLine()) {
+                firstNames.add(sc.nextLine());
             }
-       } catch (FileNotFoundException ex) {
-           System.out.println("File not found.");
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-   }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try (Scanner sc = new Scanner(new FileInputStream("src/main/resources/fi/metropolia/group8/data/lastnames.txt"), StandardCharsets.UTF_8)) {
+            lastNames = new ArrayList<>();
+            while (sc.hasNextLine()) {
+                lastNames.add(sc.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try (Scanner sc = new Scanner(new FileInputStream("src/main/resources/fi/metropolia/group8/data/address.txt"), StandardCharsets.UTF_8)) {
+            addresses = new ArrayList<>();
+            while (sc.hasNextLine()) {
+                addresses.add(sc.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Generate a list of randomized victim objects. Picks values randomly from data lists.
+     *
      * @param listSize number of victim objects to be created
      */
-   public void generateVictimList(int listSize) {
+    public void generateVictimList(int listSize) {
         readFiles();
         // Clears the previous generated list
         generatedVictimList.clear();
-        for(int i = 0; i < listSize; i++) {
+        for (int i = 0; i < listSize; i++) {
             // Generates a random first + last name combination
-            String rngName = firstNames.get(new Random().nextInt(firstNames.size()-1)) + " " + lastNames.get(new Random().nextInt(lastNames.size()-1));
+            String rngName = firstNames.get(new Random().nextInt(firstNames.size() - 1)) + " " + lastNames.get(new Random().nextInt(lastNames.size() - 1));
             // Generates a random address from a random street number + random street name + random street suffix
-            String rngAddress = new Random().nextInt(90) + " " + addresses.get(new Random().nextInt(addresses.size()-1)) + streetType.get(new Random().nextInt(streetType.size()-1));
+            String rngAddress = new Random().nextInt(90) + " " + addresses.get(new Random().nextInt(addresses.size() - 1)) + streetType.get(new Random().nextInt(streetType.size() - 1));
             // Picks a random loan value from the value list
-            int rngValue = loanValues.get(new Random().nextInt(loanValues.size()-1));
+            int rngValue = loanValues.get(new Random().nextInt(loanValues.size() - 1));
             // Picks a random interest value from the value list
-            int rngInterest = interestValues.get(new Random().nextInt(interestValues.size()-1));
+            int rngInterest = interestValues.get(new Random().nextInt(interestValues.size() - 1));
 
             // Creates the GeneratedVictim object using the random values
             GeneratedVictim generatedVictim = new GeneratedVictim(
@@ -117,11 +113,11 @@ public class VictimGenerator {
                     rngInterest,
                     DataModel.getInstance().getCurrentUser().getCurrentDate(),
                     DataModel.getInstance().getCurrentUser().getCurrentDate().plusDays(14)
-                    );
+            );
             // Adds the created object to the list
             generatedVictimList.addAll(generatedVictim);
         }
-   }
+    }
 
 
 }
