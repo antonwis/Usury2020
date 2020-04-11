@@ -327,13 +327,29 @@ public class DataModel {
     }
 
     /**
-     * Sends a new victim object to the DAO. Notifies event log manager.
+     * Creates and sends a new victim object to the DAO. Notifies event log manager.
      * @param name victim's name
      * @param address victim's address
      * @param description description for the victim
+     * @return returns the new victim object
      */
     public Victim createVictim(String name, String address, String description){
         Victim victim = new Victim(name, address, description);
+        UsuryDAO usuryDAO = new UsuryDAO();
+        usuryDAO.createVictim(victim);
+        EventManager.getInstance().victimCreated(victim);
+        loadVictimData();
+        return victim;
+    }
+
+    /**
+     * Creates a new victim object from a randomly generated GeneratedVictim object created by the VictimGenerator class.
+     * Sends the new victim object to the DAO. Notifies event log manager.
+     * @param generatedVictim random generated GeneratedVictim object
+     * @return returns the new victim object
+     */
+    public Victim createGeneratedVictim(GeneratedVictim generatedVictim) {
+        Victim victim = new Victim(generatedVictim.getName(), generatedVictim.getAddress(), generatedVictim.getDescription());
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createVictim(victim);
         EventManager.getInstance().victimCreated(victim);

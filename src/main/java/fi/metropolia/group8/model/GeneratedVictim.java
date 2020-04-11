@@ -1,20 +1,30 @@
 package fi.metropolia.group8.model;
 
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.time.LocalDate;
+
 /**
- * Temporary victim objects created by Victim Generator. These are not saved into the database.
- * Generated victims are not assigned a trait or an id. Those are assigned when the actual Victim objects
- * are properly created by the DataModel class. Generated Victims are used as a base for actual Victim creation.
+ * Temporary victim objects created by Victim Generator. These are not saved into the database. Contains template data for
+ * Victim and Loan object creation. Generated victims are not assigned a trait or an id. Those are assigned when
+ * the actual Victim objects are properly created by the DataModel class. Generated Victims are used as a base
+ * for actual Victim and Loan creation. This is used as a helper class to prevent temporary objects from flooding the database.
  */
 public class GeneratedVictim {
 
+    // Template data for Victim object creation
     private StringProperty name;
     private StringProperty address;
     private StringProperty description;
-    private boolean alive;
 
+    // Template data for Loan object creation
+    private FloatProperty value;
+    private FloatProperty interest;
+    private LocalDate startDate;
+    private LocalDate dueDate;
 
     /**
      * Constructor for the Generated Victim object. Unlike Victim objects, GeneratedVictims are not assigned a trait or
@@ -22,12 +32,19 @@ public class GeneratedVictim {
      * @param name name of the victim
      * @param address victim's address
      * @param description string describing the victim
+     * @param value generated loan value
+     * @param interest generated loan interest value
+     * @param startDate generated issue date. This is typically the current user's current working date
+     * @param dueDate generated default due date. Typically 14 days after issue date.
      */
-    public GeneratedVictim(String name, String address, String description) {
+    public GeneratedVictim(String name, String address, String description, float value, float interest, LocalDate startDate, LocalDate dueDate) {
         this.name = new SimpleStringProperty(name);
         this.address = new SimpleStringProperty(address);
         this.description = new SimpleStringProperty(description);
-        this.alive = true;
+        this.value = new SimpleFloatProperty(value);
+        this.interest = new SimpleFloatProperty(interest);
+        this.startDate = startDate;
+        this.dueDate = dueDate;
     }
 
 
@@ -98,19 +115,77 @@ public class GeneratedVictim {
     }
 
     /**
-     * @return checks if the victim is still alive
+     * @return returns loan value property value
      */
-    public boolean isAlive() {
-        return alive;
+    public FloatProperty valueProperty() {
+        if (value == null) value = new SimpleFloatProperty(this, "value");
+        return value;
     }
 
     /**
-     * Set the alive-status
-     * @param alive true if alive, false if dead
+     * @return returns the generated float value of the potential loan
      */
-    public void setAlive(boolean alive) {
-        this.alive = alive;
+    public float getValue() {
+        return valueProperty().get();
     }
+
+    /**
+     * @param value Sets a new value for the potential loan
+     */
+    public void setValue(float value) {
+        valueProperty().set(value);
+    }
+
+    /**
+     * @return returns the interest property value
+     */
+    public FloatProperty interestProperty() {
+        if (interest == null) interest = new SimpleFloatProperty(this, "interest");
+        return interest;
+    }
+
+    /**
+     * @return retruns the interest property value
+     */
+    public float getInterest() {
+        return interestProperty().get();
+    }
+
+    /**
+     * @param value sets a new interest value for the potential loan
+     */
+    public void setInterest(float value) {
+        interestProperty().set(value);
+    }
+
+    /**
+     * @return returns the potential loan start date
+     */
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    /**
+     * @param startDate sets a new issue date for the potential loan
+     */
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    /**
+     * @return returns the potential loan's due date
+     */
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    /**
+     * @param dueDate sets a new due date for the potential loan
+     */
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
 
     /**
      * Override for toString()
