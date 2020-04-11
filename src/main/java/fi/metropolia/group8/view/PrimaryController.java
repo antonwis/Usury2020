@@ -1,7 +1,9 @@
 package fi.metropolia.group8.view;
 
+import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,6 +46,7 @@ public class PrimaryController {
     private Label primaryCurrentDate;
 
     private Scene scene;
+    private MenubarController menubarController;
 
     /**
      * initializes all controllers for software
@@ -77,12 +80,14 @@ public class PrimaryController {
             AnchorPane.setLeftAnchor(menuBar, 0d);
             AnchorPane.setTopAnchor(menuBar, 0d);
 
-            MenubarController menubarController = menuBarF.getController();
+            menubarController = menuBarF.getController();
 
             menubarController.init(loginManager, aliasController, this, loanListController, overviewController);
             menubarController.updateView();
+            menubarController.initListener();
 
             setCurrentAliasText();
+
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -2,6 +2,8 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.model.EventManager;
+import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -53,6 +55,8 @@ public class MenubarController {
     private OverviewController overviewController;
     private Menu sub;
 
+    ListChangeListener<Alias> changeListener;
+
     /**
      * Method that initializes menubar and gets all the necessary controllers
      * @param loginManager Login Manager
@@ -76,7 +80,16 @@ public class MenubarController {
             saveMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
             logoutButton.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
         }
-        //updateView();
+    }
+
+    public void initListener() {
+        changeListener = change -> {
+            if(change.next()) {
+                updateView();
+            }
+
+        };
+        DataModel.getInstance().addAliasListChangeListener(changeListener);
     }
 
     /**
@@ -84,7 +97,7 @@ public class MenubarController {
      */
     public void updateView() {
 
-        DataModel.getInstance().loadAliasData();
+        //DataModel.getInstance().loadAliasData();
 
         FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
         Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
