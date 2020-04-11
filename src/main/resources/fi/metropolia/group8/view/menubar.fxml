@@ -8,7 +8,7 @@
 
     <MenuBar fx:id="menuBar" focusTraversable="true">
         <Menu text="System" fx:id="systemMenu">
-            <MenuItem text="Settings"/>
+            <MenuItem text="Settings" fx:id="settings" onAction="#openSettings"/>
             <MenuItem text="Save" fx:id="saveMenuItem"/>
             <MenuItem text="Load"/>
             <MenuItem fx:id="logoutButton" onAction="#logout" text="Logout"/>

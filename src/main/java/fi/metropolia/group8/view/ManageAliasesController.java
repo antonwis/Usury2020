@@ -19,7 +19,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
 /**
@@ -36,6 +40,7 @@ public class ManageAliasesController {
     private PrimaryController primaryController;
     private OverviewController overviewController;
     private LoanListController loanListController;
+
 
     /**
      * Initialization method for Manage aliases window where all needed instances of controllers are initialized
@@ -62,6 +67,7 @@ public class ManageAliasesController {
      */
     public void updateView() {
 
+
         FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
 
         Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
@@ -74,7 +80,7 @@ public class ManageAliasesController {
             Label label = new Label(alias.getName());
             label.setPrefWidth(300);
             label.setMinWidth(50);
-            Button modify = new Button("Modify");
+            Button modify = new Button();
             modify.setMinWidth(60);
 
             modify.setOnAction(new EventHandler<ActionEvent>() {
