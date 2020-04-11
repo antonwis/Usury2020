@@ -1,7 +1,6 @@
 package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.DataModel;
-import fi.metropolia.group8.model.EnforceManager;
 import fi.metropolia.group8.model.LoanCalculator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +20,8 @@ import java.io.IOException;
  */
 public class LoanDetailController {
 
+    @FXML
+    public VBox victimDetailVbox;
     @FXML
     private VBox loanDetailVbox;
 
@@ -94,7 +95,7 @@ public class LoanDetailController {
         if (interestSpinner.getValue() != null && dueDatePicker.getValue() != null) {
             interestSpinner.commitValue();
             LoanCalculator.getInstance().modifyLoan(DataModel.getInstance().getCurrentLoan(), (float) (double) interestSpinner.getValue(), dueDatePicker.getValue());
-            loanListController.refreshDetails();
+            loanListController.refreshLoanDetails();
         }
         modifyHbox1.setVisible(!false);
         modifyHbox2.setVisible(!true);

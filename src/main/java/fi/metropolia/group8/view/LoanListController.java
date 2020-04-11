@@ -5,7 +5,6 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -139,12 +138,21 @@ public class LoanListController {
      *
      * @throws IOException exception
      */
-    public void refreshDetails() throws IOException {
+    public void refreshLoanDetails() throws IOException {
         if (DataModel.getInstance().getCurrentLoan() != null) {
             FXMLLoader loanDetails = new FXMLLoader(getClass().getResource("loanDetails.fxml"));
             LoanDetailsVbox.getChildren().setAll((Node) loanDetails.load());
             LoanDetailController loanDetailController = loanDetails.getController();
             loanDetailController.display(this, primaryController, overviewController);
+        }
+    }
+
+    public void refreshVictimDetails() throws IOException {
+        if (VictimGenerator.getInstance().getCurrentVictim() != null) {
+            FXMLLoader victimDetails = new FXMLLoader(getClass().getResource("VictimDetails.fxml"));
+            LoanDetailsVbox.getChildren().setAll((Node) victimDetails.load());
+            VictimDetailController victimDetailController = victimDetails.getController();
+            victimDetailController.display(this, primaryController, overviewController);
         }
     }
 
@@ -177,7 +185,27 @@ public class LoanListController {
                 } else {
                     LoanTableView.getSelectionModel().select(newLoan);
                     try {
-                        refreshDetails();
+                        refreshLoanDetails();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            victimTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> VictimGenerator.getInstance().setCurrentVictim(newSelection));
+            VictimGenerator.getInstance().currentVictimProperty().addListener((obs, oldVictim, newVictim) -> {
+                if (newVictim == null) {
+                    victimTableView.getSelectionModel().clearSelection();
+                    try {
+                        FXMLLoader placeholder = new FXMLLoader(getClass().getResource("placeholder.fxml"));
+                        LoanDetailsVbox.getChildren().setAll((Node) placeholder.load());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    victimTableView.getSelectionModel().select(newVictim);
+                    try {
+                        refreshVictimDetails();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

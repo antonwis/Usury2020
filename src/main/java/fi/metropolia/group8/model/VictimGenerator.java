@@ -31,9 +31,7 @@ public class VictimGenerator {
     public ObjectProperty<GeneratedVictim> currentVictimProperty() {
         return currentGeneratedVictim;
     }
-    public final GeneratedVictim getCurrentVictim() {
-        return currentVictimProperty().get();
-    }
+    public final GeneratedVictim getCurrentVictim() { return currentVictimProperty().get(); }
     public final void setCurrentVictim(GeneratedVictim generatedVictim) {
         currentVictimProperty().set(generatedVictim);
     }
