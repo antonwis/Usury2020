@@ -1,6 +1,5 @@
 package fi.metropolia.group8.model;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
