@@ -10,13 +10,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Class for generating randomized victim objects. Creates a list of GeneratedVictim objects which are displayed
+ * as a list of potential debtors for the user. User can issue loans directly to the generated victims after which the
+ * actual victim and loan objects are created and saved to the database.
+ */
 public class VictimGenerator {
 
     private List<String> firstNames = null;
     private List<String> lastNames = null;
     private List<String> addresses = null;
     private List<String> streetType = Arrays.asList(new String[]{" Street", " Drive", " Avenue"});
-    private final ObservableList<Victim> generatedVictimList = FXCollections.observableArrayList();
+    private final ObservableList<GeneratedVictim> generatedVictimList = FXCollections.observableArrayList();
 
     private static VictimGenerator instance;
 
@@ -38,7 +43,7 @@ public class VictimGenerator {
      * Returns the current randomly generated list of victim objects.
      * @return returns a list of Victim objects
      */
-    public ObservableList<Victim> getGeneratedVictimList() {
+    public ObservableList<GeneratedVictim> getGeneratedVictimList() {
         return generatedVictimList;
     }
 
@@ -52,7 +57,9 @@ public class VictimGenerator {
                firstNames.add(scanner.nextLine());
            }
        } catch (FileNotFoundException ex) {
-           ex.printStackTrace();
+           System.out.println("File not found.");
+       } catch (Exception e) {
+           e.printStackTrace();
        }
 
        try {
@@ -61,7 +68,9 @@ public class VictimGenerator {
                lastNames.add(scanner.nextLine());
            }
        } catch (FileNotFoundException ex) {
-           ex.printStackTrace();
+           System.out.println("File not found.");
+       } catch (Exception e) {
+           e.printStackTrace();
        }
 
        try {
@@ -70,7 +79,9 @@ public class VictimGenerator {
                 addresses.add(scanner.nextLine());
             }
        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+           System.out.println("File not found.");
+       } catch (Exception e) {
+           e.printStackTrace();
        }
    }
 
@@ -84,8 +95,8 @@ public class VictimGenerator {
         for(int i = 0; i < listSize; i++) {
             String rngName = firstNames.get(new Random().nextInt(firstNames.size())) + " " + lastNames.get(new Random().nextInt(lastNames.size()));
             String rngAddress = new Random().nextInt(90 + 1)  + 1 + addresses.get(new Random().nextInt(addresses.size())) + streetType.get(new Random().nextInt(streetType.size()));
-            Victim victim = new Victim(rngName, rngAddress, "placeholder description");
-            generatedVictimList.addAll(victim);
+            GeneratedVictim generatedVictim = new GeneratedVictim(rngName, rngAddress, "placeholder description");
+            generatedVictimList.addAll(generatedVictim);
         }
    }
 
