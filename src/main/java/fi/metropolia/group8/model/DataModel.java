@@ -368,7 +368,4 @@ public class DataModel {
         loadVictimData();
     }
 
-
-
-
 }

@@ -57,7 +57,7 @@ public class VictimGenerator {
      */
     public void readFiles() {
        try {
-           Scanner scanner = new Scanner(new File("/..../resources/fi/metropolia/group8/data/firstnames.txt"));
+           Scanner scanner = new Scanner(new File("/fi/metropolia/group8/data/firstnames.txt"));
            while(scanner.hasNextLine()) {
                firstNames.add(scanner.nextLine());
            }
@@ -68,7 +68,7 @@ public class VictimGenerator {
        }
 
        try {
-           Scanner scanner = new Scanner(new File("/..../resources/fi/metropolia/group8/data/lastnames.txt"));
+           Scanner scanner = new Scanner(new File("/fi/metropolia/group8/data/lastnames.txt"));
            while(scanner.hasNextLine()) {
                lastNames.add(scanner.nextLine());
            }
@@ -79,7 +79,7 @@ public class VictimGenerator {
        }
 
        try {
-            Scanner scanner = new Scanner(new File("/..../resources/fi/metropolia/group8/data/address.txt"));
+            Scanner scanner = new Scanner(new File("/fi/metropolia/group8/data/address.txt"));
             while(scanner.hasNextLine()) {
                 addresses.add(scanner.nextLine());
             }
