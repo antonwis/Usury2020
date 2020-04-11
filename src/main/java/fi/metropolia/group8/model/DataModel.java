@@ -349,7 +349,7 @@ public class DataModel {
      * @return returns the new victim object
      */
     public Victim createGeneratedVictim(GeneratedVictim generatedVictim) {
-        Victim victim = new Victim(generatedVictim.getName(), generatedVictim.getAddress(), generatedVictim.getDescription());
+        Victim victim = new Victim(generatedVictim.getName(), generatedVictim.getAddress());
         UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createVictim(victim);
         EventManager.getInstance().victimCreated(victim);

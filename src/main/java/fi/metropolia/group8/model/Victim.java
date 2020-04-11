@@ -27,11 +27,24 @@ public class Victim {
     }
 
     /**
-     * constructor
-     *
+     * Constructor for pre-generated data. Assigns a description based on trait.
      * @param name name of the victim
      * @param address address of the victim
-     * @param description small description about the victim
+     */
+    public Victim(String name, String address) {
+        this.name = new SimpleStringProperty(name);
+        this.address = new SimpleStringProperty(address);
+        this.alive = true;
+        // Pulls a random trait from an enum list
+        this.trait = new SimpleStringProperty(VictimTraits.values()[new Random().nextInt(VictimTraits.values().length)].name());
+        setDefaultTraitDescription();
+    }
+
+    /**
+     * Constructor for manual data input
+     * @param name name of the victim
+     * @param address address of the victim
+     * @param description description for the victim
      */
     public Victim(String name, String address, String description) {
         this.name = new SimpleStringProperty(name);
@@ -88,7 +101,7 @@ public class Victim {
     }
 
     /**
-     * @param value new value for the victims adddress
+     * @param value new value for the victims address
      */
     public void setAddress(String value) {
         addressProperty().set(value);
@@ -115,6 +128,34 @@ public class Victim {
      */
     public void setDescription(String value) {
         descriptionProperty().set(value);
+    }
+
+    /**
+     * Sets a trait based description for the victim.
+     */
+    public void setDefaultTraitDescription() {
+        switch (getTrait()) {
+            case "NORMIE":
+                setDescription("Normie description");
+                break;
+            case "JUNKIE":
+                setDescription("Junkie description");
+                break;
+            case "CLEVER":
+                setDescription("Clever description");
+                break;
+            case "VIOLENT":
+                setDescription("Violent description");
+                break;
+            case "SNEAKY":
+                setDescription("Sneaky description");
+                break;
+            case "SCARED":
+                setDescription("Scared description");
+                break;
+            default:
+                setDescription("Default description");
+        }
     }
 
     /**
