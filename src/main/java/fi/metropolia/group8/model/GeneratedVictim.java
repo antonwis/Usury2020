@@ -170,8 +170,6 @@ public class GeneratedVictim {
         return getName() + ", " + getAddress();
     }
 
-
-
 }
 
 

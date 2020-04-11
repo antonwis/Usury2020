@@ -227,11 +227,17 @@ public class LoanListController {
     }
 
     public void viewLoans() {
-        victimTableView.setVisible(true);
-        LoanTableView.setVisible(false);
-        viewLoansButton.setVisible(false);
-        backButton.setVisible(true);
-        newLoanButton.setVisible(false);
+        if (DataModel.getInstance().getCurrentAlias() == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Please Select an Alias first");
+            alert.show();
+        } else {
+            victimTableView.setVisible(true);
+            LoanTableView.setVisible(false);
+            viewLoansButton.setVisible(false);
+            backButton.setVisible(true);
+            newLoanButton.setVisible(false);
+        }
     }
 
     public void back() {

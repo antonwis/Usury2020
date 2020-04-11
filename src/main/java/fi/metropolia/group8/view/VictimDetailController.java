@@ -69,7 +69,7 @@ public class VictimDetailController {
         this.loanListController = loanListController;
 
         // Detail header
-        VictimDetailHeader.setText(String.format("Details for %s:s offer", VictimGenerator.getInstance().getCurrentVictim().getName()));
+        VictimDetailHeader.setText(String.format("%s's Loan Application", VictimGenerator.getInstance().getCurrentVictim().getName()));
 
         // Dates
         DueDate.setText(VictimGenerator.getInstance().getCurrentVictim().getDueDate().toString());
@@ -81,8 +81,7 @@ public class VictimDetailController {
         Interest.setText(String.valueOf(VictimGenerator.getInstance().getCurrentVictim().getInterest()));
 
         // Interest profit
-        //ProjectedEarnings.setText(String.valueOf(LoanCalculator.getInstance().getInterestProfit(DataModel.getInstance().getCurrentLoan())));
-        ProjectedEarnings.setText(String.valueOf(0));
+        ProjectedEarnings.setText(String.valueOf(LoanCalculator.getInstance().getOfferInterestProfit(VictimGenerator.getInstance().getCurrentVictim())));
 
         // Victim details
         VictimName.setText(VictimGenerator.getInstance().getCurrentVictim().getName());
