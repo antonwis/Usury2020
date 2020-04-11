@@ -1,15 +1,12 @@
 package fi.metropolia.group8.model;
 
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
-import javax.swing.event.ChangeListener;
 import java.time.LocalDate;
-import java.util.Random;
 
 /**
  * Builds lists of data from database for other components to use. Used as a global singleton instance.
@@ -58,12 +55,13 @@ public class DataModel {
     }
 
     public final void setCurrentAlias(Alias alias) {
-        currentAliasProperty().set(alias);
-        EventManager.getInstance().aliasSelected(alias);
+        // piti heittää if lause ettei IDE huuda erroreista
+        if (alias != null) {
+            currentAliasProperty().set(alias);
+            EventManager.getInstance().aliasSelected(alias);
+        }
     }
-    public ObservableList<Alias> getAliasList() {
-        return aliasList;
-    }
+    public ObservableList<Alias> getAliasList() { return aliasList; }
 
     // Loan data group
     private final ObservableList<Loan> loanList = FXCollections.observableArrayList();
@@ -103,7 +101,7 @@ public class DataModel {
 
     /**
      * Method to add a new listener to userList
-     * @param newListener
+     * @param newListener Listener
      */
     public void addUserListChangeListener(ListChangeListener<User> newListener) {
         userList.addListener(newListener);
@@ -111,28 +109,28 @@ public class DataModel {
 
     /**
      * Remove an existing listener from userList
-     * @param listener
+     * @param listener Listener
      */
     public void removeUserChangeListener(ListChangeListener<User> listener) { userList.removeListener(listener);
     }
 
     /**
      * Method to add a new listener to aliasList
-     * @param newListener
+     * @param newListener Listener
      */
     public void addAliasListChangeListener(ListChangeListener<Alias> newListener) { aliasList.addListener(newListener);
     }
 
     /**
      * Remove an existing listener from aliasList
-     * @param listener
+     * @param listener Listener
      */
     public void removeAliasChangeListener(ListChangeListener<Alias> listener) { aliasList.removeListener(listener);
     }
 
     /**
      * Method to add a new listener to loanList
-     * @param newListener
+     * @param newListener Listener
      */
     public void addLoanListChangeListener(ListChangeListener<Loan> newListener) {
         loanList.addListener(newListener);
@@ -140,19 +138,19 @@ public class DataModel {
 
     /**
      * Remove an existing listener from loanList
-     * @param listener
+     * @param listener Listener
      */
     public void removeLoanChangeListener(ListChangeListener<Loan> listener) { loanList.removeListener(listener); }
 
     /**
      * Method to add a new listener to victimList
-     * @param newListener
+     * @param newListener Listener
      */
     public void addVictimListChangeListener(ListChangeListener<Victim> newListener) { victimList.addListener(newListener); }
 
     /**
      * Remove an existing listener from victimList
-     * @param listener
+     * @param listener Listener
      */
     public void removeVictimChangeListener(ListChangeListener<Victim> listener) { victimList.removeListener(listener);
     }
@@ -231,12 +229,12 @@ public class DataModel {
 
     /**
      * Creates a new loan and sends it to the DAO. Notifies event log manager.
-     * @param alias
-     * @param value
-     * @param victim
-     * @param startDate
-     * @param dueDate
-     * @param interest
+     * @param alias Alias that issued the loan
+     * @param value THe value that the victim owes
+     * @param victim Debtor
+     * @param startDate Start Date for the loan
+     * @param dueDate Due date for the loan
+     * @param interest Interest of the new loan
      * @return Returns the new loan object
      */
     public Loan createLoan(Alias alias, float value, Victim victim, LocalDate startDate, LocalDate dueDate, float interest) {
@@ -302,7 +300,7 @@ public class DataModel {
 
     /**
      * Deletes the user object from database
-     * @param user
+     * @param user User to be deleted
      */
     public void deleteUser(User user) {
         UsuryDAO usuryDAO = new UsuryDAO();
@@ -345,7 +343,7 @@ public class DataModel {
 
     /**
      * Deletes a victim from database. Notifies event log manager.
-     * @param victim
+     * @param victim Victim to be deleted
      */
     public void deleteVictim(Victim victim) {
         UsuryDAO usuryDAO = new UsuryDAO();

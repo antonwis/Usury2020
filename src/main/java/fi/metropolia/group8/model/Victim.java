@@ -28,9 +28,10 @@ public class Victim {
 
     /**
      * constructor
-     * @param name
-     * @param address
-     * @param description
+     *
+     * @param name name of the victim
+     * @param address address of the victim
+     * @param description small description about the victim
      */
     public Victim(String name, String address, String description) {
         this.name = new SimpleStringProperty(name);
@@ -42,8 +43,7 @@ public class Victim {
     }
 
     /**
-     *
-     * @return
+     * @return returns victims id
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,110 +53,103 @@ public class Victim {
     }
 
     /**
-     *
-     * @param id
+     * @param id sets the victim id
      */
     public void setId(long id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
+     * @return returns the name of the victim
      */
     @Column(name = "name")
-    public String getName() { return nameProperty().get(); }
+    public String getName() {
+        return nameProperty().get();
+    }
+
     public StringProperty nameProperty() {
-        if (name == null) name = new SimpleStringProperty(this,"name") ;
+        if (name == null) name = new SimpleStringProperty(this, "name");
         return name;
     }
 
     /**
-     *
-     * @param value
+     * @param value value of the new name
      */
-    public void setName(String value) { nameProperty().set(value); }
+    public void setName(String value) {
+        nameProperty().set(value);
+    }
 
     /**
-     *
-     * @return
+     * @return gets the victims address
      */
-    @Column(name="address")
+    @Column(name = "address")
     public String getAddress() {
         return addressProperty().get();
     }
 
     /**
-     *
-     * @param value
+     * @param value new value for the victims adddress
      */
     public void setAddress(String value) {
         addressProperty().set(value);
     }
 
     /**
-     *
-     * @return
+     * @return returns the address property value
      */
     public StringProperty addressProperty() {
-        if (address == null) address = new SimpleStringProperty(this,"address") ;
+        if (address == null) address = new SimpleStringProperty(this, "address");
         return address;
     }
 
     /**
-     *
-     * @return
+     * @return returns the description of the victim
      */
-    @Column(name="description")
+    @Column(name = "description")
     public String getDescription() {
         return descriptionProperty().get();
     }
 
     /**
-     *
-     * @param value
+     * @param value new value for the description
      */
     public void setDescription(String value) {
         descriptionProperty().set(value);
     }
 
     /**
-     *
-     * @return
+     * @return returns the description property value
      */
     public StringProperty descriptionProperty() {
-        if (description == null) description = new SimpleStringProperty(this,"description") ;
+        if (description == null) description = new SimpleStringProperty(this, "description");
         return description;
     }
 
     /**
-     *
-     * @return
+     * @return returns all the traits that the victim has
      */
-    @Column(name="trait")
+    @Column(name = "trait")
     public String getTrait() {
         return traitProperty().get();
     }
 
     /**
-     *
-     * @param value
+     * @param value sets the trait for the victim
      */
     public void setTrait(String value) {
         traitProperty().set(value);
     }
 
     /**
-     *
-     * @return
+     * @return returns the trait property value
      */
     public StringProperty traitProperty() {
-        if (trait == null) trait = new SimpleStringProperty(this,"trait") ;
+        if (trait == null) trait = new SimpleStringProperty(this, "trait");
         return trait;
     }
 
     /**
-     * @return
+     * @return checks if the victim is still alive
      */
     @Column(name = "alive")
     public boolean isAlive() {
@@ -164,7 +157,7 @@ public class Victim {
     }
 
     /**
-     * @param alive
+     * @param alive kill the victim
      */
     public void setAlive(boolean alive) {
         this.alive = alive;
@@ -172,10 +165,11 @@ public class Victim {
 
     /**
      * to string method for victim
-     * @return
+     *
+     * @return returns all the relevant information about the victim
      */
     @Override
-    public String toString(){
-        return this.name+", "+this.address+", "+this.description;
+    public String toString() {
+        return getName() + ", " + getAddress() + ", " + getDescription();
     }
 }

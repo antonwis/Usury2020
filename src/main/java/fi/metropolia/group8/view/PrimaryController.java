@@ -1,13 +1,10 @@
 package fi.metropolia.group8.view;
 
-import com.sun.javafx.fxml.FXMLLoaderHelper;
 import fi.metropolia.group8.model.DataModel;
-import fi.metropolia.group8.model.EventManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -51,8 +48,8 @@ public class PrimaryController {
     /**
      * initializes all controllers for software
      *
-     * @param loginManager
-     * @param sessionID
+     * @param loginManager Login manager
+     * @param sessionID SessionID
      */
     public void init(LoginManager loginManager, String sessionID) {
         try {

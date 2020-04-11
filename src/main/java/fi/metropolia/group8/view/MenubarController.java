@@ -11,10 +11,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -26,7 +28,12 @@ import java.util.function.Predicate;
  */
 public class MenubarController {
 
-
+    @FXML
+    public VBox vbox;
+    @FXML
+    public MenuBar menuBar;
+    @FXML
+    public Menu systemMenu;
     @FXML
     private MenuItem exitMenuItem;
     @FXML
@@ -45,11 +52,11 @@ public class MenubarController {
 
     /**
      * Method that initializes menubar and gets all the necessary controllers
-     * @param loginManager
-     * @param aliasController
-     * @param primaryController
-     * @param loanListController
-     * @param overviewController
+     * @param loginManager Login Manager
+     * @param aliasController Alias Controller
+     * @param primaryController Primary Controller
+     * @param loanListController LoanList Controller
+     * @param overviewController Overview Controller
      */
     public void init(LoginManager loginManager, AliasController aliasController, PrimaryController primaryController, LoanListController loanListController, OverviewController overviewController){
 
@@ -90,14 +97,14 @@ public class MenubarController {
             String s = ""+(i+1);
             Alias alias = filteredList.get(i);
             menuItem.setAccelerator(new KeyCodeCombination(KeyCode.getKeyCode(s), KeyCombination.CONTROL_DOWN));
-            menuItem.setOnAction(new EventHandler<ActionEvent>() {
+            menuItem.setOnAction(new EventHandler<>() {
                 /**
                  * Handler for alias menuItems that set every other checkMenuItem not selected when one is clicked and sets an active alias
-                 * @param actionEvent
+                 *
                  */
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    for(int j = 0; j<sub.getItems().size();j++){
+                    for (int j = 0; j < sub.getItems().size(); j++) {
                         CheckMenuItem c = (CheckMenuItem) sub.getItems().get(j);
                         c.setSelected(false);
                     }
@@ -120,27 +127,24 @@ public class MenubarController {
 
     /**
      * method for exiting closing the app when exit is clicked
-     * @param actionEvent
      */
-    public void exitApp(javafx.event.ActionEvent actionEvent) {
+    public void exitApp() {
         System.exit(0);
     }
 
     /**
      * method for logging out when logout is clicked
-     * @param actionEvent
      */
-    public void logout(javafx.event.ActionEvent actionEvent) {
+    public void logout() {
         DataModel.getInstance().setCurrentAlias(null);
         loginManager.logout();
     }
 
     /**
      * method for opening add new alias window
-     * @param actionEvent
-     * @throws IOException
+     * @throws IOException Exception
      */
-    public void addNewAlias(javafx.event.ActionEvent actionEvent) throws IOException {
+    public void addNewAlias() throws IOException {
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -154,11 +158,10 @@ public class MenubarController {
 
     /**
      * method for opening alias manage window
-     * @param actionEvent
-     * @throws IOException
+     * @throws IOException Exception
      */
     @FXML
-    public void modifyAliases(javafx.event.ActionEvent actionEvent) throws  IOException{
+    public void modifyAliases() throws  IOException{
         Stage stage = new Stage();
         FXMLLoader modifyAlias = new FXMLLoader(getClass().getResource("modifyAliases.fxml"));
         Parent root = modifyAlias.load();
@@ -169,5 +172,15 @@ public class MenubarController {
     }
 
 
+    public void debtorBook() throws IOException {
 
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        FXMLLoader book = new FXMLLoader(getClass().getResource("BookOfDebtors.fxml"));
+        Parent root = book.load();
+        BookOfDebtorsController b = book.getController();
+        b.init();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 }
