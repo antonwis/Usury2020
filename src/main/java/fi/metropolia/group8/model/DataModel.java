@@ -56,7 +56,9 @@ public class DataModel {
 
     public final void setCurrentAlias(Alias alias) {
         // piti heittää if lause ettei IDE huuda erroreista
-        if (alias != null) {
+        if (alias == null) {
+            currentAliasProperty().set(null);
+        }else{
             currentAliasProperty().set(alias);
             EventManager.getInstance().aliasSelected(alias);
         }

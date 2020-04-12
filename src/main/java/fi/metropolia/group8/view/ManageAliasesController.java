@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Locale;
@@ -80,7 +81,7 @@ public class ManageAliasesController {
             Label label = new Label(alias.getName());
             label.setPrefWidth(300);
             label.setMinWidth(50);
-            Button modify = new Button();
+            Button modify = new Button("Modify");
             modify.setMinWidth(60);
 
             modify.setOnAction(new EventHandler<ActionEvent>() {
@@ -106,7 +107,7 @@ public class ManageAliasesController {
 
                 }
             });
-            Button delete = new Button("Delete");
+            Button delete = new Button(SettingsController.getInstance().getTranslation("delete"));
             delete.setMinWidth(60);
             delete.setOnAction(new EventHandler<ActionEvent>() {
                 /**
