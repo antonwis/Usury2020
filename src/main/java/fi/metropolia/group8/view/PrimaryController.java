@@ -104,7 +104,11 @@ public class PrimaryController {
     public void setCurrentAliasText() {
 
         // Check if current alias exists
-        if (DataModel.getInstance().getCurrentAlias() != null) {
+        if (DataModel.getInstance().getCurrentAlias() == null) {
+            primaryCurrentAlias.setText("None");
+            primaryCurrentEquity.setText("");
+            primaryCurrentDate.setText(DataModel.getInstance().getCurrentUser().getCurrentDate().toString());
+        } else {
             try {
                 primaryCurrentAlias.setText(DataModel.getInstance().getCurrentAlias().getName());
                 primaryCurrentEquity.setText(Float.toString(DataModel.getInstance().getCurrentAlias().getEquity()));
@@ -112,9 +116,6 @@ public class PrimaryController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-            primaryCurrentAlias.setText("None");
-            primaryCurrentEquity.setText("");
         }
     }
 

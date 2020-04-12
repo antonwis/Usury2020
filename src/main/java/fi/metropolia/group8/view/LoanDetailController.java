@@ -144,7 +144,7 @@ public class LoanDetailController {
         FXMLLoader enforce = new FXMLLoader(getClass().getResource("EnforceView.fxml"));
         Parent root = enforce.load();
         EnforceViewController enforceViewController = enforce.getController();
-        enforceViewController.TransferMemes(stage, overviewController);
+        enforceViewController.TransferMemes(stage, overviewController, primaryController);
         stage.setScene(new Scene(root));
         stage.show();
 

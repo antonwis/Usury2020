@@ -39,6 +39,7 @@ public class EnforceViewController implements Initializable {
 
     private Stage stage;
     private OverviewController overviewController;
+    private PrimaryController primaryController;
     private Loan loan;
 
     /**
@@ -49,6 +50,7 @@ public class EnforceViewController implements Initializable {
         EnforceManager.getInstance().Assassinate(loan);
         EnforceManager.getInstance().updateEnforcedActions();
         overviewController.updateOverview();
+        primaryController.setCurrentAliasText();
         stage.close();
     }
 
@@ -60,6 +62,7 @@ public class EnforceViewController implements Initializable {
         EnforceManager.getInstance().Extort(loan);
         EnforceManager.getInstance().updateEnforcedActions();
         overviewController.updateOverview();
+        primaryController.setCurrentAliasText();
         stage.close();
     }
     /**
@@ -70,6 +73,7 @@ public class EnforceViewController implements Initializable {
         EnforceManager.getInstance().Threaten(loan);
         EnforceManager.getInstance().updateEnforcedActions();
         overviewController.updateOverview();
+        primaryController.setCurrentAliasText();
         stage.close();
     }
 
@@ -81,6 +85,7 @@ public class EnforceViewController implements Initializable {
         EnforceManager.getInstance().Torture(loan);
         EnforceManager.getInstance().updateEnforcedActions();
         overviewController.updateOverview();
+        primaryController.setCurrentAliasText();
         stage.close();
     }
 
@@ -90,10 +95,11 @@ public class EnforceViewController implements Initializable {
      * @param overviewController
      */
 
-    public void TransferMemes(Stage stage,OverviewController overviewController) {
+    public void TransferMemes(Stage stage,OverviewController overviewController, PrimaryController primaryController) {
         System.out.println(loan);
         this.stage = stage;
         this.overviewController = overviewController;
+        this.primaryController = primaryController;
     }
     /**
      * Initializes the controller by setting currentloan to loan field

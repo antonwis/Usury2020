@@ -96,8 +96,7 @@ public class LoanCalculator {
 
         DataModel.getInstance().saveAliasData(alias);
         DataModel.getInstance().saveLoanData(loan);
-        DataModel.getInstance().loadAliasData();
-        DataModel.getInstance().loadLoanData();
+        DataModel.getInstance().setCurrentAlias(alias); // PEPEGA TIER FIX
         // Call event logger
         EventManager.getInstance().loanCompleted(loan);
     }
@@ -126,9 +125,10 @@ public class LoanCalculator {
         alias.setCompletedLoans(newCompletedLoans);
         loan.setCompleted(true);
         loan.setCompleteDate(DataModel.getInstance().getCurrentUser().getCurrentDate());
-        EventManager.getInstance().loanForfeited(loan);
         DataModel.getInstance().saveAliasData(alias);
         DataModel.getInstance().saveLoanData(loan);
+        DataModel.getInstance().setCurrentAlias(alias);
+        EventManager.getInstance().loanForfeited(loan);
     }
 
     /**
@@ -144,9 +144,10 @@ public class LoanCalculator {
         alias.setCompletedLoans(newCompletedLoans);
         loan.setCompleted(true);
         loan.setCompleteDate(DataModel.getInstance().getCurrentUser().getCurrentDate());
-        EventManager.getInstance().loanRepossessed(loan);
         DataModel.getInstance().saveAliasData(alias);
         DataModel.getInstance().saveLoanData(loan);
+        DataModel.getInstance().setCurrentAlias(alias);
+        EventManager.getInstance().loanRepossessed(loan);
     }
 
     /**
@@ -172,6 +173,10 @@ public class LoanCalculator {
         float newValue = (loan.getValue() * (1 +(modifier / 100)));
         loan.setValue(newValue);
         DataModel.getInstance().saveLoanData(loan);
+    }
+
+    public void finishLoan(Alias alias, Loan loan) {
+
     }
 
 }
