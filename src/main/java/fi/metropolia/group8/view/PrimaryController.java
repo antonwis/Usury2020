@@ -2,6 +2,7 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.model.EventManager;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
@@ -17,9 +18,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 /**
- * Main controller
+ * Main controller. Currently initializes other controllers and handles the status bar elements.
  */
 public class PrimaryController {
 
@@ -49,7 +51,7 @@ public class PrimaryController {
     private MenubarController menubarController;
 
     /**
-     * initializes all controllers for software
+     * Initializes other controllers
      *
      * @param loginManager Login manager
      * @param sessionID SessionID
@@ -99,11 +101,11 @@ public class PrimaryController {
     }
 
     /**
-     * method for setting text for currently selected alias
+     * Method for updating the status bar with updated alias selection, equity and current working date
      */
     public void setCurrentAliasText() {
 
-        // Check if current alias exists
+        // Check if current alias has a selection
         if (DataModel.getInstance().getCurrentAlias() == null) {
             primaryCurrentAlias.setText("None");
             primaryCurrentEquity.setText("");
@@ -117,6 +119,25 @@ public class PrimaryController {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Method for skipping one day ahead in time. Updates current user's working date and notifies event log manager.
+     */
+    public void fastForward() {
+        DataModel.getInstance().getCurrentUser().setCurrentDate(DataModel.getInstance().getCurrentUser().getCurrentDate().plusDays(1));
+        setCurrentAliasText();
+        EventManager.getInstance().dateChanged(DataModel.getInstance().getCurrentUser().getCurrentDate());
+    }
+
+    /**
+     * Method for setting the current working date manually
+     * @param newDate new current date
+     */
+    public void selectCurrentDate(LocalDate newDate) {
+        DataModel.getInstance().getCurrentUser().setCurrentDate(newDate);
+        setCurrentAliasText();
+        EventManager.getInstance().dateChanged(newDate);
     }
 
     @FXML

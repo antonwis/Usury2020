@@ -175,8 +175,4 @@ public class LoanCalculator {
         DataModel.getInstance().saveLoanData(loan);
     }
 
-    public void finishLoan(Alias alias, Loan loan) {
-
-    }
-
 }
