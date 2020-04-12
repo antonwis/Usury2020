@@ -96,6 +96,7 @@ public class LoanCalculator {
 
         DataModel.getInstance().saveAliasData(alias);
         DataModel.getInstance().saveLoanData(loan);
+        DataModel.getInstance().setCurrentAlias(alias); // PEPEGA TIER FIX
         DataModel.getInstance().loadAliasData();
         DataModel.getInstance().loadLoanData();
         // Call event logger

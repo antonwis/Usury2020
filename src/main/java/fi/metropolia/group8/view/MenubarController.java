@@ -153,6 +153,7 @@ public class MenubarController {
      */
     public void logout() {
         DataModel.getInstance().setCurrentAlias(null);
+        primaryController.setCurrentAliasText();
         loginManager.logout();
     }
 
