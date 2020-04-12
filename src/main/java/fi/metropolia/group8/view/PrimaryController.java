@@ -74,6 +74,7 @@ public class PrimaryController {
             AliasController aliasController = new AliasController();
 
             FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));
+
             VBox menuBar = menuBarF.load();
 
             primaryAnchor.getChildren().add(menuBar);
@@ -88,6 +89,7 @@ public class PrimaryController {
 
             setCurrentAliasText();
 
+            SettingsController.getInstance().startUp();
 
         } catch (IOException e) {
             e.printStackTrace();

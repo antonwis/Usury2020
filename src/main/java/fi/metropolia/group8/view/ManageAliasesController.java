@@ -22,9 +22,7 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.function.Predicate;
 
 /**
@@ -134,7 +132,11 @@ public class ManageAliasesController {
                     filteredList.predicateProperty().bind(Bindings.createObjectBinding(
                             () -> userFilter.get().and(aliasFilter.get()),
                             userFilter, aliasFilter));
-                    for(Loan loan : filteredList){
+                    System.out.println(filteredList);
+                    ArrayList<Loan>  loans = new ArrayList<>(List.copyOf(filteredList));
+
+                    for(Loan loan : loans){
+                        System.out.println(loan);
                         DataModel.getInstance().deleteLoan(loan);
                     }
 

@@ -39,7 +39,21 @@ public class SettingsController {
         languages.addAll(language1, language2);
         languageSelector.setItems(languages);
 
+    }
+    public void startUp(){
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream("src\\main\\resources\\TextResources.properties"));
+            String language = properties.getProperty("language");
+            String country = properties.getProperty("country");
 
+
+            curLocale = new Locale(language,country);
+            Locale.setDefault(curLocale);
+            UIManager.getDefaults().addResourceBundle("TextResources");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void setCurrentLanguage(){
         String language1 = (String) languageSelector.getValue();
@@ -56,8 +70,8 @@ public class SettingsController {
                     curLocale = new Locale(language,country);
                     Locale.setDefault(curLocale);
 
-                    UIManager.getDefaults().addResourceBundle("TextResources");
 
+                    UIManager.getDefaults().setDefaultLocale(curLocale);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -74,7 +88,7 @@ public class SettingsController {
 
                     curLocale = new Locale(language,country);
                     Locale.setDefault(curLocale);
-
+                    UIManager.getDefaults().setDefaultLocale(curLocale);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -82,6 +96,6 @@ public class SettingsController {
         }
     }
     public String getTranslation(String k){
-        return (String) UIManager.getDefaults().get(k, curLocale);
+        return (String) UIManager.getDefaults().get(k, Locale.getDefault());
     }
 }
