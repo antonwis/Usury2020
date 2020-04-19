@@ -1,9 +1,12 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.view.Login.LoginManager;
+import fi.metropolia.group8.view.Main.Loans.LoanListController;
+import fi.metropolia.group8.view.Menu.Alias.AliasController;
+import fi.metropolia.group8.view.Menu.MenubarController;
+import fi.metropolia.group8.view.Overview.OverviewController;
 import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +20,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * Main controller
@@ -46,7 +51,6 @@ public class PrimaryController {
     private Label primaryCurrentDate;
 
     private Scene scene;
-    private MenubarController menubarController;
 
     /**
      * initializes all controllers for software
@@ -56,13 +60,17 @@ public class PrimaryController {
      */
     public void init(LoginManager loginManager, String sessionID) {
         try {
-            FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
+            Locale locale = Locale.getDefault();
+            ResourceBundle bundle = ResourceBundle.getBundle("TextResources",locale);
+            FXMLLoader loanList = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Main/Loans/Loans.fxml"));
+            loanList.setResources(bundle);
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
             DataModel.getInstance().loadAliasData();
 
             /// ei välttämät tarvii tehä mut nii...
-            FXMLLoader overview = new FXMLLoader(getClass().getResource("Overview.fxml"));
+            FXMLLoader overview = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Overview/Overview.fxml"));
+            overview.setResources(bundle);
             Overview.setContent(overview.load());
             OverviewController overviewController = overview.getController();
             overviewController.initModel();
@@ -73,23 +81,20 @@ public class PrimaryController {
             loanListController.initModel(this, overviewController);
             AliasController aliasController = new AliasController();
 
-            FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));
-
+            FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Menu/Menubar.fxml"));
+            menuBarF.setResources(bundle);
             VBox menuBar = menuBarF.load();
 
             primaryAnchor.getChildren().add(menuBar);
             AnchorPane.setLeftAnchor(menuBar, 0d);
             AnchorPane.setTopAnchor(menuBar, 0d);
 
-            menubarController = menuBarF.getController();
+            MenubarController menubarController = menuBarF.getController();
 
             menubarController.init(loginManager, aliasController, this, loanListController, overviewController);
             menubarController.updateView();
-            menubarController.initListener();
 
             setCurrentAliasText();
-
-            SettingsController.getInstance().startUp();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,11 +111,7 @@ public class PrimaryController {
     public void setCurrentAliasText() {
 
         // Check if current alias exists
-        if (DataModel.getInstance().getCurrentAlias() == null) {
-            primaryCurrentAlias.setText("None");
-            primaryCurrentEquity.setText("");
-            primaryCurrentDate.setText(DataModel.getInstance().getCurrentUser().getCurrentDate().toString());
-        } else {
+        if (DataModel.getInstance().getCurrentAlias() != null) {
             try {
                 primaryCurrentAlias.setText(DataModel.getInstance().getCurrentAlias().getName());
                 primaryCurrentEquity.setText(Float.toString(DataModel.getInstance().getCurrentAlias().getEquity()));
@@ -118,6 +119,9 @@ public class PrimaryController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            primaryCurrentAlias.setText("None");
+            primaryCurrentEquity.setText("");
         }
     }
 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane fx:id="primaryAnchor" maxHeight="1080.0" maxWidth="4000.0" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.PrimaryController">
+    <fx:include source="Menu/Menubar.fxml"/>
+    <GridPane alignment="CENTER_LEFT" layoutY="25.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="57.0"
+              prefWidth="1024.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="77.0" prefWidth="77.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="468.0" minWidth="105.0" prefWidth="105.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="501.0" minWidth="19.0" prefWidth="290.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="501.0" minWidth="53.0" prefWidth="95.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="767.0" minWidth="431.0" prefWidth="634.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="98.0" prefWidth="179.0"
+               text="%selected_alias" GridPane.hgrow="NEVER"/>
+        <Label fx:id="primaryCurrentAlias" nodeOrientation="LEFT_TO_RIGHT" prefHeight="57.0" prefWidth="470.0"
+               text="None" GridPane.columnIndex="1" GridPane.hgrow="NEVER">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Label>
+        <Label alignment="CENTER_RIGHT" prefHeight="57.0" prefWidth="95.0" text="%equity" GridPane.columnIndex="3"
+               GridPane.hgrow="NEVER"/>
+        <Label fx:id="primaryCurrentEquity" prefHeight="57.0" prefWidth="94.0" GridPane.columnIndex="4"
+               GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Label>
+        <Label fx:id="primaryCurrentDate" prefHeight="57.0" prefWidth="94.0" text="%current_date"
+               GridPane.columnIndex="5" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
+            <GridPane.margin>
+                <Insets left="5.0"/>
+            </GridPane.margin>
+        </Label>
+    </GridPane>
+    <TabPane layoutY="80.0" prefHeight="820.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE"
+             AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+             AnchorPane.topAnchor="80.0">
+        <Tab fx:id="Overview" text="%overview">
+            <fx:include source="Overview/Overview.fxml"/>
+        </Tab>
+        <Tab fx:id="Loans" text="%loans">
+            <fx:include source="Main/Loans/Loans.fxml"/>
+        </Tab>
+
+    </TabPane>
+</AnchorPane>

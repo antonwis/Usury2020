@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<VBox fx:id="vbox" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="fi.metropolia.group8.view.Menu.MenubarController" prefHeight="10.0" prefWidth="3000.0">
+
+
+    <MenuBar fx:id="menuBar" focusTraversable="true">
+        <Menu text="%system" fx:id="systemMenu">
+            <MenuItem text="%settings" fx:id="settings" onAction="#openSettings"/>
+            <MenuItem text="%save" fx:id="saveMenuItem"/>
+            <MenuItem text="%load"/>
+            <MenuItem fx:id="logoutButton" onAction="#logout" text="%logout"/>
+            <MenuItem fx:id="exitMenuItem" onAction="#exitApp" text="%exit"/>
+        </Menu>
+        <Menu fx:id="aliasMenu" text="%alias">
+            <MenuItem text="%add_new_alias" onAction="#addNewAlias"/>
+            <MenuItem text="%manage_aliases" onAction="#modifyAliases"/>
+            <SeparatorMenuItem/>
+
+        </Menu>
+        <Menu text="%view">
+            <MenuItem text="%overview"/>
+            <MenuItem text="%loans"/>
+            <SeparatorMenuItem/>
+            <MenuItem text="%book_of_debtors" onAction="#debtorBook"/>
+        </Menu>
+        <Menu text="%help">
+            <MenuItem text="%about"/>
+        </Menu>
+    </MenuBar>
+</VBox>
