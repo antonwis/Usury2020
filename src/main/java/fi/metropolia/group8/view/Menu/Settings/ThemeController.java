@@ -1,5 +1,6 @@
 package fi.metropolia.group8.view.Menu.Settings;
 
+import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,7 +13,7 @@ public class ThemeController {
     private ObservableList<String> themes = FXCollections.observableArrayList();
 
     public void init() {
-        themes.addAll("Default", "Dark");
+        themes.addAll("Default", "Better");
         themeSelector.setItems(themes);
         themeSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setCurrentTheme(newValue));
     }
@@ -20,10 +21,10 @@ public class ThemeController {
     public void setCurrentTheme(String s) {
         switch (s){
             case "Default":
-                System.out.println("Default");
+                Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
                 break;
-            case "Dark":
-                System.out.println("Dark");
+            case "Better":
+                Application.setUserAgentStylesheet(Application.STYLESHEET_CASPIAN);
                 break;
             default:
                 System.out.println("Kys");
