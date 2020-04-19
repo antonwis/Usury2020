@@ -2,6 +2,7 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.view.Settings.SettingsController;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.function.Predicate;
 
@@ -175,7 +175,7 @@ public class MenubarController {
     }
     public void openSettings() throws IOException{
         Stage stage = new Stage();
-        FXMLLoader settings = new FXMLLoader(getClass().getResource("Settings.fxml"));
+        FXMLLoader settings = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Settings/Settings.fxml"));
         Parent root = settings.load();
         SettingsController settingsController = settings.getController();
         settingsController.init();

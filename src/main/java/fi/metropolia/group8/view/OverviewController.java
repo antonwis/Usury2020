@@ -4,7 +4,6 @@ import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.model.LoanCalculator;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
@@ -53,7 +52,7 @@ public class OverviewController {
     private Label forecast;
 
     @FXML
-    private LineChart profitChart;
+    private LineChart<String, Float> profitChart;
 
     @FXML
     private ComboBox<String> overviewCombo;
@@ -128,8 +127,7 @@ public class OverviewController {
 
     public void loansActive() {
         int active = DataModel.getInstance().getLoanList().filtered(loan ->
-                loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && loan.isCompleted() == false).size();
-        System.out.println(active);
+                loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && !loan.isCompleted()).size();
         loansActive.setText(String.valueOf(active));
     }
 
@@ -140,15 +138,14 @@ public class OverviewController {
     public void loansDue() {
         int loans = DataModel.getInstance().getLoanList().filtered(loan ->
                 loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).filtered(loan ->
-                loan.getDueDate().isBefore(LocalDate.now()) && loan.isCompleted() == false).size();
-        System.out.println(loans);
+                loan.getDueDate().isBefore(LocalDate.now()) && !loan.isCompleted()).size();
         loansDue.setText(String.valueOf(loans));
     }
 
     public void totalLoans() {
         int y = DataModel.getInstance().getCurrentAlias().getCompletedLoans();
         int x = DataModel.getInstance().getLoanList().filtered(loan ->
-                loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && loan.isCompleted() == false).size();
+                loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && !loan.isCompleted()).size();
         loans.setText(String.valueOf(Integer.sum(y, x)));
     }
 
@@ -183,7 +180,7 @@ public class OverviewController {
         FilteredList<Alias> meme = DataModel.getInstance().getAliasList().filtered(a -> a.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()));
         for (Alias a : meme) {
             FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(b -> b.isCompleted() && b.getOwner().getName().equals(a.getName()));
-            XYChart.Series set = new XYChart.Series();
+            XYChart.Series<String,Float> set = new XYChart.Series<>();
             set.setName(a.getName());
             for (Month m : Month.values())
                 set.getData().add(new XYChart.Data<>(m.toString(), calculateProfit(aliasLoans, m)));
@@ -194,12 +191,12 @@ public class OverviewController {
     /**
      * Shows the profits of current alias in the linechart
      *
-     * @param alias
+     * @param alias alias
      */
     public void currentAlias(Alias alias) {
         profitChart.getData().clear();
         FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(a -> a.getOwner().getName().equals(alias.getName()) && a.isCompleted());
-        XYChart.Series set = new XYChart.Series();
+        XYChart.Series<String,Float> set = new XYChart.Series<>();
         set.setName(alias.getName());
         for (Month m : Month.values())
             set.getData().add(new XYChart.Data<>(m.toString(), calculateProfit(aliasLoans, m)));
@@ -209,9 +206,9 @@ public class OverviewController {
     /**
      * Calculates the total profit of the month
      *
-     * @param aliasLoans
-     * @param m
-     * @return
+     * @param aliasLoans list of aliases
+     * @param m Month value
+     * @return returns the profit sum
      */
     public Float calculateProfit(FilteredList<Loan> aliasLoans, Month m) {
         float sum = 0;
