@@ -8,6 +8,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
 
 /**
  * Provides content for the event log window. Generates status messages for changes in the application state.
@@ -169,6 +170,14 @@ public class EventManager {
      */
     public void victimDeleted(Victim victim) {
         eventList.add(victim.getName() + " was erased from the records.");
+    }
+
+    /**
+     * Appends the event log list with a date change message
+     * @param localDate date being changed
+     */
+    public void dateChanged(LocalDate localDate) {
+        eventList.add("Date changed to " + localDate);
     }
 
     // ** ENFORCEMENT ACTIONS ** \\

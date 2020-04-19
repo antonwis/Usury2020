@@ -1,6 +1,7 @@
 package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.model.EventManager;
 import fi.metropolia.group8.view.Login.LoginManager;
 import fi.metropolia.group8.view.Main.Loans.LoanListController;
 import fi.metropolia.group8.view.Menu.Alias.AliasController;
@@ -20,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -51,9 +53,10 @@ public class PrimaryController {
     private Label primaryCurrentDate;
 
     private Scene scene;
+    private MenubarController menubarController;
 
     /**
-     * initializes all controllers for software
+     * Initializes other controllers
      *
      * @param loginManager Login manager
      * @param sessionID SessionID
@@ -89,10 +92,11 @@ public class PrimaryController {
             AnchorPane.setLeftAnchor(menuBar, 0d);
             AnchorPane.setTopAnchor(menuBar, 0d);
 
-            MenubarController menubarController = menuBarF.getController();
+            menubarController = menuBarF.getController();
 
             menubarController.init(loginManager, aliasController, this, loanListController, overviewController);
             menubarController.updateView();
+            menubarController.initListener();
 
             setCurrentAliasText();
 
@@ -106,12 +110,16 @@ public class PrimaryController {
     }
 
     /**
-     * method for setting text for currently selected alias
+     * Method for updating the status bar with updated alias selection, equity and current working date
      */
     public void setCurrentAliasText() {
 
-        // Check if current alias exists
-        if (DataModel.getInstance().getCurrentAlias() != null) {
+        // Check if current alias has a selection
+        if (DataModel.getInstance().getCurrentAlias() == null) {
+            primaryCurrentAlias.setText("None");
+            primaryCurrentEquity.setText("");
+            primaryCurrentDate.setText(DataModel.getInstance().getCurrentUser().getCurrentDate().toString());
+        } else {
             try {
                 primaryCurrentAlias.setText(DataModel.getInstance().getCurrentAlias().getName());
                 primaryCurrentEquity.setText(Float.toString(DataModel.getInstance().getCurrentAlias().getEquity()));
@@ -119,11 +127,27 @@ public class PrimaryController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-            primaryCurrentAlias.setText("None");
-            primaryCurrentEquity.setText("");
         }
     }
+    /**
+     * Method for skipping one day ahead in time. Updates current user's working date and notifies event log manager.
+     */
+    public void fastForward() {
+        DataModel.getInstance().getCurrentUser().setCurrentDate(DataModel.getInstance().getCurrentUser().getCurrentDate().plusDays(1));
+        setCurrentAliasText();
+        EventManager.getInstance().dateChanged(DataModel.getInstance().getCurrentUser().getCurrentDate());
+    }
+
+    /**
+     * Method for setting the current working date manually
+     * @param newDate new current date
+     */
+    public void selectCurrentDate(LocalDate newDate) {
+        DataModel.getInstance().getCurrentUser().setCurrentDate(newDate);
+        setCurrentAliasText();
+        EventManager.getInstance().dateChanged(newDate);
+    }
+
 
     @FXML
     private void handleExitAction(final ActionEvent event) {

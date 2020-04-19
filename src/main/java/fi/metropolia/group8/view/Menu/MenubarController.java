@@ -10,6 +10,7 @@ import fi.metropolia.group8.view.Menu.Alias.ManageAliasesController;
 import fi.metropolia.group8.view.Menu.Settings.LanguageController;
 import fi.metropolia.group8.view.Overview.OverviewController;
 import fi.metropolia.group8.view.Menu.Settings.SettingsController;
+import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -62,6 +63,8 @@ public class MenubarController {
     private OverviewController overviewController;
     private Menu sub;
 
+    ListChangeListener<Alias> changeListener;
+
     /**
      * Method that initializes menubar and gets all the necessary controllers
      * @param loginManager Login Manager
@@ -87,13 +90,22 @@ public class MenubarController {
         }
         //updateView();
     }
+    public void initListener() {
+        changeListener = change -> {
+            if(change.next()) {
+                updateView();
+            }
+
+        };
+        DataModel.getInstance().addAliasListChangeListener(changeListener);
+    }
 
     /**
      * updates the choose alias menu when a new alias is added or deleted and creates a handler for alias menuItems
      */
     public void updateView() {
 
-        DataModel.getInstance().loadAliasData();
+        //DataModel.getInstance().loadAliasData();
 
         FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
         Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
@@ -149,6 +161,7 @@ public class MenubarController {
      */
     public void logout() {
         DataModel.getInstance().setCurrentAlias(null);
+        primaryController.setCurrentAliasText();
         loginManager.logout();
     }
 

@@ -3,6 +3,7 @@ package fi.metropolia.group8.view.Menu.Settings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
 
 import javax.swing.*;
@@ -43,6 +44,7 @@ public class LanguageController {
                     curLocale = new Locale(language, country);
                     Locale.setDefault(curLocale);
                     bundle = ResourceBundle.getBundle("TextResources", curLocale);
+
                     UIManager.getDefaults().setDefaultLocale(curLocale);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -60,7 +62,7 @@ public class LanguageController {
                     curLocale = new Locale(language, country);
                     Locale.setDefault(curLocale);
                     bundle = ResourceBundle.getBundle("TextResources", curLocale);
-
+                    UIManager.getDefaults().setDefaultLocale(curLocale);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
