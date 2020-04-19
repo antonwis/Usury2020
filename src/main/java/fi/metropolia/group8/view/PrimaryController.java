@@ -1,6 +1,11 @@
 package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.view.Login.LoginManager;
+import fi.metropolia.group8.view.Main.Loans.LoanListController;
+import fi.metropolia.group8.view.Menu.Alias.AliasController;
+import fi.metropolia.group8.view.Menu.MenubarController;
+import fi.metropolia.group8.view.Overview.OverviewController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -53,13 +58,13 @@ public class PrimaryController {
      */
     public void init(LoginManager loginManager, String sessionID) {
         try {
-            FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
+            FXMLLoader loanList = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Main/Loans/Loans.fxml"));
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
             DataModel.getInstance().loadAliasData();
 
             /// ei välttämät tarvii tehä mut nii...
-            FXMLLoader overview = new FXMLLoader(getClass().getResource("Overview.fxml"));
+            FXMLLoader overview = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Overview/Overview.fxml"));
             Overview.setContent(overview.load());
             OverviewController overviewController = overview.getController();
             overviewController.initModel();
@@ -70,7 +75,7 @@ public class PrimaryController {
             loanListController.initModel(this, overviewController);
             AliasController aliasController = new AliasController();
 
-            FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));
+            FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Menu/Menubar.fxml"));
             VBox menuBar = menuBarF.load();
 
             primaryAnchor.getChildren().add(menuBar);
