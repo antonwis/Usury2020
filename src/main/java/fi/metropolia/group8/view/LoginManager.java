@@ -1,16 +1,21 @@
 package fi.metropolia.group8.view;
 
-import java.io.IOException;
-import java.util.logging.*;
-
 import fi.metropolia.group8.model.DataModel;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.*;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.hibernate.service.spi.ServiceException;
 
-/** Manages control flow for logins */
+import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Manages control flow for logins
+ */
 public class LoginManager {
 
     private Scene scene;
@@ -45,12 +50,15 @@ public class LoginManager {
      */
     public void showLoginScreen() {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("login.fxml")
-            );
+
+            // test
+            Locale locale = new Locale("fi", "FI");
+            ResourceBundle resourceBundle = ResourceBundle.getBundle("TextResources_fi_FI", locale);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            loader.setResources(resourceBundle); ////////////////////// test
             scene.setRoot(loader.load());
-            LoginController controller =
-                    loader.getController();
+            LoginController controller = loader.getController();
             controller.initManager(this);
         } catch (IOException ex) {
             Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -62,17 +70,14 @@ public class LoginManager {
 
     /**
      * opens MainView
+     *
      * @param sessionID
      */
     private void showMainView(String sessionID) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("primary.fxml")
-            );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
             scene.setRoot(loader.load());
-
-            PrimaryController primaryController =
-                    loader.getController();
+            PrimaryController primaryController = loader.getController();
             primaryController.init(this, sessionID);
 
         } catch (IOException ex) {

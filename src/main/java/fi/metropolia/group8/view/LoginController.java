@@ -11,6 +11,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /** Controls the login screen */
 public class LoginController {
@@ -91,8 +93,11 @@ public class LoginController {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
 
+        Locale locale = new Locale("fi", "FI");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("TextResources_fi_FI", locale);
 
         FXMLLoader newUser = new FXMLLoader(getClass().getResource("newUser.fxml"));
+        newUser.setResources(resourceBundle);
         Parent root = newUser.load();
         NewUserController newUserController = newUser.getController();
         newUserController.TransferMemes(stage, this);

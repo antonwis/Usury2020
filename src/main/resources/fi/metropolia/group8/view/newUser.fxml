@@ -11,13 +11,13 @@
     <children>
         <VBox alignment="CENTER" layoutX="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label text="Username:" />
+                <Label text="%username" />
                 <TextField fx:id="name" />
             <Label fx:id="userError" />
                 <HBox alignment="CENTER" prefHeight="42.0" prefWidth="227.0">
                     <children>
-                        <Button fx:id="createUser" minWidth="-Infinity" mnemonicParsing="false" onAction="#createNewUser" prefHeight="25.0" prefWidth="100.0" text="Add" textAlignment="CENTER" />
-                        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#returnToLogin" prefHeight="25.0" prefWidth="100.0" text="Cancel" textAlignment="CENTER" />
+                        <Button fx:id="createUser" minWidth="-Infinity" mnemonicParsing="false" onAction="#createNewUser" prefHeight="25.0" prefWidth="100.0" text="%add" textAlignment="CENTER" />
+                        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#returnToLogin" prefHeight="25.0" prefWidth="100.0" text="%cancel" textAlignment="CENTER" />
                     </children>
                 </HBox>
             </children>
