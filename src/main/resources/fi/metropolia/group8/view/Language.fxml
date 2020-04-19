@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.Settings.LanguageController">
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.LanguageController">
     <HBox alignment="TOP_CENTER" spacing="10.0">
         <Label text="Language:" />
         <ChoiceBox fx:id="languageSelector" onAction="#setCurrentLanguage" prefWidth="150.0" />

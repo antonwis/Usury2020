@@ -2,8 +2,6 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
-import fi.metropolia.group8.model.EventManager;
-import fi.metropolia.group8.view.Settings.SettingsController;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
@@ -23,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.function.Predicate;
 

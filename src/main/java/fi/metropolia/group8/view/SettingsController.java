@@ -1,4 +1,4 @@
-package fi.metropolia.group8.view.Settings;
+package fi.metropolia.group8.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,14 +38,14 @@ public class SettingsController {
         switch (value){
             case "Language":
                 System.out.println(value);
-                FXMLLoader language = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Settings/Language.fxml"));
+                FXMLLoader language = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Language.fxml"));
                 settingsVbox.getChildren().setAll((Node) language.load());
                 LanguageController languageController = language.getController();
                 languageController.init();
                 break;
             case "Theme":
                 System.out.println(value);
-                FXMLLoader theme = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Settings/Theme.fxml"));
+                FXMLLoader theme = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Theme.fxml"));
                 settingsVbox.getChildren().setAll((Node) theme.load());
                 ThemeController themeController = theme.getController();
                 themeController.init();
@@ -54,9 +54,6 @@ public class SettingsController {
                 System.out.println("lol");
                 break;
         }
-
-
-
     }
 
 }
