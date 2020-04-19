@@ -1,6 +1,7 @@
 package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.model.LoanCalculator;
 import fi.metropolia.group8.model.VictimGenerator;
 import javafx.fxml.FXML;
@@ -57,14 +58,15 @@ public class VictimDetailController {
 
     @FXML
     void acceptLoan() throws IOException {
-        DataModel.getInstance().createLoan(
+        Loan loan = DataModel.getInstance().createLoan(
                 DataModel.getInstance().getCurrentAlias(),
-                Float.parseFloat(loanValue.getText()),
+                VictimGenerator.getInstance().getCurrentVictim().getValue(),
                 DataModel.getInstance().createGeneratedVictim(VictimGenerator.getInstance().getCurrentVictim()),
-                LocalDate.now(),
-                LocalDate.from(VictimGenerator.getInstance().getCurrentVictim().getDueDate()),
-                Float.parseFloat(Interest.getText())
+                DataModel.getInstance().getCurrentUser().getCurrentDate(),
+                VictimGenerator.getInstance().getCurrentVictim().getDueDate(),
+                VictimGenerator.getInstance().getCurrentVictim().getInterest()
         );
+        LoanCalculator.getInstance().updateEquity(loan);
         VictimGenerator.getInstance().deleteVictim(VictimGenerator.getInstance().getCurrentVictim());
         loanListController.refreshVictimDetails();
         loanListController.refreshVictimList();
