@@ -136,10 +136,10 @@ public class LoanDetailController {
     }
 
     /**
-     *
+     * Opens enforce payment window with different options.
+     * @throws IOException Exception
      */
     @FXML
-
     void enforcePayment() throws IOException {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);

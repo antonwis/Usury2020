@@ -141,7 +141,7 @@ public class LoanListController {
     }
 
     /**
-     * sets detail view based on selected loan
+     * Sets detail view based on selected loan
      *
      * @throws IOException exception
      */
@@ -156,7 +156,11 @@ public class LoanListController {
             loanDetailController.display(this, primaryController, overviewController);
         }
     }
-
+    /**
+     * Sets detail view based on selected Victim
+     *
+     * @throws IOException exception
+     */
     public void refreshVictimDetails() throws IOException {
         if (VictimGenerator.getInstance().getCurrentVictim() != null) {
             Locale locale = Locale.getDefault();
@@ -169,7 +173,9 @@ public class LoanListController {
         }
     }
 
-    // call event log init TODO - kys yourselffaa ittes ja muuta sen jälkeen tää
+    /**
+     * Initializes the eventlog.
+     */
     public void initEventLog() { eventLogController.init(); }
 
     /**
@@ -244,10 +250,16 @@ public class LoanListController {
             victimTableView.setItems(VictimGenerator.getInstance().getGeneratedVictimList());
         }
     }
-
+    /**
+     * Sets newly generated victims to a list
+     */
     public void refreshVictimList(){
         victimTableView.setItems(VictimGenerator.getInstance().getGeneratedVictimList());
     }
+
+    /**
+     * Displays list of the potential loan offers
+     */
     public void viewLoans() {
         if (DataModel.getInstance().getCurrentAlias() == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -261,7 +273,9 @@ public class LoanListController {
             newLoanButton.setVisible(false);
         }
     }
-
+    /**
+     * Returns back to the loans view
+     */
     public void back() {
         victimTableView.setVisible(false);
         LoanTableView.setVisible(true);

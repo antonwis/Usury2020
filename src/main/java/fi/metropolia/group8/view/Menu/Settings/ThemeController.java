@@ -12,12 +12,19 @@ public class ThemeController {
     private ChoiceBox<String> themeSelector;
     private ObservableList<String> themes = FXCollections.observableArrayList();
 
+    /**
+     * Initializes the choisebox and adds an listener to check selection
+     */
     public void init() {
         themes.addAll("Default", "Better");
         themeSelector.setItems(themes);
         themeSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setCurrentTheme(newValue));
     }
 
+    /**
+     * Changes the theme based on the value
+     * @param s value of the selection
+     */
     public void setCurrentTheme(String s) {
         switch (s){
             case "Default":

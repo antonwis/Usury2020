@@ -19,11 +19,17 @@ public class BookOfDebtorsController {
     @FXML
     private ListView<Victim> bookList;
 
+    /**
+     * Initializes victims
+     */
     public void init() {
         DataModel.getInstance().loadVictimData();
         refreshVictims();
     }
 
+    /**
+     * Shows the debtors based on what user is active.
+     */
     public void refreshVictims() {
 
         DataModel.getInstance().loadLoanData();

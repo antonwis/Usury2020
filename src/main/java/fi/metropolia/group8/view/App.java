@@ -2,10 +2,8 @@ package fi.metropolia.group8.view;
 
 import fi.metropolia.group8.view.Login.LoginManager;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import javax.swing.*;

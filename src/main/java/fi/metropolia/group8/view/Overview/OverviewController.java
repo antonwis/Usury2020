@@ -125,38 +125,53 @@ public class OverviewController {
         chartY.setTickUnit(1000);
     }
 
+    /**
+     * Sets active loans based on the filters
+     */
     public void loansActive() {
         int active = DataModel.getInstance().getLoanList().filtered(loan ->
                 loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && !loan.isCompleted()).size();
         loansActive.setText(String.valueOf(active));
     }
-
+    /**
+     * Sets completed loans based on the filters
+     */
     public void loansCompleted() {
         loansComplete.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getCompletedLoans()));
     }
-
+    /**
+     * Sets loans due based on the filters
+     */
     public void loansDue() {
         int loans = DataModel.getInstance().getLoanList().filtered(loan ->
                 loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName())).filtered(loan ->
                 loan.getDueDate().isBefore(LocalDate.now()) && !loan.isCompleted()).size();
         loansDue.setText(String.valueOf(loans));
     }
-
+    /**
+     * Sets total loans based on the filters
+     */
     public void totalLoans() {
         int y = DataModel.getInstance().getCurrentAlias().getCompletedLoans();
         int x = DataModel.getInstance().getLoanList().filtered(loan ->
                 loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && !loan.isCompleted()).size();
         loans.setText(String.valueOf(Integer.sum(y, x)));
     }
-
+    /**
+     * Sets profits based on the filters
+     */
     public void setProfits() {
         profits.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getTotalProfits()));
     }
-
+    /**
+     * Sets enforcer actions based on the filters
+     */
     public void setEnforcerActions() {
         enforcerActions.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEnforcerActions()));
     }
-
+    /**
+     * Sets balance based on the filters
+     */
     public void setBalance() {
         balance.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEquity()));
     }

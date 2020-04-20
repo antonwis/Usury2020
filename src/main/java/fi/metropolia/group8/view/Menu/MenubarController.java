@@ -201,6 +201,11 @@ public class MenubarController {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
+    /**
+     * Method for opening settings window
+     * @throws IOException Exception
+     */
     public void openSettings() throws IOException{
         Stage stage = new Stage();
         Locale locale = Locale.getDefault();
@@ -214,9 +219,11 @@ public class MenubarController {
         stage.show();
     }
 
-
+    /**
+     * Method for opening book of debtors windows
+     * @throws IOException Exception
+     */
     public void debtorBook() throws IOException {
-
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         Locale locale = Locale.getDefault();

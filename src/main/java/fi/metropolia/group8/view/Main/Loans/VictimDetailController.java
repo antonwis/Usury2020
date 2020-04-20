@@ -59,6 +59,11 @@ public class VictimDetailController {
     private PrimaryController primaryController;
     private OverviewController overviewController;
 
+    /**
+     * Generates new Loan and Victim when user presses accept button and adds the newly generated victim to the database.
+     * After that deletes the victim from the victim list and refreshes multiple views
+     * @throws IOException Exception
+     */
     @FXML
     void acceptLoan() throws IOException {
         Loan loan = DataModel.getInstance().createLoan(

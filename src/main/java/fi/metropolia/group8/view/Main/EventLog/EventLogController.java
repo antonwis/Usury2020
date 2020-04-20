@@ -34,18 +34,14 @@ public class EventLogController {
     private TextArea textAreaEventlog;
     @FXML
     private LoanListController loanListController;
-
     ListChangeListener<String> changeListener;
 
+    /**
+     * Initializes observer to eventmanager.
+     */
     public void init() {
-        changeListener = change -> {
-            if(change.next()) {
-                update();
-            }
-
-        };
+        changeListener = change -> { if(change.next()) { update(); } };
         EventManager.getInstance().addChangeListener(changeListener);
-
     }
 
     /**
@@ -58,8 +54,11 @@ public class EventLogController {
         );
     }
 
+    /**
+     * Opens a view and fills it with the session event history
+     * @throws IOException Exception
+     */
     public void viewEventHistory() throws IOException {
-        // TODO open or expand a view and fill it with the session event history
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         Locale locale = Locale.getDefault();

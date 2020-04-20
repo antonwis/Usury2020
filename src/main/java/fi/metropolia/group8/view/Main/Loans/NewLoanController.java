@@ -106,6 +106,11 @@ public class NewLoanController {
         }
     }
 
+    /**
+     * Checks if message is empty and sets appropriate message
+     * @param t Textfield to be checked
+     * @param msg Message to be displayed
+     */
     private void prompt(TextField t, String msg) {
         if (t.getText().isEmpty()) {
             t.setPromptText(msg);

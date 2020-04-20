@@ -19,6 +19,10 @@ public class SettingsController {
     @FXML
     private VBox settingsVbox;
 
+    /**
+     * Generates new Tree view and items for it.
+     * Also adds an listener to the tree for checking what item is selected
+     */
     public void init() {
         TreeItem<String> settingsRoot = new TreeItem<>("Settings");
         TreeItem<String> language = new TreeItem<>("Language");
@@ -36,6 +40,11 @@ public class SettingsController {
         });
     }
 
+    /**
+     * Changes the view on the left based on the user selection.
+     * @param value value of the selected item
+     * @throws IOException Exception
+     */
     private void changeView(String value) throws IOException {
         Locale locale = Locale.getDefault();
         ResourceBundle resourceBundle = ResourceBundle.getBundle("TextResources", locale);
@@ -62,9 +71,6 @@ public class SettingsController {
                 System.out.println("lol");
                 break;
         }
-
-
-
     }
 
 }
