@@ -30,10 +30,11 @@ public class ThemeController {
     public void setCurrentTheme(String s) {
         switch (s){
             case "Default":
-                Application.setUserAgentStylesheet(null);
+                // silly "hack" but it works.
+                StyleManager.getInstance().removeUserAgentStylesheet("/fi/metropolia/group8/css/Dark.css");
                 break;
             case "Dark":
-                Application.setUserAgentStylesheet(null);
+                // overrides the default style.
                 StyleManager.getInstance().addUserAgentStylesheet("/fi/metropolia/group8/css/Dark.css");
                 break;
             default:
