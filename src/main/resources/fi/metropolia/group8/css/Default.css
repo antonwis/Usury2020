@@ -2,18 +2,18 @@
     /* Highlight color*/
     -fx-accent: #1e74c6;
     -fx-focus-color: -fx-accent;
-
-    -fx-base: #373e43;
+    /* Base color */
+    -fx-base: #f3f3f3;
     -fx-control-inner-background: derive(-fx-base, 35%);
     -fx-control-inner-background-alt: -fx-control-inner-background ;
 }
 
 .label{
-    -fx-text-fill: lightgray;
+    -fx-text-fill: #161616;
 }
 
 .text-field {
-    -fx-prompt-text-fill: gray;
+    -fx-prompt-text-fill: #f3f3f3;
 }
 
 .button{
@@ -21,11 +21,12 @@
 }
 
 .button:hover{
-    -fx-text-fill: white;
+    -fx-background-color: blue;
+    -fx-text-fill: #f3f3f3;
 }
 
 .separator *.line {
-    -fx-background-color: #3C3C3C;
+    -fx-background-color: #161616;
     -fx-border-style: solid;
     -fx-border-width: 1px;
 }

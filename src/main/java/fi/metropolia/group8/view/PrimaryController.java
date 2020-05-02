@@ -1,5 +1,6 @@
 package fi.metropolia.group8.view;
 
+import com.sun.javafx.css.StyleManager;
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.EventManager;
 import fi.metropolia.group8.view.Login.LoginManager;
@@ -63,6 +64,9 @@ public class PrimaryController {
      */
     public void init(LoginManager loginManager, String sessionID) {
         try {
+
+            StyleManager.getInstance().addUserAgentStylesheet("/fi/metropolia/group8/css/Default.css");
+
             Locale locale = Locale.getDefault();
             ResourceBundle bundle = ResourceBundle.getBundle("TextResources",locale);
             FXMLLoader loanList = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Main/Loans/Loans.fxml"));

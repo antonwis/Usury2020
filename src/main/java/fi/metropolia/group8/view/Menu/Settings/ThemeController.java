@@ -32,9 +32,11 @@ public class ThemeController {
             case "Default":
                 // silly "hack" but it works.
                 StyleManager.getInstance().removeUserAgentStylesheet("/fi/metropolia/group8/css/Dark.css");
+                StyleManager.getInstance().addUserAgentStylesheet("/fi/metropolia/group8/css/Default.css");
                 break;
             case "Dark":
                 // overrides the default style.
+                StyleManager.getInstance().removeUserAgentStylesheet("/fi/metropolia/group8/css/Default.css");
                 StyleManager.getInstance().addUserAgentStylesheet("/fi/metropolia/group8/css/Dark.css");
                 break;
             default:
