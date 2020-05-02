@@ -1,10 +1,12 @@
 package fi.metropolia.group8.view.Menu.Settings;
 
+import com.sun.javafx.css.StyleManager;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+
 
 public class ThemeController {
 
@@ -16,7 +18,7 @@ public class ThemeController {
      * Initializes the choisebox and adds an listener to check selection
      */
     public void init() {
-        themes.addAll("Default", "Better");
+        themes.addAll("Default", "Dark");
         themeSelector.setItems(themes);
         themeSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setCurrentTheme(newValue));
     }
@@ -28,13 +30,13 @@ public class ThemeController {
     public void setCurrentTheme(String s) {
         switch (s){
             case "Default":
-                Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
+                Application.setUserAgentStylesheet(null);
                 break;
-            case "Better":
-                Application.setUserAgentStylesheet(Application.STYLESHEET_CASPIAN);
+            case "Dark":
+                Application.setUserAgentStylesheet(null);
+                StyleManager.getInstance().addUserAgentStylesheet("/fi/metropolia/group8/css/Dark.css");
                 break;
             default:
-                System.out.println("Kys");
                 break;
         }
     }

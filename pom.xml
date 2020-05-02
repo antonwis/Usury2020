@@ -77,6 +77,12 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
+                    <configuration>
+                        <compilerArgs>
+                            <arg>--add-exports</arg>
+                            <arg>javafx.graphics/com.sun.javafx.css=ALL-UNNAMED</arg>
+                        </compilerArgs>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
@@ -112,6 +118,10 @@
                     <version>0.0.4</version>
                     <configuration>
                         <mainClass>fi.metropolia.group8.view.App</mainClass>
+                        <options>
+                            <option>--add-opens</option>
+                            <option>javafx.graphics/com.sun.javafx.css=ALL-UNNAMED</option>
+                        </options>
                     </configuration>
                 </plugin>
             </plugins>

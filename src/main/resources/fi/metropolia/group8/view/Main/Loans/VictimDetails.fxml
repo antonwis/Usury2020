@@ -26,65 +26,65 @@
     </Separator>
     <VBox alignment="CENTER" prefWidth="400.0">
         <VBox.margin>
-            <Insets bottom="10.0" top="10.0"/>
+            <Insets bottom="10.0" top="10.0" />
         </VBox.margin>
         <HBox alignment="CENTER">
             <Label alignment="CENTER" text="%loan_amount">
                 <HBox.margin>
-                    <Insets right="10.0"/>
+                    <Insets right="10.0" />
                 </HBox.margin>
                 <font>
-                    <Font size="15.0"/>
+                    <Font size="15.0" />
                 </font>
             </Label>
             <Label fx:id="loanValue" text="loanValue" textAlignment="RIGHT">
                 <font>
-                    <Font size="15.0"/>
+                    <Font size="15.0" />
                 </font>
             </Label>
         </HBox>
         <HBox alignment="CENTER">
             <Label alignment="CENTER" text="%interest_p">
                 <HBox.margin>
-                    <Insets right="10.0"/>
+                    <Insets right="10.0" />
                 </HBox.margin>
                 <font>
-                    <Font size="15.0"/>
+                    <Font size="15.0" />
                 </font>
             </Label>
             <Label fx:id="Interest" text="interestField" textAlignment="RIGHT">
                 <font>
-                    <Font size="15.0"/>
+                    <Font size="15.0" />
                 </font>
             </Label>
         </HBox>
         <HBox alignment="CENTER">
             <Label alignment="CENTER" text="%due_date">
                 <HBox.margin>
-                    <Insets right="10.0"/>
+                    <Insets right="10.0" />
                 </HBox.margin>
                 <font>
-                    <Font size="15.0"/>
+                    <Font size="15.0" />
                 </font>
             </Label>
             <Label fx:id="DueDate" text="dueDateField" textAlignment="RIGHT">
                 <font>
-                    <Font size="15.0"/>
+                    <Font size="15.0" />
                 </font>
             </Label>
         </HBox>
         <HBox alignment="CENTER">
             <Label alignment="CENTER" text="%interest_profit" wrapText="true">
                 <HBox.margin>
-                    <Insets right="10.0"/>
+                    <Insets right="10.0" />
                 </HBox.margin>
                 <font>
-                    <Font size="15.0"/>
+                    <Font size="15.0" />
                 </font>
             </Label>
             <Label fx:id="ProjectedEarnings" text="projectedEarningsField" textAlignment="RIGHT">
                 <font>
-                    <Font size="15.0"/>
+                    <Font size="15.0" />
                 </font>
             </Label>
         </HBox>
@@ -101,36 +101,36 @@
     </Label>
     <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="150.0" prefWidth="400.0" spacing="30.0">
         <ImageView fx:id="ProfileImage" fitHeight="137.0" fitWidth="112.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../img/template.png"/>
+            <Image url="@../../../img/template.png" />
         </ImageView>
         <VBox>
             <HBox>
                 <Label text="%name">
                     <font>
-                        <Font size="15.0"/>
+                        <Font size="15.0" />
                     </font>
                     <HBox.margin>
-                        <Insets right="10.0"/>
+                        <Insets right="10.0" />
                     </HBox.margin>
                 </Label>
                 <Label fx:id="VictimName" text="nameField">
                     <font>
-                        <Font size="15.0"/>
+                        <Font size="15.0" />
                     </font>
                 </Label>
             </HBox>
             <HBox>
                 <Label text="%address">
                     <font>
-                        <Font size="15.0"/>
+                        <Font size="15.0" />
                     </font>
                     <HBox.margin>
-                        <Insets right="10.0"/>
+                        <Insets right="10.0" />
                     </HBox.margin>
                 </Label>
                 <Label fx:id="VictimAddress" text="addressField" textOverrun="CLIP">
                     <font>
-                        <Font size="15.0"/>
+                        <Font size="15.0" />
                     </font>
                 </Label>
             </HBox>

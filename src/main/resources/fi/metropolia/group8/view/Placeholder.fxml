@@ -5,10 +5,9 @@
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <Label fx:id="placeholderLabel" alignment="CENTER" prefHeight="1000.0" prefWidth="1000.0"
-          text="%click_on__entry" wrapText="true">
+   <Label fx:id="placeholderLabel" alignment="CENTER" prefHeight="1000.0" prefWidth="1000.0" text="%click_on__entry" wrapText="true">
       <font>
-         <Font size="27.0"/>
+         <Font size="27.0" />
       </font>
    </Label>
 </VBox>
