@@ -3,6 +3,7 @@ package fi.metropolia.group8.view.Main.Loans;
 import fi.metropolia.group8.model.*;
 import fi.metropolia.group8.view.*;
 import fi.metropolia.group8.view.Main.EventLog.EventLogController;
+import fi.metropolia.group8.view.Menu.Settings.LanguageController;
 import fi.metropolia.group8.view.Overview.OverviewController;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
@@ -20,6 +21,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -69,6 +71,7 @@ public class LoanListController {
 
     private PrimaryController primaryController;
     private OverviewController overviewController;
+    private LanguageController languageController;
 
     // FXML annotaatio nii ei tarvii edes luoda new (dependency injection memes)
     @FXML private EventLogController eventLogController;
@@ -81,8 +84,9 @@ public class LoanListController {
     @FXML
     void newLoan() throws IOException {
         if (DataModel.getInstance().getCurrentAlias() == null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Please Select an Alias first");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText(null);
+            alert.setContentText(languageController.getTranslation("noalias"));
             alert.show();
         } else {
             Stage stage = new Stage();
@@ -94,7 +98,7 @@ public class LoanListController {
             loan.setResources(resourceBundle);
             Parent root = loan.load();
             NewLoanController newLoanController = loan.getController();
-            newLoanController.TransferMemes(this, stage, primaryController, overviewController);
+            newLoanController.init(this, stage, primaryController, overviewController);
             stage.setScene(new Scene(root));
             stage.show();
         }
@@ -188,9 +192,11 @@ public class LoanListController {
         if (this.primaryController == null) {
             this.primaryController = primaryController;
             this.overviewController = overviewController;
+            languageController = new LanguageController();
             ///////////////
             initEventLog();
             ///////////////
+            LoanTableView.setPlaceholder(new Text(languageController.getTranslation("no_content")));
             LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentLoan(newSelection));
             DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
                 if (newLoan == null) {
@@ -214,6 +220,7 @@ public class LoanListController {
                 }
             });
 
+            victimTableView.setPlaceholder(new Text(languageController.getTranslation("no_content")));
             victimTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> VictimGenerator.getInstance().setCurrentVictim(newSelection));
             VictimGenerator.getInstance().currentVictimProperty().addListener((obs, oldVictim, newVictim) -> {
                 if (newVictim == null) {
@@ -262,8 +269,9 @@ public class LoanListController {
      */
     public void viewLoans() {
         if (DataModel.getInstance().getCurrentAlias() == null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Please Select an Alias first");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText(null);
+            alert.setContentText(languageController.getTranslation("noalias"));
             alert.show();
         } else {
             victimTableView.setVisible(true);

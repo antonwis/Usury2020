@@ -7,6 +7,7 @@ import fi.metropolia.group8.view.Login.LoginManager;
 import fi.metropolia.group8.view.Main.Loans.LoanListController;
 import fi.metropolia.group8.view.Menu.Alias.AliasController;
 import fi.metropolia.group8.view.Menu.MenubarController;
+import fi.metropolia.group8.view.Menu.Settings.LanguageController;
 import fi.metropolia.group8.view.Overview.OverviewController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -55,6 +56,7 @@ public class PrimaryController {
 
     private Scene scene;
     private MenubarController menubarController;
+    private LanguageController languageController;
 
     /**
      * Initializes other controllers
@@ -69,6 +71,8 @@ public class PrimaryController {
 
             Locale locale = Locale.getDefault();
             ResourceBundle bundle = ResourceBundle.getBundle("TextResources",locale);
+            languageController = new LanguageController();
+
             FXMLLoader loanList = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Main/Loans/Loans.fxml"));
             loanList.setResources(bundle);
             Loans.setContent(loanList.load());
@@ -117,10 +121,9 @@ public class PrimaryController {
      * Method for updating the status bar with updated alias selection, equity and current working date
      */
     public void setCurrentAliasText() {
-
         // Check if current alias has a selection
         if (DataModel.getInstance().getCurrentAlias() == null) {
-            primaryCurrentAlias.setText("None");
+            primaryCurrentAlias.setText(languageController.getTranslation("none"));
             primaryCurrentEquity.setText("");
             primaryCurrentDate.setText(DataModel.getInstance().getCurrentUser().getCurrentDate().toString());
         } else {

@@ -3,6 +3,7 @@ package fi.metropolia.group8.view.Main.Loans;
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.model.LoanCalculator;
+import fi.metropolia.group8.view.Menu.Settings.LanguageController;
 import fi.metropolia.group8.view.Overview.OverviewController;
 import fi.metropolia.group8.view.PrimaryController;
 import javafx.fxml.FXML;
@@ -47,6 +48,7 @@ public class NewLoanController {
     private LoanListController loanListController;
     private PrimaryController primaryController;
     private OverviewController overviewController;
+    private LanguageController languageController;
 
     /**
      * closes newLoan window
@@ -125,14 +127,16 @@ public class NewLoanController {
          * @param primaryController Primary Controller
          * @param overviewController Overview Controller
          */
-        public void TransferMemes (LoanListController loanListController, Stage stage, PrimaryController primaryController, OverviewController
+        public void init(LoanListController loanListController, Stage stage, PrimaryController primaryController, OverviewController
         overviewController){
             this.loanListController = loanListController;
             this.primaryController = primaryController;
             this.stage = stage;
             this.overviewController = overviewController;
-            dueDatepicker.setEditable(false);
+            languageController = new LanguageController();
 
+
+            dueDatepicker.setEditable(false);
             interestField.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue.matches("\\d*")) return;
                 interestField.setText(newValue.replaceAll("[^\\d]", ""));

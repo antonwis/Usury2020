@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -23,11 +24,14 @@
             <Font size="22.0" />
         </font>
     </Label>
-    <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="67.0" prefHeight="37.0" prefWidth="381.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="75.0">
-        <Label fx:id="alias" text="%select_alias_to">
+    <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="67.0" prefHeight="45.0" prefWidth="714.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="75.0">
+        <Label fx:id="alias" text="%select_alias_to" wrapText="true">
             <font>
                 <Font size="15.0" />
             </font>
+         <padding>
+            <Insets right="5.0" />
+         </padding>
         </Label>
         <ComboBox fx:id="overviewCombo" onAction="#changedCombo" prefWidth="150.0" visible="false" />
     </HBox>
@@ -72,12 +76,12 @@
             </font>
         </Label>
         <Label fx:id="loansActive" alignment="CENTER" prefHeight="134.0" prefWidth="366.0" text="%active_loans" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-        <Label alignment="TOP_CENTER" prefHeight="153.0" prefWidth="240.0" text="Enforcer Actions" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+        <Label alignment="TOP_CENTER" prefHeight="153.0" prefWidth="240.0" text="%enforcer_actions" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <Label fx:id="enforcerActions" alignment="CENTER" prefHeight="194.0" prefWidth="442.0" text="EnforcerActions" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+        <Label fx:id="enforcerActions" alignment="CENTER" prefHeight="194.0" prefWidth="442.0" text="%enforcer_actions" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
         <Label alignment="TOP_CENTER" prefHeight="170.0" prefWidth="312.0" text="%loans_past_due" GridPane.rowIndex="3">
             <font>
                 <Font name="System Bold" size="16.0" />
@@ -91,7 +95,7 @@
         </Label>
         <Label fx:id="forecast" alignment="CENTER" prefHeight="171.0" prefWidth="299.0" text="%forecast" GridPane.columnIndex="1" GridPane.rowIndex="3" />
     </GridPane>
-    <LineChart fx:id="profitChart" animated="false" layoutX="50.0" layoutY="163.0" legendSide="TOP" prefHeight="577.0" prefWidth="694.0" title="Monthly profit average over all loans" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="530.0" AnchorPane.topAnchor="140.0">
+    <LineChart fx:id="profitChart" animated="false" layoutX="50.0" layoutY="163.0" legendSide="TOP" prefHeight="577.0" prefWidth="694.0" title="%monthly_profit" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="530.0" AnchorPane.topAnchor="140.0">
         <xAxis>
             <CategoryAxis fx:id="chartX" label="%month" side="BOTTOM" />
         </xAxis>

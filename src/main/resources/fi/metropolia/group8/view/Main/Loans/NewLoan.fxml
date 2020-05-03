@@ -20,8 +20,8 @@
          <Font size="20.0" />
       </font>
    </Label>
-   <Label layoutX="54.0" layoutY="136.0" text="Name:" AnchorPane.leftAnchor="53.0" AnchorPane.topAnchor="136.0" />
-   <Label layoutX="53.0" layoutY="170.0" text="Address:" AnchorPane.leftAnchor="53.0" />
+   <Label layoutX="54.0" layoutY="136.0" text="%name" AnchorPane.leftAnchor="53.0" AnchorPane.topAnchor="136.0" />
+   <Label layoutX="53.0" layoutY="170.0" text="%address" AnchorPane.leftAnchor="53.0" />
    <Label layoutX="53.0" layoutY="200.0" prefHeight="17.0" prefWidth="65.0" text="%description" AnchorPane.leftAnchor="53.0" />
    <TextField fx:id="nameField" layoutX="126.0" layoutY="132.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="126.0" />
    <TextField fx:id="addressField" layoutX="126.0" layoutY="166.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="126.0" />

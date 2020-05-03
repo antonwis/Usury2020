@@ -24,7 +24,7 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="98.0" prefWidth="179.0" text="%selected_alias" GridPane.hgrow="NEVER" />
-        <Label fx:id="primaryCurrentAlias" nodeOrientation="LEFT_TO_RIGHT" prefHeight="57.0" prefWidth="470.0" text="None" GridPane.columnIndex="1" GridPane.hgrow="NEVER">
+        <Label fx:id="primaryCurrentAlias" nodeOrientation="LEFT_TO_RIGHT" prefHeight="57.0" prefWidth="470.0" text="%none" GridPane.columnIndex="1" GridPane.hgrow="NEVER">
             <GridPane.margin>
                 <Insets left="5.0" />
             </GridPane.margin>

@@ -4,6 +4,7 @@ import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.model.LoanCalculator;
+import fi.metropolia.group8.view.Menu.Settings.LanguageController;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
@@ -63,13 +64,15 @@ public class OverviewController {
     @FXML
     private NumberAxis chartY;
 
+    private LanguageController languageController;
+
     /**
      * Changes the view to reflect the selected item in combobox
      */
     @FXML
     void changedCombo() {
         if (!overviewCombo.getSelectionModel().isEmpty()) {
-            if (overviewCombo.getValue().equals("All")) {
+            if (overviewCombo.getValue().equals(languageController.getTranslation("allC"))) {
                 showAllAliases();
             } else {
                 FilteredList<Alias> alias = DataModel.getInstance().getAliasList().filtered(a -> a.getName().equals(overviewCombo.getValue()) && DataModel.getInstance().getCurrentUser().getName().equals(a.getUser().getName()));
@@ -93,12 +96,12 @@ public class OverviewController {
         updateCombo();
 
         /// Current User
-        user.setText("Summary for " + DataModel.getInstance().getCurrentUser().getName());
+        user.setText(languageController.getTranslation("summary") + " " + DataModel.getInstance().getCurrentUser().getName());
 
         // Current alias
         if (DataModel.getInstance().getCurrentAlias() != null) {
             overviewCombo.setVisible(true);
-            alias.setText("Selected: ");
+            alias.setText(languageController.getTranslation("selected"));
             loansActive();
             loansCompleted();
             loansDue();
@@ -114,7 +117,8 @@ public class OverviewController {
      */
     public void initModel() {
         if (DataModel.getInstance().getCurrentAlias() != null) updateOverview();
-        user.setText("Welcome " + DataModel.getInstance().getCurrentUser().getName() + "!");
+        languageController = new LanguageController();
+        user.setText(languageController.getTranslation("welcome") + " " + DataModel.getInstance().getCurrentUser().getName() + "!");
         updateCombo();
 
         //chartX.setAutoRanging(false);
@@ -133,12 +137,14 @@ public class OverviewController {
                 loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && !loan.isCompleted()).size();
         loansActive.setText(String.valueOf(active));
     }
+
     /**
      * Sets completed loans based on the filters
      */
     public void loansCompleted() {
         loansComplete.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getCompletedLoans()));
     }
+
     /**
      * Sets loans due based on the filters
      */
@@ -148,6 +154,7 @@ public class OverviewController {
                 loan.getDueDate().isBefore(LocalDate.now()) && !loan.isCompleted()).size();
         loansDue.setText(String.valueOf(loans));
     }
+
     /**
      * Sets total loans based on the filters
      */
@@ -157,18 +164,21 @@ public class OverviewController {
                 loan.getOwner().getName().equals(DataModel.getInstance().getCurrentAlias().getName()) && !loan.isCompleted()).size();
         loans.setText(String.valueOf(Integer.sum(y, x)));
     }
+
     /**
      * Sets profits based on the filters
      */
     public void setProfits() {
         profits.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getTotalProfits()));
     }
+
     /**
      * Sets enforcer actions based on the filters
      */
     public void setEnforcerActions() {
         enforcerActions.setText(String.valueOf(DataModel.getInstance().getCurrentAlias().getEnforcerActions()));
     }
+
     /**
      * Sets balance based on the filters
      */
@@ -181,7 +191,7 @@ public class OverviewController {
      */
     public void updateCombo() {
         overviewCombo.getItems().clear(); // aiheuttaa nullpointereita, pitää fix jossain vaiheessa
-        overviewCombo.getItems().add("All");
+        overviewCombo.getItems().add(languageController.getTranslation("allC"));
         for (Alias a : DataModel.getInstance().getAliasList().filtered(a -> a.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()))) {
             overviewCombo.getItems().add(a.getName());
         }
@@ -195,7 +205,7 @@ public class OverviewController {
         FilteredList<Alias> meme = DataModel.getInstance().getAliasList().filtered(a -> a.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()));
         for (Alias a : meme) {
             FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(b -> b.isCompleted() && b.getOwner().getName().equals(a.getName()));
-            XYChart.Series<String,Float> set = new XYChart.Series<>();
+            XYChart.Series<String, Float> set = new XYChart.Series<>();
             set.setName(a.getName());
             for (Month m : Month.values())
                 set.getData().add(new XYChart.Data<>(m.toString(), calculateProfit(aliasLoans, m)));
@@ -211,7 +221,7 @@ public class OverviewController {
     public void currentAlias(Alias alias) {
         profitChart.getData().clear();
         FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(a -> a.getOwner().getName().equals(alias.getName()) && a.isCompleted());
-        XYChart.Series<String,Float> set = new XYChart.Series<>();
+        XYChart.Series<String, Float> set = new XYChart.Series<>();
         set.setName(alias.getName());
         for (Month m : Month.values())
             set.getData().add(new XYChart.Data<>(m.toString(), calculateProfit(aliasLoans, m)));
@@ -222,7 +232,7 @@ public class OverviewController {
      * Calculates the total profit of the month
      *
      * @param aliasLoans list of aliases
-     * @param m Month value
+     * @param m          Month value
      * @return returns the profit sum
      */
     public Float calculateProfit(FilteredList<Loan> aliasLoans, Month m) {
