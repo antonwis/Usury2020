@@ -4,6 +4,7 @@ import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.view.Main.Loans.LoanListController;
 import fi.metropolia.group8.view.Menu.MenubarController;
+import fi.metropolia.group8.view.Menu.Settings.LanguageController;
 import fi.metropolia.group8.view.Overview.OverviewController;
 import fi.metropolia.group8.view.PrimaryController;
 import javafx.collections.transformation.FilteredList;
@@ -96,6 +97,7 @@ public class ModifyAliasController {
      * Filters the alias list based on user and checks if the alias name already exists and checks all the other users inputs too then changes the details of alias and saves it to database
      */
     public void modifyAlias() {
+        LanguageController l = new LanguageController();
         try {
             String name = nameField.getText();
             float equity = Float.parseFloat(equityField.getText());
@@ -107,7 +109,7 @@ public class ModifyAliasController {
 
 
             if(nameField.getText().isBlank()) {
-                nameField.setPromptText("You must choose a name");
+                nameField.setPromptText(l.getTranslation("youmustchooseaname"));
                 nameField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
 
             }
@@ -138,7 +140,7 @@ public class ModifyAliasController {
 
         }catch (NumberFormatException numE){
             equityField.setText("");
-            equityField.setPromptText("Equity must be a number");
+            equityField.setPromptText(l.getTranslation("equitymustbeanumber"));
             equityField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
         }
 
