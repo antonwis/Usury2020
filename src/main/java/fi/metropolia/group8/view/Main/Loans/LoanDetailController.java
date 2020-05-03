@@ -152,7 +152,7 @@ public class LoanDetailController {
         enforce.setResources(resourceBundle);
         Parent root = enforce.load();
         EnforceViewController enforceViewController = enforce.getController();
-        enforceViewController.TransferMemes(stage, overviewController, primaryController);
+        enforceViewController.init(stage, overviewController, primaryController);
         stage.setScene(new Scene(root));
         stage.show();
 

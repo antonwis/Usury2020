@@ -97,7 +97,7 @@ public class EnforceViewController implements Initializable {
      * @param overviewController OverviewController
      */
 
-    public void TransferMemes(Stage stage,OverviewController overviewController, PrimaryController primaryController) {
+    public void init(Stage stage, OverviewController overviewController, PrimaryController primaryController) {
         System.out.println(loan);
         this.stage = stage;
         this.overviewController = overviewController;

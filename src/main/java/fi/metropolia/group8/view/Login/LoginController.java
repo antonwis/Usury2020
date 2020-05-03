@@ -102,7 +102,7 @@ public class LoginController {
         newUser.setResources(resourceBundle);
         Parent root = newUser.load();
         NewUserController newUserController = newUser.getController();
-        newUserController.TransferMemes(stage, this);
+        newUserController.init(stage, this);
         stage.setScene(new Scene(root));
         stage.show();
     }

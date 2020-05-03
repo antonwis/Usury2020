@@ -58,7 +58,7 @@ public class NewUserController {
      * @param stage Stage
      * @param loginController LoginController
      */
-    public void TransferMemes(Stage stage, LoginController loginController) {
+    public void init(Stage stage, LoginController loginController) {
         this.stage = stage;
         this.loginController = loginController;
     }

@@ -277,6 +277,7 @@ public class LoanListController {
             alert.setContentText(languageController.getTranslation("noalias"));
             alert.show();
         } else {
+            LoanTableView.getSelectionModel().clearSelection();
             victimTableView.setVisible(true);
             LoanTableView.setVisible(false);
             viewLoansButton.setVisible(false);
@@ -288,6 +289,7 @@ public class LoanListController {
      * Returns back to the loans view
      */
     public void back() {
+        victimTableView.getSelectionModel().clearSelection();
         victimTableView.setVisible(false);
         LoanTableView.setVisible(true);
         backButton.setVisible(false);
