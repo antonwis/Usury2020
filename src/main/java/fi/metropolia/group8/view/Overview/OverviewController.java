@@ -16,6 +16,11 @@ import javafx.scene.control.Label;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.TextStyle;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * controller for overview view
@@ -207,8 +212,18 @@ public class OverviewController {
             FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(b -> b.isCompleted() && b.getOwner().getName().equals(a.getName()));
             XYChart.Series<String, Float> set = new XYChart.Series<>();
             set.setName(a.getName());
-            for (Month m : Month.values())
-                set.getData().add(new XYChart.Data<>(m.toString(), calculateProfit(aliasLoans, m)));
+            List<String> months = new ArrayList<>();
+            for(Month m : Month.values()){
+                System.out.println(m.toString().toLowerCase());
+                months.add(languageController.getTranslation(m.toString().toLowerCase()));
+            }
+            int i = 0;
+            for (Month m : Month.values()) {
+
+                set.getData().add(new XYChart.Data<>((months.get(i)), calculateProfit(aliasLoans, m)));
+                i++;
+            }
+
             profitChart.getData().addAll(set);
         }
     }
