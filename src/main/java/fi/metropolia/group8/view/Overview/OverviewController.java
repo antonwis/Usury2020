@@ -206,22 +206,16 @@ public class OverviewController {
      * Shows the profits of all aliases in the linechart
      */
     public void showAllAliases() {
+        LanguageController lcont = new LanguageController();
         profitChart.getData().clear();
         FilteredList<Alias> meme = DataModel.getInstance().getAliasList().filtered(a -> a.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()));
         for (Alias a : meme) {
             FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(b -> b.isCompleted() && b.getOwner().getName().equals(a.getName()));
             XYChart.Series<String, Float> set = new XYChart.Series<>();
             set.setName(a.getName());
-            List<String> months = new ArrayList<>();
-            for(Month m : Month.values()){
-                System.out.println(m.toString().toLowerCase());
-                months.add(languageController.getTranslation(m.toString().toLowerCase()));
-            }
-            int i = 0;
-            for (Month m : Month.values()) {
 
-                set.getData().add(new XYChart.Data<>((months.get(i)), calculateProfit(aliasLoans, m)));
-                i++;
+            for (Month m : Month.values()) {
+                set.getData().add(new XYChart.Data<>((languageController.getTranslation(m.toString().toLowerCase())), calculateProfit(aliasLoans, m)));
             }
 
             profitChart.getData().addAll(set);
@@ -239,7 +233,7 @@ public class OverviewController {
         XYChart.Series<String, Float> set = new XYChart.Series<>();
         set.setName(alias.getName());
         for (Month m : Month.values())
-            set.getData().add(new XYChart.Data<>(m.toString(), calculateProfit(aliasLoans, m)));
+            set.getData().add(new XYChart.Data<>(languageController.getTranslation(m.toString().toLowerCase()), calculateProfit(aliasLoans, m)));
         profitChart.getData().addAll(set);
     }
 
