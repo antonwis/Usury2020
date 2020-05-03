@@ -2,6 +2,7 @@ package fi.metropolia.group8.view.Main.Loans;
 
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.LoanCalculator;
+import fi.metropolia.group8.view.Menu.Settings.LanguageController;
 import fi.metropolia.group8.view.Overview.OverviewController;
 import fi.metropolia.group8.view.PrimaryController;
 import javafx.fxml.FXML;
@@ -90,6 +91,7 @@ public class LoanDetailController {
     private LoanListController loanListController;
     private PrimaryController primaryController;
     private OverviewController overviewController;
+    private LanguageController languageController;
 
     /**
      * Updates loan based on modification done in modify loan window
@@ -187,9 +189,10 @@ public class LoanDetailController {
         this.loanListController = loanListController;
         this.primaryController = primaryController;
         this.overviewController = overviewController;
+        languageController = new LanguageController();
 
         // Detail header
-        LoanDetailHeader.setText(String.format("Details for loan %s", DataModel.getInstance().getCurrentLoan().getId()));
+        LoanDetailHeader.setText(String.format("%s %s",languageController.getTranslation("loan"), DataModel.getInstance().getCurrentLoan().getId()));
 
         // Dates
         IssueDate.setText(DataModel.getInstance().getCurrentLoan().getStartDate().toString());

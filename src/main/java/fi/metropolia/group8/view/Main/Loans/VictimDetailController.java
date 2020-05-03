@@ -5,6 +5,7 @@ import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.model.LoanCalculator;
 import fi.metropolia.group8.model.VictimGenerator;
 import fi.metropolia.group8.view.Main.Loans.LoanListController;
+import fi.metropolia.group8.view.Menu.Settings.LanguageController;
 import fi.metropolia.group8.view.Overview.OverviewController;
 import fi.metropolia.group8.view.PrimaryController;
 import javafx.fxml.FXML;
@@ -16,6 +17,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Locale;
 
 public class VictimDetailController {
 
@@ -58,6 +60,7 @@ public class VictimDetailController {
     private LoanListController loanListController;
     private PrimaryController primaryController;
     private OverviewController overviewController;
+    private LanguageController languageController;
 
     /**
      * Generates new Loan and Victim when user presses accept button and adds the newly generated victim to the database.
@@ -93,9 +96,10 @@ public class VictimDetailController {
         this.primaryController = primaryController;
         this.overviewController = overviewController;
         this.loanListController = loanListController;
+        languageController = new LanguageController();
 
         // Detail header
-        VictimDetailHeader.setText(String.format("%s's Loan Application", VictimGenerator.getInstance().getCurrentVictim().getName()));
+        VictimDetailHeader.setText(String.format("%s - %s", VictimGenerator.getInstance().getCurrentVictim().getName(),languageController.getTranslation("loanoffer")));
 
         // Dates
         DueDate.setText(VictimGenerator.getInstance().getCurrentVictim().getDueDate().toString());

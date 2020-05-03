@@ -67,7 +67,7 @@ public class PrimaryController {
     public void init(LoginManager loginManager, String sessionID) {
         try {
 
-            StyleManager.getInstance().addUserAgentStylesheet("/fi/metropolia/group8/css/Default.css");
+            //StyleManager.getInstance().addUserAgentStylesheet("/fi/metropolia/group8/css/Default.css");
 
             Locale locale = Locale.getDefault();
             ResourceBundle bundle = ResourceBundle.getBundle("TextResources",locale);
