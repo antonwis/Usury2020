@@ -70,17 +70,17 @@ public class NewLoanController {
         boolean interest = interestField.getText().isEmpty();
         boolean duedate = dueDatepicker.getEditor().getText().isEmpty();
 
-        prompt(nameField,"Required");
-        prompt(addressField,"Required");
-        prompt(amountField,"Required, Numbers only");
-        prompt(interestField,"Required, Numbers only");
+        prompt(nameField,languageController.getTranslation("required"));
+        prompt(addressField,languageController.getTranslation("required"));
+        prompt(amountField,languageController.getTranslation("required_n"));
+        prompt(interestField,languageController.getTranslation("required_n"));
         if (descriptionField.getText().isEmpty()) {
-            descriptionField.setPromptText("Required");
+            descriptionField.setPromptText(languageController.getTranslation("required"));
         } else {
             descriptionField.setPromptText("");
         }
         if (dueDatepicker.getEditor().getText().isEmpty()) {
-            dueDatepicker.setPromptText("Pick a date");
+            dueDatepicker.setPromptText(languageController.getTranslation("required_d"));
         } else {
             dueDatepicker.setPromptText("");
         }
@@ -103,7 +103,7 @@ public class NewLoanController {
                 overviewController.updateOverview();
                 stage.close();
             } catch (Exception e) {
-                System.out.println("lol");
+                System.out.println("error " + e.getMessage());
             }
         }
     }

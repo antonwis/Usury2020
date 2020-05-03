@@ -9,6 +9,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -133,7 +134,9 @@ public class LoanListController {
                 if (filteredList.size() < 1) {
                     LoanTableView.setItems(null);
                 } else {
-                    LoanTableView.setItems(filteredList);
+                    SortedList<Loan> s = new SortedList<>(filteredList);
+                    s.comparatorProperty().bind(LoanTableView.comparatorProperty());
+                    LoanTableView.setItems(s);
                 }
             } catch (Exception e) {
                 System.out.println("Loan refresh failed");
@@ -252,7 +255,7 @@ public class LoanListController {
             victimName.setCellValueFactory(new PropertyValueFactory<>("name"));
             loanOfferAmount.setCellValueFactory(new PropertyValueFactory<>("value"));
             victimDueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
-            /// väliaikanen testi
+
             VictimGenerator.getInstance().generateVictimList(10);
             victimTableView.setItems(VictimGenerator.getInstance().getGeneratedVictimList());
         }

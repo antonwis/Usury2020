@@ -13,7 +13,10 @@
 }
 
 .text-field {
-    -fx-prompt-text-fill: gray;
+    -fx-prompt-text-fill: #bdbdbd;
+}
+.text-area{
+    -fx-prompt-text-fill: #bdbdbd;
 }
 
 .button{

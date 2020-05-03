@@ -111,9 +111,7 @@ public class ModifyAliasController {
             if(nameField.getText().isBlank()) {
                 nameField.setPromptText(l.getTranslation("youmustchooseaname"));
                 nameField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
-
             }
-
             else{
                 if(DataModel.getInstance().getCurrentAlias().getName().equals(alias.getName())){
                     DataModel.getInstance().setCurrentAlias(null);

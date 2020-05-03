@@ -6,7 +6,6 @@ import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.view.Main.Loans.LoanListController;
 import fi.metropolia.group8.view.Menu.MenubarController;
 import fi.metropolia.group8.view.Menu.Settings.LanguageController;
-import fi.metropolia.group8.view.Menu.Settings.SettingsController;
 import fi.metropolia.group8.view.Overview.OverviewController;
 import fi.metropolia.group8.view.PrimaryController;
 import javafx.beans.binding.Bindings;
@@ -17,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -83,12 +83,15 @@ public class ManageAliasesController {
 
             HBox hBox1 = new HBox();
             hBox1.setSpacing(10);
+            hBox1.setPrefHeight(35);
+            hBox1.setMaxHeight(35);
+            hBox1.setAlignment(Pos.CENTER);
             Label label = new Label(alias.getName());
-            label.setPrefWidth(300);
+            label.setPrefWidth(150);
             label.setMinWidth(50);
+            label.setWrapText(true);
             Button modify = new Button(languageController.getTranslation("modify"));
-            modify.setMinWidth(60);
-
+            modify.setMinWidth(100);
             modify.setOnAction(new EventHandler<>() {
                 /**
                  * Handler for modify button that opens new window where you can edit alias
@@ -117,7 +120,7 @@ public class ManageAliasesController {
                 }
             });
             Button delete = new Button(languageController.getTranslation("delete"));
-            delete.setMinWidth(60);
+            delete.setMinWidth(100);
             delete.setOnAction(new EventHandler<>() {
                 /**
                  * Handler for delete button that gets the alias and deletes it from the list and the database also if the alias is current alias it set current alias null
