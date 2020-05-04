@@ -33,12 +33,12 @@ public class Loan {
     /**
      * constructor
      *
-     * @param owner
-     * @param value
-     * @param victim
-     * @param startDate
-     * @param dueDate
-     * @param interest
+     * @param owner the lender
+     * @param value amount of money
+     * @param victim borrower
+     * @param startDate the date of the loan
+     * @param dueDate loan due date
+     * @param interest rate of interest
      */
     public Loan(Alias owner, float value, Victim victim, LocalDate startDate, LocalDate dueDate, float interest) {
 
@@ -51,7 +51,7 @@ public class Loan {
     }
 
     /**
-     * @return
+     * @return Identifier num
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -61,14 +61,14 @@ public class Loan {
     }
 
     /**
-     * @param id
+     * @param id Identifier num
      */
     public void setId(long id) {
         this.id = id;
     }
 
     /**
-     * @return
+     * @return the lender
      */
     @ManyToOne
     @JoinColumn(name = "owner")
@@ -77,7 +77,7 @@ public class Loan {
     }
 
     /**
-     * @param owner
+     * @param owner the lender
      */
     public void setOwner(Alias owner) {
         this.owner = owner;
@@ -93,7 +93,7 @@ public class Loan {
     }
 
     /**
-     * @return
+     * @return amount of money
      */
     @Column(name = "value")
     public float getValue() {
@@ -101,7 +101,7 @@ public class Loan {
     }
 
     /**
-     * @param value
+     * @param value amount of money
      */
     public void setValue(float value) {
         valueProperty().set(value);
@@ -117,7 +117,7 @@ public class Loan {
     }
 
     /**
-     * @return
+     * @return rate of interest
      */
     @Column(name = "interest_percentage")
     public float getInterest() {
@@ -125,14 +125,14 @@ public class Loan {
     }
 
     /**
-     * @param value
+     * @param value rate of interest
      */
     public void setInterest(float value) {
         interestProperty().set(value);
     }
 
     /**
-     * @return
+     * @return money borrower
      */
     @ManyToOne
     @JoinColumn(name = "victim")
@@ -141,7 +141,7 @@ public class Loan {
     }
 
     /**
-     * @param victim
+     * @param victim money borrower
      */
     // Probably not needed
     public void setVictim(Victim victim) {
@@ -149,7 +149,7 @@ public class Loan {
     }
 
     /**
-     * @return
+     * @return the date of the loan
      */
     @Column(name = "startDate")
     public LocalDate getStartDate() {
@@ -157,7 +157,7 @@ public class Loan {
     }
 
     /**
-     * @param startDate
+     * @param startDate the date of the loan
      */
     // Probably not needed
     public void setStartDate(LocalDate startDate) {
@@ -165,7 +165,7 @@ public class Loan {
     }
 
     /**
-     * @return
+     * @return loan due date
      */
     @Column(name = "dueDate")
     public LocalDate getDueDate() {
@@ -173,14 +173,14 @@ public class Loan {
     }
 
     /**
-     * @param dueDate
+     * @param dueDate loan due date
      */
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
     /**
-     * @return
+     * @return loan repayment made
      */
     @Column(name = "completed")
     public boolean isCompleted() {
@@ -188,14 +188,14 @@ public class Loan {
     }
 
     /**
-     * @param completed
+     * @param completed loan repayment made
      */
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
 
     /**
-     * @return
+     * @return loan repayment date
      */
     @Column(name = "completeDate")
     public LocalDate getCompleteDate() {
@@ -203,7 +203,7 @@ public class Loan {
     }
 
     /**
-     * @param completeDate
+     * @param completeDate loan repayment date
      */
     public void setCompleteDate(LocalDate completeDate) {
         this.completeDate = completeDate;
@@ -211,6 +211,7 @@ public class Loan {
 
     /**
      * to string method for loan
+     * the lender, amount of money borrowed, borrower, the date of the loan, loan due date.
      *
      * @return
      */
