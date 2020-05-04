@@ -26,6 +26,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
@@ -147,7 +149,11 @@ public class ManageAliasesController {
                     filteredList.predicateProperty().bind(Bindings.createObjectBinding(
                             () -> userFilter.get().and(aliasFilter.get()),
                             userFilter, aliasFilter));
-                    for (Loan loan : filteredList) {
+                    List<Loan> l = new ArrayList<Loan>();
+                    for(Loan loan : filteredList){
+                        l.add(loan);
+                    }
+                    for (Loan loan : l) {
                         DataModel.getInstance().deleteLoan(loan);
                     }
 
