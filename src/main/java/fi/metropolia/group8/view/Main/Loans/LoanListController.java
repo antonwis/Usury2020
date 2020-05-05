@@ -114,7 +114,7 @@ public class LoanListController {
         DataModel.getInstance().loadLoanData();
         DataModel.getInstance().loadAliasData();
         FilteredList<Loan> filteredList = new FilteredList<>(DataModel.getInstance().getLoanList());
-
+        System.out.println(DataModel.getInstance().getCurrentAlias()+"täällä mä oon");
         if (DataModel.getInstance().getCurrentAlias() != null) {
             try {
                 ObjectProperty<Predicate<Loan>> userFilter = new SimpleObjectProperty<>();

@@ -24,6 +24,7 @@ public class Loan {
     private FloatProperty interest;
     private boolean completed;
     private LocalDate completeDate;
+    private boolean aliasDead;
 
 
     public Loan() {
@@ -207,6 +208,18 @@ public class Loan {
      */
     public void setCompleteDate(LocalDate completeDate) {
         this.completeDate = completeDate;
+    }
+
+    @Column(name = "aliasDead")
+    public boolean isAliasDead() {
+        return aliasDead;
+    }
+
+    /**
+     * @param aliasDead
+     */
+    public void setAliasDead(boolean aliasDead) {
+        this.aliasDead = aliasDead;
     }
 
     /**

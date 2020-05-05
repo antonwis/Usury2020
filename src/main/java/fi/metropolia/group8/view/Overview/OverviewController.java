@@ -197,7 +197,7 @@ public class OverviewController {
     public void updateCombo() {
         overviewCombo.getItems().clear(); // aiheuttaa nullpointereita, pitää fix jossain vaiheessa
         overviewCombo.getItems().add(languageController.getTranslation("allC"));
-        for (Alias a : DataModel.getInstance().getAliasList().filtered(a -> a.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()))) {
+        for (Alias a : DataModel.getInstance().getAliasList().filtered(a -> a.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()) && !a.getDeprived())) {
             overviewCombo.getItems().add(a.getName());
         }
     }
@@ -208,7 +208,7 @@ public class OverviewController {
     public void showAllAliases() {
         LanguageController lcont = new LanguageController();
         profitChart.getData().clear();
-        FilteredList<Alias> meme = DataModel.getInstance().getAliasList().filtered(a -> a.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()));
+        FilteredList<Alias> meme = DataModel.getInstance().getAliasList().filtered(a -> a.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()) && !a.getDeprived());
         for (Alias a : meme) {
             FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(b -> b.isCompleted() && b.getOwner().getName().equals(a.getName()));
             XYChart.Series<String, Float> set = new XYChart.Series<>();

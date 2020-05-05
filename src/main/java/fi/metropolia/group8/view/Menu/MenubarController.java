@@ -2,6 +2,7 @@ package fi.metropolia.group8.view.Menu;
 
 import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.model.Loan;
 import fi.metropolia.group8.view.*;
 import fi.metropolia.group8.view.Login.LoginManager;
 import fi.metropolia.group8.view.Main.Loans.LoanListController;
@@ -10,6 +11,9 @@ import fi.metropolia.group8.view.Menu.Alias.ManageAliasesController;
 import fi.metropolia.group8.view.Menu.Settings.LanguageController;
 import fi.metropolia.group8.view.Overview.OverviewController;
 import fi.metropolia.group8.view.Menu.Settings.SettingsController;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
@@ -108,9 +112,16 @@ public class MenubarController {
         //DataModel.getInstance().loadAliasData();
 
         FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
-        Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
-        filteredList.setPredicate(aliasFilter);
+        ObjectProperty<Predicate<Alias>> deprivedFilter = new SimpleObjectProperty<>();
+        ObjectProperty<Predicate<Alias>> aliasFilter = new SimpleObjectProperty<>();
+        aliasFilter.bind(Bindings.createObjectBinding(() ->
+                 fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName())));
+        deprivedFilter.bind(Bindings.createObjectBinding(() ->
+                fil -> fil.getDeprived() == false));
 
+        filteredList.predicateProperty().bind(Bindings.createObjectBinding(
+                () -> aliasFilter.get().and(deprivedFilter.get()),
+                aliasFilter, deprivedFilter));
         sub.getItems().clear();
 
 

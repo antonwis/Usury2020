@@ -21,6 +21,7 @@ public class Alias {
     private IntegerProperty completedLoans;
     private FloatProperty totalProfits;
     private IntegerProperty enforcerActions;
+    private BooleanProperty deprived;
 
 
     public Alias() {
@@ -43,6 +44,7 @@ public class Alias {
         setCompletedLoans(0);
         setTotalProfits(0);
         setEnforcerActions(0);
+        setDeprived(false);
     }
 
     /**
@@ -217,6 +219,17 @@ public class Alias {
     public IntegerProperty enforcerActionsProperty() {
         if (enforcerActions == null) enforcerActions = new SimpleIntegerProperty(this, "enforcerActions");
         return enforcerActions;
+    }
+    public BooleanProperty deprivedProperty() {
+        if (deprived == null) deprived = new SimpleBooleanProperty(this, "deprived");
+        return deprived;
+    }
+    @Column(name = "deprived")
+    public boolean getDeprived(){
+        return deprivedProperty().get();
+    }
+    public void setDeprived(boolean b){
+        deprivedProperty().set(b);
     }
 
     /**

@@ -78,7 +78,7 @@ public class ManageAliasesController {
 
         FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
 
-        Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
+        Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()) && !fil.getDeprived();
         filteredList.setPredicate(aliasFilter);
         aliasBox.getChildren().clear();
         for (Alias alias : filteredList) {
@@ -131,7 +131,14 @@ public class ManageAliasesController {
                  */
                 @Override
                 public void handle(ActionEvent actionEvent) {
-
+                    if(DataModel.getInstance().getCurrentAlias() != null) {
+                        System.out.println(DataModel.getInstance().getCurrentAlias().getName()+" asd "+alias.getName());
+                        if (DataModel.getInstance().getCurrentAlias().getName().equals(alias.getName())) {
+                            DataModel.getInstance().setCurrentAlias(null);
+                            loanListController.refreshLoans();
+                            System.out.println(DataModel.getInstance().getCurrentAlias());
+                        }
+                    }
                     DataModel.getInstance().loadLoanData();
                     DataModel.getInstance().loadAliasData();
                     FilteredList<Loan> filteredList = new FilteredList<>(DataModel.getInstance().getLoanList());
@@ -149,16 +156,17 @@ public class ManageAliasesController {
                     filteredList.predicateProperty().bind(Bindings.createObjectBinding(
                             () -> userFilter.get().and(aliasFilter.get()),
                             userFilter, aliasFilter));
-                    List<Loan> l = new ArrayList<Loan>();
+                    List<Loan> l = new ArrayList<>();
                     for(Loan loan : filteredList){
                         l.add(loan);
                     }
                     for (Loan loan : l) {
-                        DataModel.getInstance().deleteLoan(loan);
+                        loan.setAliasDead(true);
+                        DataModel.getInstance().saveLoanData(loan);
                     }
-
-                    DataModel.getInstance().deleteAlias(alias);
-                    System.out.println(DataModel.getInstance().getCurrentAlias());
+                    alias.setDeprived(true);
+                    DataModel.getInstance().setCurrentAlias(null);
+                    DataModel.getInstance().saveAliasData(alias);
                     DataModel.getInstance().loadAliasData();
                     menubarController.updateView();
                     primaryController.setCurrentAliasText();
