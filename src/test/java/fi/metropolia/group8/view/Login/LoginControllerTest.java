@@ -37,6 +37,10 @@ class LoginControllerTest {
     @Start
     private void start(Stage stage) throws Exception {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("TextResources", Locale.getDefault());
+        System.setProperty("testfx.robot", "glass");
+        System.setProperty("testfx.headless", "true");
+        System.setProperty("prism.order", "sw");
+        System.setProperty("prism.text", "t2k");
         Parent root = FXMLLoader.load(getClass().getResource("/fi/metropolia/group8/view/Primary.fxml"),resourceBundle);
         Scene scene = new Scene(root,1400,800);
         LoginManager loginManager = new LoginManager(scene);

@@ -2,7 +2,6 @@ package fi.metropolia.group8.view.Menu;
 
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.User;
-import fi.metropolia.group8.model.UsuryDAO;
 import fi.metropolia.group8.view.Login.LoginManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
@@ -36,6 +34,10 @@ class MenubarControllerTest {
     @Start
     private void start(Stage stage) throws Exception {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("TextResources", Locale.getDefault());
+        System.setProperty("testfx.robot", "glass");
+        System.setProperty("testfx.headless", "true");
+        System.setProperty("prism.order", "sw");
+        System.setProperty("prism.text", "t2k");
         Parent root = FXMLLoader.load(getClass().getResource("/fi/metropolia/group8/view/Primary.fxml"), resourceBundle);
         Scene scene = new Scene(root, 1400, 800);
         LoginManager loginManager = new LoginManager(scene);
@@ -56,7 +58,7 @@ class MenubarControllerTest {
     }
 
     @Test
-    void openSettings(FxRobot robot){
+    void openSettings(FxRobot robot) {
         login(robot);
         robot.clickOn("#systemMenu");
         robot.clickOn("#settings");
@@ -64,8 +66,9 @@ class MenubarControllerTest {
         FxAssert.verifyThat(w, WindowMatchers.isShowing());
         robot.closeCurrentWindow();
     }
+
     @AfterAll
-    static void purge(){
+    static void purge() {
         DataModel.getInstance().deleteUser(user);
     }
 }
