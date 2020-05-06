@@ -1,6 +1,8 @@
 package fi.metropolia.group8.view.Menu;
 
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.model.User;
+import fi.metropolia.group8.model.UsuryDAO;
 import fi.metropolia.group8.view.Login.LoginManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
@@ -21,6 +24,9 @@ import java.util.ResourceBundle;
 
 @ExtendWith(ApplicationExtension.class)
 class MenubarControllerTest {
+
+    private static User user;
+
     /**
      * Generates new window for testing purposes
      *
@@ -38,11 +44,12 @@ class MenubarControllerTest {
         stage.show();
     }
 
-    static void login(FxRobot robot) {
+    void login(FxRobot robot) {
         robot.clickOn("#newUserButton");
         robot.clickOn("#name");
         robot.write("Pepega");
         robot.clickOn("#createUser");
+        user = DataModel.getInstance().getUserList().get(0);
         robot.clickOn("#userList");
         robot.clickOn("Pepega");
         robot.clickOn("#loginButton");
@@ -59,6 +66,6 @@ class MenubarControllerTest {
     }
     @AfterAll
     static void purge(){
-        DataModel.getInstance().deleteUser(DataModel.getInstance().getUserList().get(0));
+        DataModel.getInstance().deleteUser(user);
     }
 }

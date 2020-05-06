@@ -1,5 +1,6 @@
 package fi.metropolia.group8.model;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,10 @@ class UsuryDAOTest {
 
     @AfterEach
     void tearDown() {
+        for (Loan l: dao.readLoans()) { dao.deleteLoan(l); }
+        for (Victim v: dao.readVictims()){dao.deleteVictim(v);}
+        for (Alias a: dao.readAliases()){dao.deleteAlias(a);}
+        for (User u: dao.readUsers()){dao.deleteUser(u);}
     }
 
     @Test
@@ -46,7 +51,7 @@ class UsuryDAOTest {
         int sizeEnd = dao.readUsers().size();
         assertTrue(sizeStart < sizeEnd);
         List<User> users = dao.readUsers();
-        assertTrue(users.size() > 0);
+        assertEquals(1, users.size());
         assertTrue(users.stream().anyMatch(user -> (user.getId() == user1.getId() && user.getName().equals(user1.getName()))));
         dao.deleteUser(user1);
     }
@@ -357,7 +362,6 @@ class UsuryDAOTest {
     void updateLoan() {
         Loan loan1 = this.getNextLoan();
         dao.createUser(loan1.getOwner().getUser());
-        User user2 = dao.getUserById(loan1.getOwner().getUser().getId());
         dao.createVictim(loan1.getVictim());
         dao.createAlias(loan1.getOwner());
         dao.createLoan(loan1);
@@ -376,8 +380,6 @@ class UsuryDAOTest {
         dao.deleteVictim(loan1.getVictim());
         dao.deleteAlias(loan1.getOwner());
         dao.deleteLoan(loan1);
-        dao.deleteUser(user2);
-        System.out.println(dao.readUsers());
     }
 
     @Test
