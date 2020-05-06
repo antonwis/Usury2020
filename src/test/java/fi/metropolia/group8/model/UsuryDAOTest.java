@@ -34,6 +34,8 @@ class UsuryDAOTest {
         assertTrue(users.size() > 1);
         assertTrue(users.stream().anyMatch(user -> (user.getId() == user1.getId() && user.getName().equals(user1.getName()))));
         assertTrue(users.stream().anyMatch(user -> (user.getId() == user2.getId() && user.getName().equals(user2.getName()))));
+        dao.deleteUser(user1);
+        dao.deleteUser(user2);
     }
 
     @Test
@@ -46,6 +48,7 @@ class UsuryDAOTest {
         List<User> users = dao.readUsers();
         assertTrue(users.size() > 1);
         assertTrue(users.stream().anyMatch(user -> (user.getId() == user1.getId() && user.getName().equals(user1.getName()))));
+        dao.deleteUser(user1);
     }
 
     @Test
@@ -58,6 +61,7 @@ class UsuryDAOTest {
         User user2 = dao.getUserById(id);
         System.out.println(user2.getName() + "id" +user2.getId());
         assertEquals("nameNew1", user2.getName());
+        dao.deleteUser(user1);
     }
 
     @Test
@@ -68,6 +72,7 @@ class UsuryDAOTest {
         User user2 = dao.getUserById(id);
         assertEquals(id, user2.getId());
         assertEquals(user1.getName(), user2.getName());
+        dao.deleteUser(user1);
     }
 
     @Test
@@ -78,6 +83,7 @@ class UsuryDAOTest {
         assertNotNull(dao.getUserById(id));
         dao.deleteUserById(id);
         assertNull(dao.getUserById(id));
+
     }
 
     @Test
@@ -85,9 +91,11 @@ class UsuryDAOTest {
         User user1 = new User("nameDeleteUser1");
         dao.createUser(user1);
         long id = user1.getId();
+
         assertNotNull(dao.getUserById(id));
         dao.deleteUser(user1);
         assertNull(dao.getUserById(id));
+
     }
 
     @Test
@@ -112,6 +120,9 @@ class UsuryDAOTest {
                                 alias.getDescription().equals(alias2.getDescription()) &&
                                 alias.getEquity() == alias2.getEquity() &&
                                 alias.getId() == alias2.getId())));
+        dao.deleteUser(user1);
+        dao.deleteAlias(alias1);
+        dao.deleteAlias(alias2);
     }
 
     @Test
@@ -130,6 +141,8 @@ class UsuryDAOTest {
                                 alias.getDescription().equals(alias1.getDescription()) &&
                                 alias.getEquity() == alias1.getEquity() &&
                                 alias.getId() == alias1.getId())));
+        dao.deleteUser(user1);
+        dao.deleteAlias(alias1);
     }
 
     @Test
@@ -145,6 +158,8 @@ class UsuryDAOTest {
         Alias alias2 = dao.getAliasById(id);
         assertEquals(id, alias2.getId());
         assertEquals("updatedName1", alias2.getName());
+        dao.deleteUser(user1);
+        dao.deleteAlias(alias1);
     }
 
     @Test
@@ -159,6 +174,8 @@ class UsuryDAOTest {
         assertEquals(alias1.getName(), alias2.getName());
         assertEquals(alias1.getDescription(), alias2.getDescription());
         assertEquals(alias1.getEquity(), alias2.getEquity());
+        dao.deleteUser(user1);
+        dao.deleteAlias(alias1);
     }
 
     @Test
@@ -173,6 +190,8 @@ class UsuryDAOTest {
         int sizeEnd = dao.readAliases().size();
         assertTrue(sizeStart > sizeEnd);
         assertNull(dao.getUserById(id));
+        dao.deleteUser(user1);
+
     }
 
     @Test
@@ -187,6 +206,7 @@ class UsuryDAOTest {
         int sizeEnd = dao.readAliases().size();
         assertTrue(sizeStart > sizeEnd);
         assertNull(dao.getUserById(id));
+        dao.deleteUser(user1);
     }
 
     @Test
@@ -210,6 +230,8 @@ class UsuryDAOTest {
                                 victim.getDescription().equals(victim2.getDescription()) &&
                                 victim.getId() == victim2.getId()
                 )));
+        dao.deleteVictim(victim1);
+        dao.deleteVictim(victim2);
     }
 
     @Test
@@ -227,6 +249,7 @@ class UsuryDAOTest {
                                 victim.getDescription().equals(victim1.getDescription()) &&
                                 victim.getId() == victim1.getId()
                 )));
+        dao.deleteVictim(victim1);
     }
 
     @Test
@@ -243,6 +266,8 @@ class UsuryDAOTest {
         assertEquals(id, victim2.getId());
         assertEquals("updatedName1", victim2.getName());
         assertEquals("updatedDesc1", victim2.getDescription());
+        dao.deleteVictim(victim1);
+
     }
 
     @Test
@@ -254,6 +279,7 @@ class UsuryDAOTest {
         assertEquals(victim1.getName(), victim2.getName());
         assertEquals(victim1.getAddress(), victim2.getAddress());
         assertEquals(victim1.getDescription(), victim2.getDescription());
+        dao.createVictim(victim1);
     }
 
     @Test
@@ -266,6 +292,7 @@ class UsuryDAOTest {
         int sizeEnd = dao.readVictims().size();
         assertEquals(sizeStart, sizeEnd);
         assertNull(dao.getVictimById(id));
+
     }
 
     @Test
@@ -278,6 +305,7 @@ class UsuryDAOTest {
         int sizeEnd = dao.readVictims().size();
         assertEquals(sizeStart, sizeEnd);
         assertNull(dao.getVictimById(id));
+
     }
 
     @Test
@@ -292,6 +320,14 @@ class UsuryDAOTest {
         dao.createVictim(loan2.getVictim());
         dao.createAlias(loan2.getOwner());
         dao.createLoan(loan2);
+        dao.deleteLoan(loan1);
+        dao.deleteLoan(loan2);
+        dao.deleteUser(loan1.getOwner().getUser());
+        dao.deleteUser(loan2.getOwner().getUser());
+        dao.deleteVictim(loan1.getVictim());
+        dao.deleteAlias(loan1.getOwner());
+        dao.deleteVictim(loan2.getVictim());
+        dao.deleteAlias(loan2.getOwner());
     }
 
     @Test
@@ -311,6 +347,10 @@ class UsuryDAOTest {
                                 loan.getOwner().getId() == loan1.getOwner().getId() &&
                                 loan.getVictim().getName().equals(loan1.getVictim().getName())
                 )));
+        dao.deleteLoan(loan1);
+        dao.deleteUser(loan1.getOwner().getUser());
+        dao.deleteVictim(loan1.getVictim());
+        dao.deleteAlias(loan1.getOwner());
     }
 
     @Test
@@ -331,6 +371,11 @@ class UsuryDAOTest {
         assertEquals(startSize, endSize);
         Loan updatedLoan = dao.getLoanById(loan1.getId());
         assertEquals("updateLoanAliasName1", updatedLoan.getOwner().getName());
+        dao.deleteUser(user1);
+        dao.deleteVictim(loan1.getVictim());
+        dao.deleteAlias(loan1.getOwner());
+
+        dao.deleteLoan(loan1);
     }
 
     @Test
@@ -344,6 +389,11 @@ class UsuryDAOTest {
         assertEquals(loan1.getId(), loan2.getId());
         assertEquals(loan1.getVictim().getDescription(), loan2.getVictim().getDescription());
         assertEquals(loan1.getValue(), loan2.getValue(), (float) 0.001);
+        dao.deleteLoan(loan1);
+        dao.deleteUser(loan1.getOwner().getUser());
+        dao.deleteVictim(loan1.getVictim());
+        dao.deleteAlias(loan1.getOwner());
+
     }
 
     @Test
@@ -357,6 +407,9 @@ class UsuryDAOTest {
         assertNotNull(dao.getLoanById(id));
         dao.deleteLoanById(id);
         assertNull(dao.getLoanById(id));
+        dao.deleteUser(loan1.getOwner().getUser());
+        dao.deleteVictim(loan1.getVictim());
+        dao.deleteAlias(loan1.getOwner());
     }
 
     @Test
@@ -370,6 +423,9 @@ class UsuryDAOTest {
         assertNotNull(dao.getLoanById(id));
         dao.deleteLoan(loan1);
         assertNull(dao.getLoanById(id));
+        dao.deleteUser(loan1.getOwner().getUser());
+        dao.deleteVictim(loan1.getVictim());
+        dao.deleteAlias(loan1.getOwner());
     }
 
     private Loan getNextLoan() {
