@@ -9,7 +9,7 @@
 
         <!-- Yhteyden perustiedot: ajuri, palvelin käyttäjätunnus/salasana -->
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/usury2020</property> <!--jdbc:mysql://10.114.32.18:3306/Usury2020 -->
+        <property name="hibernate.connection.url">jdbc:mysql://10.114.32.18:3306/Usury2020</property> <!--jdbc:mysql://10.114.32.18:3306/Usury2020 -->
         <property name="hibernate.connection.username">testuser</property>
         <property name="hibernate.connection.password">pass</property>
 
