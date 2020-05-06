@@ -16,60 +16,30 @@ import javafx.scene.control.Label;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * controller for overview view
  */
 public class OverviewController {
 
-    @FXML
-    private Label user;
-
-    @FXML
-    private Label alias;
-
-    @FXML
-    private Label balance;
-
-    @FXML
-    private Label profits;
-
-    @FXML
-    private Label loans;
-
-    @FXML
-    private Label loansComplete;
-
-    @FXML
-    private Label loansActive;
-
-    @FXML
-    private Label enforcerActions;
-
-    @FXML
-    private Label loansDue;
-
-    @FXML
-    private Label forecast;
-
-    @FXML
-    private LineChart<String, Float> profitChart;
-
-    @FXML
-    private ComboBox<String> overviewCombo;
-
-    @FXML
-    private CategoryAxis chartX;
-
-    @FXML
-    private NumberAxis chartY;
+    @FXML private Label user;
+    @FXML private Label alias;
+    @FXML private Label balance;
+    @FXML private Label profits;
+    @FXML private Label loans;
+    @FXML private Label loansComplete;
+    @FXML private Label loansActive;
+    @FXML private Label enforcerActions;
+    @FXML private Label loansDue;
+    @FXML private Label forecast;
+    @FXML private LineChart<String, Float> profitChart;
+    @FXML private ComboBox<String> overviewCombo;
+    @FXML private CategoryAxis chartX;
+    @FXML private NumberAxis chartY;
 
     private LanguageController languageController;
+    private FilteredList<Loan> aliasLoans;
+    private XYChart.Series<String, Float> set;
 
     /**
      * Changes the view to reflect the selected item in combobox
@@ -91,11 +61,6 @@ public class OverviewController {
      * Updates overview based on currently active alias
      */
     public void updateOverview() {
-
-        // Filter aliases for current user
-        //FilteredList<Alias> filteredList = new FilteredList<>(DataModel.getInstance().getAliasList());
-        //Predicate<Alias> aliasFilter = fil -> fil.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName());
-        //filteredList.setPredicate(aliasFilter);
 
         // Update ComboBox
         updateCombo();
@@ -210,14 +175,10 @@ public class OverviewController {
         profitChart.getData().clear();
         FilteredList<Alias> meme = DataModel.getInstance().getAliasList().filtered(a -> a.getUser().getName().equals(DataModel.getInstance().getCurrentUser().getName()));
         for (Alias a : meme) {
-            FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(b -> b.isCompleted() && b.getOwner().getName().equals(a.getName()));
-            XYChart.Series<String, Float> set = new XYChart.Series<>();
+            aliasLoans = DataModel.getInstance().getLoanList().filtered(b -> b.isCompleted() && b.getOwner().getName().equals(a.getName()));
+            set = new XYChart.Series<>();
             set.setName(a.getName());
-
-            for (Month m : Month.values()) {
-                set.getData().add(new XYChart.Data<>((languageController.getTranslation(m.toString().toLowerCase())), calculateProfit(aliasLoans, m)));
-            }
-
+            for (Month m : Month.values()) set.getData().add(new XYChart.Data<>((languageController.getTranslation(m.toString().toLowerCase())), calculateProfit(aliasLoans, m)));
             profitChart.getData().addAll(set);
         }
     }
@@ -229,11 +190,10 @@ public class OverviewController {
      */
     public void currentAlias(Alias alias) {
         profitChart.getData().clear();
-        FilteredList<Loan> aliasLoans = DataModel.getInstance().getLoanList().filtered(a -> a.getOwner().getName().equals(alias.getName()) && a.isCompleted());
-        XYChart.Series<String, Float> set = new XYChart.Series<>();
+        aliasLoans = DataModel.getInstance().getLoanList().filtered(a -> a.getOwner().getName().equals(alias.getName()) && a.isCompleted());
+        set = new XYChart.Series<>();
         set.setName(alias.getName());
-        for (Month m : Month.values())
-            set.getData().add(new XYChart.Data<>(languageController.getTranslation(m.toString().toLowerCase()), calculateProfit(aliasLoans, m)));
+        for (Month m : Month.values()) set.getData().add(new XYChart.Data<>(languageController.getTranslation(m.toString().toLowerCase()), calculateProfit(aliasLoans, m)));
         profitChart.getData().addAll(set);
     }
 

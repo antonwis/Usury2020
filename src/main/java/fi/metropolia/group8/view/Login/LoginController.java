@@ -2,6 +2,7 @@ package fi.metropolia.group8.view.Login;
 
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.User;
+import fi.metropolia.group8.view.Menu.Settings.LanguageController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +20,7 @@ public class LoginController {
     @FXML public Button newUserButton;
     @FXML private ComboBox<User> userList;
     @FXML private Button loginButton;
+    @FXML private Label loginError;
 
     private LoginManager loginManager;
 
@@ -44,9 +46,12 @@ public class LoginController {
         loginButton.setOnAction(event -> {
             String sessionID = authorize();
             if (!userList.getSelectionModel().isEmpty()) {
+                loginError.setVisible(false);
                 DataModel.getInstance().setCurrentUser(userList.getSelectionModel().selectedItemProperty().getValue());
                 loginManager.authenticated(sessionID);
                 System.out.println("Logging in as: " + DataModel.getInstance().getCurrentUser().getName());
+            } else {
+                loginError.setVisible(true);
             }
         });
 

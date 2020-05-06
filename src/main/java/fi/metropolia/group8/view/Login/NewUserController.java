@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.Locale;
 
 /**
@@ -35,8 +34,7 @@ public class NewUserController {
     void createNewUser() {
         if (name.getText().length() < 2) {
             userError.setVisible(true);
-        }
-        else {
+        } else {
             userError.setVisible(false);
             DataModel.getInstance().createUser(name.getText());
             System.out.printf("%s: %s\n",languageController.getTranslation("new_user"),name.getText());
