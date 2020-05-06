@@ -46,7 +46,7 @@ class UsuryDAOTest {
         int sizeEnd = dao.readUsers().size();
         assertTrue(sizeStart < sizeEnd);
         List<User> users = dao.readUsers();
-        assertTrue(users.size() > 1);
+        assertTrue(users.size() > 0);
         assertTrue(users.stream().anyMatch(user -> (user.getId() == user1.getId() && user.getName().equals(user1.getName()))));
         dao.deleteUser(user1);
     }
@@ -357,6 +357,7 @@ class UsuryDAOTest {
     void updateLoan() {
         Loan loan1 = this.getNextLoan();
         dao.createUser(loan1.getOwner().getUser());
+        User user2 = dao.getUserById(loan1.getOwner().getUser().getId());
         dao.createVictim(loan1.getVictim());
         dao.createAlias(loan1.getOwner());
         dao.createLoan(loan1);
@@ -374,8 +375,9 @@ class UsuryDAOTest {
         dao.deleteUser(user1);
         dao.deleteVictim(loan1.getVictim());
         dao.deleteAlias(loan1.getOwner());
-
         dao.deleteLoan(loan1);
+        dao.deleteUser(user2);
+        System.out.println(dao.readUsers());
     }
 
     @Test
