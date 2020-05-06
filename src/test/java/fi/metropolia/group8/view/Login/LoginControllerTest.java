@@ -1,6 +1,7 @@
 package fi.metropolia.group8.view.Login;
 
 import fi.metropolia.group8.model.DataModel;
+import fi.metropolia.group8.model.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -8,10 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
@@ -20,12 +18,15 @@ import org.testfx.framework.junit5.Start;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.base.WindowMatchers;
 import org.testfx.matcher.control.ComboBoxMatchers;
+import org.testfx.matcher.control.LabeledMatchers;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 @ExtendWith(ApplicationExtension.class)
 class LoginControllerTest {
+
+    private static User user;
 
     /**
      * Generates new window for testing purposes
@@ -77,9 +78,9 @@ class LoginControllerTest {
         robot.clickOn("#name");
         robot.write("Pepega");
         robot.clickOn("#createUser");
+        user = DataModel.getInstance().getUserList().get(0);
         robot.clickOn("#userList");
         robot.clickOn("Pepega");
-        //FxAssert.verifyThat("#userList", ComboBoxMatchers.hasSelectedItem("Pepega1"));
         FxAssert.verifyThat("#userList",ComboBoxMatchers.hasItems(1));
     }
 
@@ -99,14 +100,11 @@ class LoginControllerTest {
         robot.clickOn("#userList");
         robot.clickOn("Pepega");
         robot.clickOn("#loginButton");
-        //FxAssert.verifyThat("#user",LabeledMatchers.hasText("Pepega")); // null
         Assertions.assertEquals("Pepega",DataModel.getInstance().getCurrentUser().toString());
         robot.clickOn("#systemMenu");
         robot.clickOn("#logoutButton");
         Assertions.assertNull(DataModel.getInstance().getCurrentUser());
     }
     @AfterAll
-    static void purge(){
-        DataModel.getInstance().deleteUser(DataModel.getInstance().getUserList().get(0));
-    }
+    static void purge(){ DataModel.getInstance().deleteUser(user); }
 }
