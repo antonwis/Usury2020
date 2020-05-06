@@ -16,19 +16,11 @@ import java.util.ResourceBundle;
 
 /** Controls the login screen */
 public class LoginController {
-    @FXML
-    public Button newUserButton;
-
-    /*
-    * TODO replace with a drop down selection which pulls every user from database
-    */
-
+    @FXML public Button newUserButton;
     @FXML private ComboBox<User> userList;
     @FXML private Button loginButton;
 
     private LoginManager loginManager;
-
-    public void initialize() {}
 
     /**
      * initializes loginManager
@@ -41,7 +33,7 @@ public class LoginController {
         updateView();
 
         userList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentUser(newSelection));
-        DataModel.getInstance().currentUserProperty().addListener((obs, oldLoan, newUser) -> {
+        DataModel.getInstance().currentUserProperty().addListener((obs, oldUser, newUser) -> {
             if (newUser == null) {
                 userList.getSelectionModel().clearSelection();
             } else {
