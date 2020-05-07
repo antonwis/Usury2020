@@ -162,6 +162,7 @@ public class LoanCalculator {
         alias.setEquity(newSum);
         DataModel.getInstance().saveLoanData(loan);
         DataModel.getInstance().saveAliasData(alias);
+        DataModel.getInstance().setCurrentAlias(alias);
     }
 
     /**
@@ -174,5 +175,4 @@ public class LoanCalculator {
         loan.setValue(newValue);
         DataModel.getInstance().saveLoanData(loan);
     }
-
 }

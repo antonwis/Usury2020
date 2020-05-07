@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.Menu.Alias.AliasController">
+    <VBox alignment="CENTER" layoutX="160.0" prefHeight="400.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="0.0">
+        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+
+        <Label alignment="CENTER" prefHeight="17.0" prefWidth="236.0" text="%name" />
+        <TextField fx:id="nameField" />
+
+        <Label alignment="CENTER" prefHeight="17.0" prefWidth="238.0" text="%equity" />
+        <TextField fx:id="equityField" />
+
+        <Label alignment="CENTER" prefHeight="17.0" prefWidth="239.0" text="%description" />
+        <TextArea fx:id="descriptionArea" prefHeight="94.0" prefWidth="149.0" />
+        <HBox alignment="CENTER" prefHeight="42.0" prefWidth="227.0">
+            <Button fx:id="AddAlias" minWidth="-Infinity" mnemonicParsing="false" onAction="#addNewAlias" prefHeight="25.0" prefWidth="100.0" text="%add" textAlignment="CENTER" />
+            <Button fx:id="CancelAlias" mnemonicParsing="false" onAction="#closeAliasWindow" prefHeight="25.0" prefWidth="100.0" text="%cancel" textAlignment="CENTER" />
+        </HBox>
+    </VBox>
+</AnchorPane>

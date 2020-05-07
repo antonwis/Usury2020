@@ -1,10 +1,15 @@
 package fi.metropolia.group8.view;
 
-import fi.metropolia.group8.model.Alias;
+import com.sun.javafx.css.StyleManager;
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.EventManager;
+import fi.metropolia.group8.view.Login.LoginManager;
+import fi.metropolia.group8.view.Main.Loans.LoanListController;
+import fi.metropolia.group8.view.Menu.Alias.AliasController;
+import fi.metropolia.group8.view.Menu.MenubarController;
+import fi.metropolia.group8.view.Menu.Settings.LanguageController;
+import fi.metropolia.group8.view.Overview.OverviewController;
 import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +24,8 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * Main controller. Currently initializes other controllers and handles the status bar elements.
@@ -49,6 +56,7 @@ public class PrimaryController {
 
     private Scene scene;
     private MenubarController menubarController;
+    private LanguageController languageController;
 
     /**
      * Initializes other controllers
@@ -58,13 +66,22 @@ public class PrimaryController {
      */
     public void init(LoginManager loginManager, String sessionID) {
         try {
-            FXMLLoader loanList = new FXMLLoader(getClass().getResource("loans.fxml"));
+
+            //StyleManager.getInstance().addUserAgentStylesheet("/fi/metropolia/group8/css/Default.css");
+
+            Locale locale = Locale.getDefault();
+            ResourceBundle bundle = ResourceBundle.getBundle("TextResources",locale);
+            languageController = new LanguageController();
+
+            FXMLLoader loanList = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Main/Loans/Loans.fxml"));
+            loanList.setResources(bundle);
             Loans.setContent(loanList.load());
             LoanListController loanListController = loanList.getController();
             DataModel.getInstance().loadAliasData();
 
             /// ei välttämät tarvii tehä mut nii...
-            FXMLLoader overview = new FXMLLoader(getClass().getResource("Overview.fxml"));
+            FXMLLoader overview = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Overview/Overview.fxml"));
+            overview.setResources(bundle);
             Overview.setContent(overview.load());
             OverviewController overviewController = overview.getController();
             overviewController.initModel();
@@ -75,7 +92,8 @@ public class PrimaryController {
             loanListController.initModel(this, overviewController);
             AliasController aliasController = new AliasController();
 
-            FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("menubar.fxml"));
+            FXMLLoader menuBarF = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Menu/Menubar.fxml"));
+            menuBarF.setResources(bundle);
             VBox menuBar = menuBarF.load();
 
             primaryAnchor.getChildren().add(menuBar);
@@ -90,7 +108,6 @@ public class PrimaryController {
 
             setCurrentAliasText();
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,10 +121,9 @@ public class PrimaryController {
      * Method for updating the status bar with updated alias selection, equity and current working date
      */
     public void setCurrentAliasText() {
-
         // Check if current alias has a selection
         if (DataModel.getInstance().getCurrentAlias() == null) {
-            primaryCurrentAlias.setText("None");
+            primaryCurrentAlias.setText(languageController.getTranslation("none"));
             primaryCurrentEquity.setText("");
             primaryCurrentDate.setText(DataModel.getInstance().getCurrentUser().getCurrentDate().toString());
         } else {
@@ -120,7 +136,6 @@ public class PrimaryController {
             }
         }
     }
-
     /**
      * Method for skipping one day ahead in time. Updates current user's working date and notifies event log manager.
      */

@@ -30,8 +30,7 @@ public class DbConnectionTest {
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
-        final Session session = getSession();
-        try {
+        try (Session session = getSession()) {
             System.out.println("querying all the managed entities...");
             final Metamodel metamodel = session.getSessionFactory().getMetamodel();
             for (EntityType<?> entityType : metamodel.getEntities()) {
@@ -42,8 +41,6 @@ public class DbConnectionTest {
                     System.out.println("  " + o);
                 }
             }
-        } finally {
-            session.close();
         }
     }
 }

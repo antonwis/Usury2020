@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="vbox" prefHeight="10.0" prefWidth="3000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.Menu.MenubarController">
+
+
+    <MenuBar fx:id="menuBar" focusTraversable="true">
+        <Menu fx:id="systemMenu" text="%system">
+            <MenuItem fx:id="settings" onAction="#openSettings" text="%settings" />
+            <MenuItem fx:id="saveMenuItem" text="%save" />
+            <MenuItem text="%load" />
+            <MenuItem fx:id="logoutButton" onAction="#logout" text="%logout" />
+            <MenuItem fx:id="exitMenuItem" onAction="#exitApp" text="%exit" />
+        </Menu>
+        <Menu fx:id="aliasMenu" text="%alias">
+            <MenuItem fx:id="newAlias" onAction="#addNewAlias" text="%add_new_alias" />
+            <MenuItem fx:id="modifyAlias" onAction="#modifyAliases" text="%manage_aliases" />
+            <SeparatorMenuItem />
+
+        </Menu>
+        <Menu fx:id="viewMenu" text="%view">
+            <MenuItem text="%overview" />
+            <MenuItem text="%loans" />
+            <SeparatorMenuItem />
+            <MenuItem fx:id="bookDebt" onAction="#debtorBook" text="%book_of_debtors" />
+        </Menu>
+        <Menu text="%help">
+            <MenuItem text="%about" />
+        </Menu>
+    </MenuBar>
+</VBox>
