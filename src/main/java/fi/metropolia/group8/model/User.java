@@ -29,7 +29,7 @@ public class User {
 
     /**
      *
-     * @return
+     * @return user id
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,7 +40,7 @@ public class User {
 
     /**
      *
-     * @param id
+     * @param id user id
      */
     public void setId(long id) {
         this.id = id;
@@ -48,20 +48,20 @@ public class User {
 
     /**
      *
-     * @param value
+     * @param value name of the user
      */
     public void setName(String value) { nameProperty().set(value); }
 
     /**
      *
-     * @return
+     * @return name of the user
      */
     @Column(name="name")
     public String getName() { return nameProperty().get(); }
 
     /**
      *
-     * @return
+     * @return name
      */
     public StringProperty nameProperty() {
         if (name == null) name = new SimpleStringProperty(this,"name") ;
@@ -70,7 +70,7 @@ public class User {
 
     /**
      * Returns the current working date object
-     * @return
+     * @return current working date
      */
     @Column(name = "currentDate")
     public LocalDate getCurrentDate() { return currentDate; }
@@ -83,7 +83,7 @@ public class User {
 
     /**
      *
-     * @return
+     * @return user info
      */
     @Override
     public String toString() {

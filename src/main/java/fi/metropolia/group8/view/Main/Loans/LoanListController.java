@@ -3,11 +3,13 @@ package fi.metropolia.group8.view.Main.Loans;
 import fi.metropolia.group8.model.*;
 import fi.metropolia.group8.view.*;
 import fi.metropolia.group8.view.Main.EventLog.EventLogController;
+import fi.metropolia.group8.view.Menu.Settings.LanguageController;
 import fi.metropolia.group8.view.Overview.OverviewController;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -20,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -69,6 +72,7 @@ public class LoanListController {
 
     private PrimaryController primaryController;
     private OverviewController overviewController;
+    private LanguageController languageController;
 
     // FXML annotaatio nii ei tarvii edes luoda new (dependency injection memes)
     @FXML private EventLogController eventLogController;
@@ -81,8 +85,9 @@ public class LoanListController {
     @FXML
     void newLoan() throws IOException {
         if (DataModel.getInstance().getCurrentAlias() == null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Please Select an Alias first");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText(null);
+            alert.setContentText(languageController.getTranslation("noalias"));
             alert.show();
         } else {
             Stage stage = new Stage();
@@ -94,7 +99,7 @@ public class LoanListController {
             loan.setResources(resourceBundle);
             Parent root = loan.load();
             NewLoanController newLoanController = loan.getController();
-            newLoanController.TransferMemes(this, stage, primaryController, overviewController);
+            newLoanController.init(this, stage, primaryController, overviewController);
             stage.setScene(new Scene(root));
             stage.show();
         }
@@ -129,7 +134,9 @@ public class LoanListController {
                 if (filteredList.size() < 1) {
                     LoanTableView.setItems(null);
                 } else {
-                    LoanTableView.setItems(filteredList);
+                    SortedList<Loan> s = new SortedList<>(filteredList);
+                    s.comparatorProperty().bind(LoanTableView.comparatorProperty());
+                    LoanTableView.setItems(s);
                 }
             } catch (Exception e) {
                 System.out.println("Loan refresh failed");
@@ -188,9 +195,11 @@ public class LoanListController {
         if (this.primaryController == null) {
             this.primaryController = primaryController;
             this.overviewController = overviewController;
+            languageController = new LanguageController();
             ///////////////
             initEventLog();
             ///////////////
+            LoanTableView.setPlaceholder(new Text(languageController.getTranslation("no_content")));
             LoanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentLoan(newSelection));
             DataModel.getInstance().currentLoanProperty().addListener((obs, oldLoan, newLoan) -> {
                 if (newLoan == null) {
@@ -214,6 +223,7 @@ public class LoanListController {
                 }
             });
 
+            victimTableView.setPlaceholder(new Text(languageController.getTranslation("no_content")));
             victimTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> VictimGenerator.getInstance().setCurrentVictim(newSelection));
             VictimGenerator.getInstance().currentVictimProperty().addListener((obs, oldVictim, newVictim) -> {
                 if (newVictim == null) {
@@ -245,7 +255,7 @@ public class LoanListController {
             victimName.setCellValueFactory(new PropertyValueFactory<>("name"));
             loanOfferAmount.setCellValueFactory(new PropertyValueFactory<>("value"));
             victimDueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
-            /// väliaikanen testi
+
             VictimGenerator.getInstance().generateVictimList(10);
             victimTableView.setItems(VictimGenerator.getInstance().getGeneratedVictimList());
         }
@@ -262,10 +272,12 @@ public class LoanListController {
      */
     public void viewLoans() {
         if (DataModel.getInstance().getCurrentAlias() == null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Please Select an Alias first");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText(null);
+            alert.setContentText(languageController.getTranslation("noalias"));
             alert.show();
         } else {
+            LoanTableView.getSelectionModel().clearSelection();
             victimTableView.setVisible(true);
             LoanTableView.setVisible(false);
             viewLoansButton.setVisible(false);
@@ -277,6 +289,7 @@ public class LoanListController {
      * Returns back to the loans view
      */
     public void back() {
+        victimTableView.getSelectionModel().clearSelection();
         victimTableView.setVisible(false);
         LoanTableView.setVisible(true);
         backButton.setVisible(false);
