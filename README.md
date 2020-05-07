@@ -12,3 +12,5 @@ Testi tietokannan osoite ja käyttäjätunnus määritetään ```src/main/resour
 ### Luo jacoco testikattavuusraportti
 1. ```mvn jacoco:report```
 2. Avaa raporttti ```target/site/jacoco/index.html```
+### Luo .jar
+```mvn package```
