@@ -46,6 +46,14 @@ public class MenubarController {
     @FXML
     public Menu systemMenu;
     @FXML
+    public MenuItem newAlias;
+    @FXML
+    public MenuItem modifyAlias;
+    @FXML
+    public Menu viewMenu;
+    @FXML
+    public MenuItem bookDebt;
+    @FXML
     private MenuItem exitMenuItem;
     @FXML
     private Menu aliasMenu;

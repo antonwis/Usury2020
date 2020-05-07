@@ -32,6 +32,30 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-core</artifactId>
+            <version>4.0.15-alpha</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit5</artifactId>
+            <version>4.0.15-alpha</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>openjfx-monocle</artifactId>
+            <version>jdk-12.0.1+2</version> <!-- jdk-11+26 for Java 11, jdk-9+181 for Java 9, 8u76-b04 for Java 8 -->
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.18</version>
@@ -77,12 +101,27 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
+                    <configuration>
+                        <compilerArgs>
+                            <arg>--add-exports</arg>
+                            <arg>javafx.graphics/com.sun.javafx.css=ALL-UNNAMED</arg>
+                        </compilerArgs>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.22.0</version>
                     <configuration>
                         <argLine>${argLine}</argLine>
+                        <systemPropertyVariables>
+                            <glass.platform>Monocle</glass.platform>
+                            <monocle.platform>Headless</monocle.platform>
+                            <prism.order>d3d</prism.order>
+                        </systemPropertyVariables>
+                        <argLine>
+                            --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                            --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
+                        </argLine>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -120,8 +159,13 @@
                     <version>0.0.4</version>
                     <configuration>
                         <mainClass>fi.metropolia.group8.view.App</mainClass>
+                        <options>
+                            <option>--add-opens</option>
+                            <option>javafx.graphics/com.sun.javafx.css=ALL-UNNAMED</option>
+                        </options>
                     </configuration>
                 </plugin>
+
             </plugins>
         </pluginManagement>
         <plugins>

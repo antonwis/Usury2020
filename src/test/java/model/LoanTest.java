@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class LoanTest {
     private LocalDate taken = LocalDate.now();
-    private LocalDate due = LocalDate.of(2020,02,21);
+    private LocalDate due = LocalDate.of(2020, 2,21);
     private User user = new User("näkki");
     private Alias alias = new Alias(user, "kappa", "kys", 9000);
     private Victim victim = new Victim("nisti","kappakatu","hintti");

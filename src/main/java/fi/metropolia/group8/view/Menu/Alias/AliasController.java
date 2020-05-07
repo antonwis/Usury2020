@@ -4,6 +4,7 @@ import fi.metropolia.group8.model.Alias;
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.view.Main.Loans.LoanListController;
 import fi.metropolia.group8.view.Menu.MenubarController;
+import fi.metropolia.group8.view.Menu.Settings.LanguageController;
 import fi.metropolia.group8.view.Overview.OverviewController;
 import fi.metropolia.group8.view.PrimaryController;
 import javafx.collections.ObservableList;
@@ -49,7 +50,7 @@ public class AliasController {
      */
     @FXML
     void addNewAlias() {
-
+        LanguageController l = new LanguageController();
         try {
             String name = nameField.getText();
             int equity = Integer.parseInt(equityField.getText());
@@ -67,12 +68,12 @@ public class AliasController {
             }
 
             if (nameField.getText().isEmpty()) {
-                nameField.setPromptText("You must choose a name");
+                nameField.setPromptText(l.getTranslation("youmustchooseaname"));
                 nameField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
 
             } else if (alreadyExists) {
                 nameField.setText("");
-                nameField.setPromptText("Alias already exists");
+                nameField.setPromptText(l.getTranslation("aliasalreadyexists"));
                 nameField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
             } else {
                 DataModel.getInstance().createAlias(name, description, equity);
@@ -87,7 +88,7 @@ public class AliasController {
 
         } catch (NumberFormatException numE) {
             equityField.setText("");
-            equityField.setPromptText("Equity must be a number");
+            equityField.setPromptText(l.getTranslation("equitymustbeanumber"));
             equityField.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(1), new BorderWidths(3))));
         }
 
@@ -108,6 +109,7 @@ public class AliasController {
      * @param stage Stage
      * @param primaryController Primary Controller
      * @param overviewController Overview Controller
+     * @param loanListController Loan List Controller
      */
     public void display(LoanListController loanListController, MenubarController menubarController, Stage stage, PrimaryController primaryController, OverviewController overviewController) {
         if (this.menubarController == null) {

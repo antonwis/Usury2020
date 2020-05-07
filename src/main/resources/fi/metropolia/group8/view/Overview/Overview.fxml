@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -12,118 +13,94 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="fi.metropolia.group8.view.Overview.OverviewController">
-    <Label fx:id="user" layoutX="14.0" layoutY="14.0" prefHeight="45.0" prefWidth="500.0" text="%user"
-           textAlignment="CENTER" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.Overview.OverviewController">
+    <Label fx:id="user" layoutX="14.0" layoutY="14.0" prefHeight="45.0" prefWidth="500.0" text="%user" textAlignment="CENTER" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
         <font>
-            <Font size="26.0"/>
+            <Font size="26.0" />
         </font>
     </Label>
-    <Label alignment="TOP_CENTER" layoutX="905.0" layoutY="118.0" prefHeight="45.0" prefWidth="240.0" text="%statistics"
-           AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="118.0">
+    <Label alignment="TOP_CENTER" layoutX="905.0" layoutY="118.0" prefHeight="45.0" prefWidth="240.0" text="%statistics" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="118.0">
         <font>
-            <Font size="22.0"/>
+            <Font size="22.0" />
         </font>
     </Label>
-    <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="67.0" prefHeight="37.0" prefWidth="381.0"
-          AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="75.0">
-        <Label fx:id="alias" text="%select_alias_to">
+    <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="67.0" prefHeight="45.0" prefWidth="714.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="75.0">
+        <Label fx:id="alias" text="%select_alias_to" wrapText="true">
             <font>
-                <Font size="15.0"/>
+                <Font size="15.0" />
             </font>
+         <padding>
+            <Insets right="5.0" />
+         </padding>
         </Label>
-        <ComboBox fx:id="overviewCombo" onAction="#changedCombo" prefWidth="150.0" visible="false"/>
+        <ComboBox fx:id="overviewCombo" onAction="#changedCombo" prefWidth="150.0" visible="false" />
     </HBox>
-    <GridPane gridLinesVisible="true" layoutX="409.0" layoutY="175.0" prefHeight="554.0" prefWidth="480.0"
-              AnchorPane.bottomAnchor="71.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="175.0">
+    <GridPane gridLinesVisible="true" layoutX="409.0" layoutY="175.0" prefHeight="554.0" prefWidth="480.0" AnchorPane.bottomAnchor="71.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="175.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" prefWidth="100.0"/>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-        <Label alignment="TOP_CENTER" prefHeight="218.0" prefWidth="333.0" text="%total_balance"
-               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <Label alignment="TOP_CENTER" prefHeight="218.0" prefWidth="333.0" text="%total_balance" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <font>
-                <Font name="System Bold" size="16.0"/>
+                <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <Label fx:id="balance" alignment="CENTER" prefHeight="270.0" prefWidth="357.0" text="%balance"
-               GridPane.halignment="CENTER" GridPane.valignment="TOP"/>
-        <Label fx:id="profits" alignment="CENTER" prefHeight="279.0" prefWidth="346.0" text="%profits"
-               GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP"/>
-        <Label alignment="TOP_CENTER" prefHeight="216.0" prefWidth="312.0" text="%total_profits"
-               GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <Label fx:id="balance" alignment="CENTER" prefHeight="270.0" prefWidth="357.0" text="%balance" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+        <Label fx:id="profits" alignment="CENTER" prefHeight="279.0" prefWidth="346.0" text="%profits" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP" />
+        <Label alignment="TOP_CENTER" prefHeight="216.0" prefWidth="312.0" text="%total_profits" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <font>
-                <Font name="System Bold" size="16.0"/>
+                <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <Label alignment="TOP_CENTER" prefHeight="255.0" prefWidth="343.0" text="%total_loans_issued"
-               GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+        <Label alignment="TOP_CENTER" prefHeight="255.0" prefWidth="343.0" text="%total_loans_issued" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
             <font>
-                <Font name="System Bold" size="16.0"/>
+                <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <Label fx:id="loans" alignment="CENTER" prefHeight="244.0" prefWidth="326.0" text="%loans"
-               GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP"/>
-        <Label alignment="TOP_CENTER" prefHeight="226.0" prefWidth="343.0" text="%completed_loans"
-               GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1"
-               GridPane.valignment="CENTER">
+        <Label fx:id="loans" alignment="CENTER" prefHeight="244.0" prefWidth="326.0" text="%loans" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+        <Label alignment="TOP_CENTER" prefHeight="226.0" prefWidth="343.0" text="%completed_loans" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
             <font>
-                <Font name="System Bold" size="16.0"/>
+                <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <Label fx:id="loansComplete" alignment="CENTER" prefHeight="227.0" prefWidth="295.0" text="%loans_complete"
-               GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1"
-               GridPane.valignment="TOP"/>
-        <Label alignment="TOP_CENTER" prefHeight="227.0" prefWidth="355.0" text="%active_loans"
-               GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+        <Label fx:id="loansComplete" alignment="CENTER" prefHeight="227.0" prefWidth="295.0" text="%loans_complete" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+        <Label alignment="TOP_CENTER" prefHeight="227.0" prefWidth="355.0" text="%active_loans" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
             <font>
-                <Font name="System Bold" size="16.0"/>
+                <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <Label fx:id="loansActive" alignment="CENTER" prefHeight="134.0" prefWidth="366.0" text="%active_loans"
-               GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP"/>
-        <Label alignment="TOP_CENTER" prefHeight="153.0" prefWidth="240.0" text="Enforcer Actions"
-               GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2"
-               GridPane.valignment="CENTER">
+        <Label fx:id="loansActive" alignment="CENTER" prefHeight="134.0" prefWidth="366.0" text="%active_loans" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+        <Label alignment="TOP_CENTER" prefHeight="153.0" prefWidth="240.0" text="%enforcer_actions" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
             <font>
-                <Font name="System Bold" size="16.0"/>
+                <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <Label fx:id="enforcerActions" alignment="CENTER" prefHeight="194.0" prefWidth="442.0"
-               text="EnforcerActions" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2"
-               GridPane.valignment="TOP"/>
-        <Label alignment="TOP_CENTER" prefHeight="170.0" prefWidth="312.0" text="%loans_past_due"
-               GridPane.rowIndex="3">
+        <Label fx:id="enforcerActions" alignment="CENTER" prefHeight="194.0" prefWidth="442.0" text="%enforcer_actions" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+        <Label alignment="TOP_CENTER" prefHeight="170.0" prefWidth="312.0" text="%loans_past_due" GridPane.rowIndex="3">
             <font>
-                <Font name="System Bold" size="16.0"/>
+                <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <Label fx:id="loansDue" alignment="CENTER" prefHeight="177.0" prefWidth="284.0" text="%loans_past_due"
-               GridPane.rowIndex="3"/>
-        <Label alignment="TOP_CENTER" prefHeight="235.0" prefWidth="325.0" text="%30_day_forecast"
-               GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <Label fx:id="loansDue" alignment="CENTER" prefHeight="177.0" prefWidth="284.0" text="%loans_past_due" GridPane.rowIndex="3" />
+        <Label alignment="TOP_CENTER" prefHeight="235.0" prefWidth="325.0" text="%30_day_forecast" GridPane.columnIndex="1" GridPane.rowIndex="3">
             <font>
-                <Font name="System Bold" size="16.0"/>
+                <Font name="System Bold" size="16.0" />
             </font>
         </Label>
-        <Label fx:id="forecast" alignment="CENTER" prefHeight="171.0" prefWidth="299.0" text="%forecast"
-               GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        <Label fx:id="forecast" alignment="CENTER" prefHeight="171.0" prefWidth="299.0" text="%forecast" GridPane.columnIndex="1" GridPane.rowIndex="3" />
     </GridPane>
-    <LineChart fx:id="profitChart" animated="false" layoutX="50.0" layoutY="163.0" legendSide="TOP" prefHeight="577.0"
-               prefWidth="694.0" title="Monthly profit average over all loans" AnchorPane.bottomAnchor="15.0"
-               AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="530.0" AnchorPane.topAnchor="140.0">
+    <LineChart fx:id="profitChart" animated="false" layoutX="50.0" layoutY="163.0" legendSide="TOP" prefHeight="577.0" prefWidth="694.0" title="%monthly_profit" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="530.0" AnchorPane.topAnchor="140.0">
         <xAxis>
-            <CategoryAxis fx:id="chartX" label="%month" side="BOTTOM"/>
+            <CategoryAxis fx:id="chartX" label="%month" side="BOTTOM" />
         </xAxis>
         <yAxis>
-            <NumberAxis fx:id="chartY" label="%profit" side="LEFT"/>
+            <NumberAxis fx:id="chartY" label="%profit" side="LEFT" />
         </yAxis>
     </LineChart>
 </AnchorPane>

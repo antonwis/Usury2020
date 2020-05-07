@@ -2,6 +2,7 @@ package fi.metropolia.group8.view.Login;
 
 import fi.metropolia.group8.model.DataModel;
 import fi.metropolia.group8.model.User;
+import fi.metropolia.group8.view.Menu.Settings.LanguageController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,19 +17,12 @@ import java.util.ResourceBundle;
 
 /** Controls the login screen */
 public class LoginController {
-    @FXML
-    public Button newUserButton;
-
-    /*
-    * TODO replace with a drop down selection which pulls every user from database
-    */
-
+    @FXML public Button newUserButton;
     @FXML private ComboBox<User> userList;
     @FXML private Button loginButton;
+    @FXML private Label loginError;
 
     private LoginManager loginManager;
-
-    public void initialize() {}
 
     /**
      * initializes loginManager
@@ -41,7 +35,7 @@ public class LoginController {
         updateView();
 
         userList.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> DataModel.getInstance().setCurrentUser(newSelection));
-        DataModel.getInstance().currentUserProperty().addListener((obs, oldLoan, newUser) -> {
+        DataModel.getInstance().currentUserProperty().addListener((obs, oldUser, newUser) -> {
             if (newUser == null) {
                 userList.getSelectionModel().clearSelection();
             } else {
@@ -52,9 +46,12 @@ public class LoginController {
         loginButton.setOnAction(event -> {
             String sessionID = authorize();
             if (!userList.getSelectionModel().isEmpty()) {
+                loginError.setVisible(false);
                 DataModel.getInstance().setCurrentUser(userList.getSelectionModel().selectedItemProperty().getValue());
                 loginManager.authenticated(sessionID);
                 System.out.println("Logging in as: " + DataModel.getInstance().getCurrentUser().getName());
+            } else {
+                loginError.setVisible(true);
             }
         });
 
@@ -102,7 +99,7 @@ public class LoginController {
         newUser.setResources(resourceBundle);
         Parent root = newUser.load();
         NewUserController newUserController = newUser.getController();
-        newUserController.TransferMemes(stage, this);
+        newUserController.init(stage, this);
         stage.setScene(new Scene(root));
         stage.show();
     }

@@ -28,6 +28,7 @@ public class LoginManager {
     /**
      * Callback method invoked to notify that a user has been authenticated.
      * Will show the main application screen.
+     * @param sessionID generated session id, not used
      */
     public void authenticated(String sessionID) {
         showMainView(sessionID);
@@ -42,7 +43,6 @@ public class LoginManager {
         DataModel.getInstance().setCurrentAlias(null);
         DataModel.getInstance().setCurrentLoan(null);
         System.out.println("Logout: All current properties set to null");
-
         showLoginScreen();
     }
 
@@ -51,13 +51,12 @@ public class LoginManager {
      */
     public void showLoginScreen() {
         try {
-
-            // test
+            //TODO localization
             Locale locale = Locale.getDefault();
             ResourceBundle resourceBundle = ResourceBundle.getBundle("TextResources", locale);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fi/metropolia/group8/view/Login/Login.fxml"));
-            loader.setResources(resourceBundle); ////////////////////// test
+            loader.setResources(resourceBundle);
             scene.setRoot(loader.load());
             LoginController controller = loader.getController();
             controller.initManager(this);

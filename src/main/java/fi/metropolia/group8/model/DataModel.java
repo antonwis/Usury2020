@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class DataModel {
 
     private static DataModel instance;
-
+    private UsuryDAO usuryDAO = new UsuryDAO();
     public DataModel() { }
 
     /**
@@ -164,7 +164,7 @@ public class DataModel {
      * Refreshes user, alias and loan lists from database
      */
     public void loadData() {
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         userList.setAll(usuryDAO.readUsers());
         aliasList.setAll(usuryDAO.readAliases());
         loanList.setAll(usuryDAO.readLoans());
@@ -174,7 +174,7 @@ public class DataModel {
      * Refreshes alias list from database
      */
     public void loadAliasData() {
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         aliasList.setAll(usuryDAO.readAliases());
     }
 
@@ -183,7 +183,7 @@ public class DataModel {
      * @param alias alias to be updated in database
      */
     public void saveAliasData(Alias alias) {
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.updateAlias(alias);
         //EventManager.getInstance().aliasModified(alias);
         loadAliasData();
@@ -198,7 +198,7 @@ public class DataModel {
     public void createAlias(String name, String description, int equity){
         User user = getCurrentUser();
         Alias alias = new Alias(user, name, description, equity);
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createAlias(alias);
         EventManager.getInstance().aliasCreated(alias);
         loadAliasData();
@@ -210,7 +210,7 @@ public class DataModel {
      * @param alias alias to be deleted
      */
     public void deleteAlias(Alias alias){
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         if(getCurrentAlias() != null && alias.getName().equals(getCurrentAlias().getName())){
             setCurrentAlias(null);
         }
@@ -223,7 +223,7 @@ public class DataModel {
      * Refreshes loan list from database
      */
     public void loadLoanData() {
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         loanList.setAll(usuryDAO.readLoans());
     }
 
@@ -239,7 +239,7 @@ public class DataModel {
      */
     public Loan createLoan(Alias alias, float value, Victim victim, LocalDate startDate, LocalDate dueDate, float interest) {
         Loan loan = new Loan(alias, value, victim, startDate, dueDate, interest);
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createLoan(loan);
         EventManager.getInstance().loanCreated(loan);
         loadLoanData();
@@ -251,7 +251,7 @@ public class DataModel {
      * @param loan loan to be updated in database
      */
     public void saveLoanData(Loan loan) {
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.updateLoan(loan);
         //EventManager.getInstance().loanModified(loan);
         loadLoanData();
@@ -262,7 +262,7 @@ public class DataModel {
      * @param loan alias to be deleted
      */
     public void deleteLoan(Loan loan) {
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.deleteLoan(loan);
         EventManager.getInstance().loanDeleted(loan);
         loadLoanData();
@@ -272,7 +272,7 @@ public class DataModel {
      * Refreshes user list from database
      */
     public void loadUserData() {
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         userList.setAll(usuryDAO.readUsers());
     }
 
@@ -281,7 +281,7 @@ public class DataModel {
      * @param user user to be updated in database
      */
     public void saveUserData(User user) {
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.updateUser(user);
         loadUserData();
     }
@@ -289,10 +289,11 @@ public class DataModel {
     /**
      * Creates a new user object and sends it to the data access object to be added to database
      * @param name name of the user
+     * @return user object
      */
     public User createUser(String name){
         User user = new User(name);
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createUser(user);
         loadUserData();
         return user;
@@ -303,7 +304,7 @@ public class DataModel {
      * @param user User to be deleted
      */
     public void deleteUser(User user) {
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.deleteUser(user);
         loadUserData();
     }
@@ -312,7 +313,7 @@ public class DataModel {
      * Refreshes victim list from database
      */
     public void loadVictimData() {
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         victimList.setAll(usuryDAO.readVictims());
     }
 
@@ -321,7 +322,7 @@ public class DataModel {
      * @param victim victim to be updated in database
      */
     public void saveVictimData(Victim victim) {
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.updateVictim(victim);
         loadVictimData();
     }
@@ -335,7 +336,7 @@ public class DataModel {
      */
     public Victim createVictim(String name, String address, String description){
         Victim victim = new Victim(name, address, description);
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createVictim(victim);
         EventManager.getInstance().victimCreated(victim);
         loadVictimData();
@@ -350,7 +351,7 @@ public class DataModel {
      */
     public Victim createGeneratedVictim(GeneratedVictim generatedVictim) {
         Victim victim = new Victim(generatedVictim.getName(), generatedVictim.getAddress());
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.createVictim(victim);
         EventManager.getInstance().victimCreated(victim);
         loadVictimData();
@@ -362,7 +363,7 @@ public class DataModel {
      * @param victim Victim to be deleted
      */
     public void deleteVictim(Victim victim) {
-        UsuryDAO usuryDAO = new UsuryDAO();
+        //UsuryDAO usuryDAO = new UsuryDAO();
         usuryDAO.deleteVictim(victim);
         EventManager.getInstance().victimDeleted(victim);
         loadVictimData();
