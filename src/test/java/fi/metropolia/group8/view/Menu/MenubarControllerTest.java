@@ -1,3 +1,4 @@
+/*
 package fi.metropolia.group8.view.Menu;
 
 import fi.metropolia.group8.model.*;
@@ -29,12 +30,14 @@ class MenubarControllerTest {
     private static User user;
     private UsuryDAO dao = new UsuryDAO();
 
-    /**
+    */
+/**
      * Generates new window for testing purposes
      *
      * @param stage stage
      * @throws Exception exception
-     */
+     *//*
+
     @Start
     private void start(Stage stage) throws Exception {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("TextResources", Locale.getDefault());
@@ -47,20 +50,24 @@ class MenubarControllerTest {
         stage.toFront();
     }
 
-    /**
+    */
+/**
      * Resets the robot before each test (not sure if needed)
      *
      * @param robot robot
-     */
+     *//*
+
     @BeforeEach
     void reset(FxRobot robot) {
         robot.release(new KeyCode[]{});
         robot.release(new MouseButton[]{});
     }
 
-    /**
+    */
+/**
      * Clears the database of leftover items
-     */
+     *//*
+
     @AfterEach
     void tearDown() {
         for (Loan l : dao.readLoans()) { dao.deleteLoan(l); }
@@ -69,10 +76,12 @@ class MenubarControllerTest {
         for (User u : dao.readUsers()) { dao.deleteUser(u); }
     }
 
-    /**
+    */
+/**
      * Login Helper method
      * @param robot robot
-     */
+     *//*
+
     void login(FxRobot robot) {
         robot.clickOn("#newUserButton");
         robot.clickOn("#nameF");
@@ -84,10 +93,13 @@ class MenubarControllerTest {
         robot.clickOn("#loginButton");
     }
 
-    /**
+    */
+/**
      * Test for opening the settings window from the menu
      * @param robot robot
-     */
+     *//*
+
+*/
 /*    @Test
     void openSettingsWindow(FxRobot robot) {
         login(robot);
@@ -95,12 +107,15 @@ class MenubarControllerTest {
         robot.clickOn("#settings");
         Window w = robot.window(1);
         FxAssert.verifyThat(w, WindowMatchers.isShowing());
-    }*/
+    }*//*
 
-    /**
+
+    */
+/**
      * Test for creating a new alias from the menu
      * @param robot robot
-     */
+     *//*
+
     @Test
     void createAlias(FxRobot robot) {
         login(robot);
@@ -116,10 +131,12 @@ class MenubarControllerTest {
         DataModel.getInstance().deleteAlias(dao.getAliasById(dao.readAliases().get(0).getId()));
     }
 
-    /**
+    */
+/**
      * Quick test for opening the alias creation window from the menu
      * @param robot robot
-     */
+     *//*
+
     @Test
     void addAliasWindow(FxRobot robot) {
         login(robot);
@@ -130,10 +147,12 @@ class MenubarControllerTest {
         robot.clickOn("#CancelAlias");
         FxAssert.verifyThat(w, WindowMatchers.isNotShowing());
     }
-    /**
+    */
+/**
      * Quick test for opening the modify aliases window from the menu
      * @param robot robot
-     */
+     *//*
+
     @Test
     void modifyAliasWindow(FxRobot robot) {
         login(robot);
@@ -145,10 +164,12 @@ class MenubarControllerTest {
         FxAssert.verifyThat(w, WindowMatchers.isNotShowing());
     }
 
-    /**
+    */
+/**
      * Quick test for opening the book of debtors window from the menu
      * @param robot robot
-     */
+     *//*
+
     @Test
     void bookOfDebtors(FxRobot robot) {
         login(robot);
@@ -157,4 +178,4 @@ class MenubarControllerTest {
         Window w = robot.window(1);
         FxAssert.verifyThat(w, WindowMatchers.isShowing());
     }
-}
+}*/

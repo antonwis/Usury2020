@@ -1,3 +1,4 @@
+/*
 package fi.metropolia.group8.view.Login;
 
 import fi.metropolia.group8.model.*;
@@ -26,12 +27,14 @@ class LoginControllerTest {
 
     private UsuryDAO dao = new UsuryDAO();
 
-    /**
+    */
+/**
      * Generates new window for testing purposes
      *
      * @param stage stage
      * @throws Exception exception
-     */
+     *//*
+
     @Start
     private void start(Stage stage) throws Exception {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("TextResources", Locale.getDefault());
@@ -44,18 +47,22 @@ class LoginControllerTest {
         stage.toFront();
     }
 
-    /**
+    */
+/**
      * Resets the robot before each test (not sure if needed)
      * @param robot robot
-     */
+     *//*
+
     @BeforeEach
     void reset(FxRobot robot) {
         robot.release(new KeyCode[]{});
         robot.release(new MouseButton[]{});
     }
-    /**
+    */
+/**
      * Clears the database of leftover items
-     */
+     *//*
+
     @AfterEach
     void tearDown() {
         for (Loan l : dao.readLoans()) { dao.deleteLoan(l); }
@@ -65,10 +72,12 @@ class LoginControllerTest {
 
     }
 
-    /**
+    */
+/**
      * Tests if the create user button opens a new stage. also checks if the new stage can be closed
      * @param robot robot
-     */
+     *//*
+
     @Test
     void windowOpensAndClose(FxRobot robot) {
         robot.clickOn("#newUserButton");
@@ -78,10 +87,12 @@ class LoginControllerTest {
         FxAssert.verifyThat(w, WindowMatchers.isNotShowing());
     }
 
-    /**
+    */
+/**
      * Test the creation of a new user
      * @param robot robot
-     */
+     *//*
+
     @Test
     void newUsername(FxRobot robot){
         robot.clickOn("#newUserButton");
@@ -94,17 +105,21 @@ class LoginControllerTest {
         FxAssert.verifyThat("#userList",ComboBoxMatchers.hasItems(1));
     }
 
-    /**
+    */
+/**
      * Login test without selecting any user from the combobox
-     */
+     *//*
+
     @Test
     void loginNoSelection(FxRobot robot){
         robot.clickOn("#loginButton");
         FxAssert.verifyThat("#loginError", NodeMatchers.isVisible());
     }
-    /**
+    */
+/**
      * Login and Logout test
-     */
+     *//*
+
     @Test
     void loginAndLogout(FxRobot robot){
         robot.clickOn("#newUserButton");
@@ -119,4 +134,4 @@ class LoginControllerTest {
         robot.clickOn("#logoutButton");
         Assertions.assertNull(DataModel.getInstance().getCurrentUser());
     }
-}
+}*/
