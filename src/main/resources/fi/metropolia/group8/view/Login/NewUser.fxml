@@ -10,7 +10,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="144.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.metropolia.group8.view.Login.NewUserController">
     <VBox alignment="CENTER" layoutX="180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="0.0">
         <Label text="%username" />
-        <TextField fx:id="name" />
+        <TextField fx:id="nameF" />
         <Label fx:id="userError" text="%notEmpty" textFill="#f50000" visible="false" />
         <HBox alignment="CENTER" prefHeight="42.0" prefWidth="227.0">
             <Button fx:id="createUser" minWidth="-Infinity" mnemonicParsing="false" onAction="#createNewUser" prefHeight="25.0" prefWidth="100.0" text="%add" textAlignment="CENTER" />

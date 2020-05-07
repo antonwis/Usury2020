@@ -19,7 +19,7 @@ public class NewUserController {
     @FXML
     public Button cancelButton;
     @FXML
-    private TextField name;
+    private TextField nameF;
     @FXML
     private Label userError;
 
@@ -32,12 +32,12 @@ public class NewUserController {
      */
     @FXML
     void createNewUser() {
-        if (name.getText().length() < 2) {
+        if (nameF.getText().length() < 2) {
             userError.setVisible(true);
         } else {
             userError.setVisible(false);
-            DataModel.getInstance().createUser(name.getText());
-            System.out.printf("%s: %s\n",languageController.getTranslation("new_user"),name.getText());
+            DataModel.getInstance().createUser(nameF.getText());
+            System.out.printf("%s: %s\n",languageController.getTranslation("new_user"), nameF.getText());
             stage.close();
         }
     }

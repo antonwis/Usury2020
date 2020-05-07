@@ -113,7 +113,6 @@
                     <version>2.22.0</version>
                     <configuration>
                         <argLine>${argLine}</argLine>
-
                         <systemPropertyVariables>
                             <glass.platform>Monocle</glass.platform>
                             <monocle.platform>Headless</monocle.platform>

@@ -18,16 +18,16 @@
             <MenuItem fx:id="exitMenuItem" onAction="#exitApp" text="%exit" />
         </Menu>
         <Menu fx:id="aliasMenu" text="%alias">
-            <MenuItem onAction="#addNewAlias" text="%add_new_alias" />
-            <MenuItem onAction="#modifyAliases" text="%manage_aliases" />
+            <MenuItem fx:id="newAlias" onAction="#addNewAlias" text="%add_new_alias" />
+            <MenuItem fx:id="modifyAlias" onAction="#modifyAliases" text="%manage_aliases" />
             <SeparatorMenuItem />
 
         </Menu>
-        <Menu text="%view">
+        <Menu fx:id="viewMenu" text="%view">
             <MenuItem text="%overview" />
             <MenuItem text="%loans" />
             <SeparatorMenuItem />
-            <MenuItem onAction="#debtorBook" text="%book_of_debtors" />
+            <MenuItem fx:id="bookDebt" onAction="#debtorBook" text="%book_of_debtors" />
         </Menu>
         <Menu text="%help">
             <MenuItem text="%about" />

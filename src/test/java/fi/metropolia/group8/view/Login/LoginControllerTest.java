@@ -1,7 +1,6 @@
 package fi.metropolia.group8.view.Login;
 
-import fi.metropolia.group8.model.DataModel;
-import fi.metropolia.group8.model.User;
+import fi.metropolia.group8.model.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,7 +17,6 @@ import org.testfx.framework.junit5.Start;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.base.WindowMatchers;
 import org.testfx.matcher.control.ComboBoxMatchers;
-import org.testfx.matcher.control.LabeledMatchers;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -26,7 +24,7 @@ import java.util.ResourceBundle;
 @ExtendWith(ApplicationExtension.class)
 class LoginControllerTest {
 
-    private static User user;
+    private UsuryDAO dao = new UsuryDAO();
 
     /**
      * Generates new window for testing purposes
@@ -43,6 +41,7 @@ class LoginControllerTest {
         loginManager.showLoginScreen();
         stage.setScene(scene);
         stage.show();
+        stage.toFront();
     }
 
     /**
@@ -53,6 +52,17 @@ class LoginControllerTest {
     void reset(FxRobot robot) {
         robot.release(new KeyCode[]{});
         robot.release(new MouseButton[]{});
+    }
+    /**
+     * Clears the database of leftover items
+     */
+    @AfterEach
+    void tearDown() {
+        for (Loan l : dao.readLoans()) { dao.deleteLoan(l); }
+        for (Victim v : dao.readVictims()) { dao.deleteVictim(v); }
+        for (Alias a : dao.readAliases()) { dao.deleteAlias(a); }
+        for (User u : dao.readUsers()) { dao.deleteUser(u); }
+
     }
 
     /**
@@ -75,10 +85,10 @@ class LoginControllerTest {
     @Test
     void newUsername(FxRobot robot){
         robot.clickOn("#newUserButton");
-        robot.clickOn("#name");
+        robot.clickOn("#nameF");
         robot.write("Pepega");
         robot.clickOn("#createUser");
-        user = DataModel.getInstance().getUserList().get(0);
+        User user = DataModel.getInstance().getUserList().get(0);
         robot.clickOn("#userList");
         robot.clickOn("Pepega");
         FxAssert.verifyThat("#userList",ComboBoxMatchers.hasItems(1));
@@ -97,6 +107,10 @@ class LoginControllerTest {
      */
     @Test
     void loginAndLogout(FxRobot robot){
+        robot.clickOn("#newUserButton");
+        robot.clickOn("#nameF");
+        robot.write("Pepega");
+        robot.clickOn("#createUser");
         robot.clickOn("#userList");
         robot.clickOn("Pepega");
         robot.clickOn("#loginButton");
@@ -105,6 +119,4 @@ class LoginControllerTest {
         robot.clickOn("#logoutButton");
         Assertions.assertNull(DataModel.getInstance().getCurrentUser());
     }
-    @AfterAll
-    static void purge(){ DataModel.getInstance().deleteUser(user); }
 }

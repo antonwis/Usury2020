@@ -1,11 +1,13 @@
 package fi.metropolia.group8.view.Login;
 
+import fi.metropolia.group8.model.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +22,8 @@ import java.util.ResourceBundle;
 
 @ExtendWith(ApplicationExtension.class)
 class NewUserControllerTest {
+
+    private UsuryDAO dao = new UsuryDAO();
 
     /**
      * Generates new window for testing purposes
@@ -41,9 +45,20 @@ class NewUserControllerTest {
      * @param robot robot
      */
     @BeforeEach
-    void reset(FxRobot robot){
+    void reset(FxRobot robot) {
         robot.release(new KeyCode[]{});
         robot.release(new MouseButton[]{});
+    }
+
+    /**
+     * Clears the database of leftover items
+     */
+    @AfterEach
+    void tearDown() {
+        for (Loan l : dao.readLoans()) { dao.deleteLoan(l); }
+        for (Victim v : dao.readVictims()) { dao.deleteVictim(v); }
+        for (Alias a : dao.readAliases()) { dao.deleteAlias(a); }
+        for (User u : dao.readUsers()) { dao.deleteUser(u); }
     }
 
     /**
@@ -62,7 +77,7 @@ class NewUserControllerTest {
      */
     @Test
     void lessThan2(FxRobot robot){
-        robot.clickOn("#name");
+        robot.clickOn("#nameF");
         robot.write("P");
         robot.clickOn("#createUser");
         FxAssert.verifyThat("#userError", NodeMatchers.isVisible());
