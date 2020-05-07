@@ -28,6 +28,7 @@ public class LoginManager {
     /**
      * Callback method invoked to notify that a user has been authenticated.
      * Will show the main application screen.
+     * @param sessionID generated session id, not used
      */
     public void authenticated(String sessionID) {
         showMainView(sessionID);

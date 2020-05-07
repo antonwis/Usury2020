@@ -289,6 +289,7 @@ public class DataModel {
     /**
      * Creates a new user object and sends it to the data access object to be added to database
      * @param name name of the user
+     * @return user object
      */
     public User createUser(String name){
         User user = new User(name);

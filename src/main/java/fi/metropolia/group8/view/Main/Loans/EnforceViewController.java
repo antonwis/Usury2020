@@ -95,6 +95,7 @@ public class EnforceViewController implements Initializable {
      *  Receives controllers from other classes to be used in this one.
      * @param stage Stage
      * @param overviewController OverviewController
+     * @param primaryController Primary Controller
      */
 
     public void init(Stage stage, OverviewController overviewController, PrimaryController primaryController) {

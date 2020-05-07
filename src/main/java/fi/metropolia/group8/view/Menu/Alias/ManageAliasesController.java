@@ -57,6 +57,7 @@ public class ManageAliasesController {
      * @param menubarController Menubar Controller
      * @param primaryController Primary Controller
      * @param overviewController Overview Controller
+     * @param loanListController Loan List Controller
      */
     public void init(LoanListController loanListController, AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController, OverviewController overviewController){
         if(this.aliasController == null) {

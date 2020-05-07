@@ -48,7 +48,7 @@ public class EventManager {
 
     /**
      * Method to add a new listener to eventList
-     * @param newListener
+     * @param newListener new change listener
      */
     public void addChangeListener(ListChangeListener<String> newListener) {
         eventList.addListener(newListener);
@@ -56,7 +56,7 @@ public class EventManager {
 
     /**
      * Remove an existing listener from eventList
-     * @param listener
+     * @param listener new change listener
      */
     public void removeChangeListener(ListChangeListener<String> listener) {
         eventList.removeListener(listener);

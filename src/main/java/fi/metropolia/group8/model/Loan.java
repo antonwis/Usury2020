@@ -33,12 +33,12 @@ public class Loan {
     /**
      * constructor
      *
-     * @param owner
-     * @param value
-     * @param victim
-     * @param startDate
-     * @param dueDate
-     * @param interest
+     * @param owner owner alias object
+     * @param value loan value
+     * @param victim victim object
+     * @param startDate loan issue date
+     * @param dueDate loan due date
+     * @param interest interest percentage
      */
     public Loan(Alias owner, float value, Victim victim, LocalDate startDate, LocalDate dueDate, float interest) {
 
@@ -51,7 +51,7 @@ public class Loan {
     }
 
     /**
-     * @return
+     * @return loan id
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -61,14 +61,14 @@ public class Loan {
     }
 
     /**
-     * @param id
+     * @param id loan id
      */
     public void setId(long id) {
         this.id = id;
     }
 
     /**
-     * @return
+     * @return owner alias object
      */
     @ManyToOne
     @JoinColumn(name = "owner")
@@ -77,14 +77,14 @@ public class Loan {
     }
 
     /**
-     * @param owner
+     * @param owner new owner alias object
      */
     public void setOwner(Alias owner) {
         this.owner = owner;
     }
 
     /**
-     * @return
+     * @return loan value
      */
     //Value property stuff
     public FloatProperty valueProperty() {
@@ -93,7 +93,7 @@ public class Loan {
     }
 
     /**
-     * @return
+     * @return loan value
      */
     @Column(name = "value")
     public float getValue() {
@@ -101,14 +101,14 @@ public class Loan {
     }
 
     /**
-     * @param value
+     * @param value loan value
      */
     public void setValue(float value) {
         valueProperty().set(value);
     }
 
     /**
-     * @return
+     * @return interest value
      */
     //Interest property stuff
     public FloatProperty interestProperty() {
@@ -117,7 +117,7 @@ public class Loan {
     }
 
     /**
-     * @return
+     * @return interest value
      */
     @Column(name = "interest_percentage")
     public float getInterest() {
@@ -125,14 +125,14 @@ public class Loan {
     }
 
     /**
-     * @param value
+     * @param value interest value
      */
     public void setInterest(float value) {
         interestProperty().set(value);
     }
 
     /**
-     * @return
+     * @return victim object
      */
     @ManyToOne
     @JoinColumn(name = "victim")
@@ -141,7 +141,7 @@ public class Loan {
     }
 
     /**
-     * @param victim
+     * @param victim new victim object
      */
     // Probably not needed
     public void setVictim(Victim victim) {
@@ -149,7 +149,7 @@ public class Loan {
     }
 
     /**
-     * @return
+     * @return issue date
      */
     @Column(name = "startDate")
     public LocalDate getStartDate() {
@@ -157,7 +157,7 @@ public class Loan {
     }
 
     /**
-     * @param startDate
+     * @param startDate issue date
      */
     // Probably not needed
     public void setStartDate(LocalDate startDate) {
@@ -165,7 +165,7 @@ public class Loan {
     }
 
     /**
-     * @return
+     * @return loan due date
      */
     @Column(name = "dueDate")
     public LocalDate getDueDate() {
@@ -173,14 +173,14 @@ public class Loan {
     }
 
     /**
-     * @param dueDate
+     * @param dueDate loan due date
      */
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
     /**
-     * @return
+     * @return completion status
      */
     @Column(name = "completed")
     public boolean isCompleted() {
@@ -188,14 +188,14 @@ public class Loan {
     }
 
     /**
-     * @param completed
+     * @param completed completion status
      */
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
 
     /**
-     * @return
+     * @return completion date
      */
     @Column(name = "completeDate")
     public LocalDate getCompleteDate() {
@@ -203,7 +203,7 @@ public class Loan {
     }
 
     /**
-     * @param completeDate
+     * @param completeDate completion date
      */
     public void setCompleteDate(LocalDate completeDate) {
         this.completeDate = completeDate;
@@ -212,7 +212,7 @@ public class Loan {
     /**
      * to string method for loan
      *
-     * @return
+     * @return loan info
      */
     @Override
     public String toString() {

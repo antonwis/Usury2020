@@ -25,8 +25,8 @@ public class LoanCalculator {
 
     /**
      * calculates total sum after interest
-     * @param loan
-     * @return
+     * @param loan loan object
+     * @return loan total sum with interest
      */
     public float getLoanTotalSum(Loan loan) {
         float interest = (loan.getInterest() / 100) * loan.getValue();
@@ -35,8 +35,8 @@ public class LoanCalculator {
 
     /**
      * calculates total sum after interest for the generated loan proposal
-     * @param generatedVictim
-     * @return
+     * @param generatedVictim random generated victim object
+     * @return loan offer total sum
      */
     public float getLoanOfferTotalSum(GeneratedVictim generatedVictim) {
         float interest = (generatedVictim.getInterest() / 100) * generatedVictim.getValue();
@@ -45,8 +45,8 @@ public class LoanCalculator {
 
     /**
      * calculates profit made from the loan
-     * @param loan
-     * @return
+     * @param loan loan object
+     * @return interest profit value
      */
     public float getInterestProfit(Loan loan) {
         float interest = (loan.getInterest() / 100) * loan.getValue();
@@ -55,8 +55,8 @@ public class LoanCalculator {
 
     /**
      * calculates profit made from the loan proposal
-     * @param generatedVictim
-     * @return
+     * @param generatedVictim random generated victim object
+     * @return loan offer interest profit value
      */
     public float getOfferInterestProfit(GeneratedVictim generatedVictim) {
         float interest = (generatedVictim.getInterest() / 100) * generatedVictim.getValue();
@@ -65,7 +65,7 @@ public class LoanCalculator {
 
     /**
      * sets new equity for alias after giving out a loan
-     * @param loan
+     * @param loan loan object
      */
     // Update alias data in database
     public void updateEquity(Loan loan) {
@@ -77,7 +77,7 @@ public class LoanCalculator {
 
     /**
      * Update alias with loan values and update loan status in database. Notifies event log manager.
-     * @param loan
+     * @param loan loan object
      */
     public void completeLoan(Loan loan) {
         Alias alias = loan.getOwner();
@@ -103,9 +103,9 @@ public class LoanCalculator {
 
     /**
      * modifies loan in database
-     * @param loan
-     * @param newInterest
-     * @param dueDate
+     * @param loan loan object
+     * @param newInterest new interest value
+     * @param dueDate new due date
      */
     public void modifyLoan(Loan loan, float newInterest, LocalDate dueDate) {
         loan.setDueDate(dueDate);
@@ -116,8 +116,8 @@ public class LoanCalculator {
     /**
      * Sets the loan value to zero. Forfeits the loan and all its profits. Notifies event log manager.
      * Used when victim is no longer alive.
-     * @param alias
-     * @param loan
+     * @param alias alias object
+     * @param loan loan object
      */
     public void forfeitLoan(Alias alias, Loan loan) {
         loan.setValue(0f);
@@ -134,8 +134,8 @@ public class LoanCalculator {
     /**
      * Forfeits all profits. Returns the loan value to the alias. Notifies event log manager.
      * Used while repossessing loans.
-     * @param alias
-     * @param loan
+     * @param alias alias object
+     * @param loan loan object
      */
     public void repoLoan(Alias alias, Loan loan) {
         float newEquity = alias.getEquity() + loan.getValue();
@@ -152,7 +152,7 @@ public class LoanCalculator {
 
     /**
      * Pays back half of the loan value with interest to the Alias
-     * @param loan
+     * @param loan loan object
      */
     public void payHalfLoan(Loan loan) {
         float newValue = (loan.getValue() / 2);
@@ -167,7 +167,7 @@ public class LoanCalculator {
 
     /**
      * Modifies the loan's value by a given modifier
-     * @param loan
+     * @param loan loan object
      * @param modifier percentage modifier ie. 20
      */
     public void modifyLoanValue(Loan loan, float modifier) {

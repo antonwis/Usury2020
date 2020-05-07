@@ -30,10 +30,10 @@ public class Alias {
     /**
      * Constructor for Alias
      *
-     * @param user
-     * @param name
-     * @param description
-     * @param equity
+     * @param user User object
+     * @param name name of the Alias
+     * @param description Description for the alias
+     * @param equity Starting equity for the alias
      */
     public Alias(User user, String name, String description, int equity) {
         this.user = user;
@@ -56,7 +56,7 @@ public class Alias {
     }
 
     /**
-     * @param id
+     * @param id unique id for the alias
      */
     public void setId(long id) {
         this.id = id;
@@ -72,7 +72,7 @@ public class Alias {
     }
 
     /**
-     * @param user
+     * @param user user object
      */
     public void setUser(User user) {
         this.user = user;
@@ -98,14 +98,14 @@ public class Alias {
     }
 
     /**
-     * @param value
+     * @param value new description
      */
     public void setDescription(String value) {
         descriptionProperty().set(value);
     }
 
     /**
-     * @return
+     * @return description
      */
     @Column(name = "description")
     public String getDescription() {
@@ -123,7 +123,7 @@ public class Alias {
     }
 
     /**
-     * @param value
+     * @param value new equity value
      */
     public void setEquity(float value) {
         equityProperty().set(value);
@@ -148,7 +148,7 @@ public class Alias {
     }
 
     /**
-     * @param value
+     * @param value new completed loans value
      */
     public void setCompletedLoans(int value) {
         completedLoansProperty().set(value);
@@ -173,7 +173,7 @@ public class Alias {
     }
 
     /**
-     * @param value
+     * @param value new total profits value
      */
     public void setTotalProfits(float value) {
         totalProfitsProperty().set(value);
@@ -195,7 +195,7 @@ public class Alias {
     }
 
     /**
-     * @param value
+     * @param value new enforcer action total value
      */
     public void setEnforcerActions(int value) {
         enforcerActionsProperty().set(value);
@@ -220,7 +220,7 @@ public class Alias {
     }
 
     /**
-     * @return
+     * @return alias info
      */
     @Override
     public String toString() {

@@ -58,6 +58,7 @@ public class ModifyAliasController {
      * @param primaryController Primary Controller
      * @param overviewController Overview Controller
      * @param alias Alias
+     * @param loanListController Loan List Controller
      */
     public void init(LoanListController loanListController, AliasController aliasController, Stage stage, MenubarController menubarController, PrimaryController primaryController, OverviewController overviewController, Alias alias) {
         if (this.aliasController == null) {
